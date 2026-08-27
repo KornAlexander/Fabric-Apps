@@ -42,14 +42,13 @@ export default function AppPage({ params }: { params: { slug: string } }) {
               A playable build beats any amount of description, so it leads. Only shown
               where the app declares one: most of these need a Fabric tenant, and a dead
               "try it" button is worse than none.
+
+              ⚠️ Points at our own /play/ route, never at the deployment host. The
+              fabricapps.net address is unmemorable and changes on redeploy, so it must
+              never be the thing people copy, bookmark or paste into a post.
             */}
             {app.liveUrl && (
-              <a
-                className="btn btn-primary"
-                href={app.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a className="btn btn-primary" href={asset(`/apps/${app.slug}/play/`)}>
                 ▶ Try it live
               </a>
             )}

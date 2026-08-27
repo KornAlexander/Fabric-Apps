@@ -2,6 +2,10 @@
 
 **A turn-based 4X strategy game whose tech tree is a certification syllabus.**
 
+### ▶ [Play it in your browser](https://kornalexander.github.io/fabric-empires/)
+
+No install and no sign-in. It runs on a phone too.
+
 ![Fabric Empires](../../docs/previews/fabric-empires.webp)
 
 You explore a procedurally generated hex map, found cities, work tiles for four

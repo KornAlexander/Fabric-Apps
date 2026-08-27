@@ -168,10 +168,6 @@ ALLOWLIST: dict[str, tuple[set[str], str]] = {
     #   3. it is opt-in via `template.liveUrl` and drives the "Try it live" button.
     # Do not copy this entry for an app that reads real data. The Fabric Usage App was
     # exactly that shape and served 15 named customers as an unauthenticated JSON file.
-    "games-and-learn/fabric-empires/package.json": ({"internal"},
-        'the public playable build: "liveUrl": '
-        '"https://solid-wheat-02620eb270-swedencentral.webapp.fabricapps.net" - a game, '
-        'anonymous by design, deliberately published'),
 
     # --- german: proper nouns only. Each reason quotes the surviving text so the next
     # reader can judge it without re-opening the file. Prose was translated, not excused.

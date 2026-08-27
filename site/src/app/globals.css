@@ -255,6 +255,25 @@ code { font-family: var(--code-font); font-size: 0.9em; }
 .readme li { margin: 5px 0; }
 .readme hr { border: 0; border-top: 1px solid var(--border-soft); margin: 34px 0; }
 
+/* ------------------------------------------------------------- play page --- */
+/* Full-bleed embed. The address bar stays on github.io, which is the whole point:
+   the deployment host is never the link anyone copies. */
+.play { display: flex; flex-direction: column; height: calc(100vh - 62px); }
+.play-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 22px;
+  background: var(--bg-raised);
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+  flex: 0 0 auto;
+}
+.play-bar a { font-weight: 600; }
+.play-note { color: var(--text-dim); margin-right: auto; }
+.play-frame { flex: 1 1 auto; width: 100%; border: 0; display: block; background: var(--bg-shot); }
+@media (max-width: 640px) { .play-note { display: none; } }
+
 /* ---------------------------------------------------------------- footer --- */
 .site-footer {
   border-top: 1px solid var(--border-soft);
