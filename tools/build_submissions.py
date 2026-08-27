@@ -74,23 +74,48 @@ def build(slug: str, draft: Path) -> bool:
     folder.mkdir(parents=True)
 
     # --- assets, renamed to what they ARE so the submission form is obvious ----
+    #
+    # ⚠️ The gallery's uploader accepts ONLY .jpg, .gif, .pdf and .wmv, with a 50 MB cap
+    # and at most 3 files. Found by opening the real form, not from any documentation.
+    # That rules out both of the repo's native formats: previews are .webp and demos are
+    # .mp4. So the thumbnail is converted to JPG here, and the MP4 is deliberately left
+    # out of the bundle - it cannot be uploaded, and shipping a file that will be rejected
+    # wastes the reviewer's time.
     copied: list[str] = []
     preview = REPO / "docs" / "previews" / f"{slug}.webp"
     if preview.exists():
-        shutil.copy2(preview, folder / "thumbnail.webp")
-        copied.append("thumbnail.webp  (the tile image)")
-    for kind in ("gif", "mp4"):
-        src = REPO / "docs" / "media" / f"{slug}-demo.{kind}"
-        if src.exists():
-            shutil.copy2(src, folder / f"demo.{kind}")
-            mb = src.stat().st_size / 1_048_576
-            copied.append(f"demo.{kind:<3}       ({mb:.1f} MB)")
+        from PIL import Image
+        Image.open(preview).convert("RGB").save(folder / "thumbnail.jpg", "JPEG",
+                                                quality=88, optimize=True)
+        kb = (folder / "thumbnail.jpg").stat().st_size / 1024
+        copied.append(f"thumbnail.jpg  ({kb:.0f} KB, the tile image)")
+    gif = REPO / "docs" / "media" / f"{slug}-demo.gif"
+    if gif.exists():
+        shutil.copy2(gif, folder / "demo.gif")
+        copied.append(f"demo.gif       ({gif.stat().st_size/1_048_576:.1f} MB)")
 
     # --- the post itself, with the embed rewritten to the local copy ----------
     post = body_of(text)
     post = re.sub(r"!\[([^\]]*)\]\(docs/media/[^)]*-demo\.gif\)", r"![\1](demo.gif)", post)
     post = re.sub(r"!\[([^\]]*)\]\(docs/previews/[^)]*\.webp\)", r"![\1](thumbnail.webp)", post)
     (folder / "post.md").write_bytes(post.encode("utf-8"))
+
+    # --- and a paste-ready version -------------------------------------------
+    # ⚠️ The gallery's editor is RICH TEXT, not markdown. Pasting post.md leaves "##" and
+    # "![demo](demo.gif)" sitting in the published post as literal characters. Images go
+    # in as attachments, so the embeds are dropped rather than converted.
+    plain = post
+    plain = re.sub(r"<!--.*?-->", "", plain, flags=re.S)      # drafting notes
+    plain = re.sub(r"!\[[^\]]*\]\([^)]*\)", "", plain)         # embeds -> attachments
+    plain = re.sub(r"^#{1,6}\s*", "", plain, flags=re.M)       # heading marks
+    plain = re.sub(r"```[a-z]*\n", "", plain)                  # fence open
+    plain = plain.replace("```", "")
+    plain = re.sub(r"\*\*([^*]+)\*\*", r"\1", plain)           # bold
+    plain = re.sub(r"^\s*-\s+", "\u2022 ", plain, flags=re.M)  # bullets survive as text
+    plain = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r"\1: \2", plain)  # links -> label: url
+    plain = re.sub(r"^-{3,}$", "", plain, flags=re.M)          # rules
+    plain = re.sub(r"\n{3,}", "\n\n", plain).strip()
+    (folder / "post-plain.txt").write_bytes((plain + "\n").encode("utf-8"))
 
     live = meta.get("liveUrl")
     title = str(fm.get("title", "")).strip('"')
@@ -136,6 +161,13 @@ def build(slug: str, draft: Path) -> bool:
         "- [ ] Nothing in the pixels names a customer, a tenant or a workspace you would",
         "      not put on a billboard",
         "- [ ] The links above all resolve",
+        "",
+        "## Form facts, checked against the live form",
+        "",
+        "- Attachments: **.jpg, .gif, .pdf, .wmv only**. No .webp, no .mp4.",
+        "- Max 3 attachments, 50 MB each.",
+        "- The body editor is **rich text, not markdown** - paste `post-plain.txt`,",
+        "  not `post.md`, or the `##` and `![]()` show up as literal characters.",
     ]
     if not any(c.startswith("demo") for c in copied):
         lines += [
