@@ -1,0 +1,33 @@
+id: hochschul-studierende-race
+name: Hochschul-Insights Studierende-Race
+version: 1.0.0
+services:
+  auth:
+    enabled: true
+    fabric:
+      enabled: true
+    password:
+      enabled: false
+    # ⚠️ `rayfin up` rewrites this file and will re-add whatever host it just deployed to.
+    # That host is tenant- and item-specific, so it must not travel into a public repo — check
+    # this list before publishing. Whoever deploys adds their own `https://<their-app-host>`
+    # AND `https://<their-app-host>/auth/callback`, then runs a full `rayfin up`
+    # (a `staticapp deploy` alone does not re-register them).
+    allowedRedirectUris:
+      - http://localhost:5173
+      # Local preview only. `rayfin up` adds the deployment's own hosting URL,
+      # so it does not need to be written down here — and a public repository is
+      # the wrong place to record which host a tenant deployed to.
+      - http://localhost:8080
+      - http://127.0.0.1:8080
+  functions:
+    enabled: false
+  staticHosting:
+    enabled: true
+    folder: dist
+    buildCommand: npm run build:fabric
+    indexDocument: index.html
+  data:
+    enabled: false
+  storage:
+    enabled: false

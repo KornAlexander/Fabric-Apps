@@ -1,0 +1,211 @@
+{
+  "$comment": "Area of interest definition. Flut-Insights is a reusable vertical asset (PLAN §14 Q2) — no location is hard-coded in code. Ahrtal 2021 is the first instance, not the app.",
+  "id": "ahrtal-2021",
+  "event": {
+    "name": {
+      "de": "Flutkatastrophe im Ahrtal",
+      "en": "Ahr valley flood"
+    },
+    "startUtc": "2021-07-14T12:00:00Z",
+    "peakUtc": "2021-07-14T20:00:00Z",
+    "$peakComment": "22:00 CEST on 14 July. NOT a measured time: the Altenahr gauge recorded 575 cm at 20:45 CEST and was then destroyed, so no peak time was ever measured there. The LfU reconstructed the peak STAGE (980 cm) and DISCHARGE (800-1230 m3/s) after the event but published no time. This value is therefore a modelling assumption placed inside the window in which the peak must have occurred, and the app must say so wherever it shows a clock.",
+    "endUtc": "2021-07-15T12:00:00Z",
+    "timelineStartUtc": "2021-07-11T12:00:00Z",
+    "timelineEndUtc": "2021-07-21T12:00:00Z"
+  },
+  "bbox": {
+    "crs": "EPSG:4326",
+    "west": 6.96,
+    "east": 7.29,
+    "south": 50.505,
+    "north": 50.572,
+    "$comment": "~23 x 8 km, extended east in 2026-07 so the Ahr is shown all the way to its mouth. The old box stopped at 7.14, a few km short of the Rhine, which left the map ending in mid-valley with empty screen beyond it. East 7.29 puts 3.7 km of Rhine channel inside the eastern edge (lon 7.270-7.286) and carries the Ahr's full 35.8 km reach to the confluence at Kripp, 50.5599 N. ⚠️ The mouth is NORTH-east: the lower Ahr swings up to 50.56, so the north edge cannot be trimmed below about 50.567 without cutting off the confluence itself. North 50.572 and south 50.505 pay for the extra width by dropping plateau that carries no flood."
+  },
+  "workingCrs": "EPSG:25832",
+  "verticalDatum": "DHHN2016",
+  "grids": {
+    "terrainResolutionM": 4,
+    "sourceResolutionM": 1,
+    "simulationResolutionM": 2,
+    "renderResolutionM": 4,
+    "flowResolutionM": 16
+  },
+  "river": {
+    "name": "Ahr",
+    "osmWaterwayRef": "Ahr",
+    "chainageStepM": 25,
+    "flowDirection": "downstream-east"
+  },
+  "focusPlaces": [
+    {
+      "id": "kreuzberg",
+      "name": "Kreuzberg",
+      "lat": 50.50904,
+      "lon": 6.97626
+    },
+    {
+      "id": "altenburg",
+      "name": "Altenburg",
+      "lat": 50.51066,
+      "lon": 6.98636
+    },
+    {
+      "id": "altenahr",
+      "name": "Altenahr",
+      "lat": 50.51695,
+      "lon": 6.99205
+    },
+    {
+      "id": "reimerzhoven",
+      "name": "Reimerzhoven",
+      "lat": 50.51999,
+      "lon": 7.005
+    },
+    {
+      "id": "laach",
+      "name": "Laach",
+      "lat": 50.51738,
+      "lon": 7.01242
+    },
+    {
+      "id": "mayschoss",
+      "name": "Mayschoß",
+      "lat": 50.52203,
+      "lon": 7.01978
+    },
+    {
+      "id": "rech",
+      "name": "Rech",
+      "lat": 50.51315,
+      "lon": 7.03694
+    },
+    {
+      "id": "dernau",
+      "name": "Dernau",
+      "lat": 50.53442,
+      "lon": 7.04346
+    },
+    {
+      "id": "marienthal",
+      "name": "Marienthal",
+      "lat": 50.53584,
+      "lon": 7.05843
+    },
+    {
+      "id": "walporzheim",
+      "name": "Walporzheim",
+      "lat": 50.5312,
+      "lon": 7.07944
+    },
+    {
+      "id": "ahrweiler",
+      "name": "Ahrweiler",
+      "lat": 50.54183,
+      "lon": 7.09511
+    },
+    {
+      "id": "bachem",
+      "name": "Bachem",
+      "lat": 50.54003,
+      "lon": 7.11089
+    },
+    {
+      "id": "badneuenahr",
+      "name": "Bad Neuenahr",
+      "lat": 50.54486,
+      "lon": 7.13773
+    },
+    {
+      "id": "heppingen",
+      "name": "Heppingen",
+      "lat": 50.55122,
+      "lon": 7.16464
+    },
+    {
+      "id": "heimersheim",
+      "name": "Heimersheim",
+      "lat": 50.54255,
+      "lon": 7.17611
+    },
+    {
+      "id": "lohrsdorf",
+      "name": "Lohrsdorf",
+      "lat": 50.5515,
+      "lon": 7.18655
+    },
+    {
+      "id": "ehlingen",
+      "name": "Ehlingen",
+      "lat": 50.545,
+      "lon": 7.19459
+    },
+    {
+      "id": "badbodendorf",
+      "name": "Bad Bodendorf",
+      "lat": 50.55795,
+      "lon": 7.21999
+    },
+    {
+      "id": "sinzig",
+      "name": "Sinzig",
+      "lat": 50.5452,
+      "lon": 7.24908
+    },
+    {
+      "id": "kripp",
+      "name": "Kripp",
+      "lat": 50.56092,
+      "lon": 7.26906
+    }
+  ],
+  "$focusPlacesComment": "Every settlement inside the valley corridor, listed upstream to downstream — the order the wave arrives in. Coordinates are the OpenStreetMap place nodes, checked against the river bed: each sits on the valley floor where the village is. The earlier Altenahr and Dernau values were 541 m and 332 m away from the river and 84 m and 52 m above it — on the hillside, so the camera framed a slope rather than the village. ⚠️ 'Ahrweiler' used to be 50.545/7.115, which is 1451 m from the Ahrweiler place node and 266 m from the Bad Neuenahr-Ahrweiler town centre: the button was labelled Ahrweiler and pointed at Bad Neuenahr. Now corrected, with Bachem and Bad Neuenahr as their own entries. The composite 'Bad Neuenahr-Ahrweiler' town node is deliberately omitted — it would put a third pin between two that are already listed. Alteheck, Auf Godeneltern, Lantershofen, Gimmigen and Westum fall inside the corridor but sit 1.0-1.9 km off the river on the valley shoulder, so they are left out of the flood narrative. ⚠️ Linz am Rhein, Leubsdorf and Wallen also pass the corridor test and must NOT be added: they sit on the EAST bank of the Rhine and only measure close because the Ahr's chainage ends at the confluence, so the nearest chainage point is the mouth itself.",
+  "valley": {
+    "corridorM": 2000,
+    "$comment": "Half-width of the band around the Ahr centreline that counts as 'the valley'. Buildings are collected across the whole AOI and kept inside this band: the plateau villages (Ringen, Holzweiler, Lantershofen and the rest) sit above the flood and would only add download weight."
+  },
+  "gauges": [
+    {
+      "id": "altenahr",
+      "name": "Altenahr",
+      "hvzStationNumber": "27180403",
+      "primary": true
+    },
+    {
+      "id": "bad-bodendorf",
+      "name": "Bad Bodendorf",
+      "hvzStationNumber": "27180607",
+      "primary": false
+    },
+    {
+      "id": "muesch-2",
+      "name": "Müsch 2",
+      "hvzStationNumber": "27180094",
+      "primary": false
+    }
+  ],
+  "hvz": {
+    "apiBase": "https://www.hochwasser.rlp.de/api/v1",
+    "alertRegionId": "31",
+    "alertRegionName": "Ahr-Einzugsgebiet"
+  },
+  "copernicus": {
+    "activation": "EMSR517",
+    "aoiCandidates": [
+      "AOI15",
+      "AOI03",
+      "AOI07",
+      "AOI08"
+    ],
+    "$comment": "AOI footprints not yet verified against focusPlaces — see docs/phase1-data-tasks.md"
+  },
+  "geobasis": {
+    "authority": "LVermGeo Rheinland-Pfalz",
+    "licence": "dl-de/by-2-0",
+    "attribution": "© GeoBasis-DE / LVermGeoRP 2021–2026, dl-de/by-2-0, www.lvermgeo.rlp.de [Daten bearbeitet]",
+    "dop": {
+      "service": "https://geo4.service24.rlp.de/wms/rp_dop20.fcgi",
+      "layer": "rp_dop20",
+      "$comment": "DOP20 from LVermGeo Rheinland-Pfalz, the same authority as the DGM1. Verified 2026-08-02: GetCapabilities answers with 6 layers and rp_dop20 is the RGB image layer."
+    }
+  }
+}

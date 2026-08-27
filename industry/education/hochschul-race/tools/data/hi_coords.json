@@ -1,0 +1,6155 @@
+[
+  {
+    "Hochschulen[Hochschule_Code]": "HS0011",
+    "Hochschulen[Stadt]": "Kassel",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 51.315777777,
+    "[lon]": 9.497916666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0012",
+    "Hochschulen[Stadt]": "Kassel",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 51.315777777,
+    "[lon]": 9.497916666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0013",
+    "Hochschulen[Stadt]": "Kassel",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 51.315777777,
+    "[lon]": 9.497916666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0014",
+    "Hochschulen[Stadt]": "Kassel",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 51.315777777,
+    "[lon]": 9.497916666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0020",
+    "Hochschulen[Stadt]": "Bremen",
+    "Hochschulen[Bundesland]": "Bremen",
+    "[lat]": 53.075833333,
+    "[lon]": 8.807222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0030",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0032",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0033",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0034",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0035",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0036",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0037",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0038",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0040",
+    "Hochschulen[Stadt]": "Bielefeld",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 52.016666666,
+    "[lon]": 8.533333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0050",
+    "Hochschulen[Stadt]": "Heilbronn",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.140428,
+    "[lon]": 9.217953
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0060",
+    "Hochschulen[Stadt]": "Mannheim",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.487777777,
+    "[lon]": 8.466111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0061",
+    "Hochschulen[Stadt]": "Schwerin",
+    "Hochschulen[Bundesland]": "Mecklenburg-Vorpommern",
+    "[lat]": 53.628888888,
+    "[lon]": 11.415
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0070",
+    "Hochschulen[Stadt]": "Duisburg",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.432222222,
+    "[lon]": 6.761111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0080",
+    "Hochschulen[Stadt]": "Duisburg",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.432222222,
+    "[lon]": 6.761111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0082",
+    "Hochschulen[Stadt]": "Duisburg",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.432222222,
+    "[lon]": 6.761111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0090",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0091",
+    "Hochschulen[Stadt]": "Duisburg",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.432222222,
+    "[lon]": 6.761111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0092",
+    "Hochschulen[Stadt]": "Duisburg",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.432222222,
+    "[lon]": 6.761111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0100",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0101",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0102",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0103",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0110",
+    "Hochschulen[Stadt]": "Weißenfels",
+    "Hochschulen[Bundesland]": "Sachsen-Anhalt",
+    "[lat]": 51.2,
+    "[lon]": 11.966666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0121",
+    "Hochschulen[Stadt]": "Paderborn",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.708055555,
+    "[lon]": 8.772222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0122",
+    "Hochschulen[Stadt]": "Paderborn",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.716666666,
+    "[lon]": 8.766666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0123",
+    "Hochschulen[Stadt]": "Paderborn",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.716666666,
+    "[lon]": 8.766666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0124",
+    "Hochschulen[Stadt]": "Paderborn",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.716666666,
+    "[lon]": 8.766666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0130",
+    "Hochschulen[Stadt]": "Siegen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.9064,
+    "[lon]": 8.02833
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0140",
+    "Hochschulen[Stadt]": "Wuppertal",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.266666666,
+    "[lon]": 7.183333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0150",
+    "Hochschulen[Stadt]": "Hagen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.37722222,
+    "[lon]": 7.49527778
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0160",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.55,
+    "[lon]": 10.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0170",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0180",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0190",
+    "Hochschulen[Stadt]": "Frankfurt (Oder)",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.342083333,
+    "[lon]": 14.551666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0200",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0240",
+    "Hochschulen[Stadt]": "Cottbus",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 51.760805555,
+    "[lon]": 14.331861111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0260",
+    "Hochschulen[Stadt]": "Rostock",
+    "Hochschulen[Bundesland]": "Mecklenburg-Vorpommern",
+    "[lat]": 54.088133333,
+    "[lon]": 12.133372222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0270",
+    "Hochschulen[Stadt]": "Greifswald",
+    "Hochschulen[Bundesland]": "Mecklenburg-Vorpommern",
+    "[lat]": 54.094638888,
+    "[lon]": 13.374625
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0301",
+    "Hochschulen[Stadt]": "Halle (Saale)",
+    "Hochschulen[Bundesland]": "Sachsen-Anhalt",
+    "[lat]": 51.482777777,
+    "[lon]": 11.969722222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0302",
+    "Hochschulen[Stadt]": "Merseburg",
+    "Hochschulen[Bundesland]": "Sachsen-Anhalt",
+    "[lat]": 51.354444444,
+    "[lon]": 11.992777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0310",
+    "Hochschulen[Stadt]": "Magdeburg",
+    "Hochschulen[Bundesland]": "Sachsen-Anhalt",
+    "[lat]": 52.1315889,
+    "[lon]": 11.6399609
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0360",
+    "Hochschulen[Stadt]": "Leipzig",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.3406321,
+    "[lon]": 12.3747329
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0370",
+    "Hochschulen[Stadt]": "Dresden",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.0493286,
+    "[lon]": 13.7381437
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0372",
+    "Hochschulen[Stadt]": "Dresden",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.0493286,
+    "[lon]": 13.7381437
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0373",
+    "Hochschulen[Stadt]": "Dresden",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.0493286,
+    "[lon]": 13.7381437
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0380",
+    "Hochschulen[Stadt]": "Chemnitz",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 50.83917,
+    "[lon]": 12.9275
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0390",
+    "Hochschulen[Stadt]": "Freiberg",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 50.918361111,
+    "[lon]": 13.3407
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0490",
+    "Hochschulen[Stadt]": "Jena",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.927222222,
+    "[lon]": 11.586388888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0500",
+    "Hochschulen[Stadt]": "Bamberg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.891666666,
+    "[lon]": 10.891666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0510",
+    "Hochschulen[Stadt]": "Bayreuth",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.948055555,
+    "[lon]": 11.578333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0511",
+    "Hochschulen[Stadt]": "Bayreuth",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.948055555,
+    "[lon]": 11.578333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0520",
+    "Hochschulen[Stadt]": "Oldenburg",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.143888888,
+    "[lon]": 8.213888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0530",
+    "Hochschulen[Stadt]": "Osnabrück",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.282438,
+    "[lon]": 8.024921
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0540",
+    "Hochschulen[Stadt]": "Passau",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.568333333,
+    "[lon]": 13.453333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0551",
+    "Hochschulen[Stadt]": "Ingolstadt",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.763055555,
+    "[lon]": 11.425
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0552",
+    "Hochschulen[Stadt]": "Ingolstadt",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.763055555,
+    "[lon]": 11.425
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0553",
+    "Hochschulen[Stadt]": "Ingolstadt",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.763055555,
+    "[lon]": 11.425
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0580",
+    "Hochschulen[Stadt]": "Weimar",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.9745,
+    "[lon]": 11.3291
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0590",
+    "Hochschulen[Stadt]": "Ilmenau",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.68167,
+    "[lon]": 10.93889
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0610",
+    "Hochschulen[Stadt]": "Zittau",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 50.896111111,
+    "[lon]": 14.807222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0620",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0630",
+    "Hochschulen[Stadt]": "Leipzig",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.3406321,
+    "[lon]": 12.3747329
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0660",
+    "Hochschulen[Stadt]": "Bremen",
+    "Hochschulen[Bundesland]": "Bremen",
+    "[lat]": 53.075833333,
+    "[lon]": 8.807222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0670",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0680",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0690",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.540305555,
+    "[lon]": 10.004805555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0700",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0710",
+    "Hochschulen[Stadt]": "Herford",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 52.114569444,
+    "[lon]": 8.673430555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0720",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0730",
+    "Hochschulen[Stadt]": "Heidelberg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.412222222,
+    "[lon]": 8.71
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0740",
+    "Hochschulen[Stadt]": "Hildesheim",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.15,
+    "[lon]": 9.95
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0750",
+    "Hochschulen[Stadt]": "Hannover",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.374444444,
+    "[lon]": 9.738611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0760",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0761",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0762",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0763",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0764",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0770",
+    "Hochschulen[Stadt]": "Rostock",
+    "Hochschulen[Bundesland]": "Mecklenburg-Vorpommern",
+    "[lat]": 54.083333333,
+    "[lon]": 12.133333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0780",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0790",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0800",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.55,
+    "[lon]": 10.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0810",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0811",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0812",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0820",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0821",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0822",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0823",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0830",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0840",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0850",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0851",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0852",
+    "Hochschulen[Stadt]": "Düsseldorf",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.225555555,
+    "[lon]": 6.776666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0853",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0860",
+    "Hochschulen[Stadt]": "Saarbrücken",
+    "Hochschulen[Bundesland]": "Saarland",
+    "[lat]": 49.233333333,
+    "[lon]": 7.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0880",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.55,
+    "[lon]": 10.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0890",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.55,
+    "[lon]": 10.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0900",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0910",
+    "Hochschulen[Stadt]": "Münster",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.9625,
+    "[lon]": 7.625555555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0920",
+    "Hochschulen[Stadt]": "Arnstadt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.834166666,
+    "[lon]": 10.946388888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0930",
+    "Hochschulen[Stadt]": "Bochum",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.483333333,
+    "[lon]": 7.216666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0940",
+    "Hochschulen[Stadt]": "Gießen",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.583333333,
+    "[lon]": 8.666666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0960",
+    "Hochschulen[Stadt]": "Vechta",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.7216,
+    "[lon]": 8.29382
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0980",
+    "Hochschulen[Stadt]": "Hildesheim",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.15,
+    "[lon]": 9.95
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0990",
+    "Hochschulen[Stadt]": "Lüneburg",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.2525,
+    "[lon]": 10.414444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0991",
+    "Hochschulen[Stadt]": "Lüneburg",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.2525,
+    "[lon]": 10.414444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0992",
+    "Hochschulen[Stadt]": "Lüneburg",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.2525,
+    "[lon]": 10.414444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS0993",
+    "Hochschulen[Stadt]": "Lüneburg",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.2525,
+    "[lon]": 10.414444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1000",
+    "Hochschulen[Stadt]": "Kiel",
+    "Hochschulen[Bundesland]": "Schleswig-Holstein",
+    "[lat]": 54.323333333,
+    "[lon]": 10.139444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1010",
+    "Hochschulen[Stadt]": "Lübeck",
+    "Hochschulen[Bundesland]": "Schleswig-Holstein",
+    "[lat]": 53.8369,
+    "[lon]": 10.7058
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1020",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.460958333,
+    "[lon]": 9.969505555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1030",
+    "Hochschulen[Stadt]": "Göttingen",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 51.533888888,
+    "[lon]": 9.935555555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1040",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.460958333,
+    "[lon]": 9.969505555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1050",
+    "Hochschulen[Stadt]": "Bremen",
+    "Hochschulen[Bundesland]": "Bremen",
+    "[lat]": 53.07236,
+    "[lon]": 8.79359
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1060",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.55,
+    "[lon]": 10.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1070",
+    "Hochschulen[Stadt]": "Kassel",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 51.315777777,
+    "[lon]": 9.497916666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1080",
+    "Hochschulen[Stadt]": "Bochum",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.483333333,
+    "[lon]": 7.216666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1090",
+    "Hochschulen[Stadt]": "Bonn",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.735277777,
+    "[lon]": 7.102222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1100",
+    "Hochschulen[Stadt]": "Düsseldorf",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.247388888,
+    "[lon]": 6.791361111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1110",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.9407,
+    "[lon]": 6.95991
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1120",
+    "Hochschulen[Stadt]": "Münster",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.961,
+    "[lon]": 7.60809
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1130",
+    "Hochschulen[Stadt]": "Dortmund",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.4925,
+    "[lon]": 7.414169444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1140",
+    "Hochschulen[Stadt]": "Bielefeld",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 52.0355,
+    "[lon]": 8.50315
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1150",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.935130555,
+    "[lon]": 6.8701
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1160",
+    "Hochschulen[Stadt]": "Frankfurt am Main",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.110555555,
+    "[lon]": 8.682222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1170",
+    "Hochschulen[Stadt]": "Gießen",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.583333333,
+    "[lon]": 8.666666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1180",
+    "Hochschulen[Stadt]": "Marburg",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.816666666,
+    "[lon]": 8.766666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1200",
+    "Hochschulen[Stadt]": "Trier",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.7475,
+    "[lon]": 6.687777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1210",
+    "Hochschulen[Stadt]": "Kaiserslautern",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.444722222,
+    "[lon]": 7.768888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1211",
+    "Hochschulen[Stadt]": "Kaiserslautern",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.444722222,
+    "[lon]": 7.768888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1221",
+    "Hochschulen[Stadt]": "Mainz",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.999444444,
+    "[lon]": 8.273611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1222",
+    "Hochschulen[Stadt]": "Mainz",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.999444444,
+    "[lon]": 8.273611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1230",
+    "Hochschulen[Stadt]": "Speyer",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.31641389,
+    "[lon]": 8.41630833
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1240",
+    "Hochschulen[Stadt]": "Freiburg im Breisgau",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 47.995,
+    "[lon]": 7.85
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1250",
+    "Hochschulen[Stadt]": "Heidelberg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.412222222,
+    "[lon]": 8.71
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1252",
+    "Hochschulen[Stadt]": "Heidelberg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.412222222,
+    "[lon]": 8.71
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1260",
+    "Hochschulen[Stadt]": "Konstanz",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 47.690215,
+    "[lon]": 9.1881
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1270",
+    "Hochschulen[Stadt]": "Tübingen",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.52,
+    "[lon]": 9.055555555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1291",
+    "Hochschulen[Stadt]": "Koblenz",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 50.359722222,
+    "[lon]": 7.597777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1292",
+    "Hochschulen[Stadt]": "Koblenz",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 50.359722222,
+    "[lon]": 7.597777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1300",
+    "Hochschulen[Stadt]": "Bruchsal",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.133333333,
+    "[lon]": 8.6
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1310",
+    "Hochschulen[Stadt]": "Erlangen",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.5925,
+    "[lon]": 11.005
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1311",
+    "Hochschulen[Stadt]": "Erlangen",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.5925,
+    "[lon]": 11.005
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1312",
+    "Hochschulen[Stadt]": "Erlangen",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.5925,
+    "[lon]": 11.005
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1320",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1322",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1323",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1330",
+    "Hochschulen[Stadt]": "Würzburg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.794444444,
+    "[lon]": 9.929444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1340",
+    "Hochschulen[Stadt]": "Regensburg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.9992339,
+    "[lon]": 12.0931658
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1350",
+    "Hochschulen[Stadt]": "Augsburg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.3555,
+    "[lon]": 10.90553
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1360",
+    "Hochschulen[Stadt]": "Saarbrücken",
+    "Hochschulen[Bundesland]": "Saarland",
+    "[lat]": 49.233333333,
+    "[lon]": 7.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1380",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.4543245,
+    "[lon]": 13.2934768
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1400",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1410",
+    "Hochschulen[Stadt]": "Konstanz",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 47.663333333,
+    "[lon]": 9.175277777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1420",
+    "Hochschulen[Stadt]": "Calw",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.714444444,
+    "[lon]": 8.7375
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1430",
+    "Hochschulen[Stadt]": "Braunschweig",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.2736,
+    "[lon]": 10.5297
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1440",
+    "Hochschulen[Stadt]": "Osterode am Harz",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 51.804722222,
+    "[lon]": 10.334444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1450",
+    "Hochschulen[Stadt]": "Hannover",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.35317,
+    "[lon]": 9.72249
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1460",
+    "Hochschulen[Stadt]": "Friedrichshafen",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 47.654166666,
+    "[lon]": 9.479166666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1470",
+    "Hochschulen[Stadt]": "Dresden",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.0493286,
+    "[lon]": 13.7381437
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1480",
+    "Hochschulen[Stadt]": "Aachen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.776207,
+    "[lon]": 6.083788
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1490",
+    "Hochschulen[Stadt]": "Witten",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.433333333,
+    "[lon]": 7.333333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1500",
+    "Hochschulen[Stadt]": "Bonn",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.735277777,
+    "[lon]": 7.102222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1510",
+    "Hochschulen[Stadt]": "Kassel",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 51.315777777,
+    "[lon]": 9.497916666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1520",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1530",
+    "Hochschulen[Stadt]": "Darmstadt",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 49.875,
+    "[lon]": 8.656388888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1542",
+    "Hochschulen[Stadt]": "Wiesbaden",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.0825,
+    "[lon]": 8.24
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1550",
+    "Hochschulen[Stadt]": "Marburg",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.816666666,
+    "[lon]": 8.766666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1560",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1561",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1562",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1563",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1570",
+    "Hochschulen[Stadt]": "Potsdam",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.374748,
+    "[lon]": 13.012962
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1580",
+    "Hochschulen[Stadt]": "Karlsruhe",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.016666666,
+    "[lon]": 8.4
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1590",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7817,
+    "[lon]": 9.1752
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1600",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1610",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1620",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1630",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1631",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1632",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1633",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1634",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1635",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1640",
+    "Hochschulen[Stadt]": "Neuss",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.200277777,
+    "[lon]": 6.693888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1650",
+    "Hochschulen[Stadt]": "Rheine",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 52.283333333,
+    "[lon]": 7.433333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1660",
+    "Hochschulen[Stadt]": "Düsseldorf",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.225555555,
+    "[lon]": 6.776666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1680",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.942222222,
+    "[lon]": 6.957777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1681",
+    "Hochschulen[Stadt]": "Mainz",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.999444444,
+    "[lon]": 8.273611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1682",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.942222222,
+    "[lon]": 6.957777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1683",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.942222222,
+    "[lon]": 6.957777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1690",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.512,
+    "[lon]": 13.32725
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1700",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1710",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.14694444,
+    "[lon]": 11.56333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1720",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.55,
+    "[lon]": 10.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1730",
+    "Hochschulen[Stadt]": "Hannover",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.3836594,
+    "[lon]": 9.8044941
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1740",
+    "Hochschulen[Stadt]": "Hannover",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.374444444,
+    "[lon]": 9.738611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1750",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1751",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1752",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1760",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1761",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1770",
+    "Hochschulen[Stadt]": "Bochum",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.483333333,
+    "[lon]": 7.216666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1780",
+    "Hochschulen[Stadt]": "Hameln",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.103055555,
+    "[lon]": 9.36
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1790",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1800",
+    "Hochschulen[Stadt]": "Ostfildern",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7125,
+    "[lon]": 9.214
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1810",
+    "Hochschulen[Stadt]": "Mannheim",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.469555555,
+    "[lon]": 8.482208333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1820",
+    "Hochschulen[Stadt]": "Ulm",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.422111111,
+    "[lon]": 9.953805555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1830",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1840",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1850",
+    "Hochschulen[Stadt]": "Dresden",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.0493286,
+    "[lon]": 13.7381437
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1860",
+    "Hochschulen[Stadt]": "Dresden",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.0493286,
+    "[lon]": 13.7381437
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1870",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.55,
+    "[lon]": 10.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1880",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.55,
+    "[lon]": 10.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1890",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1900",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1910",
+    "Hochschulen[Stadt]": "Hannover",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.374444444,
+    "[lon]": 9.738611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1920",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1921",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1922",
+    "Hochschulen[Stadt]": "Baden-Baden",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.761944444,
+    "[lon]": 8.240833333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1930",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1950",
+    "Hochschulen[Stadt]": "Düsseldorf",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.225555555,
+    "[lon]": 6.776666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1960",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.55,
+    "[lon]": 10.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1970",
+    "Hochschulen[Stadt]": "Mannheim",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.487777777,
+    "[lon]": 8.466111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1980",
+    "Hochschulen[Stadt]": "Freiburg im Breisgau",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 47.995,
+    "[lon]": 7.85
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1981",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS1990",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2000",
+    "Hochschulen[Stadt]": "Fulda",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.554635,
+    "[lon]": 9.670922
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2020",
+    "Hochschulen[Stadt]": "Frankfurt am Main",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.110555555,
+    "[lon]": 8.682222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2030",
+    "Hochschulen[Stadt]": "Paderborn",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.7161,
+    "[lon]": 8.75494
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2040",
+    "Hochschulen[Stadt]": "Trier",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.74689,
+    "[lon]": 6.68748
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2060",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.942222222,
+    "[lon]": 6.957777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2080",
+    "Hochschulen[Stadt]": "Münster",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.9625,
+    "[lon]": 7.625555555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2090",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2100",
+    "Hochschulen[Stadt]": "Heidelberg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.412222222,
+    "[lon]": 8.71
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2150",
+    "Hochschulen[Stadt]": "Heidelberg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.412222222,
+    "[lon]": 8.71
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2170",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2190",
+    "Hochschulen[Stadt]": "Zwickau",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 50.718888888,
+    "[lon]": 12.496111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2200",
+    "Hochschulen[Stadt]": "Bingen am Rhein",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.9842,
+    "[lon]": 7.96139
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2211",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2212",
+    "Hochschulen[Stadt]": "Bamberg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.891666666,
+    "[lon]": 10.891666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2213",
+    "Hochschulen[Stadt]": "Traunstein",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 47.868333333,
+    "[lon]": 12.643333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2230",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2240",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2250",
+    "Hochschulen[Stadt]": "Bielefeld",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 52.016666666,
+    "[lon]": 8.533333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2260",
+    "Hochschulen[Stadt]": "Wuppertal",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.266666666,
+    "[lon]": 7.183333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2271",
+    "Hochschulen[Stadt]": "Bielefeld",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 52.016666666,
+    "[lon]": 8.533333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2272",
+    "Hochschulen[Stadt]": "Wuppertal",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.266666666,
+    "[lon]": 7.183333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2280",
+    "Hochschulen[Stadt]": "Düsseldorf",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.225555555,
+    "[lon]": 6.776666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2290",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2300",
+    "Hochschulen[Stadt]": "Heidelberg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.412222222,
+    "[lon]": 8.71
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2320",
+    "Hochschulen[Stadt]": "Oberursel",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.2105,
+    "[lon]": 8.5556
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2350",
+    "Hochschulen[Stadt]": "Burg",
+    "Hochschulen[Bundesland]": "Sachsen-Anhalt",
+    "[lat]": 52.2117,
+    "[lon]": 11.9842
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2370",
+    "Hochschulen[Stadt]": "Leipzig",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.3406321,
+    "[lon]": 12.3747329
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2371",
+    "Hochschulen[Stadt]": "Leipzig",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.3406321,
+    "[lon]": 12.3747329
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2381",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2382",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2383",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2384",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2390",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2410",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.55,
+    "[lon]": 10.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2420",
+    "Hochschulen[Stadt]": "Neuruppin",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.922222222,
+    "[lon]": 12.8
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2440",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.942222222,
+    "[lon]": 6.957777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2441",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.942222222,
+    "[lon]": 6.957777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2450",
+    "Hochschulen[Stadt]": "Mannheim",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.487777777,
+    "[lon]": 8.466111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2460",
+    "Hochschulen[Stadt]": "Aachen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.776207,
+    "[lon]": 6.083788
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2470",
+    "Hochschulen[Stadt]": "Görlitz",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.152777777,
+    "[lon]": 14.987222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2490",
+    "Hochschulen[Stadt]": "Dresden",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.029,
+    "[lon]": 13.771
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2500",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.57055556,
+    "[lon]": 9.99888889
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2510",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2520",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2530",
+    "Hochschulen[Stadt]": "Hannover",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.377525489,
+    "[lon]": 9.753811633
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2540",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2550",
+    "Hochschulen[Stadt]": "Potsdam",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.4,
+    "[lon]": 13.066666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2561",
+    "Hochschulen[Stadt]": "Detmold",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.937777777,
+    "[lon]": 8.883333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2562",
+    "Hochschulen[Stadt]": "Detmold",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.937777777,
+    "[lon]": 8.883333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2563",
+    "Hochschulen[Stadt]": "Detmold",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.937777777,
+    "[lon]": 8.883333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2571",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2572",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2573",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2574",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2581",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.942222222,
+    "[lon]": 6.957777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2582",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.942222222,
+    "[lon]": 6.957777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2583",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.942222222,
+    "[lon]": 6.957777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2590",
+    "Hochschulen[Stadt]": "Lübeck",
+    "Hochschulen[Bundesland]": "Schleswig-Holstein",
+    "[lat]": 53.8647,
+    "[lon]": 10.6814
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2600",
+    "Hochschulen[Stadt]": "Burg",
+    "Hochschulen[Bundesland]": "Sachsen-Anhalt",
+    "[lat]": 51.5027,
+    "[lon]": 11.9549
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2610",
+    "Hochschulen[Stadt]": "Bremen",
+    "Hochschulen[Bundesland]": "Bremen",
+    "[lat]": 53.0981,
+    "[lon]": 8.7675
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2620",
+    "Hochschulen[Stadt]": "Frankfurt am Main",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.1201,
+    "[lon]": 8.6762
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2630",
+    "Hochschulen[Stadt]": "Dresden",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.05284167,
+    "[lon]": 13.74244444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2640",
+    "Hochschulen[Stadt]": "Leipzig",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.33340583,
+    "[lon]": 12.36783611
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2650",
+    "Hochschulen[Stadt]": "Freiburg im Breisgau",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 47.995,
+    "[lon]": 7.85
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2660",
+    "Hochschulen[Stadt]": "Mannheim",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.487777777,
+    "[lon]": 8.466111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2661",
+    "Hochschulen[Stadt]": "Heidelberg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.412222222,
+    "[lon]": 8.71
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2662",
+    "Hochschulen[Stadt]": "Mannheim",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.487777777,
+    "[lon]": 8.466111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2670",
+    "Hochschulen[Stadt]": "Karlsruhe",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.016666666,
+    "[lon]": 8.4
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2690",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.778611,
+    "[lon]": 9.185833
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2710",
+    "Hochschulen[Stadt]": "Würzburg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.792466,
+    "[lon]": 9.933947
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2720",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.146111111,
+    "[lon]": 11.567805555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2730",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.146758333,
+    "[lon]": 11.569038888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2740",
+    "Hochschulen[Stadt]": "Leipzig",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.3406321,
+    "[lon]": 12.3747329
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2760",
+    "Hochschulen[Stadt]": "Saarbrücken",
+    "Hochschulen[Bundesland]": "Saarland",
+    "[lat]": 49.233333333,
+    "[lon]": 7.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2770",
+    "Hochschulen[Stadt]": "Saarbrücken",
+    "Hochschulen[Bundesland]": "Saarland",
+    "[lat]": 49.233333333,
+    "[lon]": 7.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2790",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.509166666,
+    "[lon]": 13.326944444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2800",
+    "Hochschulen[Stadt]": "Dresden",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.0493286,
+    "[lon]": 13.7381437
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2810",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.56757,
+    "[lon]": 10.03132
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2830",
+    "Hochschulen[Stadt]": "Braunschweig",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.2575,
+    "[lon]": 10.50166667
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2850",
+    "Hochschulen[Stadt]": "Weimar",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.981111111,
+    "[lon]": 11.329444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2860",
+    "Hochschulen[Stadt]": "Düsseldorf",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.23054,
+    "[lon]": 6.77365
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2870",
+    "Hochschulen[Stadt]": "Düsseldorf",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.242222,
+    "[lon]": 6.771944
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2880",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.934755825,
+    "[lon]": 6.96215995
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2890",
+    "Hochschulen[Stadt]": "Münster",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.974412,
+    "[lon]": 7.601456
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2900",
+    "Hochschulen[Stadt]": "Frankfurt am Main",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.110555555,
+    "[lon]": 8.682222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2930",
+    "Hochschulen[Stadt]": "Dresden",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.0493286,
+    "[lon]": 13.7381437
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2940",
+    "Hochschulen[Stadt]": "Karlsruhe",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.001666666,
+    "[lon]": 8.383888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2950",
+    "Hochschulen[Stadt]": "Karlsruhe",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.0144,
+    "[lon]": 8.38726
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2960",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2980",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.15319592,
+    "[lon]": 11.580312391
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS2990",
+    "Hochschulen[Stadt]": "Nürnberg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.445693214,
+    "[lon]": 11.135396642
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3000",
+    "Hochschulen[Stadt]": "Halle (Saale)",
+    "Hochschulen[Bundesland]": "Sachsen-Anhalt",
+    "[lat]": 51.484755,
+    "[lon]": 11.9665376
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3011",
+    "Hochschulen[Stadt]": "Nürnberg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.45861111,
+    "[lon]": 11.10868056
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3012",
+    "Hochschulen[Stadt]": "Nürnberg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.453888888,
+    "[lon]": 11.0775
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3020",
+    "Hochschulen[Stadt]": "Bayreuth",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.93962,
+    "[lon]": 11.57249
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3030",
+    "Hochschulen[Stadt]": "Rostock",
+    "Hochschulen[Bundesland]": "Mecklenburg-Vorpommern",
+    "[lat]": 54.0915,
+    "[lon]": 12.1444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3040",
+    "Hochschulen[Stadt]": "Regensburg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.016666666,
+    "[lon]": 12.083333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3051",
+    "Hochschulen[Stadt]": "Bottrop",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.52325,
+    "[lon]": 6.925269444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3052",
+    "Hochschulen[Stadt]": "Mülheim an der Ruhr",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.4275,
+    "[lon]": 6.8825
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3061",
+    "Hochschulen[Stadt]": "Kleve",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.79,
+    "[lon]": 6.14
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3062",
+    "Hochschulen[Stadt]": "Kamp-Lintfort",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.5,
+    "[lon]": 6.533333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3071",
+    "Hochschulen[Stadt]": "Hamm",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.681388888,
+    "[lon]": 7.819166666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3072",
+    "Hochschulen[Stadt]": "Hamm",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.681388888,
+    "[lon]": 7.819166666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3080",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3090",
+    "Hochschulen[Stadt]": "Potsdam",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.4,
+    "[lon]": 13.066666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3091",
+    "Hochschulen[Stadt]": "Potsdam",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.4,
+    "[lon]": 13.066666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3092",
+    "Hochschulen[Stadt]": "Potsdam",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.4,
+    "[lon]": 13.066666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3100",
+    "Hochschulen[Stadt]": "Flensburg",
+    "Hochschulen[Bundesland]": "Schleswig-Holstein",
+    "[lat]": 54.781944444,
+    "[lon]": 9.436666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3121",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3122",
+    "Hochschulen[Stadt]": "Ulm",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.39841,
+    "[lon]": 9.99155
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3130",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3140",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3230",
+    "Hochschulen[Stadt]": "Koblenz",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 50.359722222,
+    "[lon]": 7.597777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3241",
+    "Hochschulen[Stadt]": "Gera",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.87818,
+    "[lon]": 12.08242
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3242",
+    "Hochschulen[Stadt]": "Gera",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.87818,
+    "[lon]": 12.08242
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3250",
+    "Hochschulen[Stadt]": "Potsdam",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.4,
+    "[lon]": 13.066666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3260",
+    "Hochschulen[Stadt]": "Schleswig",
+    "Hochschulen[Bundesland]": "Schleswig-Holstein",
+    "[lat]": 54.515277777,
+    "[lon]": 9.569722222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3270",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3290",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3291",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3360",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3370",
+    "Hochschulen[Stadt]": "Nürnberg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.453888888,
+    "[lon]": 11.0775
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3430",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.55347,
+    "[lon]": 10.03226
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3490",
+    "Hochschulen[Stadt]": "Potsdam",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.4,
+    "[lon]": 13.066666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3500",
+    "Hochschulen[Stadt]": "Potsdam",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.401111111,
+    "[lon]": 13.011944444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3630",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3640",
+    "Hochschulen[Stadt]": "Potsdam",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.4,
+    "[lon]": 13.066666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3660",
+    "Hochschulen[Stadt]": "Freiburg im Breisgau",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 47.995,
+    "[lon]": 7.85
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3670",
+    "Hochschulen[Stadt]": "Heidelberg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.420462,
+    "[lon]": 8.684739
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3680",
+    "Hochschulen[Stadt]": "Karlsruhe",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.0137,
+    "[lon]": 8.39274
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3700",
+    "Hochschulen[Stadt]": "Schwäbisch Gmünd",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7917,
+    "[lon]": 9.82889
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3711",
+    "Hochschulen[Stadt]": "Ludwigsburg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.8975,
+    "[lon]": 9.191944444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3712",
+    "Hochschulen[Stadt]": "Ludwigsburg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.8975,
+    "[lon]": 9.191944444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3720",
+    "Hochschulen[Stadt]": "Frankfurt am Main",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.110555555,
+    "[lon]": 8.682222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3780",
+    "Hochschulen[Stadt]": "Weingarten",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 47.808403,
+    "[lon]": 9.645904
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3790",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.942222222,
+    "[lon]": 6.957777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3880",
+    "Hochschulen[Stadt]": "Frankfurt am Main",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.110555555,
+    "[lon]": 8.682222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3890",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3910",
+    "Hochschulen[Stadt]": "Cottbus",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 51.760805555,
+    "[lon]": 14.331861111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3930",
+    "Hochschulen[Stadt]": "Schleswig",
+    "Hochschulen[Bundesland]": "Schleswig-Holstein",
+    "[lat]": 54.515277777,
+    "[lon]": 9.569722222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3940",
+    "Hochschulen[Stadt]": "Frankfurt am Main",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.110555555,
+    "[lon]": 8.682222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3950",
+    "Hochschulen[Stadt]": "Bochum",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.483333333,
+    "[lon]": 7.216666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3971",
+    "Hochschulen[Stadt]": "Cottbus",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 51.760805555,
+    "[lon]": 14.331861111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3972",
+    "Hochschulen[Stadt]": "Cottbus",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 51.760805555,
+    "[lon]": 14.331861111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3980",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS3990",
+    "Hochschulen[Stadt]": "Deggendorf",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.835277777,
+    "[lon]": 12.964444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4750",
+    "Hochschulen[Stadt]": "Rosenheim",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 47.856111111,
+    "[lon]": 12.128888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4760",
+    "Hochschulen[Stadt]": "Augsburg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.368888888,
+    "[lon]": 10.897777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4770",
+    "Hochschulen[Stadt]": "Kempten (Allgäu)",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 47.733333333,
+    "[lon]": 10.316666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4790",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4800",
+    "Hochschulen[Stadt]": "Nürnberg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.453888888,
+    "[lon]": 11.0775
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4810",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4820",
+    "Hochschulen[Stadt]": "Regensburg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.016666666,
+    "[lon]": 12.083333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4830",
+    "Hochschulen[Stadt]": "Würzburg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.794444444,
+    "[lon]": 9.929444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4840",
+    "Hochschulen[Stadt]": "Deggendorf",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.835277777,
+    "[lon]": 12.964444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4850",
+    "Hochschulen[Stadt]": "Coburg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 50.258469444,
+    "[lon]": 10.957869444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4860",
+    "Hochschulen[Stadt]": "Amberg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.444444444,
+    "[lon]": 11.848333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4870",
+    "Hochschulen[Stadt]": "Ingolstadt",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.763055555,
+    "[lon]": 11.425
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4880",
+    "Hochschulen[Stadt]": "Ingolstadt",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.763055555,
+    "[lon]": 11.425
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4890",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4900",
+    "Hochschulen[Stadt]": "Neu-Ulm",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.383333333,
+    "[lon]": 10.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4910",
+    "Hochschulen[Stadt]": "Regensburg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.016666666,
+    "[lon]": 12.083333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4920",
+    "Hochschulen[Stadt]": "Nürnberg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.453888888,
+    "[lon]": 11.0775
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4930",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4940",
+    "Hochschulen[Stadt]": "Potsdam",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.4,
+    "[lon]": 13.066666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4950",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.942222222,
+    "[lon]": 6.957777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4960",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4970",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4981",
+    "Hochschulen[Stadt]": "Wilhelmshaven",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.528611111,
+    "[lon]": 8.105555555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4982",
+    "Hochschulen[Stadt]": "Oldenburg",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.143888888,
+    "[lon]": 8.213888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4991",
+    "Hochschulen[Stadt]": "Emden",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.366944444,
+    "[lon]": 7.206111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS4992",
+    "Hochschulen[Stadt]": "Emden",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.366944444,
+    "[lon]": 7.206111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5000",
+    "Hochschulen[Stadt]": "Bamberg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.891666666,
+    "[lon]": 10.891666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5010",
+    "Hochschulen[Stadt]": "Flensburg",
+    "Hochschulen[Bundesland]": "Schleswig-Holstein",
+    "[lat]": 54.774861111,
+    "[lon]": 9.450555555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5020",
+    "Hochschulen[Stadt]": "Kiel",
+    "Hochschulen[Bundesland]": "Schleswig-Holstein",
+    "[lat]": 54.323333333,
+    "[lon]": 10.139444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5030",
+    "Hochschulen[Stadt]": "Lübeck",
+    "Hochschulen[Bundesland]": "Schleswig-Holstein",
+    "[lat]": 53.869722222,
+    "[lon]": 10.686388888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5050",
+    "Hochschulen[Stadt]": "Wedel",
+    "Hochschulen[Bundesland]": "Schleswig-Holstein",
+    "[lat]": 53.583333,
+    "[lon]": 9.7
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5070",
+    "Hochschulen[Stadt]": "Pinneberg",
+    "Hochschulen[Bundesland]": "Schleswig-Holstein",
+    "[lat]": 53.659111111,
+    "[lon]": 9.800861111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5080",
+    "Hochschulen[Stadt]": "Kiel",
+    "Hochschulen[Bundesland]": "Schleswig-Holstein",
+    "[lat]": 54.323333333,
+    "[lon]": 10.139444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5090",
+    "Hochschulen[Stadt]": "Heide",
+    "Hochschulen[Bundesland]": "Schleswig-Holstein",
+    "[lat]": 54.196111111,
+    "[lon]": 9.093333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5100",
+    "Hochschulen[Stadt]": "Leipzig",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.3406321,
+    "[lon]": 12.3747329
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5110",
+    "Hochschulen[Stadt]": "Dresden",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.0493286,
+    "[lon]": 13.7381437
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5111",
+    "Hochschulen[Stadt]": "Dresden",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.0493286,
+    "[lon]": 13.7381437
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5120",
+    "Hochschulen[Stadt]": "Dresden",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.00992,
+    "[lon]": 13.87443
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5130",
+    "Hochschulen[Stadt]": "Leipzig",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.3406321,
+    "[lon]": 12.3747329
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5151",
+    "Hochschulen[Stadt]": "Zittau",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 50.896111111,
+    "[lon]": 14.807222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5152",
+    "Hochschulen[Stadt]": "Zittau",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 50.896111111,
+    "[lon]": 14.807222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5161",
+    "Hochschulen[Stadt]": "Zwickau",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 50.718888888,
+    "[lon]": 12.496111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5162",
+    "Hochschulen[Stadt]": "Zwickau",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 50.718888888,
+    "[lon]": 12.496111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5163",
+    "Hochschulen[Stadt]": "Zwickau",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 50.718888888,
+    "[lon]": 12.496111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5180",
+    "Hochschulen[Stadt]": "Leipzig",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.3406321,
+    "[lon]": 12.3747329
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5191",
+    "Hochschulen[Stadt]": "Bautzen",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.181388888,
+    "[lon]": 14.423888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5200",
+    "Hochschulen[Stadt]": "Plauen",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 50.495,
+    "[lon]": 12.138333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5210",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.55627,
+    "[lon]": 10.02196
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5230",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.55,
+    "[lon]": 10.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5240",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.55,
+    "[lon]": 10.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5251",
+    "Hochschulen[Stadt]": "Hagen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.359444444,
+    "[lon]": 7.475
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5252",
+    "Hochschulen[Stadt]": "Iserlohn",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.383333333,
+    "[lon]": 7.666666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5253",
+    "Hochschulen[Stadt]": "Meschede",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.350277777,
+    "[lon]": 8.283611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5254",
+    "Hochschulen[Stadt]": "Soest",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.571111111,
+    "[lon]": 8.109166666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5260",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.60434,
+    "[lon]": 10.15306
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5270",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5271",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5272",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5280",
+    "Hochschulen[Stadt]": "Elmshorn",
+    "Hochschulen[Bundesland]": "Schleswig-Holstein",
+    "[lat]": 53.754722222,
+    "[lon]": 9.653611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5290",
+    "Hochschulen[Stadt]": "Göttingen",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 51.533888888,
+    "[lon]": 9.935555555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5301",
+    "Hochschulen[Stadt]": "Oldenburg",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.143888888,
+    "[lon]": 8.213888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5302",
+    "Hochschulen[Stadt]": "Emden",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.366944444,
+    "[lon]": 7.206111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5303",
+    "Hochschulen[Stadt]": "Wilhelmshaven",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.528611111,
+    "[lon]": 8.105555555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5305",
+    "Hochschulen[Stadt]": "Leer",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.230833333,
+    "[lon]": 7.452777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5311",
+    "Hochschulen[Stadt]": "Braunschweig",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.269166666,
+    "[lon]": 10.521111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5312",
+    "Hochschulen[Stadt]": "Braunschweig",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.269166666,
+    "[lon]": 10.521111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5313",
+    "Hochschulen[Stadt]": "Braunschweig",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.269166666,
+    "[lon]": 10.521111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5314",
+    "Hochschulen[Stadt]": "Braunschweig",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.269166666,
+    "[lon]": 10.521111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5315",
+    "Hochschulen[Stadt]": "Braunschweig",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.269166666,
+    "[lon]": 10.521111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5330",
+    "Hochschulen[Stadt]": "Hannover",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.35317,
+    "[lon]": 9.72249
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5331",
+    "Hochschulen[Stadt]": "Hannover",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.374444444,
+    "[lon]": 9.738611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5332",
+    "Hochschulen[Stadt]": "Hannover",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.374444444,
+    "[lon]": 9.738611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5333",
+    "Hochschulen[Stadt]": "Hannover",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.374444444,
+    "[lon]": 9.738611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5334",
+    "Hochschulen[Stadt]": "Hannover",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.374444444,
+    "[lon]": 9.738611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5335",
+    "Hochschulen[Stadt]": "Hannover",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.374444444,
+    "[lon]": 9.738611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5370",
+    "Hochschulen[Stadt]": "Hannover",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.374444444,
+    "[lon]": 9.738611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5381",
+    "Hochschulen[Stadt]": "Holzminden",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 51.829722222,
+    "[lon]": 9.448333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5382",
+    "Hochschulen[Stadt]": "Holzminden",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 51.829722222,
+    "[lon]": 9.448333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5383",
+    "Hochschulen[Stadt]": "Hildesheim",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.15,
+    "[lon]": 9.95
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5384",
+    "Hochschulen[Stadt]": "Hildesheim",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.15,
+    "[lon]": 9.95
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5385",
+    "Hochschulen[Stadt]": "Holzminden",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 51.829722222,
+    "[lon]": 9.448333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5386",
+    "Hochschulen[Stadt]": "Buxtehude",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.476944444,
+    "[lon]": 9.701111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5390",
+    "Hochschulen[Stadt]": "Hannover",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.374444444,
+    "[lon]": 9.738611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5391",
+    "Hochschulen[Stadt]": "Hannover",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.374444444,
+    "[lon]": 9.738611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5392",
+    "Hochschulen[Stadt]": "Hannover",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.374444444,
+    "[lon]": 9.738611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5400",
+    "Hochschulen[Stadt]": "Göttingen",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 51.533888888,
+    "[lon]": 9.935555555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5411",
+    "Hochschulen[Stadt]": "Vechta",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.730555555,
+    "[lon]": 8.288611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5412",
+    "Hochschulen[Stadt]": "Vechta",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.730555555,
+    "[lon]": 8.288611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5421",
+    "Hochschulen[Stadt]": "Osnabrück",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.278888888,
+    "[lon]": 8.043055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5422",
+    "Hochschulen[Stadt]": "Vechta",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.730555555,
+    "[lon]": 8.288611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5441",
+    "Hochschulen[Stadt]": "Emden",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.366944444,
+    "[lon]": 7.206111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5442",
+    "Hochschulen[Stadt]": "Leer",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.230833333,
+    "[lon]": 7.452777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5461",
+    "Hochschulen[Stadt]": "Buxtehude",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.476944444,
+    "[lon]": 9.701111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5462",
+    "Hochschulen[Stadt]": "Lüneburg",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.2525,
+    "[lon]": 10.414444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5481",
+    "Hochschulen[Stadt]": "Oldenburg",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.143888888,
+    "[lon]": 8.213888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5482",
+    "Hochschulen[Stadt]": "Oldenburg",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.143888888,
+    "[lon]": 8.213888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5501",
+    "Hochschulen[Stadt]": "Osnabrück",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.278888888,
+    "[lon]": 8.043055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5502",
+    "Hochschulen[Stadt]": "Osnabrück",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.278888888,
+    "[lon]": 8.043055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5503",
+    "Hochschulen[Stadt]": "Osnabrück",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.278888888,
+    "[lon]": 8.043055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5520",
+    "Hochschulen[Stadt]": "Wilhelmshaven",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.528611111,
+    "[lon]": 8.105555555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5571",
+    "Hochschulen[Stadt]": "Hildesheim",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.15,
+    "[lon]": 9.95
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5572",
+    "Hochschulen[Stadt]": "Hildesheim",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.15,
+    "[lon]": 9.95
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5573",
+    "Hochschulen[Stadt]": "Hildesheim",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.15,
+    "[lon]": 9.95
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5574",
+    "Hochschulen[Stadt]": "Rinteln",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.186039,
+    "[lon]": 9.079169
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5660",
+    "Hochschulen[Stadt]": "Bremerhaven",
+    "Hochschulen[Bundesland]": "Bremen",
+    "[lat]": 53.53977,
+    "[lon]": 8.58204972
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5670",
+    "Hochschulen[Stadt]": "Bremen",
+    "Hochschulen[Bundesland]": "Bremen",
+    "[lat]": 53.075833333,
+    "[lon]": 8.807222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5680",
+    "Hochschulen[Stadt]": "Bremen",
+    "Hochschulen[Bundesland]": "Bremen",
+    "[lat]": 53.07236,
+    "[lon]": 8.79359
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5690",
+    "Hochschulen[Stadt]": "Dortmund",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.513888888,
+    "[lon]": 7.465277777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5691",
+    "Hochschulen[Stadt]": "Dortmund",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.513888888,
+    "[lon]": 7.465277777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5692",
+    "Hochschulen[Stadt]": "Dortmund",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.513888888,
+    "[lon]": 7.465277777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5693",
+    "Hochschulen[Stadt]": "Dortmund",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.513888888,
+    "[lon]": 7.465277777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5694",
+    "Hochschulen[Stadt]": "Dortmund",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.513888888,
+    "[lon]": 7.465277777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5695",
+    "Hochschulen[Stadt]": "Dortmund",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.513888888,
+    "[lon]": 7.465277777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5696",
+    "Hochschulen[Stadt]": "Dortmund",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.513888888,
+    "[lon]": 7.465277777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5701",
+    "Hochschulen[Stadt]": "Gelsenkirchen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.510277777,
+    "[lon]": 7.094166666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5702",
+    "Hochschulen[Stadt]": "Bocholt",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.833333333,
+    "[lon]": 6.616666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5703",
+    "Hochschulen[Stadt]": "Recklinghausen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.616666666,
+    "[lon]": 7.2
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5711",
+    "Hochschulen[Stadt]": "Aachen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.776207,
+    "[lon]": 6.083788
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5712",
+    "Hochschulen[Stadt]": "Aachen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.776207,
+    "[lon]": 6.083788
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5720",
+    "Hochschulen[Stadt]": "Bad Honnef",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.645,
+    "[lon]": 7.226944444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5721",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5722",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5723",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5724",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5725",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5726",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5727",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5728",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5729",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS572A",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS572B",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS572C",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS572D",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS572E",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS572F",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS572G",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS572H",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS572J",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS572K",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS572L",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS572M",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5731",
+    "Hochschulen[Stadt]": "Bielefeld",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 52.016666666,
+    "[lon]": 8.533333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5732",
+    "Hochschulen[Stadt]": "Bielefeld",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 52.016666666,
+    "[lon]": 8.533333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5733",
+    "Hochschulen[Stadt]": "Bielefeld",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 52.016666666,
+    "[lon]": 8.533333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5750",
+    "Hochschulen[Stadt]": "Bochum",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.483333333,
+    "[lon]": 7.216666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5751",
+    "Hochschulen[Stadt]": "Bochum",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.483333333,
+    "[lon]": 7.216666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5752",
+    "Hochschulen[Stadt]": "Bochum",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.483333333,
+    "[lon]": 7.216666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5770",
+    "Hochschulen[Stadt]": "Dortmund",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.4925,
+    "[lon]": 7.414169444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5780",
+    "Hochschulen[Stadt]": "Düsseldorf",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.225555555,
+    "[lon]": 6.776666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5800",
+    "Hochschulen[Stadt]": "Potsdam",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.4,
+    "[lon]": 13.066666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5801",
+    "Hochschulen[Stadt]": "Potsdam",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.4,
+    "[lon]": 13.066666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5802",
+    "Hochschulen[Stadt]": "Potsdam",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.4,
+    "[lon]": 13.066666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5803",
+    "Hochschulen[Stadt]": "Potsdam",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.4,
+    "[lon]": 13.066666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5811",
+    "Hochschulen[Stadt]": "Iserlohn",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.383333333,
+    "[lon]": 7.666666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5812",
+    "Hochschulen[Stadt]": "Hagen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.359444444,
+    "[lon]": 7.475
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5820",
+    "Hochschulen[Stadt]": "Bielefeld",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 52.016666666,
+    "[lon]": 8.533333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5821",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.942222222,
+    "[lon]": 6.957777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5822",
+    "Hochschulen[Stadt]": "Frechen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.916666666,
+    "[lon]": 6.816666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5823",
+    "Hochschulen[Stadt]": "Rostock",
+    "Hochschulen[Bundesland]": "Mecklenburg-Vorpommern",
+    "[lat]": 54.083333333,
+    "[lon]": 12.133333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5824",
+    "Hochschulen[Stadt]": "Schwerin",
+    "Hochschulen[Bundesland]": "Mecklenburg-Vorpommern",
+    "[lat]": 53.628888888,
+    "[lon]": 11.415
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5825",
+    "Hochschulen[Stadt]": "Hannover",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 52.374444444,
+    "[lon]": 9.738611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5826",
+    "Hochschulen[Stadt]": "Bamberg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.891666666,
+    "[lon]": 10.891666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5827",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5831",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.942222222,
+    "[lon]": 6.957777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5832",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.942222222,
+    "[lon]": 6.957777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5833",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.942222222,
+    "[lon]": 6.957777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5841",
+    "Hochschulen[Stadt]": "Krefeld",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.333333333,
+    "[lon]": 6.566666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5842",
+    "Hochschulen[Stadt]": "Mönchengladbach",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.2,
+    "[lon]": 6.433333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5861",
+    "Hochschulen[Stadt]": "Lemgo",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 52.027680555,
+    "[lon]": 8.9043
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5862",
+    "Hochschulen[Stadt]": "Detmold",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.937777777,
+    "[lon]": 8.883333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5863",
+    "Hochschulen[Stadt]": "Höxter",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.766666666,
+    "[lon]": 9.366666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5891",
+    "Hochschulen[Stadt]": "Münster",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.9625,
+    "[lon]": 7.625555555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5892",
+    "Hochschulen[Stadt]": "Münster",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.9625,
+    "[lon]": 7.625555555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5901",
+    "Hochschulen[Stadt]": "Paderborn",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.716666666,
+    "[lon]": 8.766666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5902",
+    "Hochschulen[Stadt]": "Paderborn",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.716666666,
+    "[lon]": 8.766666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5903",
+    "Hochschulen[Stadt]": "Gütersloh",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.9,
+    "[lon]": 8.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5904",
+    "Hochschulen[Stadt]": "Paderborn",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.716666666,
+    "[lon]": 8.766666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5905",
+    "Hochschulen[Stadt]": "Paderborn",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.716666666,
+    "[lon]": 8.766666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5906",
+    "Hochschulen[Stadt]": "Marburg",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.816666666,
+    "[lon]": 8.766666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5980",
+    "Hochschulen[Stadt]": "Bochum",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.483333333,
+    "[lon]": 7.216666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5990",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.942222222,
+    "[lon]": 6.957777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS5991",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.942222222,
+    "[lon]": 6.957777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6000",
+    "Hochschulen[Stadt]": "Bochum",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.483333333,
+    "[lon]": 7.216666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6031",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.942222222,
+    "[lon]": 6.957777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6032",
+    "Hochschulen[Stadt]": "Aachen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.776207,
+    "[lon]": 6.083788
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6033",
+    "Hochschulen[Stadt]": "Münster",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.9625,
+    "[lon]": 7.625555555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6034",
+    "Hochschulen[Stadt]": "Paderborn",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.716666666,
+    "[lon]": 8.766666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6071",
+    "Hochschulen[Stadt]": "Gelsenkirchen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.510277777,
+    "[lon]": 7.094166666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6072",
+    "Hochschulen[Stadt]": "Dortmund",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.513888888,
+    "[lon]": 7.465277777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6073",
+    "Hochschulen[Stadt]": "Düsseldorf",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.225555555,
+    "[lon]": 6.776666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6074",
+    "Hochschulen[Stadt]": "Duisburg",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.432222222,
+    "[lon]": 6.761111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6075",
+    "Hochschulen[Stadt]": "Hagen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.359444444,
+    "[lon]": 7.475
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6076",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.942222222,
+    "[lon]": 6.957777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6077",
+    "Hochschulen[Stadt]": "Münster",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.9625,
+    "[lon]": 7.625555555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6078",
+    "Hochschulen[Stadt]": "Soest",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.571111111,
+    "[lon]": 8.109166666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6079",
+    "Hochschulen[Stadt]": "Wuppertal",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.266666666,
+    "[lon]": 7.183333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS607A",
+    "Hochschulen[Stadt]": "Bielefeld",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 52.016666666,
+    "[lon]": 8.533333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS607B",
+    "Hochschulen[Stadt]": "Mülheim an der Ruhr",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.4275,
+    "[lon]": 6.8825
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS607C",
+    "Hochschulen[Stadt]": "Aachen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.776207,
+    "[lon]": 6.083788
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS607D",
+    "Hochschulen[Stadt]": "Herne",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.54258,
+    "[lon]": 7.21897
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6202",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6203",
+    "Hochschulen[Stadt]": "Langen",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 49.989305555,
+    "[lon]": 8.680347222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6205",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6206",
+    "Hochschulen[Stadt]": "Brühl",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.833333333,
+    "[lon]": 6.9
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6207",
+    "Hochschulen[Stadt]": "Brühl",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.833333333,
+    "[lon]": 6.9
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6208",
+    "Hochschulen[Stadt]": "Münster",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.9625,
+    "[lon]": 7.625555555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6209",
+    "Hochschulen[Stadt]": "Mainz",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.999444444,
+    "[lon]": 8.273611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS620A",
+    "Hochschulen[Stadt]": "Mannheim",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.487777777,
+    "[lon]": 8.466111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS620B",
+    "Hochschulen[Stadt]": "Mannheim",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.487777777,
+    "[lon]": 8.466111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS620C",
+    "Hochschulen[Stadt]": "Wiesbaden",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.0825,
+    "[lon]": 8.24
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS620D",
+    "Hochschulen[Stadt]": "Lübeck",
+    "Hochschulen[Bundesland]": "Schleswig-Holstein",
+    "[lat]": 53.869722222,
+    "[lon]": 10.686388888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS620E",
+    "Hochschulen[Stadt]": "Kassel",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 51.315777777,
+    "[lon]": 9.497916666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS620F",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6210",
+    "Hochschulen[Stadt]": "Darmstadt",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 49.866666666,
+    "[lon]": 8.65
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6211",
+    "Hochschulen[Stadt]": "Darmstadt",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 49.866666666,
+    "[lon]": 8.65
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6212",
+    "Hochschulen[Stadt]": "Darmstadt",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 49.866666666,
+    "[lon]": 8.65
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6220",
+    "Hochschulen[Stadt]": "Frankfurt am Main",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.130333,
+    "[lon]": 8.692486
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6231",
+    "Hochschulen[Stadt]": "Gießen",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.583333333,
+    "[lon]": 8.666666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6232",
+    "Hochschulen[Stadt]": "Friedberg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.35,
+    "[lon]": 10.983333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6233",
+    "Hochschulen[Stadt]": "Wetzlar",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.566666666,
+    "[lon]": 8.5
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6243",
+    "Hochschulen[Stadt]": "Rüsselsheim am Main",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 49.995,
+    "[lon]": 8.411944444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6244",
+    "Hochschulen[Stadt]": "Wiesbaden",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.0825,
+    "[lon]": 8.24
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6270",
+    "Hochschulen[Stadt]": "Darmstadt",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 49.866666666,
+    "[lon]": 8.65
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6271",
+    "Hochschulen[Stadt]": "Darmstadt",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 49.866666666,
+    "[lon]": 8.65
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6272",
+    "Hochschulen[Stadt]": "Darmstadt",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 49.866666666,
+    "[lon]": 8.65
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6280",
+    "Hochschulen[Stadt]": "Idstein",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.220555555,
+    "[lon]": 8.269166666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6281",
+    "Hochschulen[Stadt]": "Idstein",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.220555555,
+    "[lon]": 8.269166666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6282",
+    "Hochschulen[Stadt]": "Idstein",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.220555555,
+    "[lon]": 8.269166666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6283",
+    "Hochschulen[Stadt]": "Idstein",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.220555555,
+    "[lon]": 8.269166666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6284",
+    "Hochschulen[Stadt]": "Idstein",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.220555555,
+    "[lon]": 8.269166666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6285",
+    "Hochschulen[Stadt]": "Idstein",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.220555555,
+    "[lon]": 8.269166666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6286",
+    "Hochschulen[Stadt]": "Idstein",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.220555555,
+    "[lon]": 8.269166666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6287",
+    "Hochschulen[Stadt]": "Idstein",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.220555555,
+    "[lon]": 8.269166666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6288",
+    "Hochschulen[Stadt]": "Idstein",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.220555555,
+    "[lon]": 8.269166666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6289",
+    "Hochschulen[Stadt]": "Idstein",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.220555555,
+    "[lon]": 8.269166666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6290",
+    "Hochschulen[Stadt]": "Fulda",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.5647,
+    "[lon]": 9.6875
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6310",
+    "Hochschulen[Stadt]": "Frankfurt am Main",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.110555555,
+    "[lon]": 8.682222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6320",
+    "Hochschulen[Stadt]": "Marburg",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.816666666,
+    "[lon]": 8.766666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6341",
+    "Hochschulen[Stadt]": "Wiesbaden",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.0825,
+    "[lon]": 8.24
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6342",
+    "Hochschulen[Stadt]": "Mühlheim am Main",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.125694444,
+    "[lon]": 8.83
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6343",
+    "Hochschulen[Stadt]": "Gießen",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.583333333,
+    "[lon]": 8.666666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6344",
+    "Hochschulen[Stadt]": "Kassel",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 51.315777777,
+    "[lon]": 9.497916666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6345",
+    "Hochschulen[Stadt]": "Wiesbaden",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.0825,
+    "[lon]": 8.24
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6360",
+    "Hochschulen[Stadt]": "Bad Hersfeld",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.868333333,
+    "[lon]": 9.706666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6370",
+    "Hochschulen[Stadt]": "Frankfurt am Main",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.110555555,
+    "[lon]": 8.682222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6380",
+    "Hochschulen[Stadt]": "Meißen",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.163611111,
+    "[lon]": 13.4775
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6381",
+    "Hochschulen[Stadt]": "Meißen",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.163611111,
+    "[lon]": 13.4775
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6382",
+    "Hochschulen[Stadt]": "Meißen",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.163611111,
+    "[lon]": 13.4775
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6383",
+    "Hochschulen[Stadt]": "Meißen",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.163611111,
+    "[lon]": 13.4775
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6384",
+    "Hochschulen[Stadt]": "Meißen",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.163611111,
+    "[lon]": 13.4775
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6390",
+    "Hochschulen[Stadt]": "Darmstadt",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 49.866666666,
+    "[lon]": 8.65
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6402",
+    "Hochschulen[Stadt]": "Kassel",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 51.315777777,
+    "[lon]": 9.497916666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6410",
+    "Hochschulen[Stadt]": "Brühl",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.833333333,
+    "[lon]": 6.9
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6411",
+    "Hochschulen[Stadt]": "Brühl",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.833333333,
+    "[lon]": 6.9
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6412",
+    "Hochschulen[Stadt]": "Neuss",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.200277777,
+    "[lon]": 6.693888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6413",
+    "Hochschulen[Stadt]": "Rostock",
+    "Hochschulen[Bundesland]": "Mecklenburg-Vorpommern",
+    "[lat]": 54.083333333,
+    "[lon]": 12.133333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6414",
+    "Hochschulen[Stadt]": "Köln",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.942222222,
+    "[lon]": 6.957777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6415",
+    "Hochschulen[Stadt]": "Rheine",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 52.283333333,
+    "[lon]": 7.433333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6416",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6450",
+    "Hochschulen[Stadt]": "Bonn",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.735277777,
+    "[lon]": 7.102222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6510",
+    "Hochschulen[Stadt]": "Bingium",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.9533,
+    "[lon]": 7.92356
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6521",
+    "Hochschulen[Stadt]": "Kaiserslautern",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.444722222,
+    "[lon]": 7.768888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6522",
+    "Hochschulen[Stadt]": "Kaiserslautern",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.444722222,
+    "[lon]": 7.768888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6523",
+    "Hochschulen[Stadt]": "Kaiserslautern",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.444722222,
+    "[lon]": 7.768888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6531",
+    "Hochschulen[Stadt]": "Koblenz",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 50.359722222,
+    "[lon]": 7.597777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6532",
+    "Hochschulen[Stadt]": "Koblenz",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 50.359722222,
+    "[lon]": 7.597777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6533",
+    "Hochschulen[Stadt]": "Koblenz",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 50.359722222,
+    "[lon]": 7.597777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6550",
+    "Hochschulen[Stadt]": "Ludwigshafen am Rhein",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.481111111,
+    "[lon]": 8.435277777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6581",
+    "Hochschulen[Stadt]": "Trier",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.75565,
+    "[lon]": 6.63935
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6582",
+    "Hochschulen[Stadt]": "Trier",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.75565,
+    "[lon]": 6.63935
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6583",
+    "Hochschulen[Stadt]": "Idar-Oberstein",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.701944444,
+    "[lon]": 7.325277777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6600",
+    "Hochschulen[Stadt]": "Mainz",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.99717,
+    "[lon]": 8.25329
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6650",
+    "Hochschulen[Stadt]": "Ludwigshafen am Rhein",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.48054889,
+    "[lon]": 8.44600139
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6660",
+    "Hochschulen[Stadt]": "Worms",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.6334,
+    "[lon]": 8.34433
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6670",
+    "Hochschulen[Stadt]": "Mainz",
+    "Hochschulen[Bundesland]": "Rheinland-Pfalz",
+    "[lat]": 49.9882478,
+    "[lon]": 8.2270517
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6690",
+    "Hochschulen[Stadt]": "Frankfurt am Main",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.110555555,
+    "[lon]": 8.682222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6711",
+    "Hochschulen[Stadt]": "Schwäbisch Gmünd",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.8,
+    "[lon]": 9.8
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6720",
+    "Hochschulen[Stadt]": "Biberach an der Riß",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.098055555,
+    "[lon]": 9.788611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6731",
+    "Hochschulen[Stadt]": "Esslingen am Neckar",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.740555555,
+    "[lon]": 9.310833333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6732",
+    "Hochschulen[Stadt]": "Göppingen",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7025,
+    "[lon]": 9.652777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6742",
+    "Hochschulen[Stadt]": "Villingen-Schwenningen",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.063152,
+    "[lon]": 8.4929618
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6743",
+    "Hochschulen[Stadt]": "Tuttlingen",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 47.985,
+    "[lon]": 8.823333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6751",
+    "Hochschulen[Stadt]": "Heilbronn",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.140428,
+    "[lon]": 9.217953
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6752",
+    "Hochschulen[Stadt]": "Heilbronn",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.140428,
+    "[lon]": 9.217953
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6753",
+    "Hochschulen[Stadt]": "Heilbronn",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.140428,
+    "[lon]": 9.217953
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6760",
+    "Hochschulen[Stadt]": "Karlsruhe",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.016666666,
+    "[lon]": 8.4
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6770",
+    "Hochschulen[Stadt]": "Konstanz",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 47.690215,
+    "[lon]": 9.1881
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6780",
+    "Hochschulen[Stadt]": "Mannheim",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.469555555,
+    "[lon]": 8.482208333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6791",
+    "Hochschulen[Stadt]": "Nürtingen",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.626666666,
+    "[lon]": 9.335277777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6792",
+    "Hochschulen[Stadt]": "Nürtingen",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.626666666,
+    "[lon]": 9.335277777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6800",
+    "Hochschulen[Stadt]": "Offenburg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.4589,
+    "[lon]": 7.94278
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6810",
+    "Hochschulen[Stadt]": "Pforzheim",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.8785,
+    "[lon]": 8.71722
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6820",
+    "Hochschulen[Stadt]": "Ravensburg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 47.81416667,
+    "[lon]": 9.65305556
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6830",
+    "Hochschulen[Stadt]": "Reutlingen",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.483333333,
+    "[lon]": 9.216666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6841",
+    "Hochschulen[Stadt]": "Albstadt",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.211944444,
+    "[lon]": 9.023888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6842",
+    "Hochschulen[Stadt]": "Albstadt",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.211944444,
+    "[lon]": 9.023888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6850",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7803,
+    "[lon]": 9.17278
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6860",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6870",
+    "Hochschulen[Stadt]": "Ulm",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.422111111,
+    "[lon]": 9.953805555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6871",
+    "Hochschulen[Stadt]": "Ulm",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.39841,
+    "[lon]": 9.99155
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6872",
+    "Hochschulen[Stadt]": "Ulm",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.39841,
+    "[lon]": 9.99155
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6900",
+    "Hochschulen[Stadt]": "Freiburg im Breisgau",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 47.9975,
+    "[lon]": 7.80388889
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6910",
+    "Hochschulen[Stadt]": "Freiburg im Breisgau",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 47.995,
+    "[lon]": 7.85
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6911",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6930",
+    "Hochschulen[Stadt]": "Mannheim",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.487777777,
+    "[lon]": 8.466111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6950",
+    "Hochschulen[Stadt]": "Reutlingen",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.483333333,
+    "[lon]": 9.216666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6960",
+    "Hochschulen[Stadt]": "Esslingen am Neckar",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.740555555,
+    "[lon]": 9.310833333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS6970",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7010",
+    "Hochschulen[Stadt]": "Nürtingen",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.626666666,
+    "[lon]": 9.335277777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7020",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7050",
+    "Hochschulen[Stadt]": "Schwäbisch Gmünd",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.793244,
+    "[lon]": 9.793727
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7060",
+    "Hochschulen[Stadt]": "Kehl",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.571111111,
+    "[lon]": 7.808888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7070",
+    "Hochschulen[Stadt]": "Ludwigsburg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.8975,
+    "[lon]": 9.191944444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7080",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7090",
+    "Hochschulen[Stadt]": "Heidelberg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.412222222,
+    "[lon]": 8.71
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7091",
+    "Hochschulen[Stadt]": "Heidelberg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.412222222,
+    "[lon]": 8.71
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7092",
+    "Hochschulen[Stadt]": "Heidelberg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.412222222,
+    "[lon]": 8.71
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7110",
+    "Hochschulen[Stadt]": "Rottenburg am Neckar",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.4581,
+    "[lon]": 8.94417
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7120",
+    "Hochschulen[Stadt]": "Schwetzingen",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.383333333,
+    "[lon]": 8.566666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7130",
+    "Hochschulen[Stadt]": "Ludwigsburg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.8975,
+    "[lon]": 9.191944444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7140",
+    "Hochschulen[Stadt]": "Villingen-Schwenningen",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.063152,
+    "[lon]": 8.4929618
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7170",
+    "Hochschulen[Stadt]": "Ludwigsburg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.8975,
+    "[lon]": 9.191944444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7190",
+    "Hochschulen[Stadt]": "Ludwigsburg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.8975,
+    "[lon]": 9.191944444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7191",
+    "Hochschulen[Stadt]": "Ludwigsburg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.8975,
+    "[lon]": 9.191944444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7192",
+    "Hochschulen[Stadt]": "Ludwigsburg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.8975,
+    "[lon]": 9.191944444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7200",
+    "Hochschulen[Stadt]": "Schwäbisch Hall",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.112222222,
+    "[lon]": 9.7375
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7210",
+    "Hochschulen[Stadt]": "Augsburg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.368888888,
+    "[lon]": 10.897777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7220",
+    "Hochschulen[Stadt]": "Coburg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 50.2647,
+    "[lon]": 10.95
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7221",
+    "Hochschulen[Stadt]": "Coburg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 50.258469444,
+    "[lon]": 10.957869444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7222",
+    "Hochschulen[Stadt]": "Coburg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 50.258469444,
+    "[lon]": 10.957869444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7240",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.153432,
+    "[lon]": 11.552752
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7250",
+    "Hochschulen[Stadt]": "Nürnberg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.453888888,
+    "[lon]": 11.0775
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7260",
+    "Hochschulen[Stadt]": "Regensburg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.0037,
+    "[lon]": 12.0951
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7300",
+    "Hochschulen[Stadt]": "Rosenheim",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 47.856111111,
+    "[lon]": 12.128888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7301",
+    "Hochschulen[Stadt]": "Mühldorf am Inn",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.245555555,
+    "[lon]": 12.522777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7303",
+    "Hochschulen[Stadt]": "Rosenheim",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 47.856111111,
+    "[lon]": 12.128888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7311",
+    "Hochschulen[Stadt]": "Freising",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.402777777,
+    "[lon]": 11.748888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7313",
+    "Hochschulen[Stadt]": "Straubing",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.877222222,
+    "[lon]": 12.575833333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7351",
+    "Hochschulen[Stadt]": "Würzburg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.794444444,
+    "[lon]": 9.929444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7352",
+    "Hochschulen[Stadt]": "Würzburg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.794444444,
+    "[lon]": 9.929444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7353",
+    "Hochschulen[Stadt]": "Aschaffenburg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.9740542,
+    "[lon]": 9.1493636
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7370",
+    "Hochschulen[Stadt]": "Nürnberg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.450809,
+    "[lon]": 11.060323
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7381",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7382",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7440",
+    "Hochschulen[Stadt]": "Kempten (Allgäu)",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 47.7158,
+    "[lon]": 10.3136
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7450",
+    "Hochschulen[Stadt]": "Landshut",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.5552,
+    "[lon]": 12.199
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7461",
+    "Hochschulen[Stadt]": "Fürstenfeldbruck",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.177777777,
+    "[lon]": 11.255555555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7463",
+    "Hochschulen[Stadt]": "Hof",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 50.316666666,
+    "[lon]": 11.916666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7464",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7465",
+    "Hochschulen[Stadt]": "Starnberg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 47.997222222,
+    "[lon]": 11.340555555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS746B",
+    "Hochschulen[Stadt]": "Kaufbeuren",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 47.88,
+    "[lon]": 10.6225
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7520",
+    "Hochschulen[Stadt]": "Deggendorf",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.835277777,
+    "[lon]": 12.964444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7521",
+    "Hochschulen[Stadt]": "Deggendorf",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.835277777,
+    "[lon]": 12.964444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7522",
+    "Hochschulen[Stadt]": "Deggendorf",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.835277777,
+    "[lon]": 12.964444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7523",
+    "Hochschulen[Stadt]": "Deggendorf",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.835277777,
+    "[lon]": 12.964444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7530",
+    "Hochschulen[Stadt]": "Hof",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 50.316666666,
+    "[lon]": 11.916666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7531",
+    "Hochschulen[Stadt]": "Hof",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 50.316666666,
+    "[lon]": 11.916666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7532",
+    "Hochschulen[Stadt]": "Hof",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 50.316666666,
+    "[lon]": 11.916666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7540",
+    "Hochschulen[Stadt]": "Ingolstadt",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.763055555,
+    "[lon]": 11.425
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7541",
+    "Hochschulen[Stadt]": "Ingolstadt",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.763055555,
+    "[lon]": 11.425
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7551",
+    "Hochschulen[Stadt]": "Amberg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.444444444,
+    "[lon]": 11.848333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7552",
+    "Hochschulen[Stadt]": "Amberg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.444444444,
+    "[lon]": 11.848333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7560",
+    "Hochschulen[Stadt]": "Ansbach",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.3,
+    "[lon]": 10.583333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7561",
+    "Hochschulen[Stadt]": "Ansbach",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.3,
+    "[lon]": 10.583333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7562",
+    "Hochschulen[Stadt]": "Ansbach",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.3,
+    "[lon]": 10.583333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7563",
+    "Hochschulen[Stadt]": "Ansbach",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.3,
+    "[lon]": 10.583333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7570",
+    "Hochschulen[Stadt]": "Neu-Ulm",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.3804,
+    "[lon]": 10.0092
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7580",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7590",
+    "Hochschulen[Stadt]": "Aschaffenburg",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.9740542,
+    "[lon]": 9.1493636
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7600",
+    "Hochschulen[Stadt]": "Calw",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.714444444,
+    "[lon]": 8.7375
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7610",
+    "Hochschulen[Stadt]": "Saarbrücken",
+    "Hochschulen[Bundesland]": "Saarland",
+    "[lat]": 49.233333333,
+    "[lon]": 7.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7620",
+    "Hochschulen[Stadt]": "Saarbrücken",
+    "Hochschulen[Bundesland]": "Saarland",
+    "[lat]": 49.233333333,
+    "[lon]": 7.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7630",
+    "Hochschulen[Stadt]": "Saarbrücken",
+    "Hochschulen[Bundesland]": "Saarland",
+    "[lat]": 49.233333333,
+    "[lon]": 7.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7650",
+    "Hochschulen[Stadt]": "Schwandorf",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 49.3236,
+    "[lon]": 12.09935
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7670",
+    "Hochschulen[Stadt]": "Homburg",
+    "Hochschulen[Bundesland]": "Saarland",
+    "[lat]": 49.316666666,
+    "[lon]": 7.333333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7680",
+    "Hochschulen[Stadt]": "Reutlingen",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.483333333,
+    "[lon]": 9.216666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7690",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.49305556,
+    "[lon]": 13.52583333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7700",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7710",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.5445,
+    "[lon]": 13.3528
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7720",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7721",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7722",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7723",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7730",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.5369,
+    "[lon]": 13.6053
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7750",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.4234,
+    "[lon]": 13.2628
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7760",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7780",
+    "Hochschulen[Stadt]": "Neubrandenburg",
+    "Hochschulen[Bundesland]": "Mecklenburg-Vorpommern",
+    "[lat]": 53.5567,
+    "[lon]": 13.2461
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7790",
+    "Hochschulen[Stadt]": "Stralsund",
+    "Hochschulen[Bundesland]": "Mecklenburg-Vorpommern",
+    "[lat]": 54.3394,
+    "[lon]": 13.0742
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7800",
+    "Hochschulen[Stadt]": "Bernau bei Berlin",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.666666666,
+    "[lon]": 13.583055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7810",
+    "Hochschulen[Stadt]": "Erfurt",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.978055555,
+    "[lon]": 11.028888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7820",
+    "Hochschulen[Stadt]": "Jena",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.9189,
+    "[lon]": 11.5692
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7840",
+    "Hochschulen[Stadt]": "Wismar",
+    "Hochschulen[Bundesland]": "Mecklenburg-Vorpommern",
+    "[lat]": 53.89,
+    "[lon]": 11.44583333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7850",
+    "Hochschulen[Stadt]": "Königs Wusterhausen",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.291666666,
+    "[lon]": 13.625
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7860",
+    "Hochschulen[Stadt]": "Gotha",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.948888888,
+    "[lon]": 10.718333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7861",
+    "Hochschulen[Stadt]": "Gotha",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.948888888,
+    "[lon]": 10.718333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7862",
+    "Hochschulen[Stadt]": "Gotha",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.948888888,
+    "[lon]": 10.718333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7863",
+    "Hochschulen[Stadt]": "Meiningen",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 50.55,
+    "[lon]": 10.416666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7880",
+    "Hochschulen[Stadt]": "Nordhausen",
+    "Hochschulen[Bundesland]": "Thüringen",
+    "[lat]": 51.4971,
+    "[lon]": 10.8098
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7890",
+    "Hochschulen[Stadt]": "Oranienburg",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.754444444,
+    "[lon]": 13.236944444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7900",
+    "Hochschulen[Stadt]": "Güstrow",
+    "Hochschulen[Bundesland]": "Mecklenburg-Vorpommern",
+    "[lat]": 53.793888888,
+    "[lon]": 12.176388888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7910",
+    "Hochschulen[Stadt]": "Brandenburg an der Havel",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.4119,
+    "[lon]": 12.5369
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7920",
+    "Hochschulen[Stadt]": "Eberswalde",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.8329,
+    "[lon]": 13.8176
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7931",
+    "Hochschulen[Stadt]": "Cottbus",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 51.760805555,
+    "[lon]": 14.331861111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7932",
+    "Hochschulen[Stadt]": "Senftenberg",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 51.516666666,
+    "[lon]": 14.016666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7940",
+    "Hochschulen[Stadt]": "Königs Wusterhausen",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.3194,
+    "[lon]": 13.6325
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7950",
+    "Hochschulen[Stadt]": "Potsdam",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.401111111,
+    "[lon]": 13.011944444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7960",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7961",
+    "Hochschulen[Stadt]": "Magdeburg",
+    "Hochschulen[Bundesland]": "Sachsen-Anhalt",
+    "[lat]": 52.1315889,
+    "[lon]": 11.6399609
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7970",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7971",
+    "Hochschulen[Stadt]": "Heidelberg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.412222222,
+    "[lon]": 8.71
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7972",
+    "Hochschulen[Stadt]": "Heidelberg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.412222222,
+    "[lon]": 8.71
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7973",
+    "Hochschulen[Stadt]": "Heidelberg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.412222222,
+    "[lon]": 8.71
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7974",
+    "Hochschulen[Stadt]": "Heidelberg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.412222222,
+    "[lon]": 8.71
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7975",
+    "Hochschulen[Stadt]": "Heidelberg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.412222222,
+    "[lon]": 8.71
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7980",
+    "Hochschulen[Stadt]": "Schwerin",
+    "Hochschulen[Bundesland]": "Mecklenburg-Vorpommern",
+    "[lat]": 53.628888888,
+    "[lon]": 11.415
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS7990",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.55,
+    "[lon]": 10.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8000",
+    "Hochschulen[Stadt]": "Merseburg",
+    "Hochschulen[Bundesland]": "Sachsen-Anhalt",
+    "[lat]": 51.354444444,
+    "[lon]": 11.992777777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8011",
+    "Hochschulen[Stadt]": "Magdeburg",
+    "Hochschulen[Bundesland]": "Sachsen-Anhalt",
+    "[lat]": 52.1315889,
+    "[lon]": 11.6399609
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8012",
+    "Hochschulen[Stadt]": "Magdeburg",
+    "Hochschulen[Bundesland]": "Sachsen-Anhalt",
+    "[lat]": 52.1315889,
+    "[lon]": 11.6399609
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8021",
+    "Hochschulen[Stadt]": "Wernigerode",
+    "Hochschulen[Bundesland]": "Sachsen-Anhalt",
+    "[lat]": 51.835,
+    "[lon]": 10.785277777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8022",
+    "Hochschulen[Stadt]": "Halberstadt",
+    "Hochschulen[Bundesland]": "Sachsen-Anhalt",
+    "[lat]": 51.895833333,
+    "[lon]": 11.046666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8031",
+    "Hochschulen[Stadt]": "Bernburg",
+    "Hochschulen[Bundesland]": "Sachsen-Anhalt",
+    "[lat]": 51.8,
+    "[lon]": 11.733333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8032",
+    "Hochschulen[Stadt]": "Dessau-Roßlau",
+    "Hochschulen[Bundesland]": "Sachsen-Anhalt",
+    "[lat]": 51.833333,
+    "[lon]": 12.233333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8033",
+    "Hochschulen[Stadt]": "Köthen",
+    "Hochschulen[Bundesland]": "Sachsen-Anhalt",
+    "[lat]": 51.751111111,
+    "[lon]": 11.973611111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8043",
+    "Hochschulen[Stadt]": "Wernigerode",
+    "Hochschulen[Bundesland]": "Sachsen-Anhalt",
+    "[lat]": 51.835,
+    "[lon]": 10.785277777
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8060",
+    "Hochschulen[Stadt]": "Aschersleben",
+    "Hochschulen[Bundesland]": "Sachsen-Anhalt",
+    "[lat]": 51.75,
+    "[lon]": 11.466666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8070",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.55,
+    "[lon]": 10.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8071",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.55,
+    "[lon]": 10.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8072",
+    "Hochschulen[Stadt]": "Idstein",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.220555555,
+    "[lon]": 8.269166666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8073",
+    "Hochschulen[Stadt]": "Idstein",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.220555555,
+    "[lon]": 8.269166666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8074",
+    "Hochschulen[Stadt]": "München",
+    "Hochschulen[Bundesland]": "Bayern",
+    "[lat]": 48.1375,
+    "[lon]": 11.575
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8080",
+    "Hochschulen[Stadt]": "Heidelberg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.412222222,
+    "[lon]": 8.71
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8081",
+    "Hochschulen[Stadt]": "Heidelberg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.412222222,
+    "[lon]": 8.71
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8090",
+    "Hochschulen[Stadt]": "Hamburg",
+    "Hochschulen[Bundesland]": "Hamburg",
+    "[lat]": 53.55,
+    "[lon]": 10.0
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8101",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8102",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8103",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8104",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8105",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8106",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8107",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8108",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8109",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810A",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810B",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810C",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810D",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810E",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810F",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810G",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810H",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810J",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810K",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810L",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810M",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810N",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810P",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810Q",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810R",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810S",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810T",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810U",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810V",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810W",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810X",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS810Y",
+    "Hochschulen[Stadt]": "Essen",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 51.450833333,
+    "[lon]": 7.013055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8111",
+    "Hochschulen[Stadt]": "Sankt Augustin",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.77,
+    "[lon]": 7.186666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8112",
+    "Hochschulen[Stadt]": "Bonn",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.735277777,
+    "[lon]": 7.102222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8113",
+    "Hochschulen[Stadt]": "Bonn",
+    "Hochschulen[Bundesland]": "Nordrhein-Westfalen",
+    "[lat]": 50.735277777,
+    "[lon]": 7.102222222
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8130",
+    "Hochschulen[Stadt]": "Potsdam",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.4,
+    "[lon]": 13.066666666
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8140",
+    "Hochschulen[Stadt]": "Buxtehude",
+    "Hochschulen[Bundesland]": "Niedersachsen",
+    "[lat]": 53.476944444,
+    "[lon]": 9.701111111
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8150",
+    "Hochschulen[Stadt]": "Karlsruhe",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.016666666,
+    "[lon]": 8.4
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8160",
+    "Hochschulen[Stadt]": "Berlin",
+    "Hochschulen[Bundesland]": "Berlin",
+    "[lat]": 52.516666666,
+    "[lon]": 13.383333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8171",
+    "Hochschulen[Stadt]": "Bad Mergentheim",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.490833333,
+    "[lon]": 9.773055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8172",
+    "Hochschulen[Stadt]": "Ravensburg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 47.783055555,
+    "[lon]": 9.611388888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8173",
+    "Hochschulen[Stadt]": "Heidenheim an der Brenz",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.676111111,
+    "[lon]": 10.154444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8174",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8175",
+    "Hochschulen[Stadt]": "Karlsruhe",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.0261,
+    "[lon]": 8.38552
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8176",
+    "Hochschulen[Stadt]": "Lörrach",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 47.61733,
+    "[lon]": 7.67724
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8177",
+    "Hochschulen[Stadt]": "Mannheim",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.4744,
+    "[lon]": 8.53472
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8178",
+    "Hochschulen[Stadt]": "Mosbach",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.354158,
+    "[lon]": 9.15130546
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8179",
+    "Hochschulen[Stadt]": "Ravensburg",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 47.779846,
+    "[lon]": 9.613434
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS817A",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7736,
+    "[lon]": 9.17083
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS817B",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS817C",
+    "Hochschulen[Stadt]": "Villingen-Schwenningen",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.063152,
+    "[lon]": 8.4929618
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS817D",
+    "Hochschulen[Stadt]": "Heilbronn",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.140428,
+    "[lon]": 9.217953
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS817E",
+    "Hochschulen[Stadt]": "Stuttgart",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.7775,
+    "[lon]": 9.18
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS817F",
+    "Hochschulen[Stadt]": "Heilbronn",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 49.140428,
+    "[lon]": 9.217953
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8191",
+    "Hochschulen[Stadt]": "Wiesbaden",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.0825,
+    "[lon]": 8.24
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8192",
+    "Hochschulen[Stadt]": "Wiesbaden",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.0825,
+    "[lon]": 8.24
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8193",
+    "Hochschulen[Stadt]": "Wiesbaden",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.0825,
+    "[lon]": 8.24
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8194",
+    "Hochschulen[Stadt]": "Wiesbaden",
+    "Hochschulen[Bundesland]": "Hessen",
+    "[lat]": 50.0825,
+    "[lon]": 8.24
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8200",
+    "Hochschulen[Stadt]": "Eberswalde",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.833055555,
+    "[lon]": 13.833055555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8210",
+    "Hochschulen[Stadt]": "Backnang",
+    "Hochschulen[Bundesland]": "Baden-Württemberg",
+    "[lat]": 48.946388888,
+    "[lon]": 9.430555555
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8221",
+    "Hochschulen[Stadt]": "Bautzen",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.181388888,
+    "[lon]": 14.423888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8223",
+    "Hochschulen[Stadt]": "Dresden",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.0493286,
+    "[lon]": 13.7381437
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8224",
+    "Hochschulen[Stadt]": "Glauchau",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 50.823333333,
+    "[lon]": 12.544444444
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8225",
+    "Hochschulen[Stadt]": "Leipzig",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.3406321,
+    "[lon]": 12.3747329
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8226",
+    "Hochschulen[Stadt]": "Plauen",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 50.495,
+    "[lon]": 12.138333333
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8227",
+    "Hochschulen[Stadt]": "Riesa",
+    "Hochschulen[Bundesland]": "Sachsen",
+    "[lat]": 51.308055555,
+    "[lon]": 13.293888888
+  },
+  {
+    "Hochschulen[Hochschule_Code]": "HS8230",
+    "Hochschulen[Stadt]": "Potsdam",
+    "Hochschulen[Bundesland]": "Brandenburg",
+    "[lat]": 52.4,
+    "[lon]": 13.066666666
+  }
+]

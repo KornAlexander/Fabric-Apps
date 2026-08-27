@@ -1,0 +1,161 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "pagegeholfen",
+  "displayName": "Was hätte geholfen",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F2EFEA'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "visP2Slicer",
+      "target": "visP2Kpis",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Slicer",
+      "target": "visP2Gap",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Slicer",
+      "target": "visP2Reason",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Slicer",
+      "target": "visP2Sockel",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Slicer",
+      "target": "visP2Elem",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Kpis",
+      "target": "visP2Gap",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Kpis",
+      "target": "visP2Reason",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Kpis",
+      "target": "visP2Sockel",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Kpis",
+      "target": "visP2Elem",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Gap",
+      "target": "visP2Kpis",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Gap",
+      "target": "visP2Reason",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Gap",
+      "target": "visP2Sockel",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Gap",
+      "target": "visP2Elem",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Reason",
+      "target": "visP2Kpis",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Reason",
+      "target": "visP2Gap",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Reason",
+      "target": "visP2Sockel",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Reason",
+      "target": "visP2Elem",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Sockel",
+      "target": "visP2Kpis",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Sockel",
+      "target": "visP2Gap",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Sockel",
+      "target": "visP2Reason",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Sockel",
+      "target": "visP2Elem",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Elem",
+      "target": "visP2Kpis",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Elem",
+      "target": "visP2Gap",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Elem",
+      "target": "visP2Reason",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP2Elem",
+      "target": "visP2Sockel",
+      "type": "DataFilter"
+    }
+  ]
+}

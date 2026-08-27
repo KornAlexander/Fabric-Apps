@@ -1,0 +1,68 @@
+table 'Schaden'
+	lineageTag: 517d6fa6-a10c-4aac-9dc0-461411e637ec
+
+	column 'Schaden ID'
+		dataType: string
+		sourceColumn: claimId
+		lineageTag: 274d91e8-fef9-4b22-91ec-657d2d6d5054
+		summarizeBy: none
+	column 'Policen ID'
+		dataType: string
+		sourceColumn: policyId
+		lineageTag: f00cfcdd-5935-4575-985e-a36697cd6eff
+		summarizeBy: none
+		isHidden
+	column 'Gebäude ID'
+		dataType: string
+		sourceColumn: buildingId
+		lineageTag: e268c3c5-fb97-4ba4-963b-7b0637040499
+		summarizeBy: none
+		isHidden
+	column 'Ort'
+		dataType: string
+		sourceColumn: village
+		lineageTag: 05ed8e43-4f11-4802-867d-cf36636fdb71
+		summarizeBy: none
+	column 'Gefährdungsklasse'
+		dataType: string
+		sourceColumn: hazardClass
+		lineageTag: b81f2caa-a725-41fe-9b59-2b0621fba2dd
+		summarizeBy: none
+	column 'Wassertiefe m'
+		dataType: double
+		sourceColumn: depthM
+		lineageTag: bdc66768-118e-46d8-bb3c-95a622334fef
+		summarizeBy: none
+		formatString: "#,0.00"
+	column 'Schaden geschätzt'
+		dataType: double
+		sourceColumn: estimatedLossEur
+		lineageTag: fe217932-71f8-489c-ba1d-1cbd214c476a
+		summarizeBy: none
+		formatString: "#,0 €"
+	column 'Entschädigung'
+		dataType: double
+		sourceColumn: coveredEur
+		lineageTag: 6614e230-fc03-450b-920a-b66d63fd99aa
+		summarizeBy: none
+		formatString: "#,0 €"
+	column 'Nicht gedeckt'
+		dataType: double
+		sourceColumn: uncoveredEur
+		lineageTag: eae39957-6184-450e-b121-e52eb208f4e9
+		summarizeBy: none
+		formatString: "#,0 €"
+	column 'Deckungsgrund'
+		dataType: string
+		sourceColumn: coverageReason
+		lineageTag: a7e8ac91-149c-42e4-8988-c8ef4ff50aba
+		summarizeBy: none
+
+	partition 'Schaden' = entity
+		mode: directLake
+		source
+			entityName: claims_claim
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

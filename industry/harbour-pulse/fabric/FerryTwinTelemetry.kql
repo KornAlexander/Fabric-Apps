@@ -1,0 +1,25 @@
+// Stores OpenTelemetry-schema digital-twin metrics for per-deck ferry occupancy.
+// Each row represents one metric data point with resource/metric attributes in Attributes.
+.create table FerryTwinTelemetry (
+    Timestamp:datetime,
+    VesselId:string,
+    DeckId:string,
+    MetricName:string,
+    MetricValue:real,
+    Unit:string,
+    Attributes:dynamic,
+    TraceId:string,
+    SpanId:string
+)
+
+.create table FerryTwinTelemetry ingestion json mapping "FerryTwinTelemetryMapping" '[
+    {"column":"Timestamp","path":"$.Timestamp","datatype":"datetime"},
+    {"column":"VesselId","path":"$.VesselId","datatype":"string"},
+    {"column":"DeckId","path":"$.DeckId","datatype":"string"},
+    {"column":"MetricName","path":"$.MetricName","datatype":"string"},
+    {"column":"MetricValue","path":"$.MetricValue","datatype":"real"},
+    {"column":"Unit","path":"$.Unit","datatype":"string"},
+    {"column":"Attributes","path":"$.Attributes","datatype":"dynamic"},
+    {"column":"TraceId","path":"$.TraceId","datatype":"string"},
+    {"column":"SpanId","path":"$.SpanId","datatype":"string"}
+]'

@@ -1,0 +1,46 @@
+# fabric-cicd parameter file
+#
+# Rebinds every environment-specific identifier baked into the exported item
+# definitions so the same repo can be published into ANY workspace / tenant.
+#
+# `_ALL_` means "apply in every target environment". Values starting with
+# `$workspace.` / `$items.` are resolved by fabric-cicd at publish time against
+# the TARGET workspace, so nothing here needs editing for a new tenant.
+#
+# Dollar-brace tokens are substituted from environment variables by deploy.py
+# before the file is handed to fabric-cicd.
+#
+# Source (reference) environment values these patterns replace:
+#   workspace     <source-workspace-id>  (Rayfin_Hack)
+#   eventhouse    <source-eventhouse-id>  (SydneyFerriesEventhouse)
+#   kql database  <source-kqldatabase-id>  (SydneyFerriesKustoDB)
+#   lakehouse     <source-lakehouse-id>  (EnvLakehouse)
+#   cluster uri   https://<your-eventhouse>.kusto.fabric.microsoft.com
+
+find_replace:
+  # ---------------------------------------------------------------- workspace
+  - find_value: <source-workspace-id>
+    replace_value:
+      _ALL_: $workspace.$id
+
+  # --------------------------------------------------------- Kusto cluster URI
+  # Every consumer of the Eventhouse (dashboard, querysets, pipeline) embeds
+  # the cluster query endpoint.
+  - find_value: https://<your-eventhouse>.kusto.fabric.microsoft.com
+    replace_value:
+      _ALL_: $items.Eventhouse.SydneyFerriesEventhouse.$queryserviceuri
+
+  # ------------------------------------------------------------- KQL database
+  - find_value: <source-kqldatabase-id>
+    replace_value:
+      _ALL_: $items.KQLDatabase.SydneyFerriesKustoDB.$id
+
+  # ---------------------------------------------- Eventhouse (parent of KQLDB)
+  - find_value: <source-eventhouse-id>
+    replace_value:
+      _ALL_: $items.Eventhouse.SydneyFerriesEventhouse.$id
+
+  # ------------------------------------------- Lakehouse attached to notebooks
+  - find_value: <source-lakehouse-id>
+    replace_value:
+      _ALL_: $items.Lakehouse.EnvLakehouse.$id

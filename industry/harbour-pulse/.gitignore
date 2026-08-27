@@ -1,0 +1,55 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies
+node_modules
+
+# Build output
+dist
+dist-ssr
+*.tsbuildinfo
+.vite
+
+# .NET build output
+[Bb]in/
+[Oo]bj/
+
+# Python
+__pycache__/
+*.pyc
+
+# Test coverage
+coverage
+
+# Local env files (`*.local` matches `.env.local`, `.env.*.local`, etc.)
+*.local
+
+# Secret-bearing root env (holds TFNSW_API_KEY and VITE_CESIUM_ION_TOKEN).
+# `.env.bak` is the copy provision-environment.ps1 takes before it rewrites;
+# it carries the same secrets. Not `.env*`, which would swallow .env.example.
+.env
+.env.bak
+
+# Rayfin — auto-generated or secret-bearing files
+# `rayfin/.env*` covers .env, .env.bak (emitted by env-file v2 migration with
+# secrets), and any future .env-family files Rayfin's runtime adds.
+rayfin/.env*
+# `.deployments.json*` also covers the .bak / .deleted-item-* copies, which
+# carry publishable keys and item ids for past deploys.
+rayfin/.deployments.json*
+rayfin/.temp/
+
+# Editor / OS
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

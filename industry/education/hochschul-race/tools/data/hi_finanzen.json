@@ -1,0 +1,514 @@
+[
+  {
+    "Bundesland[Bundesland]": "Baden-Württemberg",
+    "Hochschulfinanzen[Jahr]": "2019-01-01T00:00:00",
+    "[ein]": 4803604000.0,
+    "[aus]": 8582881000.0,
+    "[dm]": 1441930000.0,
+    "[trg]": 3987383000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Bayern",
+    "Hochschulfinanzen[Jahr]": "2019-01-01T00:00:00",
+    "[ein]": 5246307000.0,
+    "[aus]": 9607546000.0,
+    "[dm]": 1360828000.0,
+    "[trg]": 4147276000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Berlin",
+    "Hochschulfinanzen[Jahr]": "2019-01-01T00:00:00",
+    "[ein]": 2470672000.0,
+    "[aus]": 4006163000.0,
+    "[dm]": 662383000.0,
+    "[trg]": 1575610000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Brandenburg",
+    "Hochschulfinanzen[Jahr]": "2019-01-01T00:00:00",
+    "[ein]": 161109000.0,
+    "[aus]": 643745000.0,
+    "[dm]": 132883000.0,
+    "[trg]": 486942000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Bremen",
+    "Hochschulfinanzen[Jahr]": "2019-01-01T00:00:00",
+    "[ein]": 281507000.0,
+    "[aus]": 507142000.0,
+    "[dm]": 142815000.0,
+    "[trg]": 252778000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Hamburg",
+    "Hochschulfinanzen[Jahr]": "2019-01-01T00:00:00",
+    "[ein]": 1306601000.0,
+    "[aus]": 2290119000.0,
+    "[dm]": 317534000.0,
+    "[trg]": 938832000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Hessen",
+    "Hochschulfinanzen[Jahr]": "2019-01-01T00:00:00",
+    "[ein]": 2358699000.0,
+    "[aus]": 4502200000.0,
+    "[dm]": 565161000.0,
+    "[trg]": 2243326000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Mecklenburg-Vorpommern",
+    "Hochschulfinanzen[Jahr]": "2019-01-01T00:00:00",
+    "[ein]": 746794000.0,
+    "[aus]": 1255191000.0,
+    "[dm]": 121088000.0,
+    "[trg]": 517347000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Niedersachsen",
+    "Hochschulfinanzen[Jahr]": "2019-01-01T00:00:00",
+    "[ein]": 2170811000.0,
+    "[aus]": 4696866000.0,
+    "[dm]": 729777000.0,
+    "[trg]": 2599370000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Nordrhein-Westfalen",
+    "Hochschulfinanzen[Jahr]": "2019-01-01T00:00:00",
+    "[ein]": 6962820000.0,
+    "[aus]": 13612368000.0,
+    "[dm]": 1712853000.0,
+    "[trg]": 6660823000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Rheinland-Pfalz",
+    "Hochschulfinanzen[Jahr]": "2019-01-01T00:00:00",
+    "[ein]": 1005993000.0,
+    "[aus]": 2038189000.0,
+    "[dm]": 283165000.0,
+    "[trg]": 743988000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Saarland",
+    "Hochschulfinanzen[Jahr]": "2019-01-01T00:00:00",
+    "[ein]": 618659000.0,
+    "[aus]": 935040000.0,
+    "[dm]": 78756000.0,
+    "[trg]": 296426000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Sachsen",
+    "Hochschulfinanzen[Jahr]": "2019-01-01T00:00:00",
+    "[ein]": 1788495000.0,
+    "[aus]": 3191007000.0,
+    "[dm]": 615120000.0,
+    "[trg]": 1191449000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Sachsen-Anhalt",
+    "Hochschulfinanzen[Jahr]": "2019-01-01T00:00:00",
+    "[ein]": 882958000.0,
+    "[aus]": 1549383000.0,
+    "[dm]": 155411000.0,
+    "[trg]": 660249000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Schleswig-Holstein",
+    "Hochschulfinanzen[Jahr]": "2019-01-01T00:00:00",
+    "[ein]": 1287375000.0,
+    "[aus]": 2228965000.0,
+    "[dm]": 193995000.0,
+    "[trg]": 602749000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Thüringen",
+    "Hochschulfinanzen[Jahr]": "2019-01-01T00:00:00",
+    "[ein]": 721836000.0,
+    "[aus]": 1345731000.0,
+    "[dm]": 200445000.0,
+    "[trg]": 611690000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Baden-Württemberg",
+    "Hochschulfinanzen[Jahr]": "2020-01-01T00:00:00",
+    "[ein]": 5121619000.0,
+    "[aus]": 9132959000.0,
+    "[dm]": 1464779000.0,
+    "[trg]": 4149927000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Bayern",
+    "Hochschulfinanzen[Jahr]": "2020-01-01T00:00:00",
+    "[ein]": 5456375000.0,
+    "[aus]": 10162253000.0,
+    "[dm]": 1378181000.0,
+    "[trg]": 4561848000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Berlin",
+    "Hochschulfinanzen[Jahr]": "2020-01-01T00:00:00",
+    "[ein]": 2495821000.0,
+    "[aus]": 4231918000.0,
+    "[dm]": 630166000.0,
+    "[trg]": 1772809000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Brandenburg",
+    "Hochschulfinanzen[Jahr]": "2020-01-01T00:00:00",
+    "[ein]": 185480000.0,
+    "[aus]": 690723000.0,
+    "[dm]": 153792000.0,
+    "[trg]": 537879000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Bremen",
+    "Hochschulfinanzen[Jahr]": "2020-01-01T00:00:00",
+    "[ein]": 281994000.0,
+    "[aus]": 516675000.0,
+    "[dm]": 136611000.0,
+    "[trg]": 279218000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Hamburg",
+    "Hochschulfinanzen[Jahr]": "2020-01-01T00:00:00",
+    "[ein]": 1350894000.0,
+    "[aus]": 2479471000.0,
+    "[dm]": 316667000.0,
+    "[trg]": 1146653000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Hessen",
+    "Hochschulfinanzen[Jahr]": "2020-01-01T00:00:00",
+    "[ein]": 2446094000.0,
+    "[aus]": 4638864000.0,
+    "[dm]": 596751000.0,
+    "[trg]": 2260737000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Mecklenburg-Vorpommern",
+    "Hochschulfinanzen[Jahr]": "2020-01-01T00:00:00",
+    "[ein]": 810584000.0,
+    "[aus]": 1323399000.0,
+    "[dm]": 126668000.0,
+    "[trg]": 529963000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Niedersachsen",
+    "Hochschulfinanzen[Jahr]": "2020-01-01T00:00:00",
+    "[ein]": 2288573000.0,
+    "[aus]": 4776931000.0,
+    "[dm]": 760645000.0,
+    "[trg]": 2643572000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Nordrhein-Westfalen",
+    "Hochschulfinanzen[Jahr]": "2020-01-01T00:00:00",
+    "[ein]": 7293379000.0,
+    "[aus]": 14491051000.0,
+    "[dm]": 1766956000.0,
+    "[trg]": 6486583000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Rheinland-Pfalz",
+    "Hochschulfinanzen[Jahr]": "2020-01-01T00:00:00",
+    "[ein]": 1030222000.0,
+    "[aus]": 2097752000.0,
+    "[dm]": 287162000.0,
+    "[trg]": 740046000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Saarland",
+    "Hochschulfinanzen[Jahr]": "2020-01-01T00:00:00",
+    "[ein]": 650307000.0,
+    "[aus]": 987785000.0,
+    "[dm]": 73636000.0,
+    "[trg]": 365978000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Sachsen",
+    "Hochschulfinanzen[Jahr]": "2020-01-01T00:00:00",
+    "[ein]": 1866430000.0,
+    "[aus]": 3350001000.0,
+    "[dm]": 627267000.0,
+    "[trg]": 1142117000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Sachsen-Anhalt",
+    "Hochschulfinanzen[Jahr]": "2020-01-01T00:00:00",
+    "[ein]": 973463000.0,
+    "[aus]": 1718403000.0,
+    "[dm]": 151323000.0,
+    "[trg]": 706277000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Schleswig-Holstein",
+    "Hochschulfinanzen[Jahr]": "2020-01-01T00:00:00",
+    "[ein]": 1368670000.0,
+    "[aus]": 2246086000.0,
+    "[dm]": 197961000.0,
+    "[trg]": 661599000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Thüringen",
+    "Hochschulfinanzen[Jahr]": "2020-01-01T00:00:00",
+    "[ein]": 919106000.0,
+    "[aus]": 1592305000.0,
+    "[dm]": 222495000.0,
+    "[trg]": 633498000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Baden-Württemberg",
+    "Hochschulfinanzen[Jahr]": "2021-01-01T00:00:00",
+    "[ein]": 5583588000.0,
+    "[aus]": 9694291000.0,
+    "[dm]": 1554966000.0,
+    "[trg]": 4335773000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Bayern",
+    "Hochschulfinanzen[Jahr]": "2021-01-01T00:00:00",
+    "[ein]": 5806312000.0,
+    "[aus]": 10596058000.0,
+    "[dm]": 1463169000.0,
+    "[trg]": 4672168000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Berlin",
+    "Hochschulfinanzen[Jahr]": "2021-01-01T00:00:00",
+    "[ein]": 2687410000.0,
+    "[aus]": 4432892000.0,
+    "[dm]": 701026000.0,
+    "[trg]": 1867838000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Brandenburg",
+    "Hochschulfinanzen[Jahr]": "2021-01-01T00:00:00",
+    "[ein]": 223976000.0,
+    "[aus]": 753123000.0,
+    "[dm]": 160789000.0,
+    "[trg]": 539705000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Bremen",
+    "Hochschulfinanzen[Jahr]": "2021-01-01T00:00:00",
+    "[ein]": 289712000.0,
+    "[aus]": 543798000.0,
+    "[dm]": 146511000.0,
+    "[trg]": 281721000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Hamburg",
+    "Hochschulfinanzen[Jahr]": "2021-01-01T00:00:00",
+    "[ein]": 1458092000.0,
+    "[aus]": 2531905000.0,
+    "[dm]": 343409000.0,
+    "[trg]": 1246945000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Hessen",
+    "Hochschulfinanzen[Jahr]": "2021-01-01T00:00:00",
+    "[ein]": 2553907000.0,
+    "[aus]": 4856854000.0,
+    "[dm]": 599170000.0,
+    "[trg]": 2374709000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Mecklenburg-Vorpommern",
+    "Hochschulfinanzen[Jahr]": "2021-01-01T00:00:00",
+    "[ein]": 885649000.0,
+    "[aus]": 1361917000.0,
+    "[dm]": 149092000.0,
+    "[trg]": 530573000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Niedersachsen",
+    "Hochschulfinanzen[Jahr]": "2021-01-01T00:00:00",
+    "[ein]": 2345420000.0,
+    "[aus]": 4895812000.0,
+    "[dm]": 806288000.0,
+    "[trg]": 2682590000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Nordrhein-Westfalen",
+    "Hochschulfinanzen[Jahr]": "2021-01-01T00:00:00",
+    "[ein]": 7579647000.0,
+    "[aus]": 14965882000.0,
+    "[dm]": 1914207000.0,
+    "[trg]": 7722334000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Rheinland-Pfalz",
+    "Hochschulfinanzen[Jahr]": "2021-01-01T00:00:00",
+    "[ein]": 1114189000.0,
+    "[aus]": 2192341000.0,
+    "[dm]": 321062000.0,
+    "[trg]": 782838000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Saarland",
+    "Hochschulfinanzen[Jahr]": "2021-01-01T00:00:00",
+    "[ein]": 677986000.0,
+    "[aus]": 1043441000.0,
+    "[dm]": 86408000.0,
+    "[trg]": 319983000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Sachsen",
+    "Hochschulfinanzen[Jahr]": "2021-01-01T00:00:00",
+    "[ein]": 1911641000.0,
+    "[aus]": 3394922000.0,
+    "[dm]": 629772000.0,
+    "[trg]": 1221489000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Sachsen-Anhalt",
+    "Hochschulfinanzen[Jahr]": "2021-01-01T00:00:00",
+    "[ein]": 1008993000.0,
+    "[aus]": 1802037000.0,
+    "[dm]": 162949000.0,
+    "[trg]": 733713000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Schleswig-Holstein",
+    "Hochschulfinanzen[Jahr]": "2021-01-01T00:00:00",
+    "[ein]": 1423602000.0,
+    "[aus]": 2416468000.0,
+    "[dm]": 213116000.0,
+    "[trg]": 723117000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Thüringen",
+    "Hochschulfinanzen[Jahr]": "2021-01-01T00:00:00",
+    "[ein]": 1092826000.0,
+    "[aus]": 1719322000.0,
+    "[dm]": 235773000.0,
+    "[trg]": 790433000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Baden-Württemberg",
+    "Hochschulfinanzen[Jahr]": "2022-01-01T00:00:00",
+    "[ein]": 5953698000.0,
+    "[aus]": 10028821000.0,
+    "[dm]": 1690713000.0,
+    "[trg]": 4562787000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Bayern",
+    "Hochschulfinanzen[Jahr]": "2022-01-01T00:00:00",
+    "[ein]": 6108773000.0,
+    "[aus]": 11182447000.0,
+    "[dm]": 1564729000.0,
+    "[trg]": 5053606000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Berlin",
+    "Hochschulfinanzen[Jahr]": "2022-01-01T00:00:00",
+    "[ein]": 2855280000.0,
+    "[aus]": 4651271000.0,
+    "[dm]": 781733000.0,
+    "[trg]": 1852581000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Brandenburg",
+    "Hochschulfinanzen[Jahr]": "2022-01-01T00:00:00",
+    "[ein]": 253921000.0,
+    "[aus]": 819846000.0,
+    "[dm]": 174095000.0,
+    "[trg]": 571009000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Bremen",
+    "Hochschulfinanzen[Jahr]": "2022-01-01T00:00:00",
+    "[ein]": 288078000.0,
+    "[aus]": 578875000.0,
+    "[dm]": 148127000.0,
+    "[trg]": 297780000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Hamburg",
+    "Hochschulfinanzen[Jahr]": "2022-01-01T00:00:00",
+    "[ein]": 1586195000.0,
+    "[aus]": 2735076000.0,
+    "[dm]": 376421000.0,
+    "[trg]": 1274005000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Hessen",
+    "Hochschulfinanzen[Jahr]": "2022-01-01T00:00:00",
+    "[ein]": 2732260000.0,
+    "[aus]": 5101692000.0,
+    "[dm]": 703128000.0,
+    "[trg]": 2588461000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Mecklenburg-Vorpommern",
+    "Hochschulfinanzen[Jahr]": "2022-01-01T00:00:00",
+    "[ein]": 929496000.0,
+    "[aus]": 1520092000.0,
+    "[dm]": 149702000.0,
+    "[trg]": 627281000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Niedersachsen",
+    "Hochschulfinanzen[Jahr]": "2022-01-01T00:00:00",
+    "[ein]": 2505865000.0,
+    "[aus]": 5075837000.0,
+    "[dm]": 852309000.0,
+    "[trg]": 2733171000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Nordrhein-Westfalen",
+    "Hochschulfinanzen[Jahr]": "2022-01-01T00:00:00",
+    "[ein]": 7970542000.0,
+    "[aus]": 15853635000.0,
+    "[dm]": 2010528000.0,
+    "[trg]": 7806641000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Rheinland-Pfalz",
+    "Hochschulfinanzen[Jahr]": "2022-01-01T00:00:00",
+    "[ein]": 1178801000.0,
+    "[aus]": 2347026000.0,
+    "[dm]": 332835000.0,
+    "[trg]": 800089000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Saarland",
+    "Hochschulfinanzen[Jahr]": "2022-01-01T00:00:00",
+    "[ein]": 694412000.0,
+    "[aus]": 1057120000.0,
+    "[dm]": 89679000.0,
+    "[trg]": 377465000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Sachsen",
+    "Hochschulfinanzen[Jahr]": "2022-01-01T00:00:00",
+    "[ein]": 2089251000.0,
+    "[aus]": 3638259000.0,
+    "[dm]": 736849000.0,
+    "[trg]": 1220993000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Sachsen-Anhalt",
+    "Hochschulfinanzen[Jahr]": "2022-01-01T00:00:00",
+    "[ein]": 1157190000.0,
+    "[aus]": 1937493000.0,
+    "[dm]": 217233000.0,
+    "[trg]": 768225000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Schleswig-Holstein",
+    "Hochschulfinanzen[Jahr]": "2022-01-01T00:00:00",
+    "[ein]": 1520689000.0,
+    "[aus]": 2383416000.0,
+    "[dm]": 246325000.0,
+    "[trg]": 721196000.0
+  },
+  {
+    "Bundesland[Bundesland]": "Thüringen",
+    "Hochschulfinanzen[Jahr]": "2022-01-01T00:00:00",
+    "[ein]": 1264973000.0,
+    "[aus]": 1942486000.0,
+    "[dm]": 262893000.0,
+    "[trg]": 793635000.0
+  }
+]

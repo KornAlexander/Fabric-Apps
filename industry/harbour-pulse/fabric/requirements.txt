@@ -1,0 +1,4 @@
+# Pinned to major versions, not exact ones: exact pins go unsatisfiable as soon
+# as a patch release is yanked from the index, which strands anyone deploying.
+azure-identity>=1.21,<2
+fabric-cicd>=1.1,<2

@@ -1,0 +1,10 @@
+EVALUATE
+SUMMARIZECOLUMNS(
+    Bundesland[Bundesland],
+    Hochschulfinanzen[Jahr],
+    "ein", [Einnahmen EUR],
+    "aus", [Ausgaben EUR],
+    "dm",  [Drittmitteleinnahmen EUR],
+    "trg", [Trägermittel EUR]
+)
+ORDER BY Hochschulfinanzen[Jahr], Bundesland[Bundesland]

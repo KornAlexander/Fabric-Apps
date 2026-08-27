@@ -1,0 +1,14 @@
+{
+  "servers": {
+    "Project-Rayfin": {
+      "type": "stdio",
+      "command": "npm",
+      "args": [
+        "exec",
+        "@microsoft/rayfin-mcp",
+        "--",
+        "start"
+      ]
+    }
+  }
+}

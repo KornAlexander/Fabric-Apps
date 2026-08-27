@@ -1,0 +1,29 @@
+{
+  "version": "1.0.0.21",
+  "author": {
+    "name": "Alexander Korn",
+    "email": "you@example.com"
+  },
+  "resources": [
+    {
+      "resourceId": "rId0",
+      "sourceType": 5,
+      "file": "resources/ibcsMultiTierBarECA4F65BFFB141198B7A6391AFFC946A.pbiviz.json"
+    }
+  ],
+  "visual": {
+    "guid": "ibcsMultiTierBarECA4F65BFFB141198B7A6391AFFC946A",
+    "name": "ibcsMultiTierBar",
+    "displayName": "IBCS Multi-Tier Bar",
+    "version": "1.0.0.21",
+    "description": "IBCS-compliant integrated variance bar chart (AC vs PY/PL/BU, with absolute and percent variance tiers).",
+    "supportUrl": "https://github.com/alkorn/PBI-IBCS-Visuals",
+    "gitHubUrl": "https://github.com/alkorn/PBI-IBCS-Visuals",
+    "visualClassName": "Visual"
+  },
+  "metadata": {
+    "pbivizjson": {
+      "resourceId": "rId0"
+    }
+  }
+}

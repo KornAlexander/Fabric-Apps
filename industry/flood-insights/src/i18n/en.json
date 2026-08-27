@@ -1,0 +1,497 @@
+{
+  "app": {
+    "title": "Flut-Insights",
+    "subtitle": "Ahr valley, 14–15 July 2021"
+  },
+  "disclaimer": {
+    "short": "Demonstration and training purposes only.",
+    "full": "Demonstration and training purposes only. Not a real risk assessment and not a basis for insurance or financing decisions."
+  },
+  "synthetic": {
+    "badge": "synthetic",
+    "notice": "Building geometry and street names are real. All insurance data — customers, policies, sums insured, claims — is invented and synthetically generated. Musterschutz Gruppe is a fictional company."
+  },
+  "facts": {
+    "reconstruction": "reconstructed"
+  },
+  "steinbach": {
+    "open": "Background and sources",
+    "close": "Close",
+    "title": "The dam that held",
+    "subtitle": "Steinbachtalsperre · 14 to 19 July 2021",
+    "intro": "On the same night the Ahr ran through its valley, an earth-fill dam built in 1936 came close to failing about 14 kilometres north-west of Altenahr. It held. What almost brought it down was not a record discharge in a river, but water running over a crest that was never meant to carry any.",
+    "notOnMap": "This map is not the Ahr valley. The reservoir drains the other way — Steinbach, Orbach, Jungbach, Swist, Erft, Rhine — and never reached it. Two catchments, two maps, the same night.",
+    "structureHeading": "The structure",
+    "crest": "Crest level",
+    "fullSupply": "Full supply level",
+    "height": "Height above the valley floor",
+    "storage": "Usable storage",
+    "designFlood": "The spillway was designed for",
+    "actualOutflow": "On the evening of 14 July the peak outflow was",
+    "multiple": "{{factor}} times what the structure was built to pass.",
+    "nightHeading": "The night",
+    "moment": {
+      "fullSupply": "Full supply level is reached.",
+      "reported": "The operator reports a water level of 278.88 m above sea level to the district government.",
+      "authorityInformed": "Civil protection and the district government are told that overtopping is coming.",
+      "sirens": "Sirens sound in Swisttal, 2.5 km below the dam.",
+      "overtopping": "The water reaches the crest and begins to run over the dam.",
+      "evacuation": "Evacuation of the settlements downstream begins.",
+      "overtoppingEnds": "The overtopping ends."
+    },
+    "nightSummary": "The water stood about {{overtopping}} m above the crest. Erosion channels cut {{erosion}} m across the air-side slope, and the dam was considered at risk of collapse. Around {{people}} people in three municipalities and two districts left their homes.",
+    "held": "The dam held.",
+    "scenarioHeading": "The computed scenario",
+    "scenarioIntro": "Fourteen months later an engineering firm, commissioned by the operator, presented a model: what would have followed had the dam failed? Its assumptions are deliberately severe.",
+    "assumption1": "The reservoir stands full to the crest, as it did on 14 July 2021.",
+    "assumption2": "There is no additional inflow from rain.",
+    "assumption3": "The dam fails completely within seconds.",
+    "scenarioResult": "Ten minutes after the failure the water reaches Schweinheim.",
+    "depthAtSchweinheim": "Water depth in Schweinheim",
+    "velocity": "Flow velocity",
+    "volume": "Volume released",
+    "notPublished": "not published",
+    "leverHeading": "Warning time",
+    "leverIntro": "Suppose the dam had failed at 20:00 — the moment it was actually being overtopped and the air-side slope was eroding. The times below are documented clock times from that night. Move the slider to see how much time would have been left downstream.",
+    "warningAt": "Warning issued at",
+    "placeColumn": "Place",
+    "arrival": "Water arrives",
+    "leadTime": "Warning time",
+    "minutes": "{{minutes}} min",
+    "tooLate": "{{minutes}} min too late",
+    "noDanger": "no danger",
+    "places": {
+      "schweinheim": "Schweinheim",
+      "palmersheim": "Palmersheim",
+      "odendorf": "Odendorf",
+      "heimerzheim": "Heimerzheim",
+      "flamersheim": "Flamersheim"
+    },
+    "conclusion": "The calculation leads to one sentence that sums up the night: after a dam failure there would have been no time left to evacuate. It had to happen beforehand.",
+    "evacuationRight": "The same model confirmed that the decision to clear Schweinheim, Palmersheim and Flamersheim was correct — and that no area was left out in which a failure would have done serious damage. For Heimerzheim the model finds no danger, because the A 61 embankment acts as a dam.",
+    "notice": "The dam failure did not happen. All scenario figures come from a published model by Hydrotec Ingenieurgesellschaft für Wasser und Umwelt mbH, presented on 28 September 2022. This application does not compute a dam failure of its own and does not draw one on a map. The warning times above are differences between documented clock times; they contain no evacuation model and say nothing about how many people could have left in that time.",
+    "didNotHappen": "Scenario — the break did not occur",
+    "sceneLoading": "Loading terrain …",
+    "sceneUnavailable": "The corridor terrain model is unavailable. The figures below are unchanged and come from the study.",
+    "minutesAfterBreak": "{{minutes}} minutes after the assumed failure",
+    "frontSpeed": "front {{speed}} m/s",
+    "sceneTerrainNote": "Terrain: DGM1 from Geobasis NRW, resampled to 2 m, shown at true scale with no vertical exaggeration. Buildings are LoD2 cadastral solids, trees are measured from the surface model (DOM1 minus DGM1), land use is from OpenStreetMap. The water surface is a simulated water depth, not a measurement: 1.5 million m³ out of the reservoir, routed over the real cross-sections of the Steinbach and the Orbach. The study gives depths for only two of the four places — the missing ones are not invented but follow from the released volume and the ground. The model is checked against the one published depth: Schweinheim after ten minutes.",
+    "studyConclusion": "The study's own conclusion is that the evacuation of Schweinheim, Palmersheim and Flamersheim was correct, and that no area was left out where a break would have done serious damage.",
+    "flyToDam": "Fly to the dam",
+    "flyToCorridor": "Show the whole route",
+    "didHappen": "Observed — the reservoir filling",
+    "beforeOvertopping": "before overtopping",
+    "filling": "Water level between {{full}} m above sea level (full supply, reached 16:35) and {{crest}} m (the crest, overtopped at 20:00). The rise between them is interpolated; only the two levels are sourced.",
+    "atCrest": "Water at the crest, {{crest}} m above sea level. From here the reservoir is overtopping — more water does not raise the surface, it leaves over the top."
+  },
+  "remembrance": {
+    "eyebrow": "Before you start",
+    "heading": "14 and 15 July 2021",
+    "paragraph1": "During the night of 14 to 15 July 2021, several times the usual monthly rainfall for July fell across the Ahr catchment within hours. The Altenahr gauge was destroyed during the night — the peak remains a reconstruction, and the state environment agency explicitly gives only a range for it:",
+    "paragraph1b": "For comparison, the highest discharge ever measured at this gauge before that was",
+    "paragraph1c": "and the 100-year flood discharge is",
+    "paragraph2": "In Rhineland-Palatinate {{fatalities}} people died, most of them on the Ahr.",
+    "purpose": "This application reconstructs the sequence of events from public data, to show what was known, what was missing, and what is possible differently today.",
+    "continue": "Continue",
+    "sourceLabel": "Source",
+    "sourcePending": "Source pending — this figure must not ship."
+  },
+  "nav": {
+    "act1": "What did we know?",
+    "act2": "The night",
+    "act3": "The damage",
+    "act4": "What would have helped?"
+  },
+  "shell": {
+    "phaseNotice": "Phase 0 — scaffold. The data twin is not built yet.",
+    "planLink": "Read the plan"
+  },
+  "twin": {
+    "timeline": "Timeline",
+    "collapsePanel": "Collapse the panel to the timeline",
+    "expandPanel": "Expand the panel",
+    "modelNoticeShort": "Simulated water depth, not a measurement.",
+    "trees": "Trees",
+    "showTrees": "Show trees",
+    "hideTrees": "Hide trees",
+    "loading": "Loading the map",
+    "loadingStart": "Connecting …",
+    "loadingStep": "Step {{step}} of {{of}}",
+    "loading_terrain": "Terrain model and flow paths",
+    "loading_buildings": "Buildings from the cadastre",
+    "loading_vegetation": "Trees from the surface model",
+    "landuse": "Land cover",
+    "showLanduse": "Show land cover",
+    "hideLanduse": "Hide land cover",
+    "hazard": "Hazard classes",
+    "showHazard": "Show hazard classes",
+    "hideHazard": "Hide hazard classes",
+    "hazardLegendTitle": "Hazard class, derived",
+    "hazardGk4": "HQ10 and more often",
+    "hazardGk3": "HQ10–HQ100",
+    "hazardGk2": "HQ100–HQ200",
+    "hazardGk1": "rarer than HQ200",
+    "hazardNotice": "Our own derivation from public data (LfU frequency table, DGM1) — not ZÜRS. The HQ200 boundary is extrapolated; the LfU table stops at HQ100. Unshaded ground is out of the river's reach at any discharge. A class says how rare a flood is, not how safe a place is: in 2021 GK1 and GK2 ground stood under water too.",
+    "hazardEvidence": "Over the night: {{low}} of {{flooded}} flooded buildings ({{share}} %) are in GK1 or GK2.",
+    "north": "N",
+    "faceNorth": "Point the map north",
+    "exaggeration": "Exaggeration",
+    "exaggerationOn": "Draw heights with 1.5x vertical exaggeration",
+    "trueScaleOn": "Draw heights at true scale",
+    "scaleTrue": "drawn at true scale with no vertical exaggeration",
+    "scaleExaggerated": "drawn with 1.5x vertical exaggeration",
+    "places": "Places in the valley",
+    "collapsePlaces": "Collapse the place list",
+    "expandPlaces": "Expand the place list",
+    "placesNote": "Ordered downstream. The time is the modelled peak at that place — click it to jump there.",
+    "placesSpan": "Between {{from}} and {{to}} there are {{span}} — that is how long the peak takes to travel the valley.",
+    "spanHoursMinutes": "{{hours}} h {{minutes}} min",
+    "peakHere": "Peak",
+    "jumpToPeak": "Jump to the peak in",
+    "play": "Play the sequence",
+    "speedLabel": "Playback speed",
+    "pause": "Pause the sequence",
+    "replay": "Play the sequence again",
+    "discharge": "Discharge",
+    "modelNotice": "Simulated water depth, not a measurement. The hydrograph shape is modelled and anchored to the officially published values of the state environment agency (peak 800–1,230 m³/s, 980 cm — reconstructed). The terrain model was captured in 2024/2025 and shows the state after the flood and reconstruction. Terrain 88–517 m above sea level, {{scale}}. The trees stand where the surface model (DOM1 minus DGM1) measures vegetation; height, crown width and crown form are measured too — the form separates conifer-like from broadleaf-like crowns but is not a species identification. The land cover — vineyards, forest, farmland, settlement, roads and the Ahr valley railway — comes from OpenStreetMap and shows the present day rather than 2021; it colours the surface only and takes no part in any calculation. The aerial photograph is the state's current DOP20, so it was flown after the flood and the reconstruction rather than in 2021: buildings that were destroyed are missing from it and rebuilt ones appear. It is correctly registered — checked against the cadastral footprints — but it does not show the day the simulation shows.",
+    "drape": "Aerial photo",
+    "showDrape": "Show the aerial photo",
+    "hideDrape": "Hide the aerial photo",
+    "photoreal": "Photorealistic",
+    "showPhotoreal": "Switch photorealistic rendering on",
+    "hidePhotoreal": "Switch photorealistic rendering off",
+    "photorealNotice": "Photorealistic: under the camera the aerial photo is shown at 50 cm per pixel instead of 2.9 m (DOP20, a 1 km window around the village); outside that window it stays at the AOI-wide photo. Roofs show their own pixels instead of one measured colour. This changes the rendering only — terrain, water levels and every figure are untouched. The flight is current, not 2021: this map's DOP20 comes from two 2023 campaigns (27 May to the east, 7 September to the west) that meet just west of Altenahr. Their brightness is matched — measured, by gamma, leaving the sharper flight untouched; the difference in hue remains.",
+    "freeFly": "Drone",
+    "freeFlySpeedLabel": "Speed",
+    "freeFlyIdleHint": "or press W A S D",
+    "freeFlyHelp": "W A S D fly, Q and E go down and up, R and F circle whatever is in the middle of the view, drag to look around, the wheel is the throttle, Shift for a short sprint. Stop for a moment and the map takes the camera back — the wheel zooms again and dragging orbits again. No collision — this is a camera, not a flight simulator: it will fly straight through a hillside."
+  },
+  "attribution": {
+    "heading": "Data provenance",
+    "intro": "Every layer in this application comes from openly licensed data."
+  },
+  "validation": {
+    "heading": "Validation against Copernicus",
+    "met": "The simulated extent meets the target of {{target}}.",
+    "notMet": "The model misses almost nothing, but it floods too much land. The target of {{target}} is therefore not met.",
+    "hitRate": "Hit rate",
+    "falseAlarm": "False-alarm ratio",
+    "observed": "Observed",
+    "simulated": "Simulated",
+    "explain": {
+      "open": "What does this mean?",
+      "title": "What the validation means",
+      "subtitle": "IoU {{iou}} — agreement with the satellite map",
+      "tldrLabel": "In short",
+      "tldr1": "The model misses almost nothing: it finds {{hit}} % of the flooded area the satellite mapped.",
+      "tldr2": "But it floods too much — {{over}} % more land than the satellite mapped, which is {{km2}} km² of extra water.",
+      "tldr3": "So: figures derived from extent are upper bounds. Where the model shows dry ground, it very probably was dry.",
+      "whatHeading": "What the number measures",
+      "whatBody": "IoU compares two maps of the same flood — the satellite's and the model's. It divides the area they share by the area they cover together. 1.0 would mean they match exactly, 0 that they do not overlap at all.",
+      "statObserved": "satellite mapped",
+      "statSimulated": "model floods",
+      "statShared": "shared",
+      "statIou": "IoU",
+      "formula": "{{shared}} km² shared ÷ {{combined}} km² together = {{iou}}",
+      "errorHeading": "Two kinds of error — and only one is large",
+      "missTitle": "missed",
+      "missBody": "Share of the observed area the model leaves dry.",
+      "falseTitle": "flooded too much",
+      "falseBody": "Share of the model's area that does not appear on the satellite map — {{km2}} km².",
+      "impactHeading": "How much does it matter?",
+      "impactBody": "The extra area is not a thin rim. Its median depth is {{median}} m, a quarter of it is deeper than {{p75}} m, and only {{shallow}} % is shallower than half a metre. The model reaches too far with real water, not with a film of it.",
+      "upperBound": "The practical consequence: every figure derived from extent — buildings affected, people in the danger area, estimated loss — is an upper bound rather than a best estimate. The area comes out {{over}} % too large.",
+      "lowerBound": "The converse does hold: where the model shows dry ground, it was very probably dry.",
+      "tuningHeading": "Why this cannot be tuned away",
+      "tuningBody": "Four adjustments were swept across their whole plausible range. None improves the result materially, and two make it worse.",
+      "probeName": "Tested",
+      "probeRange": "Range",
+      "probeResult": "IoU",
+      "probePeak": "Peak discharge",
+      "probeManning": "Roughness (Manning n)",
+      "probeBuiltUp": "Built-up land excluded",
+      "probeBuiltUpRange": "{{share}} % of the error area",
+      "probeThreshold": "Minimum depth to count as flooded",
+      "residualHeading": "Where the remaining deviation comes from",
+      "residual1": "The terrain model was flown in 2024/2025 — after the flood and after reconstruction. Part of the disagreement is real ground that changed, not model error.",
+      "residual2": "The model solves a water surface along the river. It has neither momentum nor duration, so it shows water standing where in reality it would never have arrived or would long since have drained.",
+      "residual3": "The reference has a blind spot of its own: water under roofs is not visible in satellite imagery. {{share}} % of the over-flooded area lies in built-up land.",
+      "honesty": "Why the number is shown at all: the honest answer to whether this simulation is good enough is currently no — {{iou}} against a target of {{target}}. In this project a missed target is stated in the interface rather than quietly retuned until it looks better. Given the subject, a flood model that overstated its own accuracy would be the worse failure."
+    }
+  },
+  "language": {
+    "label": "Language",
+    "de": "Deutsch",
+    "en": "English"
+  },
+  "tour": {
+    "start": "Guided tour",
+    "next": "Next",
+    "back": "Back",
+    "finish": "To the close",
+    "end": "End tour",
+    "progress": "{{step}} of {{of}}",
+    "act1": "Act I — What did we know?",
+    "act2": "Act II — The night",
+    "act3": "Act III — The damage",
+    "act4": "Act IV — What would have helped?",
+    "step": {
+      "valley": {
+        "title": "The valley",
+        "body": "The Ahr runs 35 kilometres from the Eifel to the Rhine and drops 120 metres on the way. Here, between Dernau and Bad Neuenahr, it is at its widest. What you see is a terrain model from open data, surveyed in 2024/25 — after the flood and the rebuilding."
+      },
+      "schleife": {
+        "title": "The Ahr loop at Altenahr",
+        "body": "The river almost closes a loop around the rock here. The village sits in the bend, wedged between water and slope, with road and railway crossing the Ahr several times in a very short distance. Narrow valleys speed a wave up rather than slowing it down."
+      },
+      "gauge": {
+        "title": "The Altenahr gauge",
+        "body": "This is where the gauge stood that did not survive the night. Its last reading was 575 centimetres; the peak of about 980 is a reconstruction by the state office. Everything past that point is computed, not measured."
+      },
+      "hazard": {
+        "title": "The maps existed",
+        "body": "These hazard classes come from public data. They say how often a flood is to be expected — not how safe a place is. In 2021 ground was under water that counts as rarely affected."
+      },
+      "wave": {
+        "title": "The wave sets off",
+        "body": "The peak reaches Altenahr at the top of the valley. From here it runs downstream, and that takes time: a good three hours to Sinzig."
+      },
+      "village": {
+        "title": "A village in the water",
+        "body": "Dernau at its modelled peak. The buildings are real cadastral solids; their colour is simulated water depth. The wine village sits on the inside of a bend, where the water backs up."
+      },
+      "altstadt": {
+        "title": "Ahrweiler",
+        "body": "The medieval old town lies almost entirely on the valley floor, behind a wall built against attackers rather than water. The floodplain is at its widest here — and densely built."
+      },
+      "downstream": {
+        "title": "Sinzig, three hours later",
+        "body": "Just short of the mouth. A good three hours separate the first village in the valley from this one — the wave was travelling while there was still nothing to see here. The inquiry does not break the death toll down by place; the 136 is a figure for the whole of Rhineland-Palatinate."
+      },
+      "mouth": {
+        "title": "The mouth at Kripp",
+        "body": "Here the Ahr meets the Rhine. The Rhine itself was not in flood that night, so the wave ran into a normally filled river and was over. The valley had already had it."
+      },
+      "validation": {
+        "title": "How good is this model?",
+        "body": "Against the Copernicus satellite mapping the simulation reaches an agreement of 0.51 rather than the 0.70 aimed for. It misses very little and floods too much — so the area is more likely too large than too small."
+      },
+      "whatif": {
+        "title": "What would have helped?",
+        "body": "Move the sliders on the left. Warning time shifts the number of people affected but barely the loss. The Elementar share does not shift the size of the loss, only who carries it."
+      },
+      "orteIntro": {
+        "title": "Twenty places, one wave",
+        "body": "The same night told by the valley rather than by the clock. We walk downstream and stop in each place at its own peak."
+      },
+      "orteAltenahr": {
+        "title": "Altenahr",
+        "body": "The first village in the model. Narrow valley, a loop, rock — the water has almost nowhere to spread and rises accordingly fast."
+      },
+      "orteMayschoss": {
+        "title": "Mayschoß",
+        "body": "Half an hour later. The village sits on the slope above the river, but part of it stands on the valley floor."
+      },
+      "orteDernau": {
+        "title": "Dernau",
+        "body": "An hour and a half after Altenahr. The floodplain widens, and the share of buildings affected still rises — more of the village stands on the valley floor."
+      },
+      "orteAhrweiler": {
+        "title": "Ahrweiler",
+        "body": "Two hours. The old town sits as one block in the floodplain, and the count of buildings in water jumps noticeably here."
+      },
+      "orteBadneuenahr": {
+        "title": "Bad Neuenahr",
+        "body": "A spa town on both banks. The valley is at its widest, the water shallower — and the affected area at its largest."
+      },
+      "orteHeimersheim": {
+        "title": "Heimersheim",
+        "body": "A good three hours. From here the valley opens into the Rhine plain, and the wave loses height as it gains width."
+      },
+      "orteSinzig": {
+        "title": "Sinzig",
+        "body": "The largest place in the model, some 5,700 buildings. The wave arrives more than four hours after the peak at Altenahr."
+      },
+      "orteKripp": {
+        "title": "Kripp",
+        "body": "The last place before the Rhine. After this the valley ends — and so does this model."
+      },
+      "orteSpread": {
+        "title": "Why the order matters",
+        "body": "A good three hours separate the first peak from the last. In that time, what was happening upstream was known downstream — the information moved faster than the water."
+      },
+      "grenzenIntro": {
+        "title": "What this model does not know",
+        "body": "A simulation that looks good invites more trust than the numbers support. This round walks the places where it gives."
+      },
+      "grenzenGauge": {
+        "title": "The peak is an estimate",
+        "body": "The gauge failed at 575 centimetres. The peak of about 980 centimetres and 800 to 1,230 m³/s is an official reconstruction with a range of more than 50 per cent — every figure after it inherits that uncertainty."
+      },
+      "grenzenTerrain": {
+        "title": "The terrain is from afterwards",
+        "body": "The laser survey is from 2024 and 2025. It shows a valley the flood dug out and the rebuilding re-profiled — not the one from 2021. No older model is publicly available."
+      },
+      "grenzenIou": {
+        "title": "Agreement 0.51",
+        "body": "Against Copernicus the extent reaches 0.51 rather than 0.70. The error is one-sided: too much area, hardly any gaps. For exposure that means overstatement rather than understatement."
+      },
+      "grenzenHazard": {
+        "title": "Hazard classes are not a forecast",
+        "body": "The classes say how often something is to be expected. 2021 sat outside what they describe — listing an area as rarely affected does not mean nothing happens there."
+      },
+      "grenzenPeople": {
+        "title": "People are an estimate",
+        "body": "The number in the danger zone assumes 2.1 people per building, spread evenly across all of them. It is an order of magnitude, not a population count — and it does not tell a house from a garage."
+      }
+    },
+    "stories": {
+      "ablauf": {
+        "label": "The sequence",
+        "blurb": "The night in order — from the valley in the afternoon to the sliders."
+      },
+      "orte": {
+        "label": "The places",
+        "blurb": "Downstream, each place at its own peak."
+      },
+      "grenzen": {
+        "label": "The model's limits",
+        "blurb": "Where the simulation is uncertain — and why that stays visible."
+      }
+    },
+    "storyLabel": "Story",
+    "restart": "Restart"
+  },
+  "closing": {
+    "open": "Lessons and sources",
+    "back": "Back to the map",
+    "eyebrow": "In closing",
+    "title": "Lessons and sources",
+    "intro": "This application is built entirely from openly licensed data. None of it was secret, and none of it had to be collected first — it existed before the flood as much as after it. What follows are the six lessons from Act IV and the provenance of every layer they rest on.",
+    "lessonsHeading": "Six lessons",
+    "lesson1": "The warning existed. What was missing was the last mile to the people.",
+    "lesson2": "The hazard maps existed. A hazard class is a statement about frequency, not a guarantee of safety.",
+    "lesson3": "The insurance gap was known — and it does not decide how large the loss is, only who carries it.",
+    "lesson4": "The data sat in separate houses. Gauges, radar, cadastre and portfolio belonged to different bodies; nobody brought them together.",
+    "lesson5": "Flood-adapted building lowers the loss at the same water depth. It does not prevent the flooding.",
+    "lesson6": "At two in the morning nobody writes a query. Whoever has to decide needs an answer with a source.",
+    "result1": "With six more hours of warning: {{before}} → {{after}} people in the danger area ({{pct}} % fewer) — the property damage barely moves.",
+    "result2": "Over the course of the night the water reaches {{flooded}} buildings. {{low}} of them — {{share}} % — are in GK1 or GK2, ground expected to flood less often than once a century. The HQ100 area covers only {{hq100}} buildings.",
+    "result3": "At 100 % elementary cover: {{before}} → {{after}} uncovered ({{pct}} % less) — the loss itself does not move.",
+    "result5": "If every building were flood-adapted: {{before}} → {{after}} in losses ({{pct}} % less) — with the same buildings in the same water.",
+    "lessonsNote": "The figures come from the same calculation as the Act IV levers and refer to a synthetic portfolio. Three of the six lessons carry no number, because they are not quantities.",
+    "provenanceHeading": "Data provenance",
+    "provenanceIntro": "Every layer of this application comes from an open source. The full register is in NOTICE.md in the repository.",
+    "colLayer": "Layer",
+    "colIssuer": "Issuer",
+    "colLicence": "Licence",
+    "reportsHeading": "Reports and programmes"
+  },
+  "act4": {
+    "heading": "What would have helped?",
+    "people": "People in the affected area",
+    "loss": "Estimated loss",
+    "uncovered": "Uncovered",
+    "buildings": "Affected buildings",
+    "reset": "Reset",
+    "lever": {
+      "warning": "Warning lead time",
+      "stage": "Peak stage",
+      "elementar": "Elementar penetration",
+      "retention": "Retention",
+      "resilient": "Built flood-adapted"
+    },
+    "lesson1": "Lesson 1 — The warning existed. Lead time moves the number of people; it barely moves the damage.",
+    "lesson2": "Lesson 2 — The hazard maps existed. A hazard class is a statement about frequency, not a guarantee of safety.",
+    "lesson3": "Lesson 3 — The insurance gap was known. Penetration shifts who carries the loss, not how large it is.",
+    "lesson5Retention": "Lesson 5 — Retention lowers the peak: less water arrives at all.",
+    "lesson5Resilient": "Lesson 5 — Flood-adapted building lowers the loss at the same water depth — the same buildings in the same water.",
+    "note": "All values are simulated and refer to a synthetic portfolio. The people figure is not a population count: it applies 2.1 residents to every flooded building, whether that building is a house, a garage or an apartment block. The changes show what the data yields — they are not a recommendation."
+  },
+  "setup": {
+    "eyebrow": "Setup",
+    "heading": "Geodata has not been generated yet",
+    "body": "This application is built on roughly 31 MB of derived geodata — terrain model, flow field and LoD2 buildings. It is not kept in the repository because it is reproducible from open sources at any time. One run of the pipeline produces it.",
+    "note": "The run downloads data from LVermGeo Rheinland-Pfalz, Copernicus EMS, the state environment agency and OpenStreetMap. Every source is openly licensed; the attributions are in NOTICE.md."
+  },
+  "story": {
+    "toggle": "Events",
+    "showAnnotations": "Show events",
+    "hideAnnotations": "Hide events",
+    "modelled": "modelled",
+    "sourced": "official",
+    "notice": "The timing of the modelled events follows the simulated hydrograph, not measurements. Only the peak is officially documented.",
+    "jumpTo": "Jump to this event",
+    "peakTimeNote": "The values are official; the time is not. The Altenahr gauge recorded 575 cm at 20:45 and was then destroyed. The peak itself was never measured — neither its height nor its hour. This app's clock places it at 22:00, which is an assumption inside the window in which it must have fallen.",
+    "beats": {
+      "firstWater": {
+        "title": "The water reaches the first buildings",
+        "body": "The simulated water surface spills onto the valley floor. From here the number of affected buildings climbs."
+      },
+      "halfExtent": {
+        "title": "Half of the affected buildings are in the water",
+        "body": "{{count}} buildings — half as many as at the greatest extent, when {{total}} stand in water at once."
+      },
+      "halfVillages": {
+        "title": "Half the settlements have water",
+        "body": "{{places}} of {{totalPlaces}} settlements are in the water. This is a different moment from half the buildings: the buildings sit densely in the wide lower valley, the settlements are spread along the whole reach."
+      },
+      "peak": {
+        "title": "Peak at the Altenahr gauge",
+        "body": "Officially published values for the peak — the only event on this timeline that is documented rather than modelled:"
+      },
+      "allVillages": {
+        "title": "The wave has reached the whole valley",
+        "body": "All {{totalPlaces}} settlements on the reach have water. A good three hours separate the first from the last — time that existed downstream."
+      },
+      "maxExtent": {
+        "title": "Largest extent",
+        "body": "{{count}} buildings in {{places}} settlements in the water at once. The greatest extent comes later than the peak at the Altenahr gauge — downstream, the wave needs time to travel the reach."
+      },
+      "receding": {
+        "title": "The water falls",
+        "body": "{{count}} buildings still within the simulated inundation area."
+      },
+      "dayAfter": {
+        "title": "24 hours after the peak",
+        "body": "{{count}} buildings still lie within the simulated inundation area. Discharge is approaching the mean again."
+      }
+    }
+  },
+  "bookmarks": {
+    "title": "Your story",
+    "collapse": "Collapse story",
+    "expand": "Expand story",
+    "capture": "Save view",
+    "play": "Play",
+    "stop": "Stop",
+    "remove": "Remove",
+    "empty": "No stops yet. Set the map and the moment the way you want to show them, then save the view.",
+    "note": "Each stop remembers the camera, the moment and the layers. Playing flies the camera slowly from stop to stop.",
+    "stopLabel": "Stop {{index}}"
+  },
+  "scenes": {
+    "label": "Choose map",
+    "ahrtal": "Ahr valley 2021",
+    "steinbach": "Steinbach dam 2021",
+    "hortasud": "Horta Sud 2024",
+    "castelbolognese": "Castel Bolognese 2023",
+    "blockedTerrainOnly": "terrain only, model to follow",
+    "steinbachReach": "DAM-BREAK SCENARIO · RESERVOIR – HEIMERZHEIM"
+  },
+  "reach": {
+    "badge": "Steady discharge — not a moment of the event",
+    "dischargeLabel": "assumed steady discharge",
+    "loading": "Loading terrain …",
+    "unavailable": "This scene could not be loaded.",
+    "note": "⚠️ This scene deliberately has no clock. The Ahr valley has a gauge series and the Steinbachtalsperre has a published study; for this river no hydrograph of the event is publicly retrievable. So what is drawn is not a moment of the flood but the water surface a steady discharge of this size would stand at in the measured cross-section: terrain from the official elevation model, level solved with Manning from the real valley section. That is a statement about the valley, not about the event. Out on the flat plain the sections are very wide (median 1.2–1.4 km), which is where a 1D model is weakest."
+  },
+  "gate": {
+    "title": "Sign-in required",
+    "body": "This demonstration shows building, terrain and synthetic portfolio data for the Ahr valley flood. It is intended for internal demonstration and training, and runs only after signing in with a Microsoft Entra identity.",
+    "signIn": "Sign in with Microsoft Entra",
+    "checking": "Checking your session...",
+    "unavailable": "Sign-in is not configured (the Rayfin auth variables are missing). The application stays locked.",
+    "scope": "Scope of this gate: it protects the application, not the individual files. Rayfin static hosting is public at the platform level, so anyone who knows a file path can still fetch that file. Only open government geodata and synthetic insurance figures are deployed - real addresses and Copernicus damage grades are deliberately withheld."
+  }
+}

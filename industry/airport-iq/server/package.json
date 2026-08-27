@@ -1,0 +1,19 @@
+{
+  "name": "airport-iq-chat-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Thin, self-contained backend for the embedded Airport IQ Fabric app: Foundry-powered streaming chat and realtime voice, grounded in the airport operations snapshot (gates, flights, delays, gate conflicts). Runs as its own Azure Container App. Ported from digital-twin-fabric-app/server.",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node --watch server.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}

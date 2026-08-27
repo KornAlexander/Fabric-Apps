@@ -1,0 +1,56 @@
+// KQL script
+// Use management commands in this script to configure your database items, such as tables, functions, materialized views, and more.
+
+
+.create-merge table SydneyFerries (ferry_name:string, ferry_lat:real, ferry_long:real, ferry_destination:string, timestamp:datetime) 
+.create-or-alter table SydneyFerries ingestion json mapping 'SydneyFerries_mapping'
+```
+[{"Properties":{"Path":"$['ferry_name']"},"column":"ferry_name","datatype":""},{"Properties":{"Path":"$['ferry_lat']"},"column":"ferry_lat","datatype":""},{"Properties":{"Path":"$['ferry_long']"},"column":"ferry_long","datatype":""},{"Properties":{"Path":"$['ferry_destination']"},"column":"ferry_destination","datatype":""},{"Properties":{"Path":"$['timestamp']"},"column":"timestamp","datatype":""}]
+```
+.create-merge table ReferenceLocation (LocationId:string, LocationName:string, Latitude:real, Longitude:real, ProximityThreshold:real) 
+.create-merge table ProximityAlerts (timestamp:datetime, ferry_name:string, ferry_destination:string, LocationId:string, LocationName:string, Distance:real, FerryLatitude:real, FerryLongitude:real, LocationLatitude:real, LocationLongitude:real, Alert:string) 
+.create-merge table FerryTwinTelemetry (Timestamp:datetime, VesselId:string, DeckId:string, MetricName:string, MetricValue:real, Unit:string, Attributes:dynamic, TraceId:string, SpanId:string) 
+.create-or-alter table FerryTwinTelemetry ingestion json mapping 'FerryTwinTelemetryMapping'
+```
+[{"column":"Timestamp","path":"$.Timestamp","datatype":"datetime"},{"column":"VesselId","path":"$.VesselId","datatype":"string"},{"column":"DeckId","path":"$.DeckId","datatype":"string"},{"column":"MetricName","path":"$.MetricName","datatype":"string"},{"column":"MetricValue","path":"$.MetricValue","datatype":"real"},{"column":"Unit","path":"$.Unit","datatype":"string"},{"column":"Attributes","path":"$.Attributes","datatype":"dynamic"},{"column":"TraceId","path":"$.TraceId","datatype":"string"},{"column":"SpanId","path":"$.SpanId","datatype":"string"}]
+```
+.create-or-alter function with (skipvalidation = "true") GetLatestFerryPositions() {
+    SydneyFerries
+    | summarize latestTimestamp=max(timestamp) by ferry_name
+    | join kind=inner (
+        SydneyFerries
+        | project ferry_name, ferry_lat, ferry_long, ferry_destination, timestamp
+    ) on ferry_name, $left.latestTimestamp == $right.timestamp
+    | where timestamp > ago(3h)
+    | project ferry_name, ferry_lat, ferry_long, ferry_destination, timestamp
+}
+.create-or-alter function with (skipvalidation = "true") CalculateDistance(lat1:real, lon1:real, lat2:real, lon2:real) {
+    let R = 6371000.0;  // Earth's radius in meters
+    let dLat = radians(lat2 - lat1);
+    let dLon = radians(lon2 - lon1);
+    let a = sin(dLat/2) * sin(dLat/2) + 
+            cos(radians(lat1)) * cos(radians(lat2)) * 
+            sin(dLon/2) * sin(dLon/2);
+    let c = 2 * atan2(sqrt(a), sqrt(1-a));
+    R * c  // Returns distance in meters
+}
+.create-or-alter function with (skipvalidation = "true") DetectProximity() {
+    GetLatestFerryPositions()
+    | extend dummy = 1
+    | join kind=inner (ReferenceLocation | extend dummy = 1) on dummy  // Cross join: every ferry with every location
+    | project-away dummy, dummy1
+    | extend Distance = CalculateDistance(ferry_lat, ferry_long, Latitude, Longitude)
+    | where Distance <= ProximityThreshold  // Only keep alerts within threshold
+    | project 
+        timestamp,
+        ferry_name,
+        ferry_destination,
+        LocationId,
+        LocationName,
+        Distance = round(Distance, 2),
+        FerryLatitude = ferry_lat,
+        FerryLongitude = ferry_long,
+        LocationLatitude = Latitude,
+        LocationLongitude = Longitude,
+        Alert = strcat(ferry_name, " (→ ", ferry_destination, ") is ", round(Distance, 2), "m from ", LocationName)
+}

@@ -1,0 +1,96 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "pagevalidierung",
+  "displayName": "Validierung & Quellen",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F2EFEA'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "visP3Val",
+      "target": "visP3Method",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP3Val",
+      "target": "visP3Matrix",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP3Val",
+      "target": "visP3Sources",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP3Method",
+      "target": "visP3Val",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP3Method",
+      "target": "visP3Matrix",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP3Method",
+      "target": "visP3Sources",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP3Matrix",
+      "target": "visP3Val",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP3Matrix",
+      "target": "visP3Method",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP3Matrix",
+      "target": "visP3Sources",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP3Sources",
+      "target": "visP3Val",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP3Sources",
+      "target": "visP3Method",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP3Sources",
+      "target": "visP3Matrix",
+      "type": "DataFilter"
+    }
+  ]
+}

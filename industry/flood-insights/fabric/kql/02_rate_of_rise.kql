@@ -1,0 +1,22 @@
+
+// Flut-Insights — Vorwarnung über Anstiegsgeschwindigkeit (PLAN §10.3, Act IV Lektion 1)
+//
+// Eine feste Pegelmarke hilft in einem Einzugsgebiet wie der Ahr nicht: bis ein absoluter
+// Schwellenwert erreicht ist, ist die Zeit zum Handeln vorbei. Diese Regel reagiert auf die
+// Geschwindigkeit des Anstiegs — sie schlägt an, während der Wert noch harmlos aussieht.
+PegelMessung
+| where Zeitpunkt > ago(6h)
+| order by Messstelle asc, Zeitpunkt asc
+| extend VorherWert = prev(WasserstandCm), VorherZeit = prev(Zeitpunkt), VorherStelle = prev(Messstelle)
+| where Messstelle == VorherStelle
+| extend MinutenDelta = datetime_diff('minute', Zeitpunkt, VorherZeit)
+| where MinutenDelta > 0
+| extend AnstiegCmProStunde = (WasserstandCm - VorherWert) * 60.0 / MinutenDelta
+| summarize
+    AktuellerStandCm = arg_max(Zeitpunkt, WasserstandCm),
+    MaxAnstiegCmProStunde = max(AnstiegCmProStunde)
+    by Messstelle
+| extend Warnstufe = case(
+    MaxAnstiegCmProStunde >= 30, "Warnung: Anstieg über 30 cm/h",
+    MaxAnstiegCmProStunde >= 15, "Beobachten: Anstieg über 15 cm/h",
+    "unauffällig")

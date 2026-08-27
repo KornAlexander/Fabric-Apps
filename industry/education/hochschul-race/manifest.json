@@ -1,0 +1,12 @@
+{
+  "templateId": "blankapp",
+  "icon": "blank-app",
+  "services": {
+    "auth": true,
+    "data": false,
+    "storage": false,
+    "staticHosting": true
+  },
+  "hasDabSchema": false,
+  "tokens": []
+}

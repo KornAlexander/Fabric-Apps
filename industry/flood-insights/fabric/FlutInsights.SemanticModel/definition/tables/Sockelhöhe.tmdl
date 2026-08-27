@@ -1,0 +1,16 @@
+table 'Sockelhöhe'
+	lineageTag: 3902f77b-4acc-4a11-8449-51fa08b2a823
+
+	column 'Sockelhöhe m'
+		dataType: double
+		lineageTag: 4a13087c-5bdd-4b22-955a-62fb19c3b934
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = User
+
+	partition 'Sockelhöhe' = calculated
+		mode: import
+		source = GENERATESERIES(0.5, 2, 0.25)
+
+	annotation PBI_Id = Sockelhoehe

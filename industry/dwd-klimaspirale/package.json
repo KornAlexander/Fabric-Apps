@@ -1,0 +1,26 @@
+{
+  "name": "klimaspirale",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pure HTML/TypeScript Klimaspirale — inward black hole that resolves into a 3D tornado. Embeddable in a Fabric App; no Power BI custom visual required.",
+  "type": "module",
+  "template": {
+    "name": "dwd-klimaspirale",
+    "displayName": "Climate Spiral",
+    "description": "A century of German weather-service temperature records as an animated climate spiral.",
+    "category": "analytics"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "build:fabric": "tsc -p tsconfig.json && node tools/build-fabric.mjs",
+    "watch": "tsc -p tsconfig.json --watch",
+    "data": "node tools/build-data.mjs",
+    "export": "python3 tools/export_data.py",
+    "serve": "python3 -m http.server 8080",
+    "rayfin:up": "rayfin up"
+  },
+  "devDependencies": {
+    "@microsoft/rayfin-cli": "^1.33.0",
+    "typescript": "^5.4.0"
+  }
+}

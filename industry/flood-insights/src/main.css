@@ -1,0 +1,22 @@
+@import 'tailwindcss';
+
+:root {
+  font-family: 'Inter', system-ui, sans-serif;
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  /* Warm off-white, the colour of a printed report rather than a screen UI. The palette stays
+     muted and documentary (PLAN §2.3) — light mode here should read as paper, not as a bright
+     product dashboard. */
+  background: #f5f5f4; /* stone-100 */
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

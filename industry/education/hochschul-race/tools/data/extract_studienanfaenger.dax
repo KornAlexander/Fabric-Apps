@@ -1,0 +1,7 @@
+EVALUATE
+SUMMARIZECOLUMNS(
+    'Studienanfänger'[Hochschule_Code],
+    'Studienanfänger'[Wintersemester],
+    "anf", SUM('Studienanfänger'[Wert])
+)
+ORDER BY 'Studienanfänger'[Hochschule_Code], 'Studienanfänger'[Wintersemester]

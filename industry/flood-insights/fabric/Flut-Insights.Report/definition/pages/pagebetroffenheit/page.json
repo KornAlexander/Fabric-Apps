@@ -1,0 +1,216 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "pagebetroffenheit",
+  "displayName": "Betroffenheit",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F2EFEA'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "visP1Slicer",
+      "target": "visP1Kpis",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Slicer",
+      "target": "visP1KpiSum",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Slicer",
+      "target": "visP1Hazard",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Slicer",
+      "target": "visP1Depth",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Slicer",
+      "target": "visP1Ort",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Slicer",
+      "target": "visP1Matrix",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Kpis",
+      "target": "visP1KpiSum",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Kpis",
+      "target": "visP1Hazard",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Kpis",
+      "target": "visP1Depth",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Kpis",
+      "target": "visP1Ort",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Kpis",
+      "target": "visP1Matrix",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1KpiSum",
+      "target": "visP1Kpis",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1KpiSum",
+      "target": "visP1Hazard",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1KpiSum",
+      "target": "visP1Depth",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1KpiSum",
+      "target": "visP1Ort",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1KpiSum",
+      "target": "visP1Matrix",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Hazard",
+      "target": "visP1Kpis",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Hazard",
+      "target": "visP1KpiSum",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Hazard",
+      "target": "visP1Depth",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Hazard",
+      "target": "visP1Ort",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Hazard",
+      "target": "visP1Matrix",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Depth",
+      "target": "visP1Kpis",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Depth",
+      "target": "visP1KpiSum",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Depth",
+      "target": "visP1Hazard",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Depth",
+      "target": "visP1Ort",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Depth",
+      "target": "visP1Matrix",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Ort",
+      "target": "visP1Kpis",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Ort",
+      "target": "visP1KpiSum",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Ort",
+      "target": "visP1Hazard",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Ort",
+      "target": "visP1Depth",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Ort",
+      "target": "visP1Matrix",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Matrix",
+      "target": "visP1Kpis",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Matrix",
+      "target": "visP1KpiSum",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Matrix",
+      "target": "visP1Hazard",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Matrix",
+      "target": "visP1Depth",
+      "type": "DataFilter"
+    },
+    {
+      "source": "visP1Matrix",
+      "target": "visP1Ort",
+      "type": "DataFilter"
+    }
+  ]
+}

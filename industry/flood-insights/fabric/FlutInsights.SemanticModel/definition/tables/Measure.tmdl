@@ -1,0 +1,145 @@
+table 'Measure'
+	lineageTag: e640328a-f43e-4eb4-b8ca-3d515db3d5db
+
+	column 'Value'
+		dataType: int64
+		isHidden
+		lineageTag: 2c8150a8-9a31-4ebc-ac8d-c864b3f7d2a7
+		sourceColumn: [Value]
+		summarizeBy: none
+
+	measure 'Gebäude #' = COUNTROWS('Gebäude')
+		formatString: #,0
+		lineageTag: c2e57df8-3d35-481d-9701-7316c26b9179
+
+	measure 'Gebäude überflutet #' = CALCULATE(COUNTROWS('Gebäude'), 'Gebäude'[Wassertiefe m] > 0)
+		formatString: #,0
+		lineageTag: d02dc620-d4ec-493c-9e1f-9725437ffc04
+
+	measure 'Ø Wassertiefe (m)' = CALCULATE(AVERAGE('Gebäude'[Wassertiefe m]), 'Gebäude'[Wassertiefe m] > 0)
+		formatString: #,0.00
+		lineageTag: b0c311f2-e736-4653-8f7e-b95013fb33a7
+
+	measure 'Versicherungssumme Σ' = SUM('Police'[Versicherungssumme])
+		formatString: #,0 €
+		lineageTag: abcfcf5b-9afb-4119-ad91-09bc0d9ac794
+
+	measure 'Elementar-Quote %' = DIVIDE(CALCULATE(COUNTROWS('Police'), 'Police'[Elementarbaustein] = TRUE()), COUNTROWS('Police'))
+		formatString: 0.0%
+		lineageTag: e34a04d2-dac3-4209-b7d2-9935d3dfaf44
+
+	measure 'Schaden geschätzt Σ' = SUM('Schaden'[Schaden geschätzt])
+		formatString: #,0 €
+		lineageTag: acde7ecb-49c2-444f-93a0-200a2fee01b1
+
+	measure 'Entschädigung Σ' = SUM('Schaden'[Entschädigung])
+		formatString: #,0 €
+		lineageTag: 01182f5b-33ee-4453-945f-a496d98cafe0
+
+	measure 'Nicht gedeckt Σ' = SUM('Schaden'[Nicht gedeckt])
+		formatString: #,0 €
+		lineageTag: 014bc06e-360c-49c0-aa19-65d820883bd5
+
+	measure 'Deckungsquote %' = DIVIDE([Entschädigung Σ], [Schaden geschätzt Σ])
+		formatString: 0.0%
+		lineageTag: c93e9084-d638-4ed1-98d3-28e6d660c9b2
+
+	measure 'Schaden je Gebäude' = DIVIDE([Schaden geschätzt Σ], [Gebäude überflutet #])
+		formatString: #,0 €
+		lineageTag: 71195fde-a1d3-4a78-8394-4fc3f9532815
+
+	measure 'Policen #' = COUNTROWS('Police')
+		formatString: #,0
+		lineageTag: 4a1d0e2c-5b77-4c31-9f0a-6c2b1e8d3a41
+
+	measure 'Gebäude trocken #' = [Gebäude #] - [Gebäude überflutet #]
+		formatString: #,0
+		lineageTag: 5b2e1f3d-6c88-4d42-a01b-7d3c2f9e4b52
+
+	/// Insured value of the buildings the flood actually reached.
+	measure 'Versicherungssumme Σ überflutet' = CALCULATE([Versicherungssumme Σ], 'Gebäude'[Wassertiefe m] > 0)
+		formatString: #,0 €
+		lineageTag: 6c3f2a4e-7d99-4e53-b12c-8e4d3a0f5c63
+
+	measure 'Nicht gedeckt %' = DIVIDE([Nicht gedeckt Σ], [Schaden geschätzt Σ])
+		formatString: 0.0%
+		lineageTag: 7d403b5f-8e00-4f64-c23d-9f5e4b106d74
+
+	/// Estimated loss as a share of the insured sum — the portfolio's burn rate in this single night.
+	measure 'Schaden-Kosten-Quote' = DIVIDE([Schaden geschätzt Σ], [Versicherungssumme Σ])
+		formatString: 0.0%
+		lineageTag: 8e514c60-9f11-4075-d34e-a06f5c217e85
+
+	/// The part of the loss that stayed with the policyholder although the claim WAS covered — i.e. the deductible.
+	measure 'Selbstbehalt Σ' = CALCULATE([Nicht gedeckt Σ], 'Schaden'[Deckungsgrund] = "gedeckt")
+		formatString: #,0 €
+		lineageTag: 9f625d71-a022-4186-e45f-b1706d328f96
+
+	/// Loss left unpaid for one reason only: the policy carried no Elementarbaustein.
+	measure 'Lücke Elementar Σ' = CALCULATE([Nicht gedeckt Σ], 'Schaden'[Deckungsgrund] = "kein Elementarbaustein")
+		formatString: #,0 €
+		lineageTag: a0736e82-b133-4297-f560-c281743390a7
+
+	/// Loss left unpaid because the policy's waiting period had not yet expired.
+	measure 'Lücke Wartezeit Σ' = CALCULATE([Nicht gedeckt Σ], 'Schaden'[Deckungsgrund] = "Wartezeit")
+		formatString: #,0 €
+		lineageTag: b1847f93-c244-43a8-0671-d392854401b8
+
+	/// Share of the loss actually settled on claims that WERE covered. Drives every counterfactual below.
+	measure 'Regulierungsquote gedeckt %' = ```
+			VAR S = CALCULATE([Schaden geschätzt Σ], REMOVEFILTERS('Schaden'[Deckungsgrund]), 'Schaden'[Deckungsgrund] = "gedeckt")
+			VAR E = CALCULATE([Entschädigung Σ], REMOVEFILTERS('Schaden'[Deckungsgrund]), 'Schaden'[Deckungsgrund] = "gedeckt")
+			RETURN DIVIDE(E, S)
+			```
+		formatString: 0.0%
+		lineageTag: c2958004-d355-44b9-1782-e4a3965512c9
+
+	/// Counterfactual: every policy carries the Elementarbaustein, settled at the observed rate.
+	measure 'Entschädigung Σ bei 100 % Elementar' = [Entschädigung Σ] + [Lücke Elementar Σ] * [Regulierungsquote gedeckt %]
+		formatString: #,0 €
+		lineageTag: d3a69115-e466-45ca-2893-f5b4a76623da
+
+	/// Counterfactual: no waiting period is still open when the water arrives.
+	measure 'Entschädigung Σ ohne Wartezeit' = [Entschädigung Σ] + [Lücke Wartezeit Σ] * [Regulierungsquote gedeckt %]
+		formatString: #,0 €
+		lineageTag: e4b7a226-f577-46db-39a4-06c5b87734eb
+
+	/// Counterfactual: both cover gaps closed. Only the deductible remains.
+	measure 'Entschädigung Σ bei voller Deckung' = [Entschädigung Σ] + ([Lücke Elementar Σ] + [Lücke Wartezeit Σ]) * [Regulierungsquote gedeckt %]
+		formatString: #,0 €
+		lineageTag: f5c8b337-0688-46dc-40a5-17c6d98845fc
+
+	measure 'Sockelhöhe m' = SELECTEDVALUE('Sockelhöhe'[Sockelhöhe m], 0)
+		formatString: #,0.00
+		lineageTag: 06d9c448-1799-47ed-5116-28d7ea99560d
+
+	/// Loss that would still occur if living space started above the chosen height.
+	measure 'Schaden Σ trotz Sockel' = CALCULATE([Schaden geschätzt Σ], FILTER(ALL('Schaden'[Wassertiefe m]), 'Schaden'[Wassertiefe m] > [Sockelhöhe m]))
+		formatString: #,0 €
+		lineageTag: 17e0d559-28aa-48fe-6227-39e8fb0a5601
+
+	/// UPPER BOUND, not a forecast: the whole loss at buildings flooded below the chosen height.
+	/// Raising the floor does not protect cellars or foundations, so the real saving is smaller.
+	measure 'Vermeidbarer Schaden Σ (Sockel)' = [Schaden geschätzt Σ] - [Schaden Σ trotz Sockel]
+		formatString: #,0 €
+		lineageTag: 28f1e66a-39bb-4900-7338-40f9ac197712
+
+	/// The IBCS visual cannot scale its own axis, so the money bars read these Mio. variants.
+	measure 'Entschädigung Mio €' = DIVIDE([Entschädigung Σ], 1000000)
+		formatString: #,0.0
+		lineageTag: 3902f77b-4acc-4a11-8449-51fa08b2a824
+
+	measure 'Entschädigung bei voller Deckung Mio €' = DIVIDE([Entschädigung Σ bei voller Deckung], 1000000)
+		formatString: #,0.0
+		lineageTag: 4a13087c-5bdd-4b22-955a-62fb19c3b935
+
+	measure 'Entschädigung bei 100 % Elementar Mio €' = DIVIDE([Entschädigung Σ bei 100 % Elementar], 1000000)
+		formatString: #,0.0
+		lineageTag: 5b24198d-6cee-4c33-a66b-73fc2ad4ca46
+
+	partition 'Measure' = calculated
+		mode: import
+		source = {0}
+
+	annotation PBI_Id = Measure
+

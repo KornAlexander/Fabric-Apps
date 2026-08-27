@@ -1,0 +1,9 @@
+EVALUATE
+SUMMARIZECOLUMNS(
+    Hochschulen[Hochschule_Code],
+    Hochschulen[Stadt],
+    Hochschulen[Bundesland],
+    "lat", [Avg Lat],
+    "lon", [Avg Lon]
+)
+ORDER BY Hochschulen[Hochschule_Code]

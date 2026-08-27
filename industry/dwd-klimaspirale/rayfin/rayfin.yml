@@ -1,0 +1,28 @@
+id: dwd-klimaspirale
+name: DWD Klimaspirale
+version: 1.0.0
+services:
+  auth:
+    enabled: true
+    fabric:
+      enabled: true
+    password:
+      enabled: false
+    # ⚠️ `rayfin up` rewrites this file and will re-add whatever host it just deployed to.
+    # That host is tenant- and item-specific, so it must not travel into a public repo — check
+    # this list before publishing. Whoever deploys adds their own `https://<their-app-host>`
+    # AND `https://<their-app-host>/auth/callback`, then runs a full `rayfin up`
+    # (a `staticapp deploy` alone does not re-register them).
+    allowedRedirectUris:
+      - http://localhost:8080
+  functions:
+    enabled: false
+  staticHosting:
+    enabled: true
+    folder: fabric-dist
+    buildCommand: npm run build:fabric
+    indexDocument: index.html
+  data:
+    enabled: false
+  storage:
+    enabled: false

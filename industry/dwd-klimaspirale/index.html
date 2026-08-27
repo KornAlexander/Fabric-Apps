@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Klimaspirale — DWD Wetter Insights</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #05070f;
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+      The visual renders itself into #app. Configure via data-* attributes:
+        data-src      URL of the dataset JSON (default ./data/klimaspirale.json)
+        data-daily    "off" to hide the fine per-day (30-day-average) spiral
+        data-tornado  "off" to keep the spiral flat (skip the 3D vortex finale)
+      Falls back to generated sample data if the dataset cannot be fetched.
+    -->
+    <div id="app" data-src="./data/klimaspirale.json" data-stations="./data/stations.json"></div>
+    <script type="module" src="./dist/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,66 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "visP3Note",
+  "position": {
+    "x": 24,
+    "y": 576,
+    "z": 210,
+    "height": 138,
+    "width": 1232,
+    "tabOrder": 210
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "horizontalTextAlignment": "left",
+                "textRuns": [
+                  {
+                    "value": "Warum diese Seite existiert",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "12pt",
+                      "color": "#12212E",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "horizontalTextAlignment": "left",
+                "textRuns": [
+                  {
+                    "value": " ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#12212E"
+                    }
+                  }
+                ]
+              },
+              {
+                "horizontalTextAlignment": "left",
+                "textRuns": [
+                  {
+                    "value": "Ein Zwilling, der seine eigene Unsicherheit verschweigt, ist eine Behauptung. Die Zahlen oben sind unbequem: das Modell überzeichnet die Ausdehnung um zwei Drittel und verfehlt sein eigenes Gütekriterium. Sie stehen hier trotzdem — an erster Stelle und nicht im Anhang —, weil ein Ergebnis ohne seine Fehlergrenze in der Aufarbeitung einer Katastrophe nichts wert ist.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#12212E"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

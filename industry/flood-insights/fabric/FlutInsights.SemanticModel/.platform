@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Flut-Insights \u2014 Portfolio & Schaden"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "cda0f135-5f34-4af7-a36e-89cfaa8b1505"
+  }
+}

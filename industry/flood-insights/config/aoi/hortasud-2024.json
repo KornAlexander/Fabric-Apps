@@ -1,0 +1,156 @@
+{
+  "$comment": "Area of interest definition. Flut-Insights is a reusable vertical asset (PLAN §14 Q2) — no location is hard-coded in code. This is the second instance after Ahrtal 2021, and the first outside Germany.",
+  "id": "hortasud-2024",
+  "event": {
+    "name": {
+      "de": "DANA im Raum Valencia",
+      "en": "Valencia DANA"
+    },
+    "startUtc": "2024-10-29T06:00:00Z",
+    "peakUtc": "2024-10-29T18:00:00Z",
+    "$peakComment": "⚠️ NOT a measured time. Copernicus EMS records the event time for EMSR773 as 2024-10-29T14:30 UTC, which is when the activation was anchored, not when the wave reached the towns. The Barranc del Poyo gauge at Riba-roja recorded its extraordinary rise during the evening of 29 October, and the water reached Paiporta and Catarroja after dark. Until a gauge series is ingested and a peak is derived from it, this value is a modelling assumption placed inside the window in which the peak must have occurred, and the app must say so wherever it shows a clock — exactly as it does for the Ahr.",
+    "endUtc": "2024-10-30T12:00:00Z",
+    "timelineStartUtc": "2024-10-28T00:00:00Z",
+    "timelineEndUtc": "2024-11-02T00:00:00Z"
+  },
+  "bbox": {
+    "crs": "EPSG:4326",
+    "west": -0.6391,
+    "east": -0.3617,
+    "south": 39.3528,
+    "north": 39.5046,
+    "$comment": "The Copernicus EMSR773 AOI03 'Horta Sud' footprint exactly, ~23.9 x 16.8 km — close to the Ahr's 23 x 8 and, unlike the Emilia-Romagna candidates, a real drop: 306 m in the west down to 6 m at the Albufera. Taking the footprint rather than a wider box means the validation area and the map are the same area, so no part of the twin is drawn where there is nothing to check it against."
+  },
+  "workingCrs": "EPSG:25830",
+  "verticalDatum": "Alicante",
+  "$crsComment": "UTM zone 30N, which is what the Spanish national mapping agency publishes for the peninsula. The Ahr's EPSG:25832 is zone 32N and would put this AOI five degrees outside its zone. Heights are referenced to the Alicante tide gauge, not to DHHN2016.",
+  "grids": {
+    "terrainResolutionM": 10,
+    "sourceResolutionM": 5,
+    "simulationResolutionM": 10,
+    "renderResolutionM": 10,
+    "flowResolutionM": 20,
+    "$resolutionComment": "Rebuilt at 10 m on 2026-08-02, down from 5 m. This is the largest box in the app (23.9 x 16.8 km) and mostly flat coastal plain, so 5 m posting cost 32.5 MB of heightmap and 12 MB of flow field for detail the aerial drape already carries better. The whole deployment had exceeded the host's 100 MB compressed limit; this AOI is where the weight was."
+  },
+  "$gridsComment": "The Ahr runs on 1 m DGM1. Spain's finest openly served elevation for this area is 5 m (IGN coverage Elevacion4258_5), so every downstream grid is coarser here and the app must not imply otherwise.",
+  "river": {
+    "name": "Barranc del Poyo",
+    "osmWaterwayRef": [
+      "Barranco de Chiva",
+      "Rambla de Poyo",
+      "Rambla de Poio",
+      "Barranc dels Cavalls",
+      "Barranc de Xiva"
+    ],
+    "osmWaterwayTypes": [
+      "stream",
+      "river"
+    ],
+    "$osmComment": "✅ Resolved 2026-07-31, completed 2026-08-02. The ravine is FIVE named reaches in series, all waterway=stream, listed here in downstream order. Joins verified on endpoint geometry, not on names: Barranco de Chiva ends at -0.6361,39.4994 where Rambla de Poyo starts; Rambla de Poyo ends at -0.6171,39.4846 where Rambla de Poio starts; both are 0 m. ⚠️ Barranc dels Cavalls was missing from the first list and its absence was NOT visible as an error: the stitcher simply dropped the reach beyond the resulting 2.1 km gap, the flow field built cleanly, and the modelled river ran down the upper ravine and stopped 9 km short of Paiporta - a flood along an empty valley, with all ten focus towns between 4.6 and 11.9 km off the reach. Found by querying every waterway in the gap box regardless of name: it sits 12 m from the Poio end and 5 m from the Barranc de Xiva start. The check that the whole chain is the RIGHT watercourse is the towns, not the names: it passes Paiporta at 95 m, Picanya at 476 m, Torrent at 594 m and Catarroja at 668 m - the places the 29 October 2024 flood hit.",
+    "chainageStepM": 25,
+    "flowDirection": "downstream-east",
+    "$comment": "A barranc, not a river: dry for most of the year and mapped as an ephemeral watercourse. It runs west to east from the Chiva hills into the Albufera lagoon, and on 29 October 2024 it carried the flood that reached Paiporta and Catarroja. Its normally dry bed is the reason the hazard was underestimated — the same 'it has never done that here' failure the Ahr shows, in a different form."
+  },
+  "focusPlaces": [
+    {
+      "id": "aldaia",
+      "name": "Aldaia",
+      "lat": 39.4601,
+      "lon": -0.48058
+    },
+    {
+      "id": "torrent",
+      "name": "Torrent",
+      "lat": 39.43667,
+      "lon": -0.46562
+    },
+    {
+      "id": "picanya",
+      "name": "Picanya",
+      "lat": 39.4354,
+      "lon": -0.43588
+    },
+    {
+      "id": "paiporta",
+      "name": "Paiporta",
+      "lat": 39.42797,
+      "lon": -0.41843
+    },
+    {
+      "id": "albal",
+      "name": "Albal",
+      "lat": 39.39564,
+      "lon": -0.41508
+    },
+    {
+      "id": "massanassa",
+      "name": "Massanassa",
+      "lat": 39.41086,
+      "lon": -0.40008
+    },
+    {
+      "id": "catarroja",
+      "name": "Catarroja",
+      "lat": 39.40337,
+      "lon": -0.40288
+    },
+    {
+      "id": "benetusser",
+      "name": "Benetússer",
+      "lat": 39.42289,
+      "lon": -0.39748
+    },
+    {
+      "id": "alfafar",
+      "name": "Alfafar",
+      "lat": 39.42007,
+      "lon": -0.38914
+    },
+    {
+      "id": "sedavi",
+      "name": "Sedaví",
+      "lat": 39.42471,
+      "lon": -0.38346
+    }
+  ],
+  "$focusPlacesComment": "OpenStreetMap place nodes, filtered to those inside the Copernicus footprint and ordered roughly upstream to downstream along the barranc — increasing longitude, since it drains west to east. Chiva and Cheste, where much of the rain fell, are 5 km west of this box and belong to their own Copernicus AOIs (AOI02, AOI10); they are deliberately absent rather than drawn without data behind them. ⚠️ Aldaia flooded from the Barranc de la Saleta rather than the Poyo, so its chainage on the Poyo centreline is not the route its water took — it is listed because it is inside the mapped area, and the distinction belongs in the UI before any per-place timing is shown.",
+  "valley": {
+    "corridorM": 4000,
+    "$comment": "Wider than the Ahr's 2 000 m. There is no valley here to speak of once the barranc leaves the hills: the flood spread across a flat, densely built plain, so a narrow corridor would exclude the towns that actually flooded."
+  },
+  "gauges": [],
+  "$gaugesComment": "⚠️ Deliberately empty. The Ahr carries three gauges with HVZ station numbers because those were verified against a live API. The equivalent here is the SAIH of the Confederación Hidrográfica del Júcar, and no station has been verified yet. An unverified station number would look exactly like a verified one, so the list stays empty until one is fetched and checked.",
+  "copernicus": {
+    "activation": "EMSR773",
+    "activationName": "Flood in Valencia Region, Spain",
+    "aoiNumber": 3,
+    "aoiName": "Horta Sud",
+    "eventTimeUtc": "2024-10-29T14:30:00",
+    "products": [
+      "DEL",
+      "GRA"
+    ],
+    "layers": [
+      "observedEventA",
+      "maximumFloodExtentA",
+      "floodDepthA"
+    ],
+    "$comment": "Verified against the rapid-mapping API on 2026-07-29, not assumed. Unlike EMSR517 this activation publishes floodDepthA as well as an extent, so the validation here can compare depth against depth rather than extent alone."
+  },
+  "geobasis": {
+    "authority": "Instituto Geográfico Nacional (IGN), España",
+    "service": "https://servicios.idee.es/wcs-inspire/mdt",
+    "coverage": "Elevacion4258_5",
+    "licence": "CC BY 4.0",
+    "attribution": "© Instituto Geográfico Nacional de España, CC BY 4.0",
+    "dop": {
+      "service": "https://www.ign.es/wms-inspire/pnoa-ma",
+      "layer": "OI.OrthoimageCoverage",
+      "$comment": "PNOA (Plan Nacional de Ortofotografia Aerea) via IGN, national coverage, CC BY 4.0 - the same authority as this AOI's MDT. Verified 2026-08-02. There is also www.ign.es/wms/pnoa-historico with a PNOA2024 layer, i.e. the year of the flood; the current mosaic is used as the base map for the same reason the German AOIs use current DOP - a base map should be legible, not a snapshot."
+    }
+  },
+  "insurance": {
+    "model": "german-elementar",
+    "$comment": "⚠️ Knowingly wrong for Spain, and kept anyway. The synthetic portfolio uses the German product model — Elementarbaustein, Wartezeit, Selbstbehalt — because the whole point of the vertical asset is that the same Act IV levers run over any area of interest. Spain does not work that way: the Consorcio de Compensación de Seguros covers extraordinary risks automatically for anyone holding an ordinary policy, so a Spanish 'Elementar-Quote' has no real counterpart and the DANA's coverage failure was not an insurance-penetration failure at all — it was warning time. Every figure here stays synthetic and labelled synthetic, and this note exists so that nobody later mistakes the model for a statement about the Spanish market."
+  }
+}

@@ -1,0 +1,46 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-blue-50: oklch(0.97 0.014 254.6);
+  --color-blue-100: oklch(0.932 0.032 255.6);
+  --color-blue-500: oklch(0.623 0.214 259.1);
+  --color-blue-600: oklch(0.546 0.245 262.9);
+  --color-blue-700: oklch(0.488 0.243 264.4);
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/*
+ * Cesium's credit container is hard-coded to the bottom LEFT of the widget — which in this app is
+ * exactly where the Fleet panel sits, so every data credit was rendered underneath it and could not
+ * be read at all. That is not only untidy: in photoreal mode this container carries Google's and
+ * Cesium ion's own required logos, so hiding it is an attribution problem, not a layout one.
+ * Move it to the bottom right, clear of the panel and above the map controls' lowest row.
+ */
+.cesium-widget-credits {
+  /* Cesium ships this element as position: static, so left/right/bottom are inert until it is
+     taken out of flow. Measured live: the rule applied and nothing moved. */
+  position: absolute !important;
+  left: auto !important;
+  right: 0.75rem !important;
+  bottom: 0.5rem !important;
+  text-align: right;
+  max-width: 46ch;
+}

@@ -1,0 +1,28 @@
+
+.create-merge table PegelMessung (
+    Messstelle: string,
+    Messstellennummer: string,
+    Zeitpunkt: datetime,
+    WasserstandCm: real,
+    Quelle: string
+)
+
+.create-or-alter table PegelMessung ingestion json mapping 'PegelMessungMapping'
+'['
+'  {"column":"Messstelle","path":"$.messstelle","datatype":"string"},'
+'  {"column":"Messstellennummer","path":"$.messstellennummer","datatype":"string"},'
+'  {"column":"Zeitpunkt","path":"$.zeitpunkt","datatype":"datetime"},'
+'  {"column":"WasserstandCm","path":"$.wasserstandCm","datatype":"real"},'
+'  {"column":"Quelle","path":"$.quelle","datatype":"string"}'
+']'
+
+// Rollierende Kennzahlen für das Live-Panel.
+.create-or-alter function PegelAnstieg() {
+    PegelMessung
+    | order by Messstelle asc, Zeitpunkt asc
+    | extend VorherWert = prev(WasserstandCm), VorherZeit = prev(Zeitpunkt), VorherStelle = prev(Messstelle)
+    | where Messstelle == VorherStelle
+    | extend MinutenDelta = datetime_diff('minute', Zeitpunkt, VorherZeit)
+    | where MinutenDelta > 0
+    | extend AnstiegCmProStunde = (WasserstandCm - VorherWert) * 60.0 / MinutenDelta
+}

@@ -1,0 +1,39 @@
+id: helsinki-public-transport
+name: Helsinki Public Transport
+version: 1.0.0
+services:
+  auth:
+    enabled: true
+    fabric:
+      enabled: true
+    # ⚠️ `rayfin up` rewrites this file and will re-add whatever host it just deployed to.
+    # That host is tenant- and item-specific, so it must not travel into a public repo — check
+    # this list before publishing. Whoever deploys adds their own `https://<their-app-host>`
+    # AND `https://<their-app-host>/auth/callback`, then runs a full `rayfin up`
+    # (a `staticapp deploy` alone does not re-register them).
+    allowedRedirectUris:
+      - http://localhost:5173
+      - http://127.0.0.1:5173
+  data:
+    enabled: true
+    dialect: mssql
+  storage:
+    enabled: false
+  functions:
+    enabled: false
+  staticHosting:
+    enabled: true
+    folder: dist
+    buildCommand: npm run build:fabric
+    indexDocument: index.html
+connectors:
+  hslModel:
+    connector: fabric-semanticmodel
+    version: "1"
+    auth:
+      type: delegated
+    config:
+      workspaceId: ${FABRIC_WORKSPACE_ID}
+      itemId: <your-dataset-id>
+    operations:
+      - name: executeQuery

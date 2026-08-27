@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.env
+.env.local
+rayfin/.env
+rayfin/.deployments.json
+
+# tenant-specific live-query endpoints (copy config/live.example.json)
+config/live.json
+
+# regenerable data extracts (data is inlined into index.html)
+tools/data/hi_stud.json
+tools/data/hi_anf.json
+tools/data/hi_appdata.json

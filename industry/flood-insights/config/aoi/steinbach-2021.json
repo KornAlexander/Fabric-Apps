@@ -1,0 +1,94 @@
+{
+  "$comment": "The Steinbachtalsperre corridor as a full AOI rather than a hardcoded rectangle. Until 2026-07-29 this scene had no config at all — its bbox, resolution and origin lived in build_steinbach_terrain.py, which is exactly the coupling PLAN §14 Q2 forbids and the reason it could only ever carry terrain. With a config it can run the same pipeline the Ahr does: DGM terrain, LoD2 buildings, canopy from the surface model, OSM land use.",
+  "id": "steinbach-2021",
+  "event": {
+    "name": {
+      "de": "Steinbachtalsperre — die Talsperre, die hielt",
+      "en": "Steinbach reservoir — the dam that held"
+    },
+    "startUtc": "2021-07-14T12:00:00Z",
+    "peakUtc": "2021-07-14T18:00:00Z",
+    "$peakComment": "20:00 CEST on 14 July is the failure time the Hydrotec dam-break study ASSUMES, not a time anything happened — the dam did not fail. It is here because the scenario's arrival times are all relative to it. Nothing in this AOI is a measured event time.",
+    "endUtc": "2021-07-19T12:00:00Z",
+    "timelineStartUtc": "2021-07-14T00:00:00Z",
+    "timelineEndUtc": "2021-07-19T12:00:00Z"
+  },
+  "bbox": {
+    "crs": "EPSG:4326",
+    "west": 6.818,
+    "east": 6.888,
+    "south": 50.575,
+    "north": 50.632,
+    "$comment": "~5.0 x 6.3 km — deliberately small. The old corridor box was 7.6 x 16.5 km at 20 m, which carried the whole route to Heimerzheim and could only ever be a relief map. This one covers the reservoir, the dam and the two places the study says the water would have reached first, at a resolution where buildings and trees are worth drawing. South 50.575 is chosen to include the reservoir basin itself, because the water rising behind the dam is the part of that night that actually happened.",
+    "$notComment": "The full 15 km to Heimerzheim is NOT in this box. The scenario's arrival times still run to 150 minutes, so the front leaves the map before the story ends — see steinbachCorridor.ts. Showing four villages badly was worse than showing two properly."
+  },
+  "workingCrs": "EPSG:25832",
+  "verticalDatum": "DHHN2016",
+  "grids": {
+    "terrainResolutionM": 2,
+    "$terrainComment": "2 m rather than the Ahr's 4 m: the box is a twentieth of the area, so a finer grid costs less than the Ahr's does and the dam wall itself is only about 5 m wide at the crest — at 4 m it would not survive resampling.",
+    "flowResolutionM": 16
+  },
+  "river": {
+    "name": "Steinbach",
+    "osmWaterwayRef": [
+      "Steinbach",
+      "Orbach"
+    ],
+    "osmWaterwayTypes": [
+      "stream"
+    ],
+    "chainageStepM": 25,
+    "flowDirection": "downstream-north",
+    "releasePlaceId": "steinbachtalsperre",
+    "$comment": "Resolved 2026-07-30 by querying Overpass for the box rather than guessing a name. The Steinbach is present as 8 ways / 519 nodes tagged waterway=stream, spanning lat 50.5694–50.6131. The Orbach picks up at 50.6131 — the same latitude the Steinbach ends, which is Schweinheim — and runs north to the edge of the box at 50.6342. So the dam's outflow is two named reaches in series, not one, and both are streams rather than rivers because they are a few metres wide. Matching only waterway=river found nothing and fetch_osm.py stopped, which was the guard working: the reach existed and the filter was too narrow.",
+    "$orderComment": "The order of osmWaterwayRef is the downstream order, and chainage is stitched in that order. Reversing it would run the flood uphill."
+  },
+  "focusPlaces": [
+    {
+      "id": "steinbachtalsperre",
+      "name": "Steinbachtalsperre",
+      "lon": 6.83748,
+      "lat": 50.5907
+    },
+    {
+      "id": "schweinheim",
+      "name": "Schweinheim",
+      "lon": 6.86946,
+      "lat": 50.61331
+    },
+    {
+      "id": "flamersheim",
+      "name": "Flamersheim",
+      "lon": 6.85099,
+      "lat": 50.62396
+    }
+  ],
+  "$focusPlacesComment": "Three, not five. Palmersheim, Odendorf and Heimerzheim are outside this box by design — the study's arrival times still name them, and the scene says so, but a map that draws them at 20 m to keep them on screen was the thing being fixed.",
+  "geobasis": {
+    "authority": "Geobasis NRW (Bezirksregierung Köln)",
+    "licence": "dl-de/zero-2-0",
+    "attribution": "© GeoBasis-DE / BKG / Land NRW (2026), dl-de/zero-2-0, www.govdata.de/dl-de/zero-2-0",
+    "$comment": "⚠️ A DIFFERENT authority from the Ahr's. Rheinland-Pfalz publishes under dl-de/by-2-0 (attribution required); NRW publishes under dl-de/zero-2-0 (no conditions). Both attributions must appear, and neither may be reused for the other AOI.",
+    "catalogue": "https://www.opengeodata.nrw.de/produkte/geobasis/",
+    "products": {
+      "dgm1": "hm/dgm1_tiff/dgm1_tiff/",
+      "dom1": "hm/dom1_tiff/dom1_tiff/",
+      "ndom50": "hm/ndom50_tiff/ndom50_tiff/",
+      "lod2": "3dg/lod2_gml/lod2_gml/"
+    },
+    "tileNaming": "LoD2_32_<easting-km>_<northing-km>_1_NW.gml — 1 km tiles, UTM32 south-west corner. Verified 2026-07-29: 35 022 tiles statewide, 9 of them within 2 km of the dam.",
+    "$ndomNote": "ndom50 is DOM minus DGM already normalised to canopy height, so this AOI can skip the subtraction build_vegetation.py does for the Ahr — where only DOM1 and DGM1 are published separately.",
+    "dop": {
+      "service": "https://www.wms.nrw.de/geobasis/wms_nw_dop",
+      "layer": "nw_dop_rgb",
+      "$comment": "DOP from Geobasis NRW, matching this AOI's DGM1 authority. A DIFFERENT service from the Ahr's and under a different licence (dl-de/zero-2-0, not by-2-0) - neither may be used for the other AOI."
+    }
+  },
+  "reservoir": {
+    "$comment": "The part of this night that is not a scenario. The reservoir filled to the point where overtopping was expected and the dam was feared lost; it held. Levels come from the e-regio operator FAQ already cited in src/data/steinbach.ts — nothing here is modelled by this app.",
+    "crestM": 300.5,
+    "fullSupplyM": 297.5,
+    "$levelComment": "⚠️ Placeholder pending the figures already in src/data/steinbach.ts (DAM_CREST_M, DAM_FULL_SUPPLY_M). Wire them from there rather than restating them, so there is one source for the number."
+  }
+}

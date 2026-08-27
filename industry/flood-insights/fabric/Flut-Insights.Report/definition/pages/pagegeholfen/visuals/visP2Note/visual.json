@@ -1,0 +1,48 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "visP2Note",
+  "position": {
+    "x": 24,
+    "y": 660,
+    "z": 200,
+    "height": 54,
+    "width": 1232,
+    "tabOrder": 200
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "horizontalTextAlignment": "left",
+                "textRuns": [
+                  {
+                    "value": "Wie die Gegenrechnung entsteht:  ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#12212E",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": "Die Kontrafaktik unterstellt keine bessere Regulierung, sondern rechnet die nicht gedeckten Schäden mit der Quote hoch, die bei gedeckten Schäden tatsächlich erreicht wurde. Der Sockel-Hebel ist eine obere Schranke: er unterstellt, dass unterhalb der Sockelhöhe gar kein Schaden entsteht — Keller und Gründung schützt eine höhere Schwelle nicht.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#7A8590"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

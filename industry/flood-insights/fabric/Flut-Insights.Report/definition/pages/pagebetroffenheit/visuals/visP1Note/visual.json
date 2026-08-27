@@ -1,0 +1,48 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "visP1Note",
+  "position": {
+    "x": 24,
+    "y": 660,
+    "z": 200,
+    "height": 54,
+    "width": 1232,
+    "tabOrder": 200
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "horizontalTextAlignment": "left",
+                "textRuns": [
+                  {
+                    "value": "Lesehilfe:  ",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#12212E",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": "Die Gefährdungsklassen GK2–GK4 wurden aus derselben Simulation abgeleitet, die auch die Wassertiefen liefert. Dass sie hier zu 100 % überflutet sind, ist deshalb keine Bestätigung der Gefahrenkarte, sondern eine Folge der Herleitung. Aussagekräftig sind allein die GK1-Gebäude, die trotz niedriger Klasse Wasser bekamen.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "9pt",
+                      "color": "#7A8590"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

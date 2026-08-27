@@ -1,0 +1,14 @@
+model Model
+	culture: de-DE
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: de-DE
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+ref table 'Gebäude'
+ref table 'Police'
+ref table 'Schaden'
+ref table 'Measure'
+ref table 'Sockelhöhe'
+ref expression 'DatabaseQuery'

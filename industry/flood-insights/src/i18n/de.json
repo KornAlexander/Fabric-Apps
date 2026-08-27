@@ -1,0 +1,497 @@
+{
+  "app": {
+    "title": "Flut-Insights",
+    "subtitle": "Ahrtal, 14./15. Juli 2021"
+  },
+  "disclaimer": {
+    "short": "Demonstrations- und Schulungszweck.",
+    "full": "Demonstrations- und Schulungszweck. Keine reale Risikobewertung, keine Grundlage für Versicherungs- oder Finanzierungsentscheidungen."
+  },
+  "synthetic": {
+    "badge": "synthetisch",
+    "notice": "Gebäudegeometrie und Straßennamen sind real. Alle Versicherungsdaten — Kundinnen und Kunden, Verträge, Versicherungssummen, Schäden — sind frei erfunden und synthetisch erzeugt. Die Musterschutz Gruppe ist ein fiktives Unternehmen."
+  },
+  "facts": {
+    "reconstruction": "rekonstruiert"
+  },
+  "steinbach": {
+    "open": "Hintergrund und Quellen",
+    "close": "Schließen",
+    "title": "Die Talsperre, die hielt",
+    "subtitle": "Steinbachtalsperre · 14. bis 19. Juli 2021",
+    "intro": "In derselben Nacht, in der die Ahr durch ihr Tal lief, stand rund 14 Kilometer nordwestlich von Altenahr ein Erdschüttdamm aus dem Jahr 1936 kurz vor dem Versagen. Er hielt. Was ihn beinahe zum Einsturz brachte, war kein Rekordabfluss in einem Fluss, sondern Wasser, das über eine Krone lief, für die es nie vorgesehen war.",
+    "notOnMap": "Diese Karte ist nicht das Ahrtal. Das Wasser der Talsperre fließt in die andere Richtung — Steinbach, Orbach, Jungbach, Swist, Erft, Rhein — und hat das Ahrtal nie erreicht. Zwei Einzugsgebiete, zwei Karten, dieselbe Nacht.",
+    "structureHeading": "Das Bauwerk",
+    "crest": "Höhe der Dammkrone",
+    "fullSupply": "Stauziel",
+    "height": "Höhe über der Talsohle",
+    "storage": "Speicherraum",
+    "designFlood": "Die Hochwasserentlastung war bemessen auf",
+    "actualOutflow": "Am Abend des 14. Juli flossen in der Spitze",
+    "multiple": "das {{factor}}-fache dessen, wofür das Bauwerk ausgelegt war.",
+    "nightHeading": "Die Nacht",
+    "moment": {
+      "fullSupply": "Der Vollstau ist erreicht.",
+      "reported": "Die Betreiberin meldet der Bezirksregierung einen Stauspiegel von 278,88 m ü. NN.",
+      "authorityInformed": "Katastrophenschutz und Bezirksregierung werden über die drohende Überströmung informiert.",
+      "sirens": "Sirenenalarm in Swisttal, 2,5 km unterhalb des Damms.",
+      "overtopping": "Der Kronenstau ist erreicht, der Damm wird überströmt.",
+      "evacuation": "Die Evakuierung der unterliegenden Orte beginnt.",
+      "overtoppingEnds": "Die Überströmung endet."
+    },
+    "nightSummary": "Das Wasser stand rund {{overtopping}} m über der Krone. Auf {{erosion}} m Breite erodierten Flutrinnen in die Luftseite, und der Damm galt als einsturzgefährdet. Rund {{people}} Menschen in drei Kommunen und zwei Kreisen verließen ihre Häuser.",
+    "held": "Der Damm hielt.",
+    "scenarioHeading": "Das berechnete Szenario",
+    "scenarioIntro": "Vierzehn Monate später legte ein Ingenieurbüro im Auftrag der Betreiberin eine Modellrechnung vor: Was wäre geschehen, wenn der Damm gebrochen wäre? Die Annahmen der Rechnung sind bewusst ungünstig gewählt.",
+    "assumption1": "Die Talsperre steht bis zur Krone voll, wie am 14. Juli 2021.",
+    "assumption2": "Es gibt keinen zusätzlichen Zufluss durch Regen.",
+    "assumption3": "Der Damm bricht innerhalb weniger Sekunden vollständig weg.",
+    "scenarioResult": "Zehn Minuten nach dem Bruch erreicht das Wasser Schweinheim.",
+    "depthAtSchweinheim": "Wassertiefe in Schweinheim",
+    "velocity": "Fließgeschwindigkeit",
+    "volume": "Freigesetztes Volumen",
+    "notPublished": "nicht angegeben",
+    "leverHeading": "Vorwarnzeit",
+    "leverIntro": "Angenommen, der Damm wäre um 20:00 Uhr gebrochen — in dem Moment, in dem er tatsächlich überströmt wurde und die Luftseite erodierte. Die Zeitpunkte unten sind belegte Uhrzeiten aus dieser Nacht. Verschieben Sie den Regler, um zu sehen, wie viel Zeit flussabwärts geblieben wäre.",
+    "warningAt": "Warnung ausgelöst um",
+    "placeColumn": "Ort",
+    "arrival": "Wasser da um",
+    "leadTime": "Vorwarnzeit",
+    "minutes": "{{minutes}} min",
+    "tooLate": "{{minutes}} min zu spät",
+    "noDanger": "keine Gefährdung",
+    "places": {
+      "schweinheim": "Schweinheim",
+      "palmersheim": "Palmersheim",
+      "odendorf": "Odendorf",
+      "heimerzheim": "Heimerzheim",
+      "flamersheim": "Flamersheim"
+    },
+    "conclusion": "Die Rechnung führt zu einem Satz, der die Lehre dieser Nacht zusammenfasst: Nach einem Dammbruch wäre für eine Evakuierung keine Zeit mehr geblieben. Sie musste vorher stattfinden.",
+    "evacuationRight": "Dieselbe Modellrechnung bestätigte, dass die Entscheidung, Schweinheim, Palmersheim und Flamersheim zu räumen, richtig war — und dass kein Bereich ausgelassen wurde, in dem ein Bruch schwere Schäden angerichtet hätte. Für Heimerzheim ergibt das Modell keine Gefährdung, weil die A 61 wie ein Damm wirkt.",
+    "notice": "Der Dammbruch ist nicht eingetreten. Alle Angaben zum Szenario stammen aus einer veröffentlichten Modellrechnung der Hydrotec Ingenieurgesellschaft für Wasser und Umwelt mbH, vorgestellt am 28. September 2022. Diese Anwendung rechnet keinen Dammbruch selbst und stellt keinen auf einer Karte dar. Die Vorwarnzeiten oben sind Differenzen belegter Uhrzeiten; sie enthalten kein Evakuierungsmodell und keine Aussage darüber, wie viele Menschen in dieser Zeit hätten gehen können.",
+    "didNotHappen": "Szenario — der Bruch ist nicht eingetreten",
+    "sceneLoading": "Gelände wird geladen …",
+    "sceneUnavailable": "Das Geländemodell für den Korridor ist nicht verfügbar. Die Zahlen unten stammen unverändert aus der Studie.",
+    "minutesAfterBreak": "{{minutes}} Minuten nach dem angenommenen Bruch",
+    "frontSpeed": "Front {{speed}} m/s",
+    "sceneTerrainNote": "Gelände: DGM1 Geobasis NRW, auf 2 m gerechnet, unverzerrt dargestellt — keine Überhöhung. Gebäude sind LoD2-Katasterkörper, Bäume aus dem Oberflächenmodell (DOM1 minus DGM1) gemessen, Landnutzung aus OpenStreetMap. Die Wasserfläche ist eine simulierte Wassertiefe, keine Messung: 1,5 Mio. m³ aus der Sperre, gerechnet über die realen Querprofile des Steinbachs und des Orbachs. Die Studie nennt Tiefen nur für zwei der vier Orte — die fehlenden werden nicht erfunden, sondern ergeben sich aus dem freigesetzten Volumen und dem Gelände. Geprüft wird das Modell an der einen veröffentlichten Tiefe: Schweinheim nach zehn Minuten.",
+    "studyConclusion": "Die Studie kommt selbst zu dem Schluss, dass die Evakuierung von Schweinheim, Palmersheim und Flamersheim richtig war und kein Bereich ausgelassen wurde, in dem ein Bruch ernsthaften Schaden angerichtet hätte.",
+    "flyToDam": "Zur Talsperre fliegen",
+    "flyToCorridor": "Ganzen Verlauf zeigen",
+    "didHappen": "Beobachtet — die Talsperre füllt sich",
+    "beforeOvertopping": "Uhr, vor dem Überlaufen",
+    "filling": "Wasserstand zwischen {{full}} m ü. NHN (Vollstau, 16:35 erreicht) und {{crest}} m ü. NHN (Kronenhöhe, 20:00 überströmt). Der Verlauf dazwischen ist interpoliert; nur die beiden Stände sind belegt.",
+    "atCrest": "Wasserstand auf Kronenhöhe, {{crest}} m ü. NHN. Ab hier läuft die Talsperre über — weiteres Wasser hebt den Spiegel nicht, es geht oben ab."
+  },
+  "remembrance": {
+    "eyebrow": "Vor dem Start",
+    "heading": "14. und 15. Juli 2021",
+    "paragraph1": "In der Nacht vom 14. auf den 15. Juli 2021 fiel im Einzugsgebiet der Ahr innerhalb weniger Stunden ein Vielfaches der üblichen Julimenge an Regen. Der Pegel Altenahr wurde im Verlauf der Nacht zerstört — der Scheitel ist bis heute eine Rekonstruktion, und das Landesamt für Umwelt gibt dafür ausdrücklich nur einen Wertebereich an:",
+    "paragraph1b": "Zum Vergleich: der bis dahin höchste gemessene Abfluss an diesem Pegel lag bei",
+    "paragraph1c": "und der 100-jährliche Hochwasserabfluss bei",
+    "paragraph2": "In Rheinland-Pfalz starben {{fatalities}} Menschen, die meisten davon an der Ahr.",
+    "purpose": "Diese Anwendung rekonstruiert den Ablauf aus öffentlichen Daten, um zu zeigen, was bekannt war, was gefehlt hat und was heute anders möglich ist.",
+    "continue": "Weiter",
+    "sourceLabel": "Quelle",
+    "sourcePending": "Quelle ausstehend — diese Zahl darf nicht ausgeliefert werden."
+  },
+  "nav": {
+    "act1": "Was wussten wir?",
+    "act2": "Die Nacht",
+    "act3": "Der Schaden",
+    "act4": "Was hätte geholfen?"
+  },
+  "shell": {
+    "phaseNotice": "Phase 0 — Gerüst. Der Datenzwilling ist noch nicht gebaut.",
+    "planLink": "Plan lesen"
+  },
+  "twin": {
+    "timeline": "Zeitachse",
+    "collapsePanel": "Bedienfeld auf die Zeitachse reduzieren",
+    "expandPanel": "Bedienfeld ausklappen",
+    "modelNoticeShort": "Simulierte Wassertiefe, keine Messung.",
+    "trees": "Bäume",
+    "showTrees": "Bäume einblenden",
+    "hideTrees": "Bäume ausblenden",
+    "loading": "Karte wird geladen",
+    "loadingStart": "Verbindung wird aufgebaut …",
+    "loadingStep": "Schritt {{step}} von {{of}}",
+    "loading_terrain": "Geländemodell und Fließwege",
+    "loading_buildings": "Gebäude aus dem Liegenschaftskataster",
+    "loading_vegetation": "Bäume aus dem Oberflächenmodell",
+    "landuse": "Landnutzung",
+    "showLanduse": "Landnutzung einblenden",
+    "hideLanduse": "Landnutzung ausblenden",
+    "hazard": "Gefährdungsklassen",
+    "showHazard": "Gefährdungsklassen einblenden",
+    "hideHazard": "Gefährdungsklassen ausblenden",
+    "hazardLegendTitle": "Gefährdungsklasse, abgeleitet",
+    "hazardGk4": "HQ10 und häufiger",
+    "hazardGk3": "HQ10–HQ100",
+    "hazardGk2": "HQ100–HQ200",
+    "hazardGk1": "seltener als HQ200",
+    "hazardNotice": "Eigene Ableitung aus öffentlichen Daten (LfU-Jährlichkeiten, DGM1) — nicht ZÜRS. Die HQ200-Grenze ist extrapoliert, die LfU-Tabelle endet bei HQ100. Ungefärbte Flächen erreicht die Ahr bei keinem Abfluss. Eine Klasse sagt, wie selten ein Hochwasser ist, nicht wie sicher ein Ort ist: 2021 stand auch GK1- und GK2-Boden unter Wasser.",
+    "hazardEvidence": "Im Verlauf der Nacht: {{low}} von {{flooded}} überfluteten Gebäuden ({{share}} %) liegen in GK1 oder GK2.",
+    "north": "N",
+    "faceNorth": "Karte nach Norden ausrichten",
+    "exaggeration": "Überhöhung",
+    "exaggerationOn": "Höhen 1,5-fach überhöht darstellen",
+    "trueScaleOn": "Höhen unverzerrt darstellen",
+    "scaleTrue": "unverzerrt dargestellt, ohne Überhöhung",
+    "scaleExaggerated": "in der Darstellung 1,5-fach überhöht",
+    "places": "Orte im Tal",
+    "collapsePlaces": "Ortsliste einklappen",
+    "expandPlaces": "Ortsliste ausklappen",
+    "placesNote": "Flussabwärts geordnet. Die Zeit ist der modellierte Scheitel an diesem Ort — zum Springen anklicken.",
+    "placesSpan": "Zwischen {{from}} und {{to}} liegen {{span}} — so lange braucht der Scheitel durch das Tal.",
+    "spanHoursMinutes": "{{hours}} Std. {{minutes}} Min.",
+    "peakHere": "Scheitel",
+    "jumpToPeak": "Zum Scheitel springen in",
+    "play": "Ablauf abspielen",
+    "speedLabel": "Abspielgeschwindigkeit",
+    "pause": "Ablauf anhalten",
+    "replay": "Ablauf erneut abspielen",
+    "discharge": "Abfluss",
+    "modelNotice": "Simulierte Wassertiefe, keine Messung. Der Ganglinienverlauf ist modelliert und an die amtlich veröffentlichten Werte des Landesamts für Umwelt angebunden (Scheitel 800–1.230 m³/s, 980 cm — rekonstruiert). Das Geländemodell wurde 2024/2025 erfasst und zeigt den Zustand nach Flut und Wiederaufbau. Gelände 88–517 m ü. NHN, {{scale}}. Die Bäume stehen dort, wo das Oberflächenmodell (DOM1 minus DGM1) Bewuchs misst; Höhe, Kronenbreite und Kronenform sind ebenfalls gemessen — die Form trennt nadel- von laubartigen Kronen, ist aber keine Artbestimmung. Die Landnutzung — Weinberge, Wald, Acker, Siedlung, Straßen und die Ahrtalbahn — stammt aus OpenStreetMap und bildet den heutigen Stand ab, nicht den von 2021; sie färbt ausschließlich die Oberfläche und geht in keine Berechnung ein. Das Luftbild ist das aktuelle DOP20 des Landes und damit nach Flut und Wiederaufbau geflogen, nicht 2021: zerstörte Gebäude fehlen darauf, wieder aufgebaute stehen darin. Es liegt lagerichtig — geprüft gegen die Katastergrundrisse —, zeigt aber nicht den Tag, den die Simulation zeigt.",
+    "drape": "Luftbild",
+    "showDrape": "Luftbild einblenden",
+    "hideDrape": "Luftbild ausblenden",
+    "photoreal": "Fotorealistisch",
+    "showPhotoreal": "Fotorealistische Darstellung einschalten",
+    "hidePhotoreal": "Fotorealistische Darstellung ausschalten",
+    "photorealNotice": "Fotorealistisch: Das Luftbild liegt unter der Kamera in 50 cm je Bildpunkt statt 2,9 m (DOP20, Fenster von 1 km um den Ort); außerhalb dieses Fensters bleibt es beim Flächenbild. Dächer zeigen ihre eigenen Bildpunkte statt einer gemessenen Mischfarbe. Das verändert nur die Darstellung — Gelände, Wasserstände und alle Kennzahlen bleiben unberührt. Die Befliegung ist aktuell, nicht von 2021: das DOP20 dieser Karte stammt aus zwei Bildflügen des Jahres 2023 (östlich 27.05., westlich 07.09.), die kurz westlich von Altenahr aneinanderstoßen. Ihre Helligkeit ist aneinander angeglichen — gemessen, per Gamma, der schärfere Flug bleibt unverändert; der Farbtonunterschied bleibt bestehen.",
+    "freeFly": "Drohne",
+    "freeFlySpeedLabel": "Tempo",
+    "freeFlyIdleHint": "oder W A S D drücken",
+    "freeFlyHelp": "W A S D fliegen, Q und E ab und auf, R und F kreisen um den Punkt in der Bildmitte, Ziehen dreht die Blickrichtung, das Mausrad ist der Gashebel, Shift beschleunigt kurz. Kurz nichts drücken und die Karte bekommt die Kamera zurück — dann zoomt das Mausrad wieder und Ziehen dreht wieder um den Mittelpunkt. Ohne Kollision — das ist eine Kamera, kein Flugsimulator: sie fliegt auch durch den Hang."
+  },
+  "attribution": {
+    "heading": "Datenherkunft",
+    "intro": "Jede Ebene dieser Anwendung stammt aus offen lizenzierten Daten."
+  },
+  "validation": {
+    "heading": "Validierung gegen Copernicus",
+    "met": "Die simulierte Ausdehnung erreicht das Ziel von {{target}}.",
+    "notMet": "Das Modell übersieht kaum etwas, überflutet aber zu viel Fläche. Das Ziel von {{target}} wird damit nicht erreicht.",
+    "hitRate": "Trefferquote",
+    "falseAlarm": "Fehlalarmquote",
+    "observed": "Beobachtet",
+    "simulated": "Simuliert",
+    "explain": {
+      "open": "Was heißt das?",
+      "title": "Was die Validierung bedeutet",
+      "subtitle": "IoU {{iou}} — Übereinstimmung mit der Satellitenkarte",
+      "tldrLabel": "Kurz gefasst",
+      "tldr1": "Das Modell übersieht kaum etwas: {{hit}} % der beobachteten Überflutungsfläche findet es wieder.",
+      "tldr2": "Aber es überflutet zu viel — {{over}} % mehr Fläche als der Satellit kartiert hat, also {{km2}} km² zusätzlich.",
+      "tldr3": "Deshalb: Zahlen zur Ausdehnung sind eher Obergrenzen. Wo das Modell trocken zeigt, war es sehr wahrscheinlich trocken.",
+      "whatHeading": "Was die Zahl misst",
+      "whatBody": "IoU vergleicht zwei Karten derselben Flut — die des Satelliten und die des Modells. Die gemeinsame Fläche wird durch die Gesamtfläche beider geteilt. 1,0 hieße deckungsgleich, 0 hieße keine Überschneidung.",
+      "statObserved": "Satellit kartiert",
+      "statSimulated": "Modell überflutet",
+      "statShared": "gemeinsam",
+      "statIou": "IoU",
+      "formula": "{{shared}} km² gemeinsam ÷ {{combined}} km² zusammen = {{iou}}",
+      "errorHeading": "Zwei Arten von Fehler — und nur eine ist groß",
+      "missTitle": "übersehen",
+      "missBody": "Anteil der beobachteten Fläche, die das Modell trocken lässt.",
+      "falseTitle": "zu viel überflutet",
+      "falseBody": "Anteil der Modellfläche, der auf der Satellitenkarte nicht vorkommt — {{km2}} km².",
+      "impactHeading": "Wie sehr fällt das ins Gewicht?",
+      "impactBody": "Die zusätzliche Fläche ist kein dünner Saum. Ihre mittlere Tiefe beträgt {{median}} m, ein Viertel davon liegt tiefer als {{p75}} m, und nur {{shallow}} % sind flacher als ein halber Meter. Das Modell greift also mit echtem Wasser zu weit, nicht mit einem Film.",
+      "upperBound": "Praktische Folge: Alle aus der Ausdehnung abgeleiteten Zahlen — betroffene Gebäude, Personen im Gefahrenbereich, Schadensumme — sind eher Obergrenzen als Punktwerte. Die Fläche fällt um {{over}} % zu groß aus.",
+      "lowerBound": "Der Umkehrschluss trägt dagegen: Wo das Modell trocken zeigt, war es mit hoher Wahrscheinlichkeit trocken.",
+      "tuningHeading": "Warum sich das nicht wegjustieren lässt",
+      "tuningBody": "Vier Stellschrauben wurden über ihren gesamten plausiblen Bereich durchgefahren. Keine verbessert das Ergebnis nennenswert, zwei verschlechtern es.",
+      "probeName": "Geprüft",
+      "probeRange": "Bereich",
+      "probeResult": "IoU",
+      "probePeak": "Scheitelabfluss",
+      "probeManning": "Rauheit (Manning n)",
+      "probeBuiltUp": "Bebauung ausgenommen",
+      "probeBuiltUpRange": "{{share}} % der Fehlfläche",
+      "probeThreshold": "Mindesttiefe für „überflutet“",
+      "residualHeading": "Woher die verbleibende Abweichung kommt",
+      "residual1": "Das Geländemodell wurde 2024/2025 geflogen — nach Flut und Wiederaufbau. Ein Teil der Abweichung ist echte Geländeveränderung und kein Modellfehler.",
+      "residual2": "Das Modell rechnet eine Wasseroberfläche entlang des Flusses. Es kennt weder Impuls noch Dauer und zeigt deshalb Wasser dort stehen, wo es in Wirklichkeit nie hingekommen oder längst abgelaufen wäre.",
+      "residual3": "Auch die Referenz hat einen blinden Fleck: Unter Dächern ist Wasser auf Satellitenbildern nicht sichtbar. {{share}} % der zu viel überfluteten Fläche liegt in bebautem Gebiet.",
+      "honesty": "Warum die Zahl trotzdem sichtbar ist: Die ehrliche Antwort auf die Frage, ob diese Simulation gut genug ist, lautet derzeit nein — {{iou}} gegen ein Ziel von {{target}}. In diesem Projekt steht ein verfehltes Ziel in der Oberfläche, statt so lange nachjustiert zu werden, bis es besser aussieht. Bei diesem Thema wäre ein Modell, das seine eigene Genauigkeit überzeichnet, der größere Fehler."
+    }
+  },
+  "language": {
+    "label": "Sprache",
+    "de": "Deutsch",
+    "en": "English"
+  },
+  "tour": {
+    "start": "Geführte Tour",
+    "next": "Weiter",
+    "back": "Zurück",
+    "finish": "Zum Abschluss",
+    "end": "Tour beenden",
+    "progress": "{{step}} von {{of}}",
+    "act1": "Akt I — Was wussten wir?",
+    "act2": "Akt II — Die Nacht",
+    "act3": "Akt III — Der Schaden",
+    "act4": "Akt IV — Was hätte geholfen?",
+    "step": {
+      "valley": {
+        "title": "Das Tal",
+        "body": "Die Ahr läuft auf 35 Kilometern von der Eifel zum Rhein und verliert dabei 120 Höhenmeter. Hier, zwischen Dernau und Bad Neuenahr, ist es am breitesten. Was Sie sehen, ist ein Geländemodell aus offenen Daten — Stand 2024/25, also nach Flut und Wiederaufbau."
+      },
+      "schleife": {
+        "title": "Die Ahrschleife bei Altenahr",
+        "body": "Der Fluss legt hier eine fast geschlossene Schleife um den Felsen. Der Ort liegt in der Kurve, eingeklemmt zwischen Wasser und Hang — Straße und Bahn queren die Ahr auf engstem Raum mehrfach. Enge Täler beschleunigen eine Welle, statt sie zu bremsen."
+      },
+      "gauge": {
+        "title": "Der Pegel Altenahr",
+        "body": "Hier stand der Pegel, der die Nacht nicht überstanden hat. Sein letzter Messwert liegt bei 575 Zentimetern, der Scheitel von rund 980 Zentimetern ist eine Rekonstruktion des Landesamts. Alles ab diesem Punkt ist gerechnet, nicht gemessen."
+      },
+      "hazard": {
+        "title": "Die Karten lagen vor",
+        "body": "Die eingeblendeten Gefährdungsklassen stammen aus öffentlichen Daten. Sie sagen, wie häufig ein Hochwasser zu erwarten ist — nicht, wie sicher ein Ort ist. 2021 stand auch Boden unter Wasser, der als selten betroffen gilt."
+      },
+      "wave": {
+        "title": "Die Welle setzt sich in Bewegung",
+        "body": "Oben im Tal erreicht der Scheitel Altenahr. Von hier läuft er flussabwärts, und dafür braucht er Zeit: bis Sinzig vergehen gut drei Stunden."
+      },
+      "village": {
+        "title": "Ein Ort im Wasser",
+        "body": "Dernau steht auf seinem modellierten Scheitel. Die Gebäude sind echte Katasterkörper, ihre Farbe ist simulierte Wassertiefe. Der Weinort liegt auf der Innenseite einer Kurve, wo sich das Wasser staut."
+      },
+      "altstadt": {
+        "title": "Ahrweiler",
+        "body": "Die mittelalterliche Altstadt liegt fast vollständig im Talgrund, hinter einer Stadtmauer, die für Angreifer gebaut wurde und nicht für Wasser. Hier ist die Aue am breitesten — und dicht bebaut."
+      },
+      "downstream": {
+        "title": "Sinzig, drei Stunden später",
+        "body": "Kurz vor der Mündung. Zwischen dem ersten Ort im Tal und diesem hier liegen gut drei Stunden — die Welle war unterwegs, während hier noch nichts zu sehen war. Wie viele Menschen in einzelnen Orten starben, weist der Untersuchungsausschuss nicht aus; die 136 Toten sind eine Zahl für ganz Rheinland-Pfalz."
+      },
+      "mouth": {
+        "title": "Die Mündung bei Kripp",
+        "body": "Hier trifft die Ahr auf den Rhein. Der Rhein selbst führte in dieser Nacht kein Hochwasser — die Welle lief in einen normal gefüllten Strom und war damit vorbei. Das Tal hatte sie da schon hinter sich."
+      },
+      "validation": {
+        "title": "Wie gut ist dieses Modell?",
+        "body": "Gegen die Satellitenkartierung von Copernicus erreicht die Simulation eine Übereinstimmung von 0,51 statt der angestrebten 0,70. Sie übersieht kaum etwas und überflutet zu viel — die Fläche ist also eher zu groß als zu klein."
+      },
+      "whatif": {
+        "title": "Was hätte geholfen?",
+        "body": "Verschieben Sie die Regler links. Vorwarnzeit bewegt die Zahl der betroffenen Menschen, aber kaum den Schaden. Die Elementar-Quote bewegt nicht die Schadenhöhe, sondern wer sie trägt."
+      },
+      "orteIntro": {
+        "title": "Zwanzig Orte, eine Welle",
+        "body": "Dieselbe Nacht, nicht nach der Uhr erzählt, sondern nach dem Tal. Wir gehen flussabwärts und halten in jedem Ort auf seinem eigenen Scheitel an."
+      },
+      "orteAltenahr": {
+        "title": "Altenahr",
+        "body": "Der erste Ort im Modell. Enges Tal, Schleife, Fels — das Wasser hat kaum Ausweichfläche und steigt entsprechend schnell."
+      },
+      "orteMayschoss": {
+        "title": "Mayschoß",
+        "body": "Eine halbe Stunde später. Der Ort liegt am Hang über dem Fluss, ein Teil der Bebauung aber im Talgrund."
+      },
+      "orteDernau": {
+        "title": "Dernau",
+        "body": "Anderthalb Stunden nach Altenahr. Die Aue wird breiter, der Anteil betroffener Gebäude steigt trotzdem — hier steht mehr im Talgrund."
+      },
+      "orteAhrweiler": {
+        "title": "Ahrweiler",
+        "body": "Zwei Stunden. Die Altstadt liegt geschlossen in der Aue; die Zahl der Gebäude im Wasser springt an dieser Stelle deutlich."
+      },
+      "orteBadneuenahr": {
+        "title": "Bad Neuenahr",
+        "body": "Kurort auf beiden Ufern. Das Tal ist hier am weitesten, das Wasser flacher — die betroffene Fläche aber am größten."
+      },
+      "orteHeimersheim": {
+        "title": "Heimersheim",
+        "body": "Gut drei Stunden. Ab hier öffnet sich das Tal zur Rheinebene, und die Welle verliert an Höhe, während sie an Breite gewinnt."
+      },
+      "orteSinzig": {
+        "title": "Sinzig",
+        "body": "Der größte Ort im Modell, gut 5.700 Gebäude. Die Welle kommt hier über vier Stunden nach dem Scheitel in Altenahr an."
+      },
+      "orteKripp": {
+        "title": "Kripp",
+        "body": "Der letzte Ort vor dem Rhein. Danach endet das Tal — und mit ihm dieses Modell."
+      },
+      "orteSpread": {
+        "title": "Warum die Reihenfolge zählt",
+        "body": "Zwischen dem ersten und dem letzten Scheitel liegen gut drei Stunden. In dieser Zeit war flussabwärts bekannt, was flussaufwärts geschah — die Information war schneller als das Wasser."
+      },
+      "grenzenIntro": {
+        "title": "Was dieses Modell nicht weiß",
+        "body": "Eine Simulation, die gut aussieht, lädt zu mehr Vertrauen ein, als die Zahlen hergeben. Diese Runde zeigt die Stellen, an denen es hakt."
+      },
+      "grenzenGauge": {
+        "title": "Der Scheitel ist geschätzt",
+        "body": "Der Pegel fiel um 575 Zentimeter aus. Der Scheitel von rund 980 Zentimetern und 800 bis 1.230 m³/s ist eine amtliche Rekonstruktion mit einer Spanne von über 50 Prozent — jede Zahl danach erbt diese Unsicherheit."
+      },
+      "grenzenTerrain": {
+        "title": "Das Gelände ist von danach",
+        "body": "Die Laserdaten wurden 2024 und 2025 erfasst. Sie zeigen ein Tal, das die Flut umgegraben und der Wiederaufbau neu profiliert hat — nicht das von 2021. Ein älteres Modell ist öffentlich nicht verfügbar."
+      },
+      "grenzenIou": {
+        "title": "Übereinstimmung 0,51",
+        "body": "Gegen Copernicus erreicht die Fläche 0,51 statt 0,70. Der Fehler ist einseitig: zu viel Fläche, kaum Lücken. Für Betroffenheit heißt das eher Über- als Unterschätzung."
+      },
+      "grenzenHazard": {
+        "title": "Gefährdungsklassen sind keine Prognose",
+        "body": "Die Klassen sagen, wie häufig etwas zu erwarten ist. 2021 lag außerhalb dessen, was sie beschreiben — eine Fläche als selten betroffen zu führen, heißt nicht, dass dort nichts passiert."
+      },
+      "grenzenPeople": {
+        "title": "Menschen sind eine Schätzung",
+        "body": "Die Zahl im Gefahrenbereich rechnet mit 2,1 Personen je Gebäude, gleichmäßig über alle Häuser. Sie ist eine Größenordnung, keine Einwohnerzahl — und sie unterscheidet nicht zwischen Wohnhaus und Garage."
+      }
+    },
+    "stories": {
+      "ablauf": {
+        "label": "Der Ablauf",
+        "blurb": "Die Nacht der Reihe nach — vom Tal am Nachmittag bis zu den Reglern."
+      },
+      "orte": {
+        "label": "Die Orte",
+        "blurb": "Flussabwärts, jeder Ort auf seinem eigenen Scheitel."
+      },
+      "grenzen": {
+        "label": "Grenzen des Modells",
+        "blurb": "Wo die Simulation unsicher ist — und warum das sichtbar bleibt."
+      }
+    },
+    "storyLabel": "Geschichte",
+    "restart": "Neu starten"
+  },
+  "closing": {
+    "open": "Lehren und Quellen",
+    "back": "Zurück zur Karte",
+    "eyebrow": "Zum Schluss",
+    "title": "Lehren und Quellen",
+    "intro": "Diese Anwendung ist vollständig aus offen lizenzierten Daten gebaut. Nichts davon war geheim, und nichts davon musste erst erhoben werden — es lag vor der Flut ebenso vor wie danach. Was folgt, sind die sechs Lehren aus Akt IV und die Herkunft jeder Ebene, auf der sie beruhen.",
+    "lessonsHeading": "Sechs Lehren",
+    "lesson1": "Die Warnung war da. Was fehlte, war die letzte Meile bis zu den Menschen.",
+    "lesson2": "Die Gefahrenkarten waren da. Eine Gefährdungsklasse ist eine Häufigkeitsaussage, keine Sicherheitsgarantie.",
+    "lesson3": "Die Versicherungslücke war bekannt — und sie entscheidet nicht über die Höhe des Schadens, sondern darüber, wer ihn trägt.",
+    "lesson4": "Die Daten lagen in getrennten Häusern. Pegel, Radar, Kataster und Bestand gehörten verschiedenen Stellen — zusammengeführt hat sie niemand.",
+    "lesson5": "Hochwasserangepasstes Bauen senkt den Schaden bei gleicher Wassertiefe. Es verhindert die Überflutung nicht.",
+    "lesson6": "Um zwei Uhr nachts schreibt niemand eine Abfrage. Wer entscheiden muss, braucht eine Antwort mit Quelle.",
+    "result1": "Bei sechs Stunden mehr Vorwarnzeit: {{before}} → {{after}} Personen im Gefahrenbereich ({{pct}} % weniger) — der Sachschaden bleibt praktisch unverändert.",
+    "result2": "Im Verlauf der Nacht erreicht das Wasser {{flooded}} Gebäude. {{low}} davon — {{share}} % — liegen in GK1 oder GK2, also auf Boden, der seltener als alle 100 Jahre überflutet wird. Die HQ100-Fläche umfasst nur {{hq100}} Gebäude.",
+    "result3": "Bei einer Elementar-Quote von 100 %: {{before}} → {{after}} nicht gedeckt ({{pct}} % weniger) — die Schadensumme selbst bewegt sich nicht.",
+    "result5": "Wenn alle Gebäude hochwasserangepasst gebaut wären: {{before}} → {{after}} Schaden ({{pct}} % weniger) — bei denselben Gebäuden im selben Wasser.",
+    "lessonsNote": "Die Zahlen stammen aus derselben Rechnung wie die Regler in Akt IV und beziehen sich auf ein synthetisches Portfolio. Drei der sechs Lehren tragen keine Zahl, weil sie keine sind.",
+    "provenanceHeading": "Datenherkunft",
+    "provenanceIntro": "Jede Ebene dieser Anwendung stammt aus einer offenen Quelle. Die vollständigen Nachweise stehen in NOTICE.md im Repository.",
+    "colLayer": "Ebene",
+    "colIssuer": "Herausgeber",
+    "colLicence": "Lizenz",
+    "reportsHeading": "Berichte und Programme"
+  },
+  "act4": {
+    "heading": "Was hätte geholfen?",
+    "people": "Personen im Gefahrenbereich",
+    "loss": "Schaden geschätzt",
+    "uncovered": "Nicht gedeckt",
+    "buildings": "Betroffene Gebäude",
+    "reset": "Zurücksetzen",
+    "lever": {
+      "warning": "Vorwarnzeit",
+      "stage": "Scheitel",
+      "elementar": "Elementar-Quote",
+      "retention": "Rückhalt",
+      "resilient": "Hochwasserangepasst gebaut"
+    },
+    "lesson1": "Lektion 1 — Die Warnung war da. Vorwarnzeit verändert die Personenzahl, den Sachschaden kaum.",
+    "lesson2": "Lektion 2 — Die Gefahrenkarten waren da. Eine Gefährdungsklasse ist eine Häufigkeitsaussage, keine Sicherheitsgarantie.",
+    "lesson3": "Lektion 3 — Die Versicherungslücke war bekannt. Die Quote verschiebt, wer den Schaden trägt, nicht seine Höhe.",
+    "lesson5Retention": "Lektion 5 — Rückhalt senkt den Scheitel: weniger Wasser, das überhaupt ankommt.",
+    "lesson5Resilient": "Lektion 5 — Hochwasserangepasstes Bauen senkt den Schaden bei gleicher Wassertiefe — dieselben Gebäude im selben Wasser.",
+    "note": "Alle Werte sind simuliert und beziehen sich auf ein synthetisches Portfolio. Die Personenzahl ist keine Einwohnerzahl: sie rechnet 2,1 Bewohner je überflutetem Gebäude, unabhängig davon, ob es ein Wohnhaus, eine Garage oder ein Mehrfamilienhaus ist. Die Veränderungen zeigen, was die Daten hergeben — sie sind keine Empfehlung."
+  },
+  "setup": {
+    "eyebrow": "Einrichtung",
+    "heading": "Geodaten noch nicht erzeugt",
+    "body": "Diese Anwendung baut auf rund 31 MB abgeleiteter Geodaten auf — Geländemodell, Fließfeld und LoD2-Gebäude. Sie liegen nicht im Repository, weil sie jederzeit aus offenen Quellen reproduzierbar sind. Ein Durchlauf der Pipeline erzeugt sie.",
+    "note": "Der Lauf lädt Daten von LVermGeo Rheinland-Pfalz, Copernicus EMS, dem Landesamt für Umwelt und OpenStreetMap. Alle Quellen sind offen lizenziert; die Nachweise stehen in NOTICE.md."
+  },
+  "story": {
+    "toggle": "Ereignisse",
+    "showAnnotations": "Ereignisse einblenden",
+    "hideAnnotations": "Ereignisse ausblenden",
+    "modelled": "modelliert",
+    "sourced": "amtlich",
+    "notice": "Die Zeitpunkte der modellierten Ereignisse ergeben sich aus der simulierten Ganglinie, nicht aus Messwerten. Nur der Scheitel ist amtlich belegt.",
+    "jumpTo": "Zu diesem Ereignis springen",
+    "peakTimeNote": "Die Werte sind amtlich, der Zeitpunkt ist es nicht: Der Pegel Altenahr zeichnete um 20:45 Uhr 575 cm auf und wurde dann zerstört. Der Scheitel wurde nie gemessen — weder seine Höhe noch seine Uhrzeit. Die Uhr dieser Anwendung setzt ihn auf 22:00 Uhr; das ist eine Annahme innerhalb des Zeitfensters, in dem er gelegen haben muss.",
+    "beats": {
+      "firstWater": {
+        "title": "Das Wasser erreicht die ersten Gebäude",
+        "body": "Die simulierte Wasserfläche greift auf den Talgrund über. Von hier an steigt die Zahl der betroffenen Gebäude."
+      },
+      "halfExtent": {
+        "title": "Die Hälfte der betroffenen Gebäude steht im Wasser",
+        "body": "{{count}} Gebäude — halb so viele wie zum Höchststand der Ausdehnung, an dem {{total}} gleichzeitig im Wasser stehen."
+      },
+      "halfVillages": {
+        "title": "Die Hälfte der Orte hat Wasser",
+        "body": "{{places}} von {{totalPlaces}} Ortslagen stehen im Wasser. Das ist ein anderer Zeitpunkt als die Hälfte der Gebäude: Die Gebäude liegen dicht im weiten Unterlauf, die Orte verteilen sich über die ganze Strecke."
+      },
+      "peak": {
+        "title": "Scheitel am Pegel Altenahr",
+        "body": "Amtlich veröffentlichte Werte für den Scheitel — als einziges Ereignis dieser Zeitachse nicht modelliert, sondern belegt:"
+      },
+      "allVillages": {
+        "title": "Die Welle hat das ganze Tal erreicht",
+        "body": "Alle {{totalPlaces}} Ortslagen der Strecke haben Wasser. Zwischen der ersten und der letzten liegen gut drei Stunden — Zeit, die flussabwärts zur Verfügung stand."
+      },
+      "maxExtent": {
+        "title": "Größte Ausdehnung",
+        "body": "{{count}} Gebäude in {{places}} Ortslagen gleichzeitig im Wasser. Der Höchststand der Ausdehnung liegt später als der Scheitel am Pegel Altenahr — flussabwärts braucht die Welle Zeit für die Strecke."
+      },
+      "receding": {
+        "title": "Das Wasser fällt",
+        "body": "Noch {{count}} Gebäude im simulierten Überflutungsbereich."
+      },
+      "dayAfter": {
+        "title": "24 Stunden nach dem Scheitel",
+        "body": "{{count}} Gebäude liegen noch im simulierten Überflutungsbereich. Der Abfluss nähert sich wieder dem Mittelwert."
+      }
+    }
+  },
+  "bookmarks": {
+    "title": "Eigene Story",
+    "collapse": "Story einklappen",
+    "expand": "Story ausklappen",
+    "capture": "Ansicht sichern",
+    "play": "Abspielen",
+    "stop": "Anhalten",
+    "remove": "Entfernen",
+    "empty": "Noch keine Stationen. Stelle die Karte und den Zeitpunkt so ein, wie du sie zeigen willst, und sichere die Ansicht.",
+    "note": "Jede Station merkt sich Kamera, Zeitpunkt und Ebenen. Beim Abspielen fliegt die Kamera langsam von Station zu Station.",
+    "stopLabel": "Station {{index}}"
+  },
+  "scenes": {
+    "label": "Karte wählen",
+    "ahrtal": "Ahrtal 2021",
+    "steinbach": "Steinbachtalsperre 2021",
+    "hortasud": "Horta Sud 2024",
+    "castelbolognese": "Castel Bolognese 2023",
+    "blockedTerrainOnly": "nur Gelände, Modell folgt",
+    "steinbachReach": "DAMMBRUCH-SZENARIO · TALSPERRE – HEIMERZHEIM"
+  },
+  "reach": {
+    "badge": "Stationärer Abfluss — kein Zeitpunkt des Ereignisses",
+    "dischargeLabel": "angenommener stationärer Abfluss",
+    "loading": "Gelände wird geladen …",
+    "unavailable": "Diese Szene konnte nicht geladen werden.",
+    "note": "⚠️ Diese Szene hat bewusst keine Uhr. Für das Ahrtal gibt es eine Pegelreihe, für die Steinbachtalsperre eine veröffentlichte Studie — für diesen Fluss ist keine Ganglinie des Ereignisses öffentlich abrufbar. Gezeigt wird deshalb kein Moment der Flut, sondern der Wasserspiegel, den ein stationärer Abfluss dieser Größe im gemessenen Querprofil einnehmen würde: Gelände aus dem amtlichen Höhenmodell, Wasserstand über Manning aus dem realen Talquerschnitt gelöst. Das ist eine Aussage über das Tal, keine über das Ereignis. In der flachen Ebene sind die Querprofile sehr breit (Median 1,2–1,4 km) — dort ist ein 1D-Modell am schwächsten."
+  },
+  "gate": {
+    "title": "Anmeldung erforderlich",
+    "body": "Diese Demo zeigt Gebäude-, Gelände- und synthetische Portfoliodaten zur Flutkatastrophe im Ahrtal. Sie ist für interne Demonstrations- und Schulungszwecke bestimmt und läuft erst nach Anmeldung mit einer Microsoft-Entra-Identität.",
+    "signIn": "Mit Microsoft Entra anmelden",
+    "checking": "Anmeldung wird geprüft …",
+    "unavailable": "Die Anmeldung ist nicht konfiguriert (Rayfin-Auth-Variablen fehlen). Die Anwendung bleibt gesperrt.",
+    "scope": "Hinweis zur Reichweite: Diese Sperre schützt die Anwendung, nicht die einzelnen Dateien. Das statische Hosting von Rayfin ist plattformseitig öffentlich — wer einen Dateipfad kennt, kann die Datei weiterhin abrufen. Ausgeliefert werden ausschließlich offene Geobasisdaten und synthetische Versicherungsdaten; Adressdaten und Copernicus-Schadensgrade werden bewusst nicht deployt."
+  }
+}

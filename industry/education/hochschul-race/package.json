@@ -1,0 +1,21 @@
+{
+  "name": "hochschul-studierende-race",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Self-contained animated bar-chart race of German university enrolment (DESTATIS GENESIS via Hochschul-Insights Direct Lake model). Switch metric (Studierende / Studienanfänger / Internationale) and dimension (Hochschule / Bundesland / Stadt), filter members with a slicer.",
+  "type": "module",
+  "template": {
+    "name": "hochschul-race",
+    "displayName": "Higher Education Race Chart",
+    "description": "Student numbers across German universities as an animated bar-chart race.",
+    "category": "analytics"
+  },
+  "scripts": {
+    "build:fabric": "node tools/build-fabric.mjs",
+    "serve": "python -m http.server 8080",
+    "rayfin:up": "rayfin up"
+  },
+  "devDependencies": {
+    "@microsoft/rayfin-cli": "^1.33.0"
+  }
+}

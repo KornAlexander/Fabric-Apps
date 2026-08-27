@@ -1,0 +1,22 @@
+{
+  "queryset": {
+    "version": "1.0.0",
+    "dataSources": [
+      {
+        "id": "e6d83998-f7e2-4d61-bdad-2c115a0dd8ea",
+        "clusterUri": "https://<your-eventhouse>.kusto.fabric.microsoft.com",
+        "type": "Fabric",
+        "databaseItemId": "<source-kqldatabase-id>",
+        "databaseItemName": "SydneyFerriesKustoDB"
+      }
+    ],
+    "tabs": [
+      {
+        "id": "42d3efce-b65f-40f8-bf5b-d3c7217ae33e",
+        "content": "SydneyFerries\n| summarize latestTimestamp=max(timestamp) by ferry_name\n| join kind=inner (\n    SydneyFerries\n    | project ferry_name, ferry_lat, ferry_long, timestamp\n) on ferry_name, $left.latestTimestamp == $right.timestamp\n| where timestamp > ago(60h)\n| project ferry_name, ferry_lat, ferry_long, timestamp",
+        "title": "",
+        "dataSourceId": "e6d83998-f7e2-4d61-bdad-2c115a0dd8ea"
+      }
+    ]
+  }
+}

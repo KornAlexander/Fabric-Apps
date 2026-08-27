@@ -1,0 +1,258 @@
+{
+  "schema_version": "55",
+  "title": "Ferries RTI Low Latency Dashboard",
+  "autoRefresh": {
+    "enabled": true,
+    "defaultInterval": "1s",
+    "minInterval": "1s"
+  },
+  "tiles": [
+    {
+      "id": "0e0f49f7-39fb-4efe-ab6c-a03199c5ad5d",
+      "title": "Ferries Last Know Position",
+      "visualType": "table",
+      "pageId": "52351348-e3fe-4e25-a4c7-20102b0f1ba6",
+      "layout": {
+        "x": 6,
+        "y": 0,
+        "width": 12,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "a22c0c69-87a4-4fed-8c1b-540d13152f4c"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": true,
+        "colorStyle": "light",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": []
+      }
+    },
+    {
+      "id": "43d7ccb1-01a6-49c5-9135-42fa8625bc0e",
+      "title": "Ferries Real Time Position",
+      "visualType": "map",
+      "pageId": "52351348-e3fe-4e25-a4c7-20102b0f1ba6",
+      "layout": {
+        "x": 0,
+        "y": 8,
+        "width": 24,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "b991f44a-ffa6-438f-84d2-b78c8daf1cb4"
+      },
+      "visualOptions": {
+        "map__type": "bubble",
+        "map__latitudeColumn": "ferry_lat",
+        "map__longitudeColumn": null,
+        "map__labelColumn": "colour",
+        "map__sizeColumn": null,
+        "map__sizeDisabled": true,
+        "map__geoType": "numeric",
+        "map__geoPointColumn": null
+      }
+    },
+    {
+      "id": "22154d64-c16b-47a9-a995-c262d9cb0870",
+      "title": "Total Count of Events",
+      "visualType": "card",
+      "pageId": "52351348-e3fe-4e25-a4c7-20102b0f1ba6",
+      "layout": {
+        "x": 18,
+        "y": 0,
+        "width": 6,
+        "height": 3
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "f3def7b3-04bb-4e88-968e-a6ddd7cc97ce"
+      },
+      "visualOptions": {
+        "multiStat__textSize": "auto",
+        "multiStat__valueColumn": null,
+        "colorRulesDisabled": false,
+        "colorStyle": "light",
+        "colorRules": []
+      }
+    },
+    {
+      "id": "321c56bc-aa4e-4738-b10b-26de0d7c1883",
+      "title": "Counts of Events in 5 mins Interval over last 20 mins",
+      "visualType": "column",
+      "pageId": "52351348-e3fe-4e25-a4c7-20102b0f1ba6",
+      "layout": {
+        "x": 18,
+        "y": 3,
+        "width": 6,
+        "height": 5
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "f905088c-e5fd-4b79-aa3d-b5b6efa9c1fc"
+      },
+      "visualOptions": {
+        "xColumn": null,
+        "multipleYAxes": {
+          "additional": [],
+          "showMultiplePanels": false,
+          "base": {
+            "horizontalLines": [],
+            "yAxisScale": "linear",
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "columns": [],
+            "label": "",
+            "id": "-1"
+          }
+        },
+        "yColumns": null,
+        "seriesColumns": null,
+        "anomalyColumns": null,
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "924ca991-4bb7-43bd-87ad-dcbcf9abb831",
+      "title": "Counts of Events by Ferry YTD",
+      "visualType": "bar",
+      "pageId": "52351348-e3fe-4e25-a4c7-20102b0f1ba6",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 6,
+        "height": 8
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "54edfec4-5e7a-401a-898d-c67d42f9ace2"
+      },
+      "visualOptions": {
+        "xColumn": null,
+        "multipleYAxes": {
+          "additional": [],
+          "showMultiplePanels": false,
+          "base": {
+            "horizontalLines": [],
+            "yAxisScale": "linear",
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "columns": [],
+            "label": "",
+            "id": "-1"
+          }
+        },
+        "yColumns": null,
+        "seriesColumns": null,
+        "anomalyColumns": null,
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    }
+  ],
+  "baseQueries": [],
+  "parameters": [
+    {
+      "kind": "duration",
+      "id": "d51e3a12-20ea-4e72-82e1-a47a81ae8345",
+      "displayName": "Time range",
+      "description": "",
+      "beginVariableName": "_startTime",
+      "endVariableName": "_endTime",
+      "defaultValue": {
+        "kind": "dynamic",
+        "count": 1,
+        "unit": "hours"
+      },
+      "showOnPages": {
+        "kind": "all"
+      }
+    }
+  ],
+  "dataSources": [
+    {
+      "id": "f81b298f-f9b3-4d4e-a760-ece99db6b3b1",
+      "kind": "kusto-trident",
+      "scopeId": "kusto-trident",
+      "clusterUri": "https://<your-eventhouse>.kusto.fabric.microsoft.com",
+      "database": "<source-kqldatabase-id>",
+      "name": "SydneyFerriesKustoDB",
+      "workspace": "<source-workspace-id>"
+    }
+  ],
+  "pages": [
+    {
+      "name": "Page 1",
+      "id": "52351348-e3fe-4e25-a4c7-20102b0f1ba6"
+    }
+  ],
+  "queries": [
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "f81b298f-f9b3-4d4e-a760-ece99db6b3b1"
+      },
+      "text": "SydneyFerries\n| where timestamp > ago(2m)\n| summarize max_timestamp = max(timestamp) by ferry_name\n| join kind=inner (\n    SydneyFerries\n    | project ferry_name, ferry_lat, ferry_long, ferry_destination, timestamp\n) on ferry_name\n| where timestamp == max_timestamp\n| project ferry_name, ferry_lat, ferry_long,timestamp, ferry_destination\n| order by timestamp desc\n\n",
+      "id": "a22c0c69-87a4-4fed-8c1b-540d13152f4c",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "f81b298f-f9b3-4d4e-a760-ece99db6b3b1"
+      },
+      "text": "SydneyFerries\n| where timestamp > ago(2m)\n| summarize max_timestamp = max(timestamp) by ferry_name\n| join kind=inner (\n    SydneyFerries\n    | project ferry_name, ferry_lat, ferry_long, ferry_destination, timestamp\n) on ferry_name\n| where timestamp == max_timestamp\n| project ferry_name, ferry_lat, ferry_long,timestamp, ferry_destination, colour = 1\n\n",
+      "id": "b991f44a-ffa6-438f-84d2-b78c8daf1cb4",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "f81b298f-f9b3-4d4e-a760-ece99db6b3b1"
+      },
+      "text": "SydneyFerries\n| count",
+      "id": "f3def7b3-04bb-4e88-968e-a6ddd7cc97ce",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "f81b298f-f9b3-4d4e-a760-ece99db6b3b1"
+      },
+      "text": "SydneyFerries\n| where timestamp > ago(20m)\n| summarize IngestionCount = count() by bin(ingestion_time(), 20sec)\n| render columnchart  \n",
+      "id": "f905088c-e5fd-4b79-aa3d-b5b6efa9c1fc",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "f81b298f-f9b3-4d4e-a760-ece99db6b3b1"
+      },
+      "text": "// SydneyFerries\n//| summarize EventCount = count() by ferry_name\n//| render barchart \n//sort by the larger to smaller in terms of count of events\n//\nSydneyFerries\n| summarize EventCount = count() by ferry_name\n| order by EventCount desc\n| render barchart   \n",
+      "id": "54edfec4-5e7a-401a-898d-c67d42f9ace2",
+      "usedVariables": []
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+apiVersion: v1
+metadata:
+  name: flut-insights
+  displayName: Flut-Insights
+  description: Interactive 3D flood twin of the Ahr valley flood of July 2021, reconstructed entirely from open geodata — scrubbable timeline over a DGM1 terrain and LoD2 buildings, a cross-section stage rating validated against Copernicus, a Direct Lake model over a synthetic insurance portfolio, live gauge readings in an Eventhouse, and a what-if act that shows what would have helped.
+entries:
+  - path: .
+    name: Flut-Insights

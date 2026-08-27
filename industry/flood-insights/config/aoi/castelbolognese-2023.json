@@ -1,0 +1,104 @@
+{
+  "$comment": "Area of interest definition. Flut-Insights is a reusable vertical asset (PLAN §14 Q2) — no location is hard-coded in code. Third instance, after Ahrtal 2021 and Horta Sud 2024.",
+  "id": "castelbolognese-2023",
+  "event": {
+    "name": {
+      "de": "Hochwasser in der Romagna",
+      "en": "Emilia-Romagna flood"
+    },
+    "startUtc": "2023-05-16T00:00:00Z",
+    "peakUtc": "2023-05-17T00:00:00Z",
+    "$peakComment": "⚠️ NOT a measured time. Copernicus EMS records the event time for EMSR664 as 2023-05-16T11:00 UTC. The Senio overtopped and breached during the night of 16–17 May, but no gauge series has been ingested for this AOI, so this value is a modelling assumption inside the window in which the peak must have occurred. The app must say so wherever it shows a clock. Note also that this was the second flood in a fortnight — the same catchment was mapped on 2 May as EMSR659 — so ground already saturated by the earlier event is part of why the second one behaved as it did, and none of that is in this model.",
+    "endUtc": "2023-05-18T12:00:00Z",
+    "timelineStartUtc": "2023-05-15T00:00:00Z",
+    "timelineEndUtc": "2023-05-20T00:00:00Z"
+  },
+  "bbox": {
+    "crs": "EPSG:4326",
+    "west": 11.7,
+    "east": 11.85,
+    "south": 44.25,
+    "north": 44.37,
+    "$comment": "Wider than the Copernicus EMSR664 AOI03 footprint (W 11.7067 S 44.2567 E 11.8398 N 44.3383), extended north so Solarolo is on the map: the footprint contains only two settlements, which is too thin a story for a reach. ~12 x 13 km. Validation stays clipped to the Copernicus area, the same arrangement the Ahr uses — the map may be larger than the evidence, but the IoU is only ever computed where there is something to check against."
+  },
+  "workingCrs": "EPSG:25832",
+  "verticalDatum": "Genova",
+  "$crsComment": "UTM zone 32N, the same zone as the Ahr, so the existing utm.py transform applies unchanged. Heights reference the Genova tide gauge rather than DHHN2016.",
+  "grids": {
+    "terrainResolutionM": 20,
+    "sourceResolutionM": 20,
+    "simulationResolutionM": 20,
+    "renderResolutionM": 20,
+    "flowResolutionM": 20
+  },
+  "$gridsComment": "⚠️ The coarsest of the three areas by a wide margin — the Ahr is 1 m, Horta Sud 5 m, this 20 m. Emilia-Romagna's own LiDAR is behind an authenticated service (401) and its geoportal fails certificate validation, so the terrain comes from the Italian national DTM at 20 m. At that resolution a levee is roughly one cell wide, which is a real limit on what this instance can claim and belongs next to its validation figure.",
+  "river": {
+    "name": "Senio",
+    "osmWaterwayRef": "Fiume Senio",
+    "chainageStepM": 25,
+    "flowDirection": "downstream-northeast",
+    "$osmComment": "⚠️ The OSM name carries the generic: 'Fiume Senio', not 'Senio'. Verified against Overpass — the box holds exactly four ways tagged waterway=river, named Fiume Lamone, Fiume Senio, Fiume Santerno and one unnamed. The first attempt used 'Senio', matched nothing, and fetch_osm.py wrote a zero-vertex centreline and exited successfully; it now refuses to.",
+    "$comment": "The Senio leaves the Apennines at Riolo Terme and crosses the Romagna plain past Castel Bolognese towards the Reno. This AOI was chosen over Faenza precisely because it still has a gradient — 147 m of relief against Faenza's 28 — so the chainage-and-water-surface model the Ahr uses remains defensible here. Downstream of Solarolo it stops being defensible, which is where this box ends. Note the Lamone and the Santerno also clip this box; only the Senio is the subject."
+  },
+  "focusPlaces": [
+    {
+      "id": "rioloterme",
+      "name": "Riolo Terme",
+      "lat": 44.27678,
+      "lon": 11.72526
+    },
+    {
+      "id": "castelbolognese",
+      "name": "Castel Bolognese",
+      "lat": 44.3303,
+      "lon": 11.79991
+    },
+    {
+      "id": "solarolo",
+      "name": "Solarolo",
+      "lat": 44.35552,
+      "lon": 11.83573
+    }
+  ],
+  "$focusPlacesComment": "OpenStreetMap place nodes, upstream to downstream along the Senio. Only three, which is what this reach holds — Faenza is 6 km east on the Lamone, a different river and a different AOI, and is deliberately not shown here. Riolo Terme and Castel Bolognese are inside the Copernicus footprint; Solarolo is on the map but outside it, so nothing about Solarolo can be validated and the UI must not imply that it was.",
+  "valley": {
+    "corridorM": 3000,
+    "$comment": "Between the Ahr's 2 000 m and Horta Sud's 4 000 m. The Senio is confined at Riolo Terme and progressively less so downstream, which is the whole character of this reach."
+  },
+  "gauges": [],
+  "$gaugesComment": "⚠️ Deliberately empty, for the same reason as Horta Sud. ARPAE Emilia-Romagna publishes the gauge network, but no station has been verified against a live response yet, and an unverified station number is indistinguishable from a verified one once it is in a config file.",
+  "copernicus": {
+    "activation": "EMSR664",
+    "activationName": "Flood in Italy",
+    "aoiNumber": 3,
+    "aoiName": "Castel Bolognese",
+    "eventTimeUtc": "2023-05-16T11:00:00",
+    "products": [
+      "GRA"
+    ],
+    "layers": [
+      "observedEventA",
+      "builtUpP"
+    ],
+    "relatedActivation": "EMSR659",
+    "$comment": "Verified against the rapid-mapping API and by probing the published styles on 2026-07-29. The activation listing shows GRA only, which reads as 'no flood extent', but observedEventA is published inside the GRA product — so there is an extent to validate against. EMSR659 covers the same catchment for the earlier 2 May episode."
+  },
+  "geobasis": {
+    "authority": "Geoportale Nazionale, Ministero dell'Ambiente",
+    "service": "https://wms.pcn.minambiente.it/ogc?map=/ms_ogc/wcs/DTM_20m.map",
+    "coverage": "EL.DTM.20M",
+    "wcsVersion": "1.0.0",
+    "licence": "CC BY 4.0",
+    "attribution": "Geoportale Nazionale — Ministero dell'Ambiente e della Sicurezza Energetica, DTM 20 m",
+    "$comment": "⚠️ Two quirks, both found by probing rather than by reading documentation. (1) This host fails TLS certificate validation from here — incomplete chain — so the fetcher names it explicitly and says so out loud. (2) It advertises WCS 2.0.1 and answers every 2.0.1 GetCoverage with a 1×1 image, whatever axis labels or scaling are used. Only the 1.0.0 bbox/width/height form returns real data, which is why wcsVersion is pinned here instead of assumed.",
+    "dop": {
+      "service": "https://wms.pcn.minambiente.it/ogc?map=/ms_ogc/WMS_v1.3/raster/ortofoto_colore_12.map",
+      "layer": "OI.ORTOIMMAGINI.2012.32",
+      "$comment": "Geoportale Nazionale ortofoto, Ministero dell'Ambiente - the same ministry that serves this AOI's DTM, so terrain and imagery share provenance. The '.32' is the UTM zone and matches this AOI's grid; '.33' is the eastern zone and would be the wrong half of Italy. Imagery is 2012, older than the 2023 flood - it is a base map, not evidence."
+    }
+  },
+  "insurance": {
+    "model": "german-elementar",
+    "$comment": "⚠️ Knowingly wrong for Italy, and kept anyway — see the same note on hortasud-2024. Italian flood take-up was in the single digits in 2023, and cover for businesses became mandatory only under the 2024 law, so a portfolio where a third of buildings carry flood cover describes no Italian market that has ever existed. It is kept because the Act IV levers are the product, and every figure stays synthetic and labelled synthetic."
+  }
+}

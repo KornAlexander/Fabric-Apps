@@ -1,0 +1,8 @@
+relationship ee98d517-7d2a-4a7d-8b67-876276016bb2
+	fromColumn: Police.'Gebäude ID'
+	toColumn: Gebäude.'Gebäude ID'
+
+relationship 9845959d-0d50-49a9-a981-05a7351bf9da
+	fromColumn: Schaden.'Policen ID'
+	toColumn: Police.'Policen ID'
+

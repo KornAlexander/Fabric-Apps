@@ -1,0 +1,18 @@
+{
+  "_comment": [
+    "Optional. Copy to config/live.json and fill in to enable the ⚡ Live data button.",
+    "Without this file the app runs snapshot-only and the button is hidden.",
+    "These are tenant-specific resource identifiers, not secrets — no key or token belongs here.",
+    "The browser cannot call api.powerbi.com directly (CORS), so DAX goes through a",
+    "'fabric_proxy' Fabric User Data Function that forwards executeQueries server-side."
+  ],
+
+  "clientId": "__ENTRA_SPA_APP_ID__",
+  "tenantId": "__TENANT_ID__",
+  "workspaceId": "__POWER_BI_WORKSPACE_ID__",
+  "datasetId": "__SEMANTIC_MODEL_ID__",
+  "proxyUrl": "https://<udf-host>/v1/workspaces/<workspace-id>/userDataFunctions/<udf-id>/functions/fabric_proxy/invoke",
+
+  "authority": "",
+  "scope": ""
+}

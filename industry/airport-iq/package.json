@@ -1,0 +1,21 @@
+{
+  "name": "airportiq-live-approach",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Airport IQ — Live Approach: a real 3D globe (CesiumJS) centered on a single airport, with extruded OpenStreetMap buildings + runways and LIVE ADS-B aircraft (airplanes.live) flying at real altitude — zoomable from space down to the apron. Fabric static-hosting app.",
+  "template": {
+    "name": "airport-iq",
+    "displayName": "Airport IQ - Live Approach",
+    "description": "Live approach and ground operations on a photoreal 3D airport twin.",
+    "category": "digital-twins"
+  },
+  "scripts": {
+    "build:fabric": "node tools/build-fabric.mjs",
+    "serve": "python -m http.server 8096",
+    "rayfin:up": "rayfin up"
+  },
+  "devDependencies": {
+    "@microsoft/rayfin-cli": "^1.33.0"
+  }
+}

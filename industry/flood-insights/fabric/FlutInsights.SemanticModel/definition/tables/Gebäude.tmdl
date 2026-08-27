@@ -1,0 +1,78 @@
+table 'Gebäude'
+	lineageTag: 789137df-df73-4967-b7e3-c7753c0ff036
+
+	column 'Gebäude ID'
+		dataType: string
+		sourceColumn: buildingId
+		lineageTag: f24ff75e-aa39-4700-ae6a-af06a7067abd
+		summarizeBy: none
+	column 'Ort'
+		dataType: string
+		sourceColumn: village
+		lineageTag: 6ebad5e7-2c87-4909-975e-fa209559ee71
+		summarizeBy: none
+	column 'Straße'
+		dataType: string
+		sourceColumn: street
+		lineageTag: cb6c4e94-9228-452e-88bf-31edab5c320b
+		summarizeBy: none
+	column 'Gebäudetyp'
+		dataType: string
+		sourceColumn: buildingType
+		lineageTag: 91b5cc3f-07ea-4391-be1f-40632dcb4525
+		summarizeBy: none
+	column 'Grundfläche m²'
+		dataType: double
+		sourceColumn: footprintM2
+		lineageTag: a3391c94-e2fc-4d9d-a27d-72298a03c327
+		summarizeBy: none
+		formatString: "#,0"
+	column 'Geländehöhe m'
+		dataType: double
+		sourceColumn: groundElevM
+		lineageTag: 366717f7-3292-45a5-bdbe-bff25a26d939
+		summarizeBy: none
+		formatString: "#,0.00"
+	column 'Fluss-km'
+		dataType: double
+		sourceColumn: riverKm
+		lineageTag: 202078b4-8f29-499d-9ede-c309dabfb13c
+		summarizeBy: none
+		formatString: "#,0.0"
+	column 'Gefährdungsklasse'
+		dataType: string
+		sourceColumn: hazardClass
+		lineageTag: 52281250-f2da-4f2d-8541-27e0dc2f8df8
+		summarizeBy: none
+	column 'Wiederkehrintervall Jahre'
+		dataType: double
+		sourceColumn: returnPeriodYears
+		lineageTag: 0c5f7fa6-21e8-4943-b365-fe19f1216cfb
+		summarizeBy: none
+		formatString: "#,0"
+	column 'Wassertiefe m'
+		dataType: double
+		sourceColumn: depthM
+		lineageTag: 867675ba-7236-4bc6-8037-68750d2da0d2
+		summarizeBy: none
+		formatString: "#,0.00"
+	column 'Überflutungsklasse'
+		dataType: string
+		sourceColumn: inundationClass
+		lineageTag: 70f429cd-61a9-46ba-8b75-a5cb3c395f12
+		summarizeBy: none
+	column 'Schadensgrad'
+		dataType: double
+		sourceColumn: damageRatio
+		lineageTag: fad40b93-336e-4630-b935-fe79acb4e820
+		summarizeBy: none
+		formatString: "0.0%"
+
+	partition 'Gebäude' = entity
+		mode: directLake
+		source
+			entityName: geo_building
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,8 @@
+apiVersion: v1
+metadata:
+  name: maritime-insights
+  displayName: Maritime Insights
+  description: Interactive 3D coastal twin of the Kiel Fjord built entirely from open geodata — true-scale DGM1 terrain with LoD2 buildings and an orthophoto drape, a Copernicus DEM shell for the horizon, a day of AIS ship traffic replayed against a scrubber, live AIS over an SSE relay, and a geometric sensor-visibility model that measures coverage in observed traffic rather than square kilometres
+entries:
+  - path: .
+    name: Maritime Insights

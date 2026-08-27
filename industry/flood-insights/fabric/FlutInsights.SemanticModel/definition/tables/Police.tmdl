@@ -1,0 +1,60 @@
+table 'Police'
+	lineageTag: 9decd44d-150c-4fa9-8ad0-b2942c4ac43b
+
+	column 'Policen ID'
+		dataType: string
+		sourceColumn: policyId
+		lineageTag: cef1b0ca-5079-4c67-8c53-dd16a1a1a785
+		summarizeBy: none
+	column 'Gebäude ID'
+		dataType: string
+		sourceColumn: buildingId
+		lineageTag: 489b1ba1-b417-4e13-a7b8-d4c9e65c6bfc
+		summarizeBy: none
+		isHidden
+	column 'Versicherer'
+		dataType: string
+		sourceColumn: insurer
+		lineageTag: fb33b8b6-e15b-414d-aca4-8c195958cc7e
+		summarizeBy: none
+	column 'Versicherungssumme'
+		dataType: double
+		sourceColumn: sumInsuredEur
+		lineageTag: 81be6bc7-7fab-4d31-a6a9-706944de59e2
+		summarizeBy: none
+		formatString: "#,0 €"
+	column 'Elementarbaustein'
+		dataType: boolean
+		sourceColumn: elementarCover
+		lineageTag: 14061bba-bac5-496c-8c7b-b77ca1bf1d73
+		summarizeBy: none
+	column 'Wartezeit offen'
+		dataType: boolean
+		sourceColumn: waitingPeriodOpen
+		lineageTag: 727d8598-8047-4ca2-83da-1630c16c0e08
+		summarizeBy: none
+	column 'Selbstbeteiligung'
+		dataType: double
+		sourceColumn: deductibleEur
+		lineageTag: 03e0bbef-f33a-437f-98cf-f1157ceebf62
+		summarizeBy: none
+		formatString: "#,0 €"
+	column 'Ort'
+		dataType: string
+		sourceColumn: village
+		lineageTag: 66a05859-1482-443f-bca4-45b095b7ca50
+		summarizeBy: none
+	column 'Gefährdungsklasse'
+		dataType: string
+		sourceColumn: hazardClass
+		lineageTag: 3bfb3517-0789-40b3-94b2-2c96006ae886
+		summarizeBy: none
+
+	partition 'Police' = entity
+		mode: directLake
+		source
+			entityName: portfolio_policy
+			expressionSource: DatabaseQuery
+
+	annotation PBI_ResultType = Table
+

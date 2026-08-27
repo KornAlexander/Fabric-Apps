@@ -1,0 +1,13 @@
+EVALUATE
+SUMMARIZECOLUMNS(
+    Hochschulen[Hochschule_Code],
+    Hochschulen[Hochschule],
+    Hochschulen[Stadt],
+    Hochschulen[Bundesland],
+    Hochschulen[Parent_University],
+    Studierende[Wintersemester],
+    "total", SUM(Studierende[Wert]),
+    "intl", CALCULATE(SUM(Studierende[Wert]), Studierende[Nationalitaet] = "Ausländer"),
+    "weib", CALCULATE(SUM(Studierende[Wert]), Studierende[Geschlecht] = "weiblich")
+)
+ORDER BY Hochschulen[Hochschule_Code], Studierende[Wintersemester]
