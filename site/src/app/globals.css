@@ -1,30 +1,33 @@
 /*
  * Design tokens.
  *
- * Dark first, deliberately. Fifteen of these apps are 3D terrain, live maps and games:
- * their previews are the content, and a dark shell makes them read as screens rather
- * than as illustrations on a document. The Power BI Fixer pages use the same structural
- * ideas - a hero with a copyable command, alternating sections, one accent colour - but
- * light, because that page sells a notebook tool rather than a wall of renders.
+ * Light. I first built this dark, on the theory that a dark shell makes 3D terrain and
+ * game previews pop. That was wrong for this owner and the preference is standing: sites
+ * are light, and "the content is imagery" is not a reason to revisit it.
+ *
+ * The palette follows the Power BI Fixer pages, which are the house reference: white,
+ * a faintly grey alternate band, near-black text, hairline borders, and code blocks that
+ * stay dark because code is easier to read that way.
  */
 :root {
-  --bg: #0b0f17;
-  --bg-raised: #121826;
-  --bg-card: #151d2c;
-  --bg-code: #0a0e15;
+  --bg: #ffffff;
+  --bg-raised: #f7f9fb;
+  --bg-card: #ffffff;
+  --bg-code: #1e1e1e;
+  --bg-shot: #eef2f6;
 
-  --text: #e9eef7;
-  --text-muted: #97a3b6;
-  --text-dim: #6b7688;
+  --text: #1a1a1a;
+  --text-muted: #5a6472;
+  --text-dim: #78828f;
 
-  --accent: #4cc2ff;
-  --accent-strong: #0f9bdb;
-  --accent-soft: rgba(76, 194, 255, 0.12);
+  --accent: #0f6cbd;
+  --accent-strong: #0b5394;
+  --accent-soft: #eaf3fb;
 
-  --border: #232c3d;
-  --border-soft: #1a2231;
+  --border: #e3e7ec;
+  --border-soft: #edf0f4;
 
-  --wip: #f0a020;
+  --wip: #b3690a;
 
   --heading-font: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --body-font: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -32,7 +35,7 @@
 
   --max: 1180px;
   --radius: 14px;
-  --shadow: 0 12px 34px rgba(0, 0, 0, 0.45);
+  --shadow: 0 10px 28px rgba(16, 32, 56, 0.10);
 }
 
 * { box-sizing: border-box; }
@@ -59,7 +62,7 @@ a:hover { text-decoration: underline; }
   top: 0;
   z-index: 20;
   backdrop-filter: blur(10px);
-  background: rgba(11, 15, 23, 0.82);
+  background: rgba(255, 255, 255, 0.86);
   border-bottom: 1px solid var(--border-soft);
 }
 .site-header .wrap {
@@ -78,8 +81,8 @@ a:hover { text-decoration: underline; }
 .hero {
   padding: 82px 0 64px;
   background:
-    radial-gradient(900px 380px at 15% -10%, rgba(76, 194, 255, 0.16), transparent 60%),
-    radial-gradient(700px 320px at 90% 0%, rgba(120, 90, 255, 0.12), transparent 60%);
+    radial-gradient(900px 380px at 15% -10%, rgba(15, 108, 189, 0.09), transparent 62%),
+    radial-gradient(700px 320px at 90% 0%, rgba(120, 90, 255, 0.07), transparent 62%);
   border-bottom: 1px solid var(--border-soft);
 }
 .hero h1 {
@@ -113,8 +116,8 @@ a:hover { text-decoration: underline; }
   transition: transform 0.12s ease, background 0.12s ease;
 }
 .btn:hover { text-decoration: none; transform: translateY(-1px); }
-.btn-primary { background: var(--accent); color: #04121c; }
-.btn-primary:hover { background: #6bcdff; }
+.btn-primary { background: var(--accent); color: #ffffff; }
+.btn-primary:hover { background: var(--accent-strong); }
 .btn-ghost { border-color: var(--border); color: var(--text); background: var(--bg-raised); }
 .btn-ghost:hover { border-color: var(--accent); }
 
@@ -157,7 +160,7 @@ a:hover { text-decoration: underline; }
 }
 .card .shot {
   aspect-ratio: 16 / 10;
-  background: #0a0e15 center/cover no-repeat;
+  background: var(--bg-shot) center/cover no-repeat;
   border-bottom: 1px solid var(--border-soft);
   position: relative;
   overflow: hidden;
@@ -177,11 +180,11 @@ a:hover { text-decoration: underline; }
   padding: 3px 8px;
   border-radius: 999px;
   background: var(--accent-soft);
-  color: var(--accent);
-  border: 1px solid rgba(76, 194, 255, 0.22);
+  color: var(--accent-strong);
+  border: 1px solid #cfe3f5;
 }
-.badge-wip { background: rgba(240, 160, 32, 0.12); color: var(--wip); border-color: rgba(240, 160, 32, 0.3); }
-.badge-credit { background: rgba(255, 255, 255, 0.06); color: var(--text-muted); border-color: var(--border); }
+.badge-wip { background: #fdf3e3; color: var(--wip); border-color: #f1ddbb; }
+.badge-credit { background: #f4f6f8; color: var(--text-muted); border-color: var(--border); }
 
 /* --------------------------------------------------------------- app page --- */
 .app-hero { padding: 46px 0 30px; border-bottom: 1px solid var(--border-soft); }
@@ -195,13 +198,13 @@ a:hover { text-decoration: underline; }
   border-radius: var(--radius);
   border: 1px solid var(--border);
   display: block;
-  background: #000;
+  background: var(--bg-shot);
 }
 .media figcaption { color: var(--text-dim); font-size: 0.84rem; margin-top: 8px; }
 
 .callout {
   background: var(--accent-soft);
-  border: 1px solid rgba(76, 194, 255, 0.25);
+  border: 1px solid #cfe3f5;
   border-left: 3px solid var(--accent);
   border-radius: 10px;
   padding: 14px 18px;
@@ -223,10 +226,11 @@ pre, .code {
 }
 code { font-family: var(--code-font); font-size: 0.9em; }
 :not(pre) > code {
-  background: rgba(255, 255, 255, 0.07);
+  background: #f1f4f7;
   padding: 2px 6px;
   border-radius: 5px;
-  color: #cfe6f7;
+  color: #0b5394;
+  border: 1px solid var(--border-soft);
 }
 
 /* README rendered into the page */
