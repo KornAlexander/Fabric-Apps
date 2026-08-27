@@ -49,6 +49,10 @@ npx rayfin up --workspace-id <your-workspace-guid> --tenant <your-tenant-guid>
 
 **Source, and always the latest version:** https://github.com/KornAlexander/Fabric-Apps/tree/main/fabric-admin/pbi-fixer
 
+**How it is built:** https://kornalexander.github.io/Fabric-Apps/apps/pbi-fixer/
+
+It is part of an open-source gallery of Fabric Apps: 3D twins, live maps, admin tools and a few games. https://kornalexander.github.io/Fabric-Apps/
+
 ---
 
 <!-- Before submitting:

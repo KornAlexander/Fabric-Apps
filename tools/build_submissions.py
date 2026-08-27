@@ -90,10 +90,13 @@ def to_html(md: str, slug: str) -> str:
         s = esc(s)
         s = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", s)
         s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
-        s = re.sub(r"\[([^\]]+)\]\((https?://[^)]+)\)",
-                   r'<a href="\2" target="_blank" rel="noopener">\1</a>', s)
-        # bare urls
-        s = re.sub(r"(?<!\">)(?<!\()\b(https?://[^\s<]+)", r'<a href="\1" target="_blank" rel="noopener">\1</a>', s)
+        # ⚠⚠ NO target or rel. The gallery editor rejected the post outright with "contains
+        # invalid HTML ... a", and the tag itself cannot be banned - its own Insert Link
+        # button produces one. It is the extra attributes the sanitiser refuses. Stripped
+        # to a bare href, which is also what the editor writes itself.
+        s = re.sub(r"\[([^\]]+)\]\((https?://[^)]+)\)", r'<a href="\2">\1</a>', s)
+        # bare urls become links too, so nothing publishes as dead text
+        s = re.sub(r'(?<![">])(?<!\()\b(https?://[^\s<]+)', r'<a href="\1">\1</a>', s)
         return s
 
     def close_list():
@@ -262,6 +265,8 @@ def build(slug: str, draft: Path) -> bool:
         "- [ ] Nothing in the pixels names a customer, a tenant or a workspace you would",
         "      not put on a billboard",
         "- [ ] The links above all resolve",
+        "- [ ] **Cover Image is set to `thumbnail.jpg` before the first Publish** - see below",
+        "- [ ] **The GIF is in the body**, inserted with the editor's Insert Media button",
         "",
         "## Form facts, checked against the live form",
         "",
@@ -269,6 +274,27 @@ def build(slug: str, draft: Path) -> bool:
         "- Max 3 attachments, 50 MB each.",
         "- The body editor is **rich text, not markdown** - paste `post-plain.txt`,",
         "  not `post.md`, or the `##` and `![]()` show up as literal characters.",
+        "",
+        "### ⚠️ Cover Image is a one-shot field. Set it on the FIRST publish.",
+        "",
+        "The gallery tile does not come from the post body. It comes from the form's own",
+        "**Cover Image** control, below the attachment box. Leave it empty and the tile",
+        "renders a grey placeholder icon forever, no matter what the post contains.",
+        "",
+        "Forever is not an exaggeration: the **edit** form still shows the Cover Image and",
+        "attachment controls, they still accept a file and still show a preview, and then",
+        "Publish silently drops both. Verified on the live pbi-fixer post - four edit",
+        "cycles, the attachment listed in the form as `thumbnail.jpg 50 KB`, and afterwards",
+        "`SELECT * FROM attachments WHERE message.id = ...` returned zero rows every time.",
+        "The only fix for a post that went out without a cover is to delete it and submit",
+        "it again.",
+        "",
+        "### The GIF has to be uploaded, not linked",
+        "",
+        "`body.html` embeds the demo from its raw GitHub URL. That is fine for review but",
+        "the editor's sanitiser drops external `<img>` (the same one that rejects `<a>`),",
+        "so the published post ends up with no demo at all. Insert it by hand instead:",
+        "**Insert Media -> From Computer -> `demo.gif`**.",
     ]
     if not any(c.startswith("demo") for c in copied):
         lines += [
