@@ -1,0 +1,30 @@
+# Normalise line endings in the repository, check out native on each platform.
+# Without this the first commit from Windows rewrites every file it touches and the
+# diff becomes unreviewable.
+* text=auto
+
+# Keep shell scripts LF regardless of platform - CRLF breaks them.
+*.sh text eol=lf
+*.bash text eol=lf
+
+# Binary: never diff, never normalise.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.mp4 binary
+*.webm binary
+*.mov binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.pbiviz binary
+*.tif binary
+*.tiff binary
+*.bin binary
+
+# Generated Fabric item definitions - keep them out of language stats and diffs.
+fabric/** linguist-generated=true
+**/*.tmdl linguist-language=TMDL

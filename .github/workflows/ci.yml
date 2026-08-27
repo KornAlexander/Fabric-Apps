@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gate:
+    name: Publication gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 200   # the media churn check reads recent history
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: verify_publishable
+        run: python tools/verify_publishable.py
+      - name: App gallery is generated, not hand-maintained
+        run: python tools/generate_index.py --check
+      - name: README sections
+        run: python tools/check_readme_sections.py
+      - name: Gallery and LinkedIn drafts
+        run: python tools/check_gallery_drafts.py
+      - name: Links resolve
+        run: python tools/check_links.py
+      - name: Media budget
+        run: python tools/check_media_budget.py
+
+  apps:
+    name: ${{ matrix.app }}
+    runs-on: ubuntu-latest
+    needs: [gate, discover]
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{ fromJSON(needs.discover.outputs.apps) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install
+        working-directory: ${{ matrix.app }}
+        run: npm ci --no-audit --no-fund || npm install --no-audit --no-fund
+      - name: Lint
+        working-directory: ${{ matrix.app }}
+        run: npm run --if-present lint
+      - name: Test
+        working-directory: ${{ matrix.app }}
+        run: npm run --if-present test
+      - name: Build
+        working-directory: ${{ matrix.app }}
+        run: npm run --if-present build
+
+  discover:
+    name: Discover apps
+    runs-on: ubuntu-latest
+    outputs:
+      apps: ${{ steps.find.outputs.apps }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: find
+        # Every folder holding a package.json under a category directory is an app.
+        # Discovering them beats maintaining a list that silently goes stale.
+        run: |
+          apps=$(find games-and-learn fabric-admin industry -name package.json -not -path '*/node_modules/*' -maxdepth 3 -printf '%h\n' 2>/dev/null | sort -u | jq -R -s -c 'split("\n")[:-1]')
+          echo "apps=${apps:-[]}" >> "$GITHUB_OUTPUT"

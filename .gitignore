@@ -1,0 +1,39 @@
+# Dependencies and build output
+node_modules/
+dist/
+build/
+.vite/
+.turbo/
+coverage/
+*.tsbuildinfo
+
+# Local environment and deployment state
+.env
+.env.local
+.env.*.local
+# Written by `rayfin up`: tenant id, workspace id, capacity host, hosting url.
+# Nested pattern on purpose - a root-anchored rule misses <app>/rayfin/.deployments.json.
+**/rayfin/.deployments.json
+**/rayfin/.env
+**/rayfin/.temp/
+
+# Generated geodata. These are rebuilt by each app's own pipeline and must never
+# be committed - one terrain cache makes the clone painful for every other app.
+**/public/terrain/
+**/public/tiles/
+**/data/terrain/
+*.tif
+*.tiff
+*.laz
+*.las
+
+# Media: committed deliberately and ONCE (see the media budget in CONTRIBUTING.md).
+# Work-in-progress renders belong in a scratch folder, not here.
+temp/
+**/media/raw/
+**/media/wip/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
