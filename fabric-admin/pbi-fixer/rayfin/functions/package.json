@@ -1,0 +1,21 @@
+{
+  "name": "rayfin-functions",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/src/function_app.js",
+  "scripts": {
+    "build": "tsc --build",
+    "build:watch": "tsc --build --watch",
+    "dev": "rayfin functions typegen --watch",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@microsoft/fabric-user-data-functions": "file:./microsoft-fabric-user-data-functions-0.1.0.tgz"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.21",
+    "rimraf": "^6.0.0",
+    "typescript": "^5.8.0"
+  }
+}

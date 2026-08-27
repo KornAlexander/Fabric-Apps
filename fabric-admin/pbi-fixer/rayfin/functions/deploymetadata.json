@@ -1,0 +1,113 @@
+{
+  "runtime": "TYPESCRIPT",
+  "functionsMetadata": [
+    {
+      "name": "listWorkspaces",
+      "scriptFile": "src\\function_app.ts",
+      "bindings": [
+        {
+          "name": "req",
+          "type": "httpTrigger",
+          "direction": "in",
+          "authLevel": "anonymous",
+          "methods": [
+            "post"
+          ],
+          "route": "listWorkspaces"
+        },
+        {
+          "name": "$return",
+          "type": "http",
+          "direction": "out"
+        }
+      ],
+      "fabricProperties": {
+        "fabricMetadataSchemaVersion": "1.0",
+        "fabricFunctionReturnType": "Promise<{ id: string; displayName: string }[]>",
+        "fabricFunctionParameters": []
+      },
+      "functionCode": "udf.func('listWorkspaces', async (): Promise<{ id: string; displayName: string }[]> => {\r\n  const res = await fabricFetch('/workspaces');\r\n  const value = (res.json?.value ?? []) as { id: string; displayName: string }[];\r\n  return value.map((w) => ({ id: w.id, displayName: w.displayName }));\r\n}, [])"
+    },
+    {
+      "name": "listReports",
+      "scriptFile": "src\\function_app.ts",
+      "bindings": [
+        {
+          "name": "req",
+          "type": "httpTrigger",
+          "direction": "in",
+          "authLevel": "anonymous",
+          "methods": [
+            "post"
+          ],
+          "route": "listReports"
+        },
+        {
+          "name": "$return",
+          "type": "http",
+          "direction": "out"
+        }
+      ],
+      "fabricProperties": {
+        "fabricMetadataSchemaVersion": "1.0",
+        "fabricFunctionReturnType": "Promise<{ id: string; displayName: string }[]>",
+        "fabricFunctionParameters": [
+          {
+            "name": "workspaceId",
+            "dataType": "string",
+            "hasDefaultValue": false
+          }
+        ]
+      },
+      "functionCode": "udf.func('listReports', async (workspaceId: string): Promise<{ id: string; displayName: string }[]> => {\r\n  const res = await fabricFetch(`/workspaces/${workspaceId}/reports`);\r\n  const value = (res.json?.value ?? []) as { id: string; displayName: string }[];\r\n  return value.map((r) => ({ id: r.id, displayName: r.displayName }));\r\n}, [])"
+    },
+    {
+      "name": "applyReportFixer",
+      "scriptFile": "src\\function_app.ts",
+      "bindings": [
+        {
+          "name": "req",
+          "type": "httpTrigger",
+          "direction": "in",
+          "authLevel": "anonymous",
+          "methods": [
+            "post"
+          ],
+          "route": "applyReportFixer"
+        },
+        {
+          "name": "$return",
+          "type": "http",
+          "direction": "out"
+        }
+      ],
+      "fabricProperties": {
+        "fabricMetadataSchemaVersion": "1.0",
+        "fabricFunctionReturnType": "Promise<{\r\n  fixerId: string;\r\n  scanOnly: boolean;\r\n  matched: number;\r\n  changed: number;\r\n  findings: { path: string; detail: string }[];\r\n  applied: boolean;\r\n}>",
+        "fabricFunctionParameters": [
+          {
+            "name": "workspaceId",
+            "dataType": "string",
+            "hasDefaultValue": false
+          },
+          {
+            "name": "reportId",
+            "dataType": "string",
+            "hasDefaultValue": false
+          },
+          {
+            "name": "fixerId",
+            "dataType": "string",
+            "hasDefaultValue": false
+          },
+          {
+            "name": "scanOnly",
+            "dataType": "boolean",
+            "hasDefaultValue": false
+          }
+        ]
+      },
+      "functionCode": "udf.func('applyReportFixer', async (\r\n  workspaceId: string,\r\n  reportId: string,\r\n  fixerId: string,\r\n  scanOnly: boolean,\r\n): Promise<{\r\n  fixerId: string;\r\n  scanOnly: boolean;\r\n  matched: number;\r\n  changed: number;\r\n  findings: { path: string; detail: string }[];\r\n  applied: boolean;\r\n}> => {\r\n  const fixer = FIXERS[fixerId];\r\n  if (!fixer) throw new Error(`Unknown fixerId: ${fixerId}`);\r\n\r\n  // 1. getDefinition (PBIR)\r\n  const getRes = await fabricFetch(\r\n    `/workspaces/${workspaceId}/reports/${reportId}/getDefinition?format=PBIR`,\r\n    { method: 'POST' },\r\n  );\r\n  const defEnvelope = await resolveLro(getRes);\r\n  const definition: Definition = defEnvelope.definition ?? defEnvelope;\r\n  if (!definition?.parts) throw new Error('No PBIR definition parts returned');\r\n\r\n  // 2. scan / mutate\r\n  const result = fixer(definition, scanOnly);\r\n\r\n  // 3. updateDefinition when applying and something changed\r\n  if (!scanOnly && result.changed > 0) {\r\n    const updRes = await fabricFetch(\r\n      `/workspaces/${workspaceId}/reports/${reportId}/updateDefinition`,\r\n      { method: 'POST', body: { definition } },\r\n    );\r\n    await resolveLro(updRes);\r\n  }\r\n\r\n  return result;\r\n}, [])"
+    }
+  ]
+}

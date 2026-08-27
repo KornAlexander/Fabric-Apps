@@ -1,0 +1,346 @@
+{
+  "$comment": [
+    "Conformance cases for the four write gates (PLAN.md §8.7).",
+    "",
+    "The gates are implemented TWICE on purpose: once in TypeScript so the UI can",
+    "explain a refusal before anyone clicks, and once in Python because the actuator",
+    "notebook must re-decide server-side — the SPA's opinion is never trusted",
+    "(PLAN.md §14). Two implementations of one rule set drift silently, and the",
+    "drift would show up as the tool writing something it promised it would not.",
+    "",
+    "So neither implementation owns the specification: this file does. Both test",
+    "suites read it and must agree, case for case.",
+    "",
+    "`expect` is either `allow` or the id of the FIRST gate that refuses."
+  ],
+  "cases": [
+    {
+      "name": "ships disarmed — the master switch refuses everything",
+      "request": {
+        "bindingKind": "entra_group_member",
+        "module": "entra",
+        "scopeId": "ws1",
+        "dryRun": false,
+        "writable": true
+      },
+      "config": {
+        "writesEnabled": false,
+        "armedKinds": ["entra_group_member"],
+        "scopeAllowlist": ["*"],
+        "enabledModules": ["entra"]
+      },
+      "dryRuns": [{ "bindingKind": "entra_group_member", "scopeId": "ws1", "agoDays": 1 }],
+      "expect": "master"
+    },
+    {
+      "name": "an unarmed binding kind is refused even with the master switch on",
+      "request": {
+        "bindingKind": "fabric_tenant_setting",
+        "module": "fabric",
+        "scopeId": "tenant",
+        "dryRun": false,
+        "writable": true
+      },
+      "config": {
+        "writesEnabled": true,
+        "armedKinds": ["entra_group_member"],
+        "scopeAllowlist": ["*"],
+        "enabledModules": ["fabric", "entra"]
+      },
+      "dryRuns": [],
+      "expect": "kind"
+    },
+    {
+      "name": "a scope outside the allow-list is refused",
+      "request": {
+        "bindingKind": "entra_group_member",
+        "module": "entra",
+        "scopeId": "ws-prod",
+        "dryRun": false,
+        "writable": true
+      },
+      "config": {
+        "writesEnabled": true,
+        "armedKinds": ["entra_group_member"],
+        "scopeAllowlist": ["ws-pilot"],
+        "enabledModules": ["entra"]
+      },
+      "dryRuns": [
+        { "bindingKind": "entra_group_member", "scopeId": "ws-prod", "agoDays": 1 }
+      ],
+      "expect": "scope"
+    },
+    {
+      "name": "THE EXIT CRITERION — armed kind, allowed scope, no prior dry run",
+      "request": {
+        "bindingKind": "entra_group_member",
+        "module": "entra",
+        "scopeId": "ws-pilot",
+        "dryRun": false,
+        "writable": true
+      },
+      "config": {
+        "writesEnabled": true,
+        "armedKinds": ["entra_group_member"],
+        "scopeAllowlist": ["ws-pilot"],
+        "enabledModules": ["entra"]
+      },
+      "dryRuns": [],
+      "expect": "dryRun"
+    },
+    {
+      "name": "a dry run for a DIFFERENT scope does not unlock this one",
+      "request": {
+        "bindingKind": "entra_group_member",
+        "module": "entra",
+        "scopeId": "ws-pilot",
+        "dryRun": false,
+        "writable": true
+      },
+      "config": {
+        "writesEnabled": true,
+        "armedKinds": ["entra_group_member"],
+        "scopeAllowlist": ["*"],
+        "enabledModules": ["entra"]
+      },
+      "dryRuns": [{ "bindingKind": "entra_group_member", "scopeId": "ws-other", "agoDays": 1 }],
+      "expect": "dryRun"
+    },
+    {
+      "name": "a dry run for a DIFFERENT kind does not unlock this one",
+      "request": {
+        "bindingKind": "entra_group_member",
+        "module": "entra",
+        "scopeId": "ws-pilot",
+        "dryRun": false,
+        "writable": true
+      },
+      "config": {
+        "writesEnabled": true,
+        "armedKinds": ["entra_group_member"],
+        "scopeAllowlist": ["*"],
+        "enabledModules": ["entra"]
+      },
+      "dryRuns": [
+        { "bindingKind": "fabric_workspace_role", "scopeId": "ws-pilot", "agoDays": 1 }
+      ],
+      "expect": "dryRun"
+    },
+    {
+      "name": "a dry run older than the 30-day window has expired",
+      "request": {
+        "bindingKind": "entra_group_member",
+        "module": "entra",
+        "scopeId": "ws-pilot",
+        "dryRun": false,
+        "writable": true
+      },
+      "config": {
+        "writesEnabled": true,
+        "armedKinds": ["entra_group_member"],
+        "scopeAllowlist": ["*"],
+        "enabledModules": ["entra"]
+      },
+      "dryRuns": [
+        { "bindingKind": "entra_group_member", "scopeId": "ws-pilot", "agoDays": 31 }
+      ],
+      "expect": "dryRun"
+    },
+    {
+      "name": "a dry run 29 days old still counts",
+      "request": {
+        "bindingKind": "entra_group_member",
+        "module": "entra",
+        "scopeId": "ws-pilot",
+        "dryRun": false,
+        "writable": true
+      },
+      "config": {
+        "writesEnabled": true,
+        "armedKinds": ["entra_group_member"],
+        "scopeAllowlist": ["*"],
+        "enabledModules": ["entra"]
+      },
+      "dryRuns": [
+        { "bindingKind": "entra_group_member", "scopeId": "ws-pilot", "agoDays": 29 }
+      ],
+      "expect": "allow"
+    },
+    {
+      "name": "a dry-run request skips the scope and dry-run gates — it changes nothing",
+      "request": {
+        "bindingKind": "entra_group_member",
+        "module": "entra",
+        "scopeId": "ws-anything",
+        "dryRun": true,
+        "writable": true
+      },
+      "config": {
+        "writesEnabled": true,
+        "armedKinds": ["entra_group_member"],
+        "scopeAllowlist": [],
+        "enabledModules": ["entra"]
+      },
+      "dryRuns": [],
+      "expect": "allow"
+    },
+    {
+      "name": "a dry run still needs the master switch",
+      "request": {
+        "bindingKind": "entra_group_member",
+        "module": "entra",
+        "scopeId": "ws1",
+        "dryRun": true,
+        "writable": true
+      },
+      "config": {
+        "writesEnabled": false,
+        "armedKinds": ["entra_group_member"],
+        "scopeAllowlist": ["*"],
+        "enabledModules": ["entra"]
+      },
+      "dryRuns": [],
+      "expect": "master"
+    },
+    {
+      "name": "the wildcard scope allows any scope",
+      "request": {
+        "bindingKind": "fabric_workspace_role",
+        "module": "fabric",
+        "scopeId": "ws-whatever",
+        "role": "Contributor",
+        "dryRun": false,
+        "writable": true
+      },
+      "config": {
+        "writesEnabled": true,
+        "armedKinds": ["fabric_workspace_role"],
+        "scopeAllowlist": ["*"],
+        "enabledModules": ["fabric"]
+      },
+      "dryRuns": [
+        { "bindingKind": "fabric_workspace_role", "scopeId": "ws-whatever", "agoDays": 0 }
+      ],
+      "expect": "allow"
+    },
+    {
+      "name": "an elevated role is refused before any configuration is consulted",
+      "request": {
+        "bindingKind": "fabric_workspace_role",
+        "module": "fabric",
+        "scopeId": "ws-pilot",
+        "role": "Admin",
+        "dryRun": false,
+        "writable": true
+      },
+      "config": {
+        "writesEnabled": true,
+        "armedKinds": ["fabric_workspace_role"],
+        "scopeAllowlist": ["*"],
+        "enabledModules": ["fabric"]
+      },
+      "dryRuns": [
+        { "bindingKind": "fabric_workspace_role", "scopeId": "ws-pilot", "agoDays": 1 }
+      ],
+      "expect": "deniedRole"
+    },
+    {
+      "name": "an elevated role is refused even for a dry run",
+      "request": {
+        "bindingKind": "pp_dataverse_role",
+        "module": "pp",
+        "scopeId": "e-coe",
+        "role": "System Administrator",
+        "dryRun": true,
+        "writable": true
+      },
+      "config": {
+        "writesEnabled": true,
+        "armedKinds": ["pp_dataverse_role"],
+        "scopeAllowlist": ["*"],
+        "enabledModules": ["pp"]
+      },
+      "dryRuns": [],
+      "expect": "deniedRole"
+    },
+    {
+      "name": "role matching ignores case and surrounding whitespace",
+      "request": {
+        "bindingKind": "fabric_workspace_role",
+        "module": "fabric",
+        "scopeId": "ws-pilot",
+        "role": "  gLoBaL aDmInIsTrAtOr ",
+        "dryRun": false,
+        "writable": true
+      },
+      "config": {
+        "writesEnabled": true,
+        "armedKinds": ["fabric_workspace_role"],
+        "scopeAllowlist": ["*"],
+        "enabledModules": ["fabric"]
+      },
+      "dryRuns": [],
+      "expect": "deniedRole"
+    },
+    {
+      "name": "a switched-off module cannot be written to, however armed the kind is",
+      "request": {
+        "bindingKind": "pp_env_security_group",
+        "module": "pp",
+        "scopeId": "e-coe",
+        "dryRun": false,
+        "writable": true
+      },
+      "config": {
+        "writesEnabled": true,
+        "armedKinds": ["pp_env_security_group"],
+        "scopeAllowlist": ["*"],
+        "enabledModules": ["fabric", "entra"]
+      },
+      "dryRuns": [
+        { "bindingKind": "pp_env_security_group", "scopeId": "e-coe", "agoDays": 1 }
+      ],
+      "expect": "moduleOff"
+    },
+    {
+      "name": "a manual-only binding kind is never written, even if someone arms it",
+      "request": {
+        "bindingKind": "pp_routing_rule",
+        "module": "pp",
+        "scopeId": "e-coe",
+        "dryRun": false,
+        "writable": false
+      },
+      "config": {
+        "writesEnabled": true,
+        "armedKinds": ["pp_routing_rule"],
+        "scopeAllowlist": ["*"],
+        "enabledModules": ["pp"]
+      },
+      "dryRuns": [
+        { "bindingKind": "pp_routing_rule", "scopeId": "e-coe", "agoDays": 1 }
+      ],
+      "expect": "notWritable"
+    },
+    {
+      "name": "everything satisfied — the only shape that writes",
+      "request": {
+        "bindingKind": "entra_group_member",
+        "module": "entra",
+        "scopeId": "ws-pilot",
+        "dryRun": false,
+        "writable": true
+      },
+      "config": {
+        "writesEnabled": true,
+        "armedKinds": ["entra_group_member", "fabric_workspace_role"],
+        "scopeAllowlist": ["ws-pilot", "ws-lab"],
+        "enabledModules": ["entra", "fabric"]
+      },
+      "dryRuns": [
+        { "bindingKind": "entra_group_member", "scopeId": "ws-pilot", "agoDays": 3 }
+      ],
+      "expect": "allow"
+    }
+  ]
+}

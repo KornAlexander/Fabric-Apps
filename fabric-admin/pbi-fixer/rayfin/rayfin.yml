@@ -1,0 +1,32 @@
+id: pbi-fixer-app
+name: Power BI Fixer
+version: 1.0.0
+services:
+  auth:
+    enabled: true
+    fabric:
+      enabled: true
+    password:
+      enabled: true
+    # ⚠️ `rayfin up` rewrites this file and will re-add whatever host it just deployed to.
+    # That host is tenant- and item-specific, so it must not travel into a public repo — check
+    # this list before publishing. Whoever deploys adds their own `https://<their-app-host>`
+    # AND `https://<their-app-host>/auth/callback`, then runs a full `rayfin up`
+    # (a `staticapp deploy` alone does not re-register them).
+    allowedRedirectUris:
+      - http://localhost:5173
+      - <your-app-host>.webapp.fabricapps.net
+  # Rayfin (TypeScript) functions are disabled: the Fabric UDF backend does not
+  # yet accept the TYPESCRIPT runtime. The server-side logic runs in a separate
+  # standalone Python User Data Functions item instead (see fabric-udf/).
+  functions:
+    enabled: false
+  staticHosting:
+    enabled: true
+    folder: dist
+    buildCommand: npm run build:fabric
+    indexDocument: index.html
+  data:
+    enabled: false
+  storage:
+    enabled: false
