@@ -11,7 +11,7 @@ assets:
   - docs/previews/maritime-insights.webp
 ---
 
-# 05 — maritime-insights
+# 05: maritime-insights
 
 *Post 5 of 15 in the Fabric Apps series. One per weekday.*
 
@@ -20,7 +20,7 @@ assets:
 ```text
 The most useful thing this app does is tell you what it cannot see.
 
-Maritime Insights renders the Kiel Fjord as a 3D sea chart with a recorded AIS day — 261 vessels from the Danish Maritime Authority — and models what a 25 m radar mast actually covers.
+Maritime Insights renders the Kiel Fjord as a 3D sea chart from a recorded AIS day of 261 vessels, published by the Danish Maritime Authority, and models what a 25 m radar mast actually covers.
 
 Of those vessels, only a fraction fall inside the modelled line of sight. The app says so, on screen, next to the map.
 

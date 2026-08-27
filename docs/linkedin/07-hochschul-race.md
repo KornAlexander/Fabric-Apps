@@ -12,7 +12,7 @@ assets:
   - docs/media/hochschul-race-demo.gif
 ---
 
-# 07 — hochschul-race
+# 07: hochschul-race
 
 *Post 7 of 15 in the Fabric Apps series. One per weekday.*
 
@@ -23,7 +23,7 @@ Same data, two renderings: a Power BI report, and a bar-chart race.
 
 Twenty years of enrolment at German universities, off one Direct Lake semantic model.
 
-The Power BI report answers *what is the number*. The race chart answers *what happened, in what order, and who overtook whom* — and it holds attention for ninety seconds while it does it.
+The Power BI report answers *what is the number*. The race chart answers *what happened, in what order, and who overtook whom*, and it holds attention for ninety seconds while it does it.
 
 Neither replaces the other. The point is that one model can feed both, and the app is just another consumer of it.
 

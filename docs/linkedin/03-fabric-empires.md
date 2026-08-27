@@ -11,7 +11,7 @@ assets:
   - docs/previews/fabric-empires.webp
 ---
 
-# 03 — fabric-empires
+# 03: fabric-empires
 
 *Post 3 of 15 in the Fabric Apps series. One per weekday.*
 
@@ -24,7 +24,7 @@ Cities, armies, tech trees, sieges. Every turn is a transaction. The map, the fa
 
 It started as a joke about what a data platform is *for* and turned into the clearest demo I have of Fabric as an application runtime rather than a reporting back end.
 
-Still work in progress and shipping in the open — the repo is public while it is being built, not after.
+Still work in progress and shipping in the open: the repo is public while it is being built, not after.
 
 Source, and always the latest version:
 https://github.com/KornAlexander/Fabric-Apps/tree/main/games-and-learn/fabric-empires

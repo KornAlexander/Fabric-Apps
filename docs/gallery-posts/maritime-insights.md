@@ -1,7 +1,7 @@
 ---
 app: industry/maritime-insights
 slug: maritime-insights
-title: "Maritime Insights — the Kiel Fjord as an interactive 3D sea chart"
+title: "Maritime Insights: the Kiel Fjord as an interactive 3D sea chart"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
 assetsReady: true
@@ -9,7 +9,7 @@ assets:
   - docs/previews/maritime-insights.webp
 ---
 
-# Maritime Insights — the Kiel Fjord as an interactive 3D sea chart
+# Maritime Insights: the Kiel Fjord as an interactive 3D sea chart
 
 Vessel traffic on a photoreal 3D chart of the Kiel Fjord, with a line-of-sight model that is honest about what a 25 m mast can and cannot see.
 
@@ -19,7 +19,7 @@ Vessel traffic on a photoreal 3D chart of the Kiel Fjord, with a line-of-sight m
 
 ## What it does
 
-- A recorded AIS day from the Danish Maritime Authority — 261 vessels
+- A recorded AIS day from the Danish Maritime Authority, 261 vessels
 - Photoreal 3D terrain and bathymetry
 - A radar line-of-sight grid that reports what it cannot resolve, not just what it can
 - An assistant that answers questions about the scene in plain language
@@ -36,10 +36,10 @@ Danish Maritime Authority AIS, open data. The traffic shown is a recorded day, l
 ## Credits
 
 - **Terrain, surface model, buildings and orthophotos**: Landesamt für Vermessung und Geoinformation Schleswig-Holstein (LVermGeo SH), CC BY 4.0. Required attribution, verbatim: *Datenquelle: Landesamt für Vermessung und Geoinformation Schleswig-Holstein (LVermGeo SH), CC BY 4.0 [Daten bearbeitet]*
-- **Coarse terrain shell**: *© DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA; all rights reserved.*
+- **Coarse terrain shell**: *© DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014, 2018 provided under COPERNICUS by the European Union and ESA; all rights reserved.*
 - *© OpenStreetMap-Mitwirkende, ODbL*
 - **Vessel traffic**: Danish Maritime Authority AIS, open data.
-- ⚠️ The German authority and product names are kept deliberately — they are the official names and what you must search for to find the same data. A translated name finds nothing.
+- ⚠️ The German authority and product names are kept deliberately, they are the official names and what you must search for to find the same data. A translated name finds nothing.
 - Full detail: [NOTICE.md](../../industry/maritime-insights/NOTICE.md).
 
 ## Try it

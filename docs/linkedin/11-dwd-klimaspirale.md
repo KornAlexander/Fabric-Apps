@@ -12,7 +12,7 @@ assets:
   - docs/media/dwd-klimaspirale-demo.gif
 ---
 
-# 11 — dwd-klimaspirale
+# 11: dwd-klimaspirale
 
 *Post 11 of 15 in the Fabric Apps series. One per weekday.*
 
@@ -21,7 +21,7 @@ assets:
 ```text
 A century of German weather in five views, and not one line of WebGL.
 
-Canvas 2D and TypeScript. No custom visual, no GPU dependency — so it drops into a Fabric App, an iframe, or any web page, and it works on a projector in a room with bad graphics drivers.
+Canvas 2D and TypeScript. No custom visual, no GPU dependency, so it drops into a Fabric App, an iframe, or any web page, and it works on a projector in a room with bad graphics drivers.
 
 A tilted climate spiral, a stacked funnel, anomaly bars, warming stripes, and an interpolated heat map of Germany. Five views, one playback timeline.
 

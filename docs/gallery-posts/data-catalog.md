@@ -1,7 +1,7 @@
 ---
 app: fabric-admin/data-catalog
 slug: data-catalog
-title: "Data Catalog — everything in your tenant, browsable"
+title: "Data Catalog: everything in your tenant, browsable"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
 assetsReady: true
@@ -9,7 +9,7 @@ assets:
   - docs/previews/data-catalog.webp
 ---
 
-# Data Catalog — everything in your tenant, browsable
+# Data Catalog: everything in your tenant, browsable
 
 A catalogue of every item in your Fabric tenant with lineage and ownership, scanned into a Lakehouse and served as an app.
 

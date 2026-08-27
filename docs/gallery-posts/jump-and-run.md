@@ -1,7 +1,7 @@
 ---
 app: games-and-learn/jump-and-run
 slug: jump-and-run
-title: "Jump and Run — 100 levels, and every run lands in Fabric"
+title: "Jump and Run: 100 levels, and every run lands in Fabric"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
 assetsReady: true
@@ -11,7 +11,7 @@ assets:
   - docs/media/jump-and-run-demo.mp4
 ---
 
-# Jump and Run — 100 levels, and every run lands in Fabric
+# Jump and Run: 100 levels, and every run lands in Fabric
 
 A single-file HTML5 Canvas platformer embedded in a Fabric-authenticated app. Each finished play-through is written to a typed entity through the Rayfin data client.
 

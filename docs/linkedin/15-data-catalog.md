@@ -11,7 +11,7 @@ assets:
   - docs/previews/data-catalog.webp
 ---
 
-# 15 — data-catalog
+# 15: data-catalog
 
 *Post 15 of 15 in the Fabric Apps series. One per weekday.*
 

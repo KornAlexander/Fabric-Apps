@@ -12,7 +12,7 @@ assets:
   - docs/media/jump-and-run-demo.gif
 ---
 
-# 12 — jump-and-run
+# 12: jump-and-run
 
 *Post 12 of 15 in the Fabric Apps series. One per weekday.*
 

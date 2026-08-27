@@ -11,7 +11,7 @@ assets:
   - docs/previews/ibcs-trainer.webp
 ---
 
-# 13 — ibcs-trainer
+# 13: ibcs-trainer
 
 *Post 13 of 15 in the Fabric Apps series. One per weekday.*
 

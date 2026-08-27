@@ -1,7 +1,7 @@
 ---
 app: games-and-learn/paragliding-insights
 slug: paragliding-insights
-title: "Paragliding Insights — the airspace over Oberstdorf in 3D"
+title: "Paragliding Insights: the airspace over Oberstdorf in 3D"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
 assetsReady: true
@@ -11,7 +11,7 @@ assets:
   - docs/media/paragliding-insights-demo.mp4
 ---
 
-# Paragliding Insights — the airspace over Oberstdorf in 3D
+# Paragliding Insights: the airspace over Oberstdorf in 3D
 
 9 by 8 km of the Allgäu Alps at true scale, from official 1 m terrain, with real flight tracks and live glider traffic drawn over it.
 
@@ -33,12 +33,12 @@ assets:
 
 ## Data
 
-Official Bavarian elevation data and the Open Glider Network. Demonstration and training only — not flight preparation.
+Official Bavarian elevation data and the Open Glider Network. Demonstration and training only, not flight preparation.
 
 ## Credits
 
 - **Terrain and buildings**: Bayerische Vermessungsverwaltung (LDBV), CC BY 4.0. Required attribution, verbatim: *Datenquelle: Bayerische Vermessungsverwaltung – www.geodaten.bayern.de [Daten bearbeitet]*
-- **Coarse terrain shell**: *© DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA; all rights reserved.*
+- **Coarse terrain shell**: *© DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014, 2018 provided under COPERNICUS by the European Union and ESA; all rights reserved.*
 - *© OpenStreetMap contributors (ODbL)*
 - **Live glider traffic**: Open Glider Network (ODbL). ⚠️ Data older than 24 hours is not redistributed, and OGN privacy choices are honoured.
 - Full detail: [NOTICE.md](../../games-and-learn/paragliding-insights/NOTICE.md).

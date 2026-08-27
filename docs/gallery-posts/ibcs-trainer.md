@@ -1,7 +1,7 @@
 ---
 app: games-and-learn/ibcs-trainer
 slug: ibcs-trainer
-title: "IBCS Trainer — learn a charting standard by destroying bad charts"
+title: "IBCS Trainer: learn a charting standard by destroying bad charts"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
 assetsReady: true
@@ -9,7 +9,7 @@ assets:
   - docs/previews/ibcs-trainer.webp
 ---
 
-# IBCS Trainer — learn a charting standard by destroying bad charts
+# IBCS Trainer: learn a charting standard by destroying bad charts
 
 A Canvas platformer that teaches the IBCS notation rules level by level. You play an analyst who conquers bad chart types: pie charts explode, and the wrong chart for a time series has to go.
 

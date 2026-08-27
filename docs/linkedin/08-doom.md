@@ -12,7 +12,7 @@ assets:
   - docs/media/doom-demo.gif
 ---
 
-# 08 — doom
+# 08: doom
 
 *Post 8 of 15 in the Fabric Apps series. One per weekday.*
 
@@ -40,4 +40,4 @@ Gallery entry: {{galleryUrl}}
 - Attach: `docs/media/doom-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
 - Paste as plain text; LinkedIn strips markdown. The blank lines are the formatting.
 - Mentions are added by hand in the composer, not here.
-- ⚠️ Tag Sander van de Velde by hand — the credit is the point of the post.
+- ⚠️ Tag Sander van de Velde by hand. The credit is the point of the post.

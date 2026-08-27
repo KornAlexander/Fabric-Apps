@@ -1,7 +1,7 @@
 ---
 app: industry/flood-insights
 slug: flood-insights
-title: "Flood Insights — the 2021 Ahr valley flood, reconstructed from open data"
+title: "Flood Insights: the 2021 Ahr valley flood, reconstructed from open data"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
 assetsReady: true
@@ -11,9 +11,9 @@ assets:
   - docs/media/flood-insights-demo.mp4
 ---
 
-# Flood Insights — the 2021 Ahr valley flood, reconstructed from open data
+# Flood Insights: the 2021 Ahr valley flood, reconstructed from open data
 
-24.6 km of the Ahr valley in 3D, replaying the flood of 14–15 July 2021 along a scrubbable timeline, built entirely from publicly available data.
+24.6 km of the Ahr valley in 3D, replaying the flood of 14, 15 July 2021 along a scrubbable timeline, built entirely from publicly available data.
 
 <!-- Attach the demo video or GIF here. A screenshot is the minimum; the video is what
      makes someone open the post rather than scroll past it. -->
@@ -23,7 +23,7 @@ assets:
 
 - Official 1 m terrain and LoD2 buildings
 - A stage-discharge rating built from real cross-sections drives the timeline
-- Scored against the Copernicus EMSR517 flood trace — IoU 0.508, shown in the app even when it is unflattering
+- Scored against the Copernicus EMSR517 flood trace, IoU 0.508, shown in the app even when it is unflattering
 - A closing view that lets you ask what would have helped, and watch the numbers move
 
 ## What it deploys into your workspace
@@ -33,7 +33,7 @@ assets:
 
 ## Data
 
-Open German geodata and Copernicus EMSR517. Demonstration and training only — not a risk assessment.
+Open German geodata and Copernicus EMSR517. Demonstration and training only, not a risk assessment.
 
 ## Credits
 

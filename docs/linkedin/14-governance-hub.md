@@ -11,14 +11,14 @@ assets:
   - docs/previews/governance-hub.webp
 ---
 
-# 14 — governance-hub
+# 14: governance-hub
 
 *Post 14 of 15 in the Fabric Apps series. One per weekday.*
 
 ## Post text
 
 ```text
-Who may create what, where — and why.
+Who may create what, where, and why.
 
 Governance Hub collects tenant settings, capacity posture and access rules on a schedule and puts them in one place. The answer to a governance question becomes a page instead of an archaeology project.
 

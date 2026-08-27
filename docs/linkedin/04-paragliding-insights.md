@@ -12,7 +12,7 @@ assets:
   - docs/media/paragliding-insights-demo.gif
 ---
 
-# 04 — paragliding-insights
+# 04: paragliding-insights
 
 *Post 4 of 15 in the Fabric Apps series. One per weekday.*
 

@@ -12,7 +12,7 @@ assets:
   - docs/media/airport-iq-demo.gif
 ---
 
-# 10 — airport-iq
+# 10: airport-iq
 
 *Post 10 of 15 in the Fabric Apps series. One per weekday.*
 

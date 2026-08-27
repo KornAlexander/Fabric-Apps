@@ -12,7 +12,7 @@ assets:
   - docs/media/flood-insights-demo.gif
 ---
 
-# 06 — flood-insights
+# 06: flood-insights
 
 *Post 6 of 15 in the Fabric Apps series. One per weekday.*
 

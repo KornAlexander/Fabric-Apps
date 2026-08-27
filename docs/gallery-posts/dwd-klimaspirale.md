@@ -1,7 +1,7 @@
 ---
 app: industry/dwd-klimaspirale
 slug: dwd-klimaspirale
-title: "Climate Spiral — a century of German weather in five views"
+title: "Climate Spiral: a century of German weather in five views"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
 assetsReady: true
@@ -11,9 +11,9 @@ assets:
   - docs/media/dwd-klimaspirale-demo.mp4
 ---
 
-# Climate Spiral — a century of German weather in five views
+# Climate Spiral: a century of German weather in five views
 
-An interactive climate viewer rendered entirely in Canvas 2D — no custom visual, no WebGL — so it drops straight into a Fabric App, an iframe or any web page.
+An interactive climate viewer rendered entirely in Canvas 2D, no custom visual, no WebGL, so it drops straight into a Fabric App, an iframe or any web page.
 
 <!-- Attach the demo video or GIF here. A screenshot is the minimum; the video is what
      makes someone open the post rather than scroll past it. -->

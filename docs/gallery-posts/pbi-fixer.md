@@ -1,7 +1,7 @@
 ---
 app: fabric-admin/pbi-fixer
 slug: pbi-fixer
-title: "Power BI Fixer — inspect and repair a semantic model in the browser"
+title: "Power BI Fixer: inspect and repair a semantic model in the browser"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
 assetsReady: true
@@ -9,7 +9,7 @@ assets:
   - docs/previews/pbi-fixer.webp
 ---
 
-# Power BI Fixer — inspect and repair a semantic model in the browser
+# Power BI Fixer: inspect and repair a semantic model in the browser
 
 A Fabric-authenticated app that reads a semantic model and report straight out of Fabric, runs Best Practice Analyzer rules against them, and applies the fixes. No Power BI Desktop, no Tabular Editor install, nothing to download.
 
@@ -19,9 +19,9 @@ A Fabric-authenticated app that reads a semantic model and report straight out o
 
 ## What it does
 
-- Model Explorer — tables, columns, measures and relationships, with an inline TMDL view
+- Model Explorer, tables, columns, measures and relationships, with an inline TMDL view
 - Best Practice Analyzer with one-click fixes for the common findings
-- Memory Analyzer — column and table size, cardinality, and what is costing you
+- Memory Analyzer, column and table size, cardinality, and what is costing you
 - Measure Editor with a built-in DAX formatter
 - Unused-object cleanup, display folders, descriptions and field parameters
 

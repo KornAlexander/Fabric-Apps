@@ -1,7 +1,7 @@
 ---
 app: fabric-admin/governance-hub
 slug: governance-hub
-title: "Governance Hub — who may create what, where, and why"
+title: "Governance Hub: who may create what, where, and why"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
 assetsReady: true
@@ -9,7 +9,7 @@ assets:
   - docs/previews/governance-hub.webp
 ---
 
-# Governance Hub — who may create what, where, and why
+# Governance Hub: who may create what, where, and why
 
 Tenant settings, capacity posture and access rules collected on a schedule and put in one place, so the answer to a governance question is a page rather than an archaeology project.
 

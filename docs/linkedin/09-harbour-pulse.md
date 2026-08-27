@@ -11,7 +11,7 @@ assets:
   - docs/previews/harbour-pulse.webp
 ---
 
-# 09 — harbour-pulse
+# 09: harbour-pulse
 
 *Post 9 of 15 in the Fabric Apps series. One per weekday.*
 
@@ -24,10 +24,10 @@ Harbour Pulse renders live ferry positions out of a Fabric Eventhouse onto Googl
 
 Pre-departure operator checklists live in Fabric SQL, so the operational side and the visual side are the same application.
 
-This one is not mine. Harbour Pulse is Fran Genoa's project — the design, the voxel vessel twins and the Real-Time Intelligence architecture are his work:
+This one is not mine. Harbour Pulse is Fran Genoa's project. The design, the voxel vessel twins and the Real-Time Intelligence architecture are his work:
 https://github.com/FranGenoa/fabric-harbour-pulse
 
-The ferry photographs come from Wikimedia Commons and are credited individually, author and licence, in the repo's ATTRIBUTION.md — those licences require it.
+The ferry photographs come from Wikimedia Commons and are credited individually, author and licence, in the repo's ATTRIBUTION.md, because those licences require it.
 
 Source, and always the latest version:
 https://github.com/KornAlexander/Fabric-Apps/tree/main/industry/harbour-pulse

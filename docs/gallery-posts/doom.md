@@ -1,7 +1,7 @@
 ---
 app: games-and-learn/doom
 slug: doom
-title: "Doom — yes, it runs on Microsoft Fabric"
+title: "Doom: yes, it runs on Microsoft Fabric"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
 assetsReady: true
@@ -11,7 +11,7 @@ assets:
   - docs/media/doom-demo.mp4
 ---
 
-# Doom — yes, it runs on Microsoft Fabric
+# Doom: yes, it runs on Microsoft Fabric
 
 The traditional proof that a platform has matured. Shareware DOOM boots in the browser through js-dos, wrapped in a Fabric-authenticated app, with scores written to a Fabric SQL database.
 
@@ -39,8 +39,8 @@ Freedoom, BSD-licensed. Retail WADs are not included and must not be.
 
 - **This app is Sander van de Velde's work.** The original concept and the Fabric/Rayfin integration are his: [sandervandevelde/Play-Doom-On-Microsoft-Fabric](https://github.com/sandervandevelde/Play-Doom-On-Microsoft-Fabric). This is a port of it into the gallery, with his name on it.
 - DOOM in the browser via js-dos / DOSBox: [thedoggybrad/doom_on_js-dos](https://github.com/thedoggybrad/doom_on_js-dos).
-- **id Software** — the DOOM engine and the shareware game data.
-- [Freedoom](https://freedoom.github.io/) — the BSD-licensed free game data set.
+- **id Software**, the DOOM engine and the shareware game data.
+- [Freedoom](https://freedoom.github.io/), the BSD-licensed free game data set.
 
 ## Try it
 

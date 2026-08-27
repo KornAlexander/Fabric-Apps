@@ -1,7 +1,7 @@
 ---
 app: industry/education/hochschul-race
 slug: hochschul-race
-title: "Higher Education Race Chart — 20 years of enrolment, animated"
+title: "Higher Education Race Chart: 20 years of enrolment, animated"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
 assetsReady: true
@@ -11,7 +11,7 @@ assets:
   - docs/media/hochschul-race-demo.mp4
 ---
 
-# Higher Education Race Chart — 20 years of enrolment, animated
+# Higher Education Race Chart: 20 years of enrolment, animated
 
 An animated bar-chart race of enrolment at German universities, running off a Direct Lake semantic model, with a build-time snapshot inlined so the first frame is instant.
 

@@ -11,7 +11,7 @@ assets:
   - docs/previews/pbi-fixer.webp
 ---
 
-# 01 — pbi-fixer
+# 01: pbi-fixer
 
 *Post 1 of 15 in the Fabric Apps series. One per weekday.*
 

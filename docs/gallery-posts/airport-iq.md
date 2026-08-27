@@ -1,7 +1,7 @@
 ---
 app: industry/airport-iq
 slug: airport-iq
-title: "Airport IQ — live approach on a 3D airport twin"
+title: "Airport IQ: live approach on a 3D airport twin"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
 assetsReady: true
@@ -11,7 +11,7 @@ assets:
   - docs/media/airport-iq-demo.mp4
 ---
 
-# Airport IQ — live approach on a 3D airport twin
+# Airport IQ: live approach on a 3D airport twin
 
 Live aircraft on approach, drawn over a 3D airport model, with the ground operations view alongside it.
 
