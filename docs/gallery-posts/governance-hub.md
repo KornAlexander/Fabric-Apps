@@ -7,6 +7,8 @@ status: draft
 assetsReady: true
 assets:
   - docs/previews/governance-hub.webp
+  - docs/media/governance-hub-demo.gif
+  - docs/media/governance-hub-demo.mp4
 ---
 
 # Governance Hub: who may create what, where, and why

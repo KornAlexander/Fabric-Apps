@@ -9,6 +9,7 @@ language: en
 assetsReady: true
 assets:
   - docs/previews/fabric-empires.webp
+  - docs/media/fabric-empires-demo.gif
 ---
 
 # 03: fabric-empires

@@ -9,6 +9,7 @@ language: en
 assetsReady: true
 assets:
   - docs/previews/pbi-fixer.webp
+  - docs/media/pbi-fixer-demo.gif
 ---
 
 # 01: pbi-fixer

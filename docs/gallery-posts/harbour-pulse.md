@@ -15,7 +15,7 @@ A photorealistic 3D map of Sydney Harbour rendering live ferry positions out of 
 
 <!-- Attach the demo video or GIF here. A screenshot is the minimum; the video is what
      makes someone open the post rather than scroll past it. -->
-![harbour-pulse demo](docs/media/harbour-pulse-demo.gif)
+![harbour-pulse](docs/previews/harbour-pulse.webp)
 
 ## What it does
 

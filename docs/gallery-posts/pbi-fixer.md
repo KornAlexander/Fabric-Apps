@@ -7,6 +7,8 @@ status: draft
 assetsReady: true
 assets:
   - docs/previews/pbi-fixer.webp
+  - docs/media/pbi-fixer-demo.gif
+  - docs/media/pbi-fixer-demo.mp4
 ---
 
 # Power BI Fixer: inspect and repair a semantic model in the browser

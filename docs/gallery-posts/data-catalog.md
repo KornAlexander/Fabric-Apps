@@ -7,6 +7,8 @@ status: draft
 assetsReady: true
 assets:
   - docs/previews/data-catalog.webp
+  - docs/media/data-catalog-demo.gif
+  - docs/media/data-catalog-demo.mp4
 ---
 
 # Data Catalog: everything in your tenant, browsable

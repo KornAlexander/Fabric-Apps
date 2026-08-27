@@ -7,6 +7,8 @@ status: draft
 assetsReady: true
 assets:
   - docs/previews/ibcs-trainer.webp
+  - docs/media/ibcs-trainer-demo.gif
+  - docs/media/ibcs-trainer-demo.mp4
 ---
 
 # IBCS Trainer: learn a charting standard by destroying bad charts

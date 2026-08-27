@@ -66,6 +66,20 @@ def main() -> int:
                     f"{rel}: every asset exists but assetsReady is still false - "
                     f"flip it so the post can go out")
 
+            # ⚠️ The `assets:` list is not the whole story. A draft's BODY embeds images
+            # too, and those were never checked - so when the frozen pbi-fixer demo was
+            # deleted, its gallery post kept `![pbi-fixer demo](docs/media/...gif)`
+            # pointing at nothing and every gate stayed green. check_links.py tolerates
+            # exactly that path shape as a "pending Phase 1e asset", which is what made it
+            # invisible. Whatever the post shows has to exist.
+            for m in re.finditer(r"!\[[^\]]*\]\(([^)\s]+)\)", t):
+                src = m.group(1)
+                if src.startswith(("http://", "https://", "{{")):
+                    continue
+                if not (REPO / src).exists():
+                    problems.append(
+                        f"{rel}: the post embeds {src}, which MUST exist and does not")
+
             app = fm.get("app")
             if app and not (REPO / str(app)).exists():
                 problems.append(f"{rel}: app path '{app}' does not exist")
@@ -131,7 +145,7 @@ def main() -> int:
         for p in problems:
             print(f"  {p}")
         # Missing assets on a draft that honestly says so is expected mid-flight.
-        hard = [p for p in problems if "assetsReady is true but" in p or "does not exist" in p or "MUST carry" in p or "MUST name" in p]
+        hard = [p for p in problems if "assetsReady is true but" in p or "does not exist" in p or "MUST carry" in p or "MUST exist" in p or "MUST name" in p]
         if hard:
             print(f"\n{len(hard)} blocking problem(s).")
             return 1

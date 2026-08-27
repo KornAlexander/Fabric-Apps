@@ -9,6 +9,7 @@ language: en
 assetsReady: true
 assets:
   - docs/previews/governance-hub.webp
+  - docs/media/governance-hub-demo.gif
 ---
 
 # 14: governance-hub

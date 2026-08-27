@@ -9,6 +9,7 @@ language: en
 assetsReady: true
 assets:
   - docs/previews/data-catalog.webp
+  - docs/media/data-catalog-demo.gif
 ---
 
 # 15: data-catalog

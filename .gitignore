@@ -37,3 +37,7 @@ temp/
 .DS_Store
 Thumbs.db
 *.swp
+
+# Generated submission bundles: regenerable, and copying media per app would
+# duplicate every GIF in git. Rebuild with tools/build_submissions.py
+submissions/

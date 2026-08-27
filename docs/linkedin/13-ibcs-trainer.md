@@ -9,6 +9,7 @@ language: en
 assetsReady: true
 assets:
   - docs/previews/ibcs-trainer.webp
+  - docs/media/ibcs-trainer-demo.gif
 ---
 
 # 13: ibcs-trainer

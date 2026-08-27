@@ -15,7 +15,7 @@ Every tram, bus and metro in Helsinki, moving on a 3D map, fed by a Fabric Real-
 
 <!-- Attach the demo video or GIF here. A screenshot is the minimum; the video is what
      makes someone open the post rather than scroll past it. -->
-![helsinki-public-transport demo](docs/media/helsinki-public-transport-demo.gif)
+![helsinki-public-transport](docs/previews/helsinki-public-transport.webp)
 
 ## What it does
 
