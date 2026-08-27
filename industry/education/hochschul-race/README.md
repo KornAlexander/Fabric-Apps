@@ -5,6 +5,8 @@ built as a Microsoft Fabric static-hosting **Rayfin** app. Data comes from the
 **Hochschul-Insights** Direct Lake semantic model (DESTATIS GENESIS,
 
 ![Higher Education Race Chart](../../../docs/previews/hochschul-race.webp)
+
+![hochschul-race demo](../../../docs/media/hochschul-race-demo.gif)
 Datenlizenz Deutschland 2.0). A build-time snapshot is inlined into `index.html`
 so the app renders instantly and offline; an optional **⚡ Live-Daten** button
 re-queries the semantic model at runtime (see *Live data* below).

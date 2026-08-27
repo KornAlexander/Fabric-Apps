@@ -2,6 +2,8 @@
 
 ![Airport IQ - Live Approach](../../docs/previews/airport-iq.webp)
 
+![airport-iq demo](../../docs/media/airport-iq-demo.gif)
+
 The single, deployed **Airport IQ** Rayfin static-hosting app. A dark landing page
 ([`index.html`](index.html)) with two tiles that open the two 3D views. This app supersedes the
 older four-view `apps/archive/airport-iq` hub.

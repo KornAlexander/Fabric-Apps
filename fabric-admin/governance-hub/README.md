@@ -2,8 +2,7 @@
 
 **Who may create what, where — and why.**
 
-<!-- TODO(phase-1e): no preview yet. Once `docs/previews/governance-hub.webp` exists, replace this comment with:
-     ![Governance Hub](../../docs/previews/governance-hub.webp) -->
+![Governance Hub](../../docs/previews/governance-hub.webp)
 
 A self-hosted governance accelerator for Microsoft 365, Fabric and Power Platform.
 It answers one question no single Microsoft admin surface can answer today:

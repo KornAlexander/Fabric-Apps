@@ -1,7 +1,6 @@
 # Data Catalog — Rayfin App
 
-<!-- TODO(phase-1e): no preview yet. Once `docs/previews/data-catalog.webp` exists, replace this comment with:
-     ![Data Catalog](../../docs/previews/data-catalog.webp) -->
+![Data Catalog](../../docs/previews/data-catalog.webp)
 
 A Fabric-wide catalog of Power BI **reports**, **semantic models**, and their **KPIs**
 (measures / columns), with reverse lookup (which KPI is used in which report), lineage,

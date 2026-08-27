@@ -20,6 +20,8 @@ and scaling are computed in the browser from the committed `data/*.json`.
 
 ![Karte view — interpolated temperature-anomaly heat map of Germany for 2018 (+3.0 °C vs 1961–1990)](docs/screenshots/dwd-karte-temperatur.png)
 
+![dwd-klimaspirale demo](../../docs/media/dwd-klimaspirale-demo.gif)
+
 ## What it does
 
 - A tilted climate spiral of yearly temperature anomaly

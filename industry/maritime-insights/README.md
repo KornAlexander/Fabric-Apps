@@ -5,8 +5,7 @@
 > Demonstration and illustration only. Not a navigational aid and not an authoritative source of
 > traffic or maritime domain information. Only official sources apply.
 
-<!-- TODO(phase-1e): no preview yet. Once `docs/previews/maritime-insights.webp` exists, replace this comment with:
-     ![Maritime Insights](../../docs/previews/maritime-insights.webp) -->
+![Maritime Insights](../../docs/previews/maritime-insights.webp)
 
 ![A sensor site placed on the west shore of the Kiel Fjord. The water it can see is tinted; the rest of the bay is in shadow. The panel reports 82 % of transits observed — 112 of 137 seen, 25 missed.](docs/screenshot-coverage.jpeg)
 

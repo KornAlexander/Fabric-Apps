@@ -1,7 +1,8 @@
 # Doom (Rayfin) — "But can it run Doom?" on Microsoft Fabric
 
-<!-- TODO(phase-1e): no preview yet. Once `docs/previews/doom.webp` exists, replace this comment with:
-     ![Doom](../../docs/previews/doom.webp) -->
+![Doom](../../docs/previews/doom.webp)
+
+![doom demo](../../docs/media/doom-demo.gif)
 
 DOOM running as a **Fabric App**: the classic game booted in the browser through
 [js-dos](https://js-dos.com/) / DOSBox, wrapped in a Fabric-authenticated

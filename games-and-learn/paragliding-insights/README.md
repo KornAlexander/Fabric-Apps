@@ -5,8 +5,9 @@
 > ⚠️ Demonstration and training only. Not flight preparation, not a weather briefing, and not an
 > authoritative source of airspace information.
 
-<!-- TODO(phase-1e): no preview yet. Once `docs/previews/paragliding-insights.webp` exists, replace this comment with:
-     ![Paragliding Insights](../../docs/previews/paragliding-insights.webp) -->
+![Paragliding Insights](../../docs/previews/paragliding-insights.webp)
+
+![paragliding-insights demo](../../docs/media/paragliding-insights-demo.gif)
 
 ---
 

@@ -5,8 +5,9 @@
 > ⚠️ **Demonstration and training purposes only. Not a real risk assessment and not a basis for
 > insurance or financing decisions.**
 
-<!-- TODO(phase-1e): no preview yet. Once `docs/previews/flood-insights.webp` exists, replace this comment with:
-     ![Flood Insights](../../docs/previews/flood-insights.webp) -->
+![Flood Insights](../../docs/previews/flood-insights.webp)
+
+![flood-insights demo](../../docs/media/flood-insights-demo.gif)
 
 ---
 

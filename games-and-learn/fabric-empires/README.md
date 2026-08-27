@@ -2,8 +2,7 @@
 
 **A turn-based 4X strategy game whose tech tree is a certification syllabus.**
 
-<!-- TODO(phase-1e): no preview yet. Once `docs/previews/fabric-empires.webp` exists, replace this comment with:
-     ![Fabric Empires](../../docs/previews/fabric-empires.webp) -->
+![Fabric Empires](../../docs/previews/fabric-empires.webp)
 
 You explore a procedurally generated hex map, found cities, work tiles for four
 resources, research a technology tree and fight rivals over it. That is the 4X

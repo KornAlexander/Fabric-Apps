@@ -1,7 +1,8 @@
 # Jump & Run (Rayfin)
 
-<!-- TODO(phase-1e): no preview yet. Once `docs/previews/jump-and-run.webp` exists, replace this comment with:
-     ![Jump and Run](../../docs/previews/jump-and-run.webp) -->
+![Jump and Run](../../docs/previews/jump-and-run.webp)
+
+![jump-and-run demo](../../docs/media/jump-and-run-demo.gif)
 
 The single-file HTML5 Canvas platformer
 ([`jump_and_run_v2.html`](public/game/jump_and_run_v2.html)) embedded in a

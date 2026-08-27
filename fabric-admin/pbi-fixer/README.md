@@ -1,5 +1,7 @@
 # Power BI Fixer
 
+
+![Pbi Fixer](../../docs/previews/pbi-fixer.webp)
 A Fabric-authenticated React + Vite app that **inspects and fixes Power BI
 semantic models and reports** directly in the browser — no Power BI Desktop, no
 Tabular Editor install. It reads model/report definitions through a server-side

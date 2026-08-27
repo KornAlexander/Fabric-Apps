@@ -1,7 +1,6 @@
 # IBCS Trainer (Rayfin)
 
-<!-- TODO(phase-1e): no preview yet. Once `docs/previews/ibcs-trainer.webp` exists, replace this comment with:
-     ![IBCS Trainer](../../docs/previews/ibcs-trainer.webp) -->
+![IBCS Trainer](../../docs/previews/ibcs-trainer.webp)
 
 A single-file HTML5 Canvas platformer
 ([`ibcs_trainer.html`](public/game/ibcs_trainer.html)) that teaches IBCS chart
