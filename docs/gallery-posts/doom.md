@@ -4,11 +4,11 @@ slug: doom
 title: "Doom — yes, it runs on Microsoft Fabric"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
-assetsReady: false
+assetsReady: true
 assets:
   - docs/previews/doom.webp
-  - games-and-learn/doom/media/doom-demo.gif
-  - games-and-learn/doom/media/doom-demo.mp4
+  - docs/media/doom-demo.gif
+  - docs/media/doom-demo.mp4
 ---
 
 # Doom — yes, it runs on Microsoft Fabric
@@ -17,7 +17,7 @@ The traditional proof that a platform has matured. Shareware DOOM boots in the b
 
 <!-- Attach the demo video or GIF here. A screenshot is the minimum; the video is what
      makes someone open the post rather than scroll past it. -->
-![doom demo](games-and-learn/doom/media/doom-demo.gif)
+![doom demo](docs/media/doom-demo.gif)
 
 ## What it does
 

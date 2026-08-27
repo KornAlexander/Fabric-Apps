@@ -6,10 +6,10 @@ galleryPost: docs/gallery-posts/dwd-klimaspirale.md
 galleryUrl:            # paste the live gallery URL here in Phase 5a, then it replaces {{galleryUrl}} below
 status: draft
 language: en
-assetsReady: false
+assetsReady: true
 assets:
   - docs/previews/dwd-klimaspirale.webp
-  - industry/dwd-klimaspirale/media/dwd-klimaspirale-demo.gif
+  - docs/media/dwd-klimaspirale-demo.gif
 ---
 
 # 11 — dwd-klimaspirale
@@ -37,6 +37,6 @@ Gallery entry: {{galleryUrl}}
 
 ## Notes for the composer
 
-- Attach: `industry/dwd-klimaspirale/media/dwd-klimaspirale-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
+- Attach: `docs/media/dwd-klimaspirale-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
 - Paste as plain text; LinkedIn strips markdown. The blank lines are the formatting.
 - Mentions are added by hand in the composer, not here.

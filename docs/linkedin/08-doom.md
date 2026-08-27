@@ -6,10 +6,10 @@ galleryPost: docs/gallery-posts/doom.md
 galleryUrl:            # paste the live gallery URL here in Phase 5a, then it replaces {{galleryUrl}} below
 status: draft
 language: en
-assetsReady: false
+assetsReady: true
 assets:
   - docs/previews/doom.webp
-  - games-and-learn/doom/media/doom-demo.gif
+  - docs/media/doom-demo.gif
 ---
 
 # 08 — doom
@@ -37,7 +37,7 @@ Gallery entry: {{galleryUrl}}
 
 ## Notes for the composer
 
-- Attach: `games-and-learn/doom/media/doom-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
+- Attach: `docs/media/doom-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
 - Paste as plain text; LinkedIn strips markdown. The blank lines are the formatting.
 - Mentions are added by hand in the composer, not here.
 - ⚠️ Tag Sander van de Velde by hand — the credit is the point of the post.

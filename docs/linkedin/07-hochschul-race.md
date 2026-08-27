@@ -6,10 +6,10 @@ galleryPost: docs/gallery-posts/hochschul-race.md
 galleryUrl:            # paste the live gallery URL here in Phase 5a, then it replaces {{galleryUrl}} below
 status: draft
 language: en
-assetsReady: false
+assetsReady: true
 assets:
   - docs/previews/hochschul-race.webp
-  - industry/education/hochschul-race/media/hochschul-race-demo.gif
+  - docs/media/hochschul-race-demo.gif
 ---
 
 # 07 — hochschul-race
@@ -39,6 +39,6 @@ Gallery entry: {{galleryUrl}}
 
 ## Notes for the composer
 
-- Attach: `industry/education/hochschul-race/media/hochschul-race-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
+- Attach: `docs/media/hochschul-race-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
 - Paste as plain text; LinkedIn strips markdown. The blank lines are the formatting.
 - Mentions are added by hand in the composer, not here.

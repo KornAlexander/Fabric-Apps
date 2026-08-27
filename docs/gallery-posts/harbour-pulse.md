@@ -4,11 +4,9 @@ slug: harbour-pulse
 title: "Harbour Pulse — live Sydney ferries on a photoreal harbour"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
-assetsReady: false
+assetsReady: true
 assets:
   - docs/previews/harbour-pulse.webp
-  - industry/harbour-pulse/media/harbour-pulse-demo.gif
-  - industry/harbour-pulse/media/harbour-pulse-demo.mp4
 ---
 
 # Harbour Pulse — live Sydney ferries on a photoreal harbour
@@ -17,7 +15,7 @@ A photorealistic 3D map of Sydney Harbour rendering live ferry positions out of 
 
 <!-- Attach the demo video or GIF here. A screenshot is the minimum; the video is what
      makes someone open the post rather than scroll past it. -->
-![harbour-pulse demo](industry/harbour-pulse/media/harbour-pulse-demo.gif)
+![harbour-pulse demo](docs/media/harbour-pulse-demo.gif)
 
 ## What it does
 

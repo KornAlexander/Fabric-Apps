@@ -17,8 +17,8 @@ you can deploy into your own workspace with one command.
 |---|---|---|
 | <img src="docs/previews/airport-iq.webp" width="220" alt="Airport IQ - Live Approach preview"> | **[Airport IQ - Live Approach](industry/airport-iq/)** | Live approach and ground operations on a photoreal 3D airport twin. |
 | <img src="docs/previews/flood-insights.webp" width="220" alt="Flood Insights preview"> | **[Flood Insights](industry/flood-insights/)** | Flood risk and gauge levels on a 3D terrain twin, with an IBCS Power BI report. |
-| <img src="docs/previews/_placeholder.webp" width="220" alt="Harbour Pulse preview"> | **[Harbour Pulse](industry/harbour-pulse/)** | Real-time ferry operations in Sydney Harbour on an Eventhouse-backed 3D map. |
-| <img src="docs/previews/_placeholder.webp" width="220" alt="Helsinki Public Transport preview"> | **[Helsinki Public Transport](industry/helsinki-public-transport/)** | Live tram and bus positions from the HSL feed, streamed through Real-Time Intelligence. |
+| <img src="docs/previews/harbour-pulse.webp" width="220" alt="Harbour Pulse preview"> | **[Harbour Pulse](industry/harbour-pulse/)** | Real-time ferry operations in Sydney Harbour on an Eventhouse-backed 3D map. |
+| <img src="docs/previews/helsinki-public-transport.webp" width="220" alt="Helsinki Public Transport preview"> | **[Helsinki Public Transport](industry/helsinki-public-transport/)** | Live tram and bus positions from the HSL feed, streamed through Real-Time Intelligence. |
 | <img src="docs/previews/maritime-insights.webp" width="220" alt="Maritime Insights preview"> | **[Maritime Insights](industry/maritime-insights/)** | Vessel movements, port calls and cargo flows on a live maritime map. |
 | <img src="docs/previews/paragliding-insights.webp" width="220" alt="Paragliding Insights preview"> | **[Paragliding Insights](games-and-learn/paragliding-insights/)** | Photoreal 3D flight map of the Allgaeu Alps with real IGC tracks and live traffic. |
 

@@ -4,11 +4,9 @@ slug: helsinki-public-transport
 title: "Helsinki Public Transport — a live map on Real-Time Intelligence"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
-assetsReady: false
+assetsReady: true
 assets:
   - docs/previews/helsinki-public-transport.webp
-  - industry/helsinki-public-transport/media/helsinki-public-transport-demo.gif
-  - industry/helsinki-public-transport/media/helsinki-public-transport-demo.mp4
 ---
 
 # Helsinki Public Transport — a live map on Real-Time Intelligence
@@ -17,7 +15,7 @@ Every tram, bus and metro in Helsinki, moving on a 3D map, fed by a Fabric Real-
 
 <!-- Attach the demo video or GIF here. A screenshot is the minimum; the video is what
      makes someone open the post rather than scroll past it. -->
-![helsinki-public-transport demo](industry/helsinki-public-transport/media/helsinki-public-transport-demo.gif)
+![helsinki-public-transport demo](docs/media/helsinki-public-transport-demo.gif)
 
 ## What it does
 

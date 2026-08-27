@@ -4,11 +4,9 @@ slug: governance-hub
 title: "Governance Hub — who may create what, where, and why"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
-assetsReady: false
+assetsReady: true
 assets:
   - docs/previews/governance-hub.webp
-  - fabric-admin/governance-hub/media/governance-hub-demo.gif
-  - fabric-admin/governance-hub/media/governance-hub-demo.mp4
 ---
 
 # Governance Hub — who may create what, where, and why
@@ -17,7 +15,7 @@ Tenant settings, capacity posture and access rules collected on a schedule and p
 
 <!-- Attach the demo video or GIF here. A screenshot is the minimum; the video is what
      makes someone open the post rather than scroll past it. -->
-![governance-hub demo](fabric-admin/governance-hub/media/governance-hub-demo.gif)
+![governance-hub demo](docs/media/governance-hub-demo.gif)
 
 ## What it does
 

@@ -4,11 +4,9 @@ slug: data-catalog
 title: "Data Catalog — everything in your tenant, browsable"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
-assetsReady: false
+assetsReady: true
 assets:
   - docs/previews/data-catalog.webp
-  - fabric-admin/data-catalog/media/data-catalog-demo.gif
-  - fabric-admin/data-catalog/media/data-catalog-demo.mp4
 ---
 
 # Data Catalog — everything in your tenant, browsable
@@ -17,7 +15,7 @@ A catalogue of every item in your Fabric tenant with lineage and ownership, scan
 
 <!-- Attach the demo video or GIF here. A screenshot is the minimum; the video is what
      makes someone open the post rather than scroll past it. -->
-![data-catalog demo](fabric-admin/data-catalog/media/data-catalog-demo.gif)
+![data-catalog demo](docs/media/data-catalog-demo.gif)
 
 ## What it does
 

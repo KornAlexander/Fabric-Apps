@@ -4,11 +4,9 @@ slug: pbi-fixer
 title: "Power BI Fixer — inspect and repair a semantic model in the browser"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
-assetsReady: false
+assetsReady: true
 assets:
   - docs/previews/pbi-fixer.webp
-  - fabric-admin/pbi-fixer/media/pbi-fixer-demo.gif
-  - fabric-admin/pbi-fixer/media/pbi-fixer-demo.mp4
 ---
 
 # Power BI Fixer — inspect and repair a semantic model in the browser
@@ -17,7 +15,7 @@ A Fabric-authenticated app that reads a semantic model and report straight out o
 
 <!-- Attach the demo video or GIF here. A screenshot is the minimum; the video is what
      makes someone open the post rather than scroll past it. -->
-![pbi-fixer demo](fabric-admin/pbi-fixer/media/pbi-fixer-demo.gif)
+![pbi-fixer demo](docs/media/pbi-fixer-demo.gif)
 
 ## What it does
 

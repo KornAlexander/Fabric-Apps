@@ -4,11 +4,11 @@ slug: flood-insights
 title: "Flood Insights — the 2021 Ahr valley flood, reconstructed from open data"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
-assetsReady: false
+assetsReady: true
 assets:
   - docs/previews/flood-insights.webp
-  - industry/flood-insights/media/flood-insights-demo.gif
-  - industry/flood-insights/media/flood-insights-demo.mp4
+  - docs/media/flood-insights-demo.gif
+  - docs/media/flood-insights-demo.mp4
 ---
 
 # Flood Insights — the 2021 Ahr valley flood, reconstructed from open data
@@ -17,7 +17,7 @@ assets:
 
 <!-- Attach the demo video or GIF here. A screenshot is the minimum; the video is what
      makes someone open the post rather than scroll past it. -->
-![flood-insights demo](industry/flood-insights/media/flood-insights-demo.gif)
+![flood-insights demo](docs/media/flood-insights-demo.gif)
 
 ## What it does
 

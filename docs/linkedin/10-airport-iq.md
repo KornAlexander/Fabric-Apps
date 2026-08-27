@@ -6,10 +6,10 @@ galleryPost: docs/gallery-posts/airport-iq.md
 galleryUrl:            # paste the live gallery URL here in Phase 5a, then it replaces {{galleryUrl}} below
 status: draft
 language: en
-assetsReady: false
+assetsReady: true
 assets:
   - docs/previews/airport-iq.webp
-  - industry/airport-iq/media/airport-iq-demo.gif
+  - docs/media/airport-iq-demo.gif
 ---
 
 # 10 — airport-iq
@@ -37,6 +37,6 @@ Gallery entry: {{galleryUrl}}
 
 ## Notes for the composer
 
-- Attach: `industry/airport-iq/media/airport-iq-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
+- Attach: `docs/media/airport-iq-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
 - Paste as plain text; LinkedIn strips markdown. The blank lines are the formatting.
 - Mentions are added by hand in the composer, not here.

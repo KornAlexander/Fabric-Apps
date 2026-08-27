@@ -4,11 +4,11 @@ slug: jump-and-run
 title: "Jump and Run — 100 levels, and every run lands in Fabric"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
-assetsReady: false
+assetsReady: true
 assets:
   - docs/previews/jump-and-run.webp
-  - games-and-learn/jump-and-run/media/jump-and-run-demo.gif
-  - games-and-learn/jump-and-run/media/jump-and-run-demo.mp4
+  - docs/media/jump-and-run-demo.gif
+  - docs/media/jump-and-run-demo.mp4
 ---
 
 # Jump and Run — 100 levels, and every run lands in Fabric
@@ -17,7 +17,7 @@ A single-file HTML5 Canvas platformer embedded in a Fabric-authenticated app. Ea
 
 <!-- Attach the demo video or GIF here. A screenshot is the minimum; the video is what
      makes someone open the post rather than scroll past it. -->
-![jump-and-run demo](games-and-learn/jump-and-run/media/jump-and-run-demo.gif)
+![jump-and-run demo](docs/media/jump-and-run-demo.gif)
 
 ## What it does
 

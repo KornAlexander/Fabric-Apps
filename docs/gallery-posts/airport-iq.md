@@ -4,11 +4,11 @@ slug: airport-iq
 title: "Airport IQ — live approach on a 3D airport twin"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
-assetsReady: false
+assetsReady: true
 assets:
   - docs/previews/airport-iq.webp
-  - industry/airport-iq/media/airport-iq-demo.gif
-  - industry/airport-iq/media/airport-iq-demo.mp4
+  - docs/media/airport-iq-demo.gif
+  - docs/media/airport-iq-demo.mp4
 ---
 
 # Airport IQ — live approach on a 3D airport twin
@@ -17,7 +17,7 @@ Live aircraft on approach, drawn over a 3D airport model, with the ground operat
 
 <!-- Attach the demo video or GIF here. A screenshot is the minimum; the video is what
      makes someone open the post rather than scroll past it. -->
-![airport-iq demo](industry/airport-iq/media/airport-iq-demo.gif)
+![airport-iq demo](docs/media/airport-iq-demo.gif)
 
 ## What it does
 

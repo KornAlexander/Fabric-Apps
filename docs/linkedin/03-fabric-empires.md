@@ -6,10 +6,9 @@ galleryPost: (none - work in progress)
 galleryUrl:            # paste the live gallery URL here in Phase 5a, then it replaces {{galleryUrl}} below
 status: draft
 language: en
-assetsReady: false
+assetsReady: true
 assets:
   - docs/previews/fabric-empires.webp
-  - games-and-learn/fabric-empires/media/fabric-empires-demo.gif
 ---
 
 # 03 — fabric-empires
@@ -35,7 +34,7 @@ https://github.com/KornAlexander/Fabric-Apps/tree/main/games-and-learn/fabric-em
 
 ## Notes for the composer
 
-- Attach: `games-and-learn/fabric-empires/media/fabric-empires-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
+- Attach: `docs/media/fabric-empires-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
 - Paste as plain text; LinkedIn strips markdown. The blank lines are the formatting.
 - Mentions are added by hand in the composer, not here.
 - ⚠️ This app is still work in progress. It has no gallery post. Only publish this once the repo is public and the app is presentable.

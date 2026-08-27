@@ -6,10 +6,10 @@ galleryPost: docs/gallery-posts/jump-and-run.md
 galleryUrl:            # paste the live gallery URL here in Phase 5a, then it replaces {{galleryUrl}} below
 status: draft
 language: en
-assetsReady: false
+assetsReady: true
 assets:
   - docs/previews/jump-and-run.webp
-  - games-and-learn/jump-and-run/media/jump-and-run-demo.gif
+  - docs/media/jump-and-run-demo.gif
 ---
 
 # 12 — jump-and-run
@@ -37,6 +37,6 @@ Gallery entry: {{galleryUrl}}
 
 ## Notes for the composer
 
-- Attach: `games-and-learn/jump-and-run/media/jump-and-run-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
+- Attach: `docs/media/jump-and-run-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
 - Paste as plain text; LinkedIn strips markdown. The blank lines are the formatting.
 - Mentions are added by hand in the composer, not here.

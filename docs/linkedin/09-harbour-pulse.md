@@ -6,10 +6,9 @@ galleryPost: docs/gallery-posts/harbour-pulse.md
 galleryUrl:            # paste the live gallery URL here in Phase 5a, then it replaces {{galleryUrl}} below
 status: draft
 language: en
-assetsReady: false
+assetsReady: true
 assets:
   - docs/previews/harbour-pulse.webp
-  - industry/harbour-pulse/media/harbour-pulse-demo.gif
 ---
 
 # 09 — harbour-pulse
@@ -40,7 +39,7 @@ Gallery entry: {{galleryUrl}}
 
 ## Notes for the composer
 
-- Attach: `industry/harbour-pulse/media/harbour-pulse-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
+- Attach: `docs/media/harbour-pulse-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
 - Paste as plain text; LinkedIn strips markdown. The blank lines are the formatting.
 - Mentions are added by hand in the composer, not here.
 - ⚠️ Tag Fran Genoa by hand. This is his project; the post says so in the body, not in a footnote, and that placement is deliberate.
