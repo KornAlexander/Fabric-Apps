@@ -77,6 +77,12 @@ def to_html(md: str, slug: str) -> str:
     in_code = False
     code: list[str] = []
 
+    # ⚠️ Strip HTML comments FIRST, across lines. Skipping only lines that start with
+    # "<!--" left the continuation of a multi-line drafting note in the output, so every
+    # generated post carried a stray "makes someone open the post rather than scroll past
+    # it. -->" as a visible paragraph.
+    md = re.sub(r"<!--.*?-->", "", md, flags=re.S)
+
     def esc(s: str) -> str:
         return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
