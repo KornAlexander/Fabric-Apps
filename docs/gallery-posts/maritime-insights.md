@@ -7,6 +7,8 @@ status: draft
 assetsReady: true
 assets:
   - docs/previews/maritime-insights.webp
+  - docs/media/maritime-insights-demo.gif
+  - docs/media/maritime-insights-demo.mp4
 ---
 
 # Maritime Insights: the Kiel Fjord as an interactive 3D sea chart
@@ -15,7 +17,7 @@ Vessel traffic on a photoreal 3D chart of the Kiel Fjord, with a line-of-sight m
 
 <!-- Attach the demo video or GIF here. A screenshot is the minimum; the video is what
      makes someone open the post rather than scroll past it. -->
-![maritime-insights](docs/previews/maritime-insights.webp)
+![maritime-insights demo](docs/media/maritime-insights-demo.gif)
 
 ## What it does
 

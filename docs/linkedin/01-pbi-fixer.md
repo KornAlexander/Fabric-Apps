@@ -30,7 +30,7 @@ The interesting part is not the UI. It is that a Fabric App can hold a privilege
 Source, and always the latest version:
 https://github.com/KornAlexander/Fabric-Apps/tree/main/fabric-admin/pbi-fixer
 
-Gallery entry: {{galleryUrl}}
+Gallery entry: https://community.fabric.microsoft.com/discussions/pbi_fabricappsgallery/power-bi-fixer-a-whole-power-bi-toolbench-running-inside-fabric/5362847
 
 #MicrosoftFabric #PowerBI #FabricApps #DAX #TabularEditor
 ```

@@ -1,0 +1,11 @@
+{
+  "_comment": [
+    "Live Fabric Apps Gallery post URLs, filled in as each submission goes out.",
+    "",
+    "Kept as data rather than typed into the drafts, because the drafts are GENERATED:",
+    "editing galleryUrl in a draft by hand survives exactly until the next regeneration,",
+    "and then the link is silently gone from the LinkedIn post and the README that point",
+    "at it. phase2_gallery_drafts.py reads this file, so the URL outlives every rebuild."
+  ],
+  "pbi-fixer": "https://community.fabric.microsoft.com/discussions/pbi_fabricappsgallery/power-bi-fixer-a-whole-power-bi-toolbench-running-inside-fabric/5362847"
+}

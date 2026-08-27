@@ -2,7 +2,7 @@
 app: fabric-admin/pbi-fixer
 slug: pbi-fixer
 title: "Power BI Fixer: a whole Power BI toolbench, running inside Fabric"
-galleryUrl:            # filled in by Phase 5a once the post is live
+galleryUrl: https://community.fabric.microsoft.com/discussions/pbi_fabricappsgallery/power-bi-fixer-a-whole-power-bi-toolbench-running-inside-fabric/5362847
 status: draft
 assetsReady: true
 assets:

@@ -9,6 +9,7 @@ language: en
 assetsReady: true
 assets:
   - docs/previews/maritime-insights.webp
+  - docs/media/maritime-insights-demo.gif
 ---
 
 # 05: maritime-insights
