@@ -1,5 +1,13 @@
 # Harbour Pulse — live Sydney Ferries on Microsoft Fabric
 
+> **This is [Fran Genoa](https://github.com/FranGenoa)'s project.** The original work, the
+> design, the voxel vessel twins and the Real-Time Intelligence architecture are his:
+> **[FranGenoa/fabric-harbour-pulse](https://github.com/FranGenoa/fabric-harbour-pulse)**.
+> It sits in this gallery with his name on it, not instead of it.
+>
+> The ferry photographs are Wikimedia Commons contributors' work, several under CC BY-SA —
+> each credited individually in [ATTRIBUTION.md](ATTRIBUTION.md), as those licences require.
+
 ![Sydney Ferries — live 3D harbour view](docs/screenshots/ss-ferry-view.png)
 
 A photorealistic 3D map of Sydney Harbour that renders **live ferry positions**
@@ -12,7 +20,7 @@ It runs inside the Fabric portal on the user's existing Fabric identity — no
 separate hosting, no separate login, no separate access review. One
 provisioning script stands the whole thing up in a tenant you own.
 
-### What it does
+## What it does
 
 - **Live tracking** — polls the latest position per ferry every few seconds and
   animates each vessel across the harbour. Heading is derived from movement;
@@ -65,13 +73,6 @@ real-time store, a live operational view, a digital twin, and operator
 write-back that lands next to the telemetry it describes.
 
 ---
-
-## What it does
-
-- Live ferry positions polled from a Fabric Eventhouse every few seconds
-- Google Photorealistic 3D Tiles and Cesium OSM buildings
-- Click a ferry for a full-screen voxel twin with decks
-- Pre-departure operator checklists stored in Fabric SQL
 
 ## Deploy it to your own Fabric tenant
 
@@ -582,7 +583,7 @@ in `.env`.
 | `TFNSW_API_KEY` | TfNSW key. **Server-side only** — no `VITE_` prefix |
 | `KUSTO_CLUSTER_URI`, `KUSTO_DATABASE`, `FERRY_ACTIVE_WINDOW` | Dev middleware overrides |
 
-### Scripts
+## Scripts
 
 | Command | Description |
 |---|---|
@@ -698,21 +699,6 @@ npx rayfin up --workspace-id <your-workspace-guid> --tenant <your-tenant-guid>
 
 Any workspace or item id this app needs is read from the environment, with no default.
 
-## Scripts
-
-| Script | What it does |
-|---|---|
-| `npm run bake:all` |  |
-| `npm run bake:buildings` |  |
-| `npm run bake:terrain` |  |
-| `npm run bake:trees` |  |
-| `npm run build` | production build |
-| `npm run build:fabric` | build the bundle Fabric static hosting serves |
-| `npm run build:ferry` |  |
-| `npm run dev` | dev server on http://localhost:5173 |
-| `npm run lint` | lint |
-| `npm run rayfin:up` | deploy to your Fabric workspace |
-| `npm run test` | unit tests |
 
 ## Data
 
