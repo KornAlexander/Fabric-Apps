@@ -60,6 +60,7 @@ export default function Home() {
                       <h4>{app.display}</h4>
                       <p>{app.description}</p>
                       <div className="badges">
+                        {app.liveUrl && <span className="badge badge-live">▶ Playable</span>}
                         {app.wip && <span className="badge badge-wip">Work in progress</span>}
                         {(app.gif || app.mp4) && <span className="badge">Demo</span>}
                         {app.stack.slice(0, 3).map((s) => (

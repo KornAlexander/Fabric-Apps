@@ -50,6 +50,16 @@ export type App = {
   mp4: string | null;
   stack: string[];
   upstream: { name: string; url: string | null } | null;
+  /**
+   * A publicly playable deployment, if the app has one.
+   *
+   * ⚠️ Opt-in per app via `template.liveUrl`, never derived. Phase 0 deliberately
+   * stripped every deployment hostname from this repository, because a
+   * `*.webapp.fabricapps.net` host names a live app in a tenant. Publishing one is a
+   * decision, so it has to be written down deliberately - and only for an app that is
+   * safe to hand to strangers.
+   */
+  liveUrl: string | null;
 };
 
 function walk(folder: string, depth: number, out: string[]) {
@@ -152,6 +162,7 @@ export function getApps(): App[] {
       mp4: existsSync(mp4File) ? asset(`/media/${slug}-demo.mp4`) : null,
       stack: detectStack(folder),
       upstream: detectUpstream(readme),
+      liveUrl: typeof t.liveUrl === 'string' && t.liveUrl.startsWith('https://') ? t.liveUrl : null,
     };
   });
 

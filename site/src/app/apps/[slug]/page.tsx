@@ -38,8 +38,23 @@ export default function AppPage({ params }: { params: { slug: string } }) {
           </div>
 
           <div className="btn-row">
+            {/*
+              A playable build beats any amount of description, so it leads. Only shown
+              where the app declares one: most of these need a Fabric tenant, and a dead
+              "try it" button is worse than none.
+            */}
+            {app.liveUrl && (
+              <a
+                className="btn btn-primary"
+                href={app.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                ▶ Try it live
+              </a>
+            )}
             <a
-              className="btn btn-primary"
+              className={app.liveUrl ? 'btn btn-ghost' : 'btn btn-primary'}
               href={`${GITHUB}/tree/main/${app.path}`}
               target="_blank"
               rel="noopener noreferrer"

@@ -39,6 +39,7 @@
     "name": "fabric-empires",
     "displayName": "Fabric Empires",
     "description": "A turn-based 4X strategy game whose entire game state lives in Fabric.",
-    "category": "games"
+    "category": "games",
+    "liveUrl": "https://solid-wheat-02620eb270-swedencentral.webapp.fabricapps.net"
   }
 }

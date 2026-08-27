@@ -184,6 +184,7 @@ a:hover { text-decoration: underline; }
   border: 1px solid #cfe3f5;
 }
 .badge-wip { background: #fdf3e3; color: var(--wip); border-color: #f1ddbb; }
+.badge-live { background: #e7f7ec; color: #17693a; border-color: #bfe6ce; font-weight: 600; }
 .badge-credit { background: #f4f6f8; color: var(--text-muted); border-color: var(--border); }
 
 /* --------------------------------------------------------------- app page --- */
