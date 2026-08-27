@@ -62,6 +62,91 @@ def app_meta(app_path: str) -> dict:
     return json.loads(pkg.read_text(encoding="utf-8")).get("template") or {}
 
 
+RAW = "https://raw.githubusercontent.com/KornAlexander/Fabric-Apps/main"
+
+
+def to_html(md: str, slug: str) -> str:
+    """Markdown draft -> the HTML the gallery's source-code view expects.
+
+    Deliberately small: this handles the shapes the drafts actually use (h2/h3, bullet
+    lists, fenced code, bold, links, the demo embed) and nothing else. A general markdown
+    library would be more dependency for the same result on a file we generate ourselves.
+    """
+    out: list[str] = []
+    in_list = False
+    in_code = False
+    code: list[str] = []
+
+    def esc(s: str) -> str:
+        return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+    def inline(s: str) -> str:
+        s = esc(s)
+        s = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", s)
+        s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
+        s = re.sub(r"\[([^\]]+)\]\((https?://[^)]+)\)",
+                   r'<a href="\2" target="_blank" rel="noopener">\1</a>', s)
+        # bare urls
+        s = re.sub(r"(?<!\">)(?<!\()\b(https?://[^\s<]+)", r'<a href="\1" target="_blank" rel="noopener">\1</a>', s)
+        return s
+
+    def close_list():
+        nonlocal in_list
+        if in_list:
+            out.append("</ul>")
+            in_list = False
+
+    for raw in md.splitlines():
+        line = raw.rstrip()
+
+        if line.startswith("```"):
+            if in_code:
+                out.append("<pre>" + esc("\n".join(code)) + "</pre>")
+                code = []
+            in_code = not in_code
+            continue
+        if in_code:
+            code.append(line)
+            continue
+
+        if re.match(r"^<!--", line) or line.strip() in {"", "---"}:
+            close_list()
+            continue
+
+        # the demo embed, pointed at raw GitHub so it plays inside the post
+        m = re.match(r"^!\[[^\]]*\]\((?:demo\.gif|thumbnail\.\w+)\)$", line.strip())
+        if m:
+            close_list()
+            src = f"{RAW}/docs/media/{slug}-demo.gif" if "demo.gif" in line \
+                else f"{RAW}/docs/previews/{slug}.webp"
+            out.append(f'<p><img src="{src}" alt="{slug} demo" width="900" /></p>')
+            continue
+
+        h = re.match(r"^(#{1,6})\s+(.*)$", line)
+        if h:
+            close_list()
+            # the post title lives in the form's subject field, so h1 is dropped
+            if len(h.group(1)) > 1:
+                out.append(f"<h3>{inline(h.group(2))}</h3>")
+            continue
+
+        b = re.match(r"^\s*[-*]\s+(.*)$", line)
+        if b:
+            if not in_list:
+                out.append("<ul>")
+                in_list = True
+            out.append(f"<li>{inline(b.group(1))}</li>")
+            continue
+
+        close_list()
+        out.append(f"<p>{inline(line)}</p>")
+
+    close_list()
+    if in_code and code:
+        out.append("<pre>" + esc("\n".join(code)) + "</pre>")
+    return "\n".join(out) + "\n"
+
+
 def build(slug: str, draft: Path) -> bool:
     text = draft.read_text(encoding="utf-8", errors="replace")
     fm = front_matter(text)
@@ -116,6 +201,16 @@ def build(slug: str, draft: Path) -> bool:
     plain = re.sub(r"^-{3,}$", "", plain, flags=re.M)          # rules
     plain = re.sub(r"\n{3,}", "\n\n", plain).strip()
     (folder / "post-plain.txt").write_bytes((plain + "\n").encode("utf-8"))
+
+    # --- and the version that is actually worth pasting ----------------------
+    # The editor hides a "Source code" button in its toolbar overflow. Pasting HTML there
+    # is the only way to get real headings, bold and bullet lists - typing plain text
+    # produces a wall of <p> tags with literal bullet characters, which is what the first
+    # attempt published and it looked exactly as bad as that sounds.
+    #
+    # The demo is embedded from its raw GitHub URL rather than the attachment, so it plays
+    # inside the post body instead of sitting underneath it as a file.
+    (folder / "body.html").write_bytes(to_html(post, slug).encode("utf-8"))
 
     live = meta.get("liveUrl")
     title = str(fm.get("title", "")).strip('"')
