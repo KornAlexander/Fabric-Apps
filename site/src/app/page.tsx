@@ -50,7 +50,29 @@ export default function Home() {
                 {list.map((app) => (
                   <a className="card" key={app.slug} href={asset(`/apps/${app.slug}/`)}>
                     <div className="shot">
-                      {app.preview ? (
+                      {/*
+                        The demo plays on the card itself. A wall of stills undersells a
+                        gallery whose whole point is that these things move.
+
+                        MP4 rather than the GIF: same clip, a fraction of the bytes, and
+                        no posterising to 128 colours. The still is the poster, so a card
+                        is never blank while the video loads, and browsers pause autoplay
+                        video that is off screen - which is what keeps eleven of them on
+                        one page affordable.
+                      */}
+                      {app.mp4 ? (
+                        <video
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          preload="metadata"
+                          poster={app.preview ?? undefined}
+                          aria-label={`${app.display} demo`}
+                        >
+                          <source src={app.mp4} type="video/mp4" />
+                        </video>
+                      ) : app.preview ? (
                         <img src={app.preview} alt={`${app.display} preview`} loading="lazy" />
                       ) : (
                         <div className="noshot">No preview yet</div>
