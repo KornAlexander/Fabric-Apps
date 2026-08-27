@@ -1,0 +1,272 @@
+/*
+ * Design tokens.
+ *
+ * Dark first, deliberately. Fifteen of these apps are 3D terrain, live maps and games:
+ * their previews are the content, and a dark shell makes them read as screens rather
+ * than as illustrations on a document. The Power BI Fixer pages use the same structural
+ * ideas - a hero with a copyable command, alternating sections, one accent colour - but
+ * light, because that page sells a notebook tool rather than a wall of renders.
+ */
+:root {
+  --bg: #0b0f17;
+  --bg-raised: #121826;
+  --bg-card: #151d2c;
+  --bg-code: #0a0e15;
+
+  --text: #e9eef7;
+  --text-muted: #97a3b6;
+  --text-dim: #6b7688;
+
+  --accent: #4cc2ff;
+  --accent-strong: #0f9bdb;
+  --accent-soft: rgba(76, 194, 255, 0.12);
+
+  --border: #232c3d;
+  --border-soft: #1a2231;
+
+  --wip: #f0a020;
+
+  --heading-font: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --body-font: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --code-font: 'Cascadia Code', 'Fira Code', Consolas, monospace;
+
+  --max: 1180px;
+  --radius: 14px;
+  --shadow: 0 12px 34px rgba(0, 0, 0, 0.45);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body-font);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+/* ---------------------------------------------------------------- header --- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(10px);
+  background: rgba(11, 15, 23, 0.82);
+  border-bottom: 1px solid var(--border-soft);
+}
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 62px;
+}
+.brand { font-weight: 700; letter-spacing: -0.01em; color: var(--text); font-size: 1.05rem; }
+.brand span { color: var(--accent); }
+.nav { margin-left: auto; display: flex; gap: 22px; align-items: center; }
+.nav a { color: var(--text-muted); font-size: 0.94rem; }
+.nav a:hover { color: var(--text); text-decoration: none; }
+
+/* ------------------------------------------------------------------ hero --- */
+.hero {
+  padding: 82px 0 64px;
+  background:
+    radial-gradient(900px 380px at 15% -10%, rgba(76, 194, 255, 0.16), transparent 60%),
+    radial-gradient(700px 320px at 90% 0%, rgba(120, 90, 255, 0.12), transparent 60%);
+  border-bottom: 1px solid var(--border-soft);
+}
+.hero h1 {
+  font-family: var(--heading-font);
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin: 0 0 18px;
+  max-width: 18ch;
+}
+.hero p.lead {
+  font-size: clamp(1.02rem, 2vw, 1.2rem);
+  color: var(--text-muted);
+  max-width: 62ch;
+  margin: 0 0 28px;
+}
+.hero-stats { display: flex; flex-wrap: wrap; gap: 34px; margin: 34px 0 0; }
+.stat strong { display: block; font-size: 1.8rem; line-height: 1.1; letter-spacing: -0.02em; }
+.stat span { color: var(--text-dim); font-size: 0.86rem; }
+
+.btn-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: 9px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1px solid transparent;
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+.btn:hover { text-decoration: none; transform: translateY(-1px); }
+.btn-primary { background: var(--accent); color: #04121c; }
+.btn-primary:hover { background: #6bcdff; }
+.btn-ghost { border-color: var(--border); color: var(--text); background: var(--bg-raised); }
+.btn-ghost:hover { border-color: var(--accent); }
+
+/* --------------------------------------------------------------- section --- */
+.section { padding: 66px 0; }
+.section-alt { background: var(--bg-raised); border-block: 1px solid var(--border-soft); }
+.section h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+}
+.section .sub { color: var(--text-muted); margin: 0 0 30px; max-width: 68ch; }
+
+.cat-head { display: flex; align-items: baseline; gap: 12px; margin: 46px 0 6px; }
+.cat-head:first-of-type { margin-top: 0; }
+.cat-head h3 { font-size: 1.22rem; margin: 0; letter-spacing: -0.01em; }
+.cat-head .icon { font-size: 1.2rem; }
+.cat-blurb { color: var(--text-dim); margin: 0 0 22px; font-size: 0.94rem; }
+
+/* ------------------------------------------------------------------ grid --- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 22px;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
+  text-decoration: none;
+}
+.card .shot {
+  aspect-ratio: 16 / 10;
+  background: #0a0e15 center/cover no-repeat;
+  border-bottom: 1px solid var(--border-soft);
+  position: relative;
+  overflow: hidden;
+}
+.card .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.card .shot .noshot {
+  display: grid; place-items: center; height: 100%;
+  color: var(--text-dim); font-size: 0.86rem;
+}
+.card .body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.card h4 { margin: 0; font-size: 1.06rem; letter-spacing: -0.01em; color: var(--text); }
+.card p { margin: 0; color: var(--text-muted); font-size: 0.92rem; flex: 1; }
+
+.badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.badge {
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid rgba(76, 194, 255, 0.22);
+}
+.badge-wip { background: rgba(240, 160, 32, 0.12); color: var(--wip); border-color: rgba(240, 160, 32, 0.3); }
+.badge-credit { background: rgba(255, 255, 255, 0.06); color: var(--text-muted); border-color: var(--border); }
+
+/* --------------------------------------------------------------- app page --- */
+.app-hero { padding: 46px 0 30px; border-bottom: 1px solid var(--border-soft); }
+.crumb { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 14px; }
+.app-hero h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin: 0 0 10px; letter-spacing: -0.02em; }
+.app-hero p.lead { color: var(--text-muted); max-width: 66ch; margin: 0 0 20px; font-size: 1.05rem; }
+
+.media { margin: 26px 0 0; }
+.media img, .media video {
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  display: block;
+  background: #000;
+}
+.media figcaption { color: var(--text-dim); font-size: 0.84rem; margin-top: 8px; }
+
+.callout {
+  background: var(--accent-soft);
+  border: 1px solid rgba(76, 194, 255, 0.25);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 22px 0;
+  color: var(--text);
+}
+.callout strong { color: var(--text); }
+
+pre, .code {
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  font-family: var(--code-font);
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #d6e2f0;
+}
+code { font-family: var(--code-font); font-size: 0.9em; }
+:not(pre) > code {
+  background: rgba(255, 255, 255, 0.07);
+  padding: 2px 6px;
+  border-radius: 5px;
+  color: #cfe6f7;
+}
+
+/* README rendered into the page */
+.readme { max-width: 78ch; }
+.readme h2 { margin: 42px 0 10px; font-size: 1.4rem; letter-spacing: -0.01em; border-bottom: 1px solid var(--border-soft); padding-bottom: 8px; }
+.readme h3 { margin: 28px 0 8px; font-size: 1.1rem; }
+.readme h4 { margin: 22px 0 6px; font-size: 1rem; color: var(--text-muted); }
+.readme img { max-width: 100%; border-radius: 10px; border: 1px solid var(--border); margin: 14px 0; }
+.readme blockquote {
+  margin: 18px 0;
+  padding: 12px 18px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft);
+  border-radius: 0 10px 10px 0;
+  color: var(--text);
+}
+.readme table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 0.92rem; }
+.readme th, .readme td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; vertical-align: top; }
+.readme th { background: var(--bg-raised); }
+.readme ul, .readme ol { padding-left: 22px; }
+.readme li { margin: 5px 0; }
+.readme hr { border: 0; border-top: 1px solid var(--border-soft); margin: 34px 0; }
+
+/* ---------------------------------------------------------------- footer --- */
+.site-footer {
+  border-top: 1px solid var(--border-soft);
+  padding: 34px 0 46px;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  background: var(--bg-raised);
+}
+.site-footer a { color: var(--text-muted); }
+
+@media (max-width: 640px) {
+  .hero { padding: 56px 0 44px; }
+  .grid { grid-template-columns: 1fr; }
+  .nav { gap: 14px; }
+  .nav a.hide-sm { display: none; }
+}
+
+/* Embedded in actionablereporting.com later, the same way the Fixer pages are. In an
+   iframe the sticky header and the outer page's chrome fight each other, so drop it. */
+@media (display-mode: standalone) { .site-header { position: static; } }

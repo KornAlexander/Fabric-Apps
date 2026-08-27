@@ -1,0 +1,73 @@
+name: Deploy site to GitHub Pages
+
+# The site is generated from this repository, so anything merged to main - a new app, a
+# fixed README, a freshly captured preview - is on the website within a couple of minutes
+# with nothing else to remember.
+on:
+  push:
+    branches: [main]
+    # Only rebuild when something the site actually reads has changed.
+    paths:
+      - 'site/**'
+      - 'docs/previews/**'
+      - 'docs/media/**'
+      - '**/README.md'
+      - '**/package.json'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race. Queue instead of cancelling, so a push that lands during a
+# build still ends up published rather than silently dropped.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install
+        working-directory: site
+        run: npm ci
+
+      - name: Build
+        working-directory: site
+        # ⚠️ A GitHub *project* page is served from /Fabric-Apps, not the domain root.
+        # Without this the CSS and every image 404 and the site renders as bare HTML.
+        env:
+          NEXT_PUBLIC_BASE_PATH: /Fabric-Apps
+        run: npm run build
+
+      - name: Disable Jekyll
+        # Pages runs Jekyll by default, and Jekyll ignores folders beginning with an
+        # underscore. Next puts every script and stylesheet in _next.
+        run: touch site/out/.nojekyll
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
