@@ -39,7 +39,7 @@ Apps that inspect, document or administer the data platform itself.
 |---|---|---|
 | <img src="docs/previews/data-catalog.webp" width="220" alt="Data Catalog preview"> | **[Data Catalog](fabric-admin/data-catalog/)** | A browsable catalogue of every item in your Fabric tenant, with lineage and ownership. |
 | <img src="docs/previews/governance-hub.webp" width="220" alt="Governance Hub preview"> | **[Governance Hub](fabric-admin/governance-hub/)** | Tenant settings, capacity and access posture in one place, collected on a schedule. |
-| <img src="docs/previews/pbi-fixer.webp" width="220" alt="Power BI Fixer preview"> | **[Power BI Fixer](fabric-admin/pbi-fixer/)** | Scans a semantic model and report, finds what is broken, and fixes it. |
+| <img src="docs/previews/pbi-fixer.webp" width="220" alt="Power BI Fixer preview"> | **[Power BI Fixer](fabric-admin/pbi-fixer/)** | A whole Power BI toolbench in the browser: model and report explorers, BPA with one-click fixes, memory analysis, AI translations, PBIR prototyping and workspace automation. |
 
 ### 🎮 Games and Interactive Learning
 

@@ -1,7 +1,7 @@
 ---
 app: fabric-admin/pbi-fixer
 slug: pbi-fixer
-title: "Power BI Fixer: inspect and repair a semantic model in the browser"
+title: "Power BI Fixer: a whole Power BI toolbench, running inside Fabric"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
 assetsReady: true
@@ -11,9 +11,9 @@ assets:
   - docs/media/pbi-fixer-demo.mp4
 ---
 
-# Power BI Fixer: inspect and repair a semantic model in the browser
+# Power BI Fixer: a whole Power BI toolbench, running inside Fabric
 
-A Fabric-authenticated app that reads a semantic model and report straight out of Fabric, runs Best Practice Analyzer rules against them, and applies the fixes. No Power BI Desktop, no Tabular Editor install, nothing to download.
+Model explorer, report explorer, Best Practice Analyzer with one-click fixes, memory analysis, AI-assisted translations, PBIR prototyping and workspace automation. All of it in the browser, signed in with your Fabric identity. No Power BI Desktop, no Tabular Editor install, nothing to download.
 
 <!-- Attach the demo video or GIF here. A screenshot is the minimum; the video is what
      makes someone open the post rather than scroll past it. -->
@@ -21,11 +21,13 @@ A Fabric-authenticated app that reads a semantic model and report straight out o
 
 ## What it does
 
-- Model Explorer, tables, columns, measures and relationships, with an inline TMDL view
-- Best Practice Analyzer with one-click fixes for the common findings
-- Memory Analyzer, column and table size, cardinality, and what is costing you
-- Measure Editor with a built-in DAX formatter
-- Unused-object cleanup, display folders, descriptions and field parameters
+- **Model**: explorer with inline TMDL, Model Diagram, Perspectives, Measure Editor with a DAX formatter, Model Documentation, Metric View migration
+- **Best Practice Analyzer** on models and reports, with one-click fixes and a diff preview before anything is written back
+- **Memory Analyzer**: column and table size, cardinality, and what is actually costing you
+- **Reports**: PBIR tree, source and diff view, a pop-out editor, and reverse / forward prototyping to scaffold and round-trip a layout
+- **Translations**: AI-assisted culture translations through GitHub Copilot
+- **Cleanup**: unused objects, display folders, descriptions, field parameters, and batch fixers across several models at once
+- **Ops**: SemPy runner, workspace editor, Jumpstart catalogue and one-click Workspace Monitoring deployment
 
 ## What it deploys into your workspace
 
@@ -34,7 +36,7 @@ A Fabric-authenticated app that reads a semantic model and report straight out o
 
 ## Data
 
-Reads whichever model and report you point it at, through a server-side Fabric User Data Function proxy.
+Reads whichever model and report you point it at. The SPA never calls Fabric REST directly: every call goes through a Python User Data Function that holds the on-behalf-of token server-side, which keeps tokens out of the browser.
 
 ## Try it
 

@@ -6,7 +6,7 @@
   "template": {
     "name": "pbi-fixer",
     "displayName": "Power BI Fixer",
-    "description": "Scans a semantic model and report, finds what is broken, and fixes it.",
+    "description": "A whole Power BI toolbench in the browser: model and report explorers, BPA with one-click fixes, memory analysis, AI translations, PBIR prototyping and workspace automation.",
     "category": "fabric-tools"
   },
   "scripts": {
