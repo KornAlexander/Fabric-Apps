@@ -4,12 +4,15 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Fabric Apps — 3D twins, live maps, games and admin tools on Microsoft Fabric',
+  // ⚠️ No app count in any of this copy. The gallery is expected to grow, and a number
+  // written into a page description or an OpenGraph tag is the last place anyone thinks
+  // to update. The homepage shows the real figure from `apps.length` instead.
   description:
-    'Fifteen open-source Fabric Apps: photoreal 3D terrain twins, real-time transport maps, ' +
+    'Open-source Fabric Apps: photoreal 3D terrain twins, real-time transport maps, ' +
     'games, and tools that administer the data platform itself. Every app deployable to your own tenant.',
   openGraph: {
     title: 'Fabric Apps',
-    description: 'Fifteen open-source Fabric Apps, deployable to your own tenant.',
+    description: 'Open-source Fabric Apps, deployable to your own tenant.',
     type: 'website',
   },
 };
