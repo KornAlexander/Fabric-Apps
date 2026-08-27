@@ -1,0 +1,552 @@
+{
+  "cluster": "C1",
+  "generated": "tools/content/build-questions.mjs",
+  "questions": [
+    {
+      "id": "dp600-q-30-1",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 30,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "A report must answer questions as fast as possible, and the business is content with figures that are refreshed once each night. Which storage mode fits best?",
+      "options": [
+        "Dual",
+        "Import",
+        "DirectQuery",
+        "A live connection to the source system"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/connect-data/service-dataset-modes-understand",
+      "sourceSkillBullet": "Choose a storage mode",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/connect-data/service-dataset-modes-understand",
+      "reviewStatus": "draft",
+      "tags": [
+        "storage-mode",
+        "import"
+      ],
+      "answerHash": "953a71727a5bc069ed4b99703f6f7c409d41cf82658d2b462ddcb0f36aff3029",
+      "explanationCipher": "eqE1UvYA8ElkG72GiUSCzEkvQGRuPJONFfqrKfhdm84n/+PQuILK/YZsoGpRW7zLG/X/pfqoNIxthA67ciwWy8qh8puBj2Du+RFx/syfHitgd+ut6cyO+vErN5pODJVfxoX/IX5WgEEJCz+HxEgQyGNI3QxFH5u3Okz/xm+IB2p4LfyvD9iHtsVPRviOmA0PMMGUEMKR7x42hoMsS7PvtIKlp4mbzEkwm+im8hiGjP7IyCuMiZd50TaHsV0Ja6nM4F2ciHNmW9R8zH8Kvh3r5DtbBERykjbWM/tV8dUHESg9Nw5N8PUmLfOj2hVPHGbz8PD7PvP5bPQne40MgVdIQMQGAdasp/VWPubS9eEbwHIdvIk="
+    },
+    {
+      "id": "dp600-q-30-2",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 30,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "A Product dimension is used both by an imported summary table and by a very large DirectQuery detail table. Which storage mode should the dimension use?",
+      "options": [
+        "DirectQuery",
+        "Direct Lake",
+        "Dual",
+        "Import"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/transform-model/desktop-storage-mode",
+      "sourceSkillBullet": "Choose a storage mode",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/transform-model/desktop-storage-mode",
+      "reviewStatus": "draft",
+      "tags": [
+        "storage-mode",
+        "dual"
+      ],
+      "answerHash": "cf564d1556b080f6ec897a7f0e680c8b91b541770af983382ea465dcae489200",
+      "explanationCipher": "2WxgfZdUgyCrb2g7F1iVfPO4HhD/hmbbwcq1G9O6rw7+t5ppNBH/TKNuXy88r+pPhShV4fmmizuLR11zdwiAzWABcJYr2n2U4byrt2IQtHfIlxabLnHFmjk+ZOg9Qewbuum4VOw3Gme8N+8YsVwdplZQsRIgBoQldVkNzxnFCRZyHtM4v+yCZZQ55vH2HrwBMDdW7IZJe9Q3cqTEYEecUbXOoPzQnPluA0+iT20RDu7eNIerbTTTpfpcZW2/BQbjmdhAsX78srxV5ElP0qpniSfyy+cAlvx3yboSshRaUvVpxHiQ+5RO2DfwWGF35Kg+uP5laixKl3Q2WTFsygTFhID7kbSX09ngKGCpLNAN0aSaR2poGASTKDRYnjdFWAGnip/OYJ/sTA0Z2A59nsSKSvwP7rcd2SDFLzz1rUBLVXxIuiR/YypjKBRq0GwvNBWG8hFJk64WobgLarZBTI7F2fzuUg=="
+    },
+    {
+      "id": "dp600-q-30-3",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 30,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "What makes Direct Lake different from both Import and DirectQuery when reading a Delta table in a lakehouse?",
+      "options": [
+        "It translates every DAX query into T-SQL and sends it to the SQL analytics endpoint",
+        "It keeps a compressed copy of the data exactly as Import does, but refreshes it more often",
+        "It requires the tables to be converted from Delta into a proprietary format first",
+        "It loads the Delta files straight into memory without keeping a separate copy and without translating DAX into SQL"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/fundamentals/direct-lake-overview",
+      "sourceSkillBullet": "Choose a storage mode",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/fundamentals/direct-lake-overview",
+      "reviewStatus": "draft",
+      "tags": [
+        "storage-mode",
+        "direct-lake"
+      ],
+      "answerHash": "dd9aeaadfb771cab02716e463bfe227f1968fa06f30439faa2e8d7c2f93d76cb",
+      "explanationCipher": "5Qsm/p9fAJ9z4oYoXcC58Yr85+kI/VYDMTGTlmhGNsSkDkdaHRKpC8qeXvfQcAjVyHnroMIRQ6nyOWtkvlZbd7W9wnd4zNfQjKsOphvWileRvgu02L56SWuHDb8wxWz9i5xpqPTz88AJZ8D9Aiotj/s4awRVkiDPkmyRCpQa+hq6mjJMMMh9k7ATmkWQ7qwJplGdJcjN+qMuNsD5+RlbZe8ejbFXDjfcFi083Nka/BD6cjAat0rownk5+eOlxhkWqW5KrSYrCWQ9hRuxYN/4YNGKBVbgTD+2WTBaKZcZqLaN3E6zButaW444uF2iVgHm3+2lbbmKp3CSHqY1xtitYSs/NaJF/g2gyDWxjO7nF+OB/FAlpEHTXu98yvTK3UFJ7A60Or53DqkiXt+vODyfnK9HU1agiqJgsZ5Bg4cijJ+P7cLwLGofofvgZkddTXkprN//eRpTEgBUroAY"
+    },
+    {
+      "id": "dp600-q-31-1",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 31,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "You are asked to describe the shape of a star schema to a colleague who has only ever seen flat spreadsheets. What is the arrangement?",
+      "options": [
+        "One central fact table of measurable events, surrounded by dimension tables that describe them",
+        "One table per report page, each holding everything that page needs",
+        "A chain of tables where each one relates only to the next",
+        "Several fact tables joined directly to each other"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/guidance/star-schema",
+      "sourceSkillBullet": "Implement a star schema for a semantic model",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/guidance/star-schema",
+      "reviewStatus": "draft",
+      "tags": [
+        "star-schema",
+        "modelling"
+      ],
+      "answerHash": "8b8c1e89d2d91640a9409df26a629db8806d2631971a07ba2bd6d7320a45c29e",
+      "explanationCipher": "1W9GlJHZPdkKPc2gqD8wGFLiPBYlg4EYKz9Lm/GHqg53nK26ahu5+n2dPm6Tdjz83lbMjSggP2XCTyFQ4lDt/RuUZ2A7EQbwtll9zT8oFjyJQ8edyMC4UhFrHzXBy399ZIWsa+EiUjP63G8SolyDgucc7ryqRV73egP1hdTI5cMgWx4LUls4p2wtni9DshR6iqEGTxYo5zjU4ZbC7EazJsiMsGwzZ/aQWmvTMwCfa8gxB0jgAAsgmY4m+z03lWAt5UNoHbgN0S/mBaSjB+Yxai+WXXCqfT23iBnEiM+PPWuH3cM1wtLspMqcNRg7tpeqdRoLsDjAYSb2jzQXz1a36xlPOoz7qZ7kQ0u0n/kePde7mV3hMsojIZDnvZ1m9LoQj2ezp3ejg/HJZ9AKMUI6E1KdfP+RiGoZIYixwn/5YXbMyMM8JdAOFCvyD4R8T1ooxzTARs+FtPs8Iek="
+    },
+    {
+      "id": "dp600-q-31-2",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 31,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "A model contains Product related to Subcategory, which is in turn related to Category. What does star schema guidance recommend doing with those three tables?",
+      "options": [
+        "Relate Category directly to the fact table as well",
+        "Turn Subcategory into a second fact table",
+        "Leave them as they are, because more tables always mean better compression",
+        "Flatten them into a single Product dimension carrying subcategory and category as columns"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/guidance/star-schema",
+      "sourceSkillBullet": "Implement a star schema for a semantic model",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/guidance/star-schema",
+      "reviewStatus": "draft",
+      "tags": [
+        "star-schema",
+        "snowflake"
+      ],
+      "answerHash": "eecac823436d97f34f44a9eb5145fc02ce109c651efe4625322094552349c347",
+      "explanationCipher": "gQQEmQuK6MMhqvSPzjnaFpiBH8sImcTEQfwthrc+NbcmLohUyJJLmpO19C16exkqCSHpFW4JSXSzFx6KE4wCFBpdl3UORpEMBBJnMRVKr5byNlHZQBtS4JlTSnStPhRWWK7DWfrwtG2lp6wOTdSJUkTP85JN5xdWkFUJgowk2fiu8vvQibFX+la8hbIc4/tneaYtyqXBKy3YTLwNKwapiirWqnNCtGkQcamoY7ZbF1rLozlMgGFE1h93/0AGok1Ud30qNfNeimVSuEozQ9o1+U9LxLw5XHL4ljC5MkdJtpetzZGYavS4a8zmJXat4Q4HjBCX6+dOXNn4eRLn6ZOpeevmPs40S74Oejf1SYo5NcuLE3D22jjFaTqMO0DAi9oB4IA+vBf+AIP2sA=="
+    },
+    {
+      "id": "dp600-q-31-3",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 31,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "A sales fact has both an order date and a ship date, and both need to be sliced by the same date dimension. What is the standard way to model that?",
+      "options": [
+        "Remove the date dimension and use the raw date columns on the fact",
+        "Keep one active relationship and activate the other inside a measure with USERELATIONSHIP",
+        "Set the second relationship to filter in both directions",
+        "Make both relationships active at the same time"
+      ],
+      "learnUrl": "https://learn.microsoft.com/dax/userelationship-function-dax",
+      "sourceSkillBullet": "Implement a star schema for a semantic model",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/guidance/model-date-tables",
+      "reviewStatus": "draft",
+      "tags": [
+        "star-schema",
+        "role-playing"
+      ],
+      "answerHash": "577f5a610236028ebe8680662df97ece9b43cf85a721521a17cbab73afb39206",
+      "explanationCipher": "XXxbqBvC1Db8h/czTItZ9YjgLZxUH/PralcSxeKUOeBYb6qkBeet2iYOlGBh/jzXFz4xbdDm5evbBaM4OiZ+iyN1Brqj/tQ1aaPy2bYdk7IT2AQU/V5MIjdXqomwkl+eLbXgktEF0nj6wF+NegYkaUvfEebCJ3uiyEvAs28dvjqyNfultfcFIZ8Zu1l2A6SDdZrjDIJ4FchaoNhAJc4X0TpbI1uhcaPzP4VYl1xInjQt+10RyzB0UxU4gyB1YmD1zhzdsxNftLtJ+GmsDQ1jYGhSs9kIFNwXO8GoRj5gWN6al5WpibNxAIfMZUeihC5wJBz1g40LJhFFvILYDdo+fkd0PN9ezYsV0K2CUgC2u1ySFC11xfPSKiy84Xibml4DFx9ZrTUOl6jSCtDpHkkajCyxwFiRwYAseS9R4z9iWK3GY0e0I3GYv/4GpMFuacZTJweIp8FelId6wCdQg2b3Zw=="
+    },
+    {
+      "id": "dp600-q-32-1",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 32,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Each customer can hold several accounts and each account can be held by several customers. What do you add to the model to relate them?",
+      "options": [
+        "A bridge table with one row per customer and account pair",
+        "A calculated column on each table holding the other table's key",
+        "A direct relationship between the two tables filtering both ways",
+        "A second copy of the customer table"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/transform-model/desktop-relationships-understand",
+      "sourceSkillBullet": "Implement relationships, such as bridge tables and many-to-many relationships",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/transform-model/desktop-relationships-understand",
+      "reviewStatus": "draft",
+      "tags": [
+        "relationships",
+        "bridge-table"
+      ],
+      "answerHash": "ccf9e2752b6e5f0524115cecc6d12bb4048e2278aa21e1c73abd46d2a3f65228",
+      "explanationCipher": "IzC7jHyRUXRyimYQSCIVaR7rCCgKNypSAZTHMo9jo2GuYtWPXqQWHRbPtLtuN0DhYs5hMR9BFGlf90jRJPMH0mUou+Evtk3LpHasNcgOiPoCv5rqTlZ85jYqPUmThprW95PGMsDrVnigiJ087kWa2TCRFpAWlUP2kjtW6ULi3v0zjy80wQkpdvuBDfpsLJVT+r5EJfoDSkYrqjcMNYcKBTf6vwlUdV87RPJ9Mkd9arWsm+R2JtHsakx/wZf3P8RpPe5cChe38gPa6eStS2VJP9O90hl3HIL52yBehMTqC+QYriOfiD+GDF7qQc0dxdmdmmebhsC17+714ipGDah2mB3EArB6rFrUXCzig+xAWFvlf7GYOe5xmS9VwwzwvZDCZo79z5q9"
+    },
+    {
+      "id": "dp600-q-32-2",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 32,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "A colleague has set every relationship in the model to filter in both directions because it made one visual work. Why is that a bad default?",
+      "options": [
+        "It converts the model to DirectQuery automatically",
+        "It can create ambiguous filter paths and slow queries down",
+        "It removes the ability to write measures",
+        "It prevents the model from ever being refreshed"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/guidance/relationships-bidirectional-filtering",
+      "sourceSkillBullet": "Implement relationships, such as bridge tables and many-to-many relationships",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/guidance/relationships-bidirectional-filtering",
+      "reviewStatus": "draft",
+      "tags": [
+        "relationships",
+        "bidirectional"
+      ],
+      "answerHash": "98c56c2e1bfdb95289e0db789db8442bdc096671d58059d4c3ed2ed59dfda5bc",
+      "explanationCipher": "TpSOCQ7W0H2kNAsyIn4AalG2Kl1Iv4qzM3cdA7qgJ5AE1ZPuZVlo5GbNtXrqocpHYFkAQaDQzjrWYAjr2KX3iGk81gf9f6yzOIq8NjmV7RWFmVcy1QgQSLCY4BE/Qv5+NaYKCGZj3lzRJyuT7qyxWS5nKz/vldUTcfLzZ/giSTvako+w2NiZ6hYV0NT8y/fI/EfaTEgEEr4ANVOWTud+pxGUje5eppQJsUjhDHOtBCXxKOQ9DHSRiA6uphBR9TuecDL47Crf8fEenYyRf7hWkEaXgkV6SyhwUABO59APslTSaGpv8FnwGMCJgI7GXOvkwDI11lkhXkzgnABcIhIv0QKGy4tssy1cXKnnG3V4wTteaQ49d2mzox34VYv+t6HoJAJhNMgaPey9GWNS7/D+HumJW8APwQeTboT74m+Mmr0m+d7qV5jQjfE4Xd4zYCz1QnkljNcesQ=="
+    },
+    {
+      "id": "dp600-q-32-3",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 32,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "Two tables already have one active relationship, and you create a second one between the same pair. What does the model do with it?",
+      "options": [
+        "It replaces the first relationship",
+        "It is rejected and cannot be created at all",
+        "It is created as inactive, and only a measure that names it can use it",
+        "It is created active, and the engine picks whichever suits each query"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/transform-model/desktop-relationships-understand",
+      "sourceSkillBullet": "Implement relationships, such as bridge tables and many-to-many relationships",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/transform-model/desktop-relationships-understand",
+      "reviewStatus": "draft",
+      "tags": [
+        "relationships",
+        "inactive"
+      ],
+      "answerHash": "8a311524e02bca50530db8b76e6b3a6ec6231f7c46229dba2e9c5813fef9c264",
+      "explanationCipher": "laEmFRNqxxGki2DUL98Lk4TUFWEEn8BLRUjPQLqwujRt9IA6bD7Vs+a2JoSGNGy6Yu1yVOEaqrWKUJFyZhverrDt9DEeEmOCB3CGCqK7EBBOu6vtlIP8e0XZXrYN4dHRGdL8Hsp+1Awf6QlNksDKEDMG0bEEkIm9a2BfjDD2OA/dckBq4bp7CMfEVMpp6QuSw1KTxQh5xoHuto4aqJWLhan8/Hv3jTQKUy0cckudr8/z7MCctOIni/DsVCijd1iC+MjruNmEF6T9tWANrHK3MQw9IpeRhJSiWWukzZ+z8iVS+pdRmC3HW+U9pj+3SVgijxC0BeUpN4btDBtTgxu1Hf60fS+NeQFMmpSh"
+    },
+    {
+      "id": "dp600-q-33-1",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 33,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "The same subexpression appears three times in one measure. What is the main benefit of assigning it to a DAX variable first?",
+      "options": [
+        "It converts the measure into a calculated column",
+        "It is evaluated once and reused, which is both clearer and usually faster",
+        "It forces the measure to be recalculated on every visual",
+        "It allows the measure to ignore all filters"
+      ],
+      "learnUrl": "https://learn.microsoft.com/dax/best-practices/dax-variables",
+      "sourceSkillBullet": "Write calculations that use DAX variables and functions, such as iterators, table filtering, windowing, and information functions",
+      "sourceLearnUrl": "https://learn.microsoft.com/dax/best-practices/dax-variables",
+      "reviewStatus": "draft",
+      "tags": [
+        "dax",
+        "variables"
+      ],
+      "answerHash": "66b845a165a6d2ba1a7b62b1ba60588a4973d387275315dca4872f6d7eff418b",
+      "explanationCipher": "k48M47kKcPNSaSy2taKoUOlcddQJJaJzeqSvSaYgHdjqHgt+mEn8TdFcYBrIYfhE4QodWMjftcOl8/N4X2Ms5tTQwOsxGtbPP+7qj8gWbGQyy37uHm5DP/tjGxiKLr7ZdTHXlvSP120j17npHQwwjNHGYInfkYPFeEd1FLWVOBrUS03pDMEQH/n2dCtpWjWscIAsPseIUKlrpvuFizm1Sa5if+lVGGHAksLw+6DnLBLP4l4TB76/2VD3xNY1PtSQdb0KH7a2jUwyNjWe0NxLu9wC8MIbj9plmoul7QzPQ42zlUJoUcvrTvbInSOYule0Ch6No+XAxTlD/9jG704SKTBPKarRe/AXYU850+ISQFTA9gCinhfudMFWhdPZsAB1g1ZWE1Nj7bAJRMjGqcWG7RTSJ7GAAr4qJA=="
+    },
+    {
+      "id": "dp600-q-33-2",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 33,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "Revenue must be calculated by multiplying quantity by unit price on each individual sales row and then totalling the result. Which kind of DAX function does that?",
+      "options": [
+        "A filter modifier such as REMOVEFILTERS",
+        "An information function such as ISBLANK",
+        "An iterator such as SUMX, which evaluates an expression row by row",
+        "A simple aggregation such as SUM over a single column"
+      ],
+      "learnUrl": "https://learn.microsoft.com/dax/sumx-function-dax",
+      "sourceSkillBullet": "Write calculations that use DAX variables and functions, such as iterators, table filtering, windowing, and information functions",
+      "sourceLearnUrl": "https://learn.microsoft.com/dax/sumx-function-dax",
+      "reviewStatus": "draft",
+      "tags": [
+        "dax",
+        "iterators"
+      ],
+      "answerHash": "045cac57c8843692e6fc9754b8de956f24f058aa447bcabc376d9a180291d19c",
+      "explanationCipher": "8U9GiUEk5wUGq7heAbBDI5yBShL55EK7rfgdew0ztxhhYNsTV+WiPzAvXDV6w6zpL2jSjfWFipxyLCCvk+26UqlIObQPp5XCil2hrwDlMBX3EAEFMgMMPTIuHWpaAMwKQRx7V3PLx4PeumD54wF5E3xs7dfG+9OZeM6sHHBuLP7+6ielRAypBEn4yf+ozWQ0hE3QSHNDmHAZ8qLyrJqFQnfJGSoKu/lNbzRiXy5lH0DK+1mhWCbj1MRmJUdJDmNGAuW2J/qJlpEltrD3olv5nBJX3/K4+9O+HIN9cbCBZSvZnsNyAkQOLfYShKTxDrlK57CsYcGvUTXZfrD957HakkbUC5AMuvmlcJRnFrNk9qu5YszQ2SGjT7Oe44PNPqV6ibMXusyOtVXX+dxWdWbaUtPp6mLr+g=="
+    },
+    {
+      "id": "dp600-q-33-3",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 33,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "A measure needs the value from the previous row in whatever order the visual is currently sorted by. Which family of DAX functions is designed for that?",
+      "options": [
+        "Window functions such as OFFSET, which navigate relative to the current row of a result",
+        "Filter modifiers, which change which rows are visible",
+        "Time intelligence functions, which are the only way to look backwards",
+        "Information functions, which report on the current filter context"
+      ],
+      "learnUrl": "https://learn.microsoft.com/dax/offset-function-dax",
+      "sourceSkillBullet": "Write calculations that use DAX variables and functions, such as iterators, table filtering, windowing, and information functions",
+      "sourceLearnUrl": "https://learn.microsoft.com/dax/offset-function-dax",
+      "reviewStatus": "draft",
+      "tags": [
+        "dax",
+        "window-functions"
+      ],
+      "answerHash": "b1ce4e92c5418a73c1eba66f28adeeaa1881054395b01116e73a2f077d3097eb",
+      "explanationCipher": "kl5qFZZG6uRArv89VTE7p6OpAQ7mVcI76HI5sDE6fVOv5LIYu5HK5peSiE3sDi7cMQ9exElSbgr+88/HNLlx0Y0+wYG2sJBNK2GW6hJOZGd1aZQDyEVsqSm2SWDQ9aXg1x2Bu8H94mo6du4ATgvLPIQcGfWiURze4aLPsHpPqjln9s8SiBVN4cxzLL+4gBh5Q1vnXByneRB2sicHdLl1kx46qL+k80uEGX2CUThyoY7ONPbdQp0m0UrjhrkiY/sXmeKHrjJAvhwk5seThx0GkYPDvYUJWPH/3GnS4AzWcttoLpPKRofSHc8pS0U4klF54HHd/wVgM+XRKpeY6gckiSKRt6xXzLeTaC/IEK6XXvBKJrV1ZB7xHV2JXg/H6skQBWbs7P0tAQLyK0h9LZWeksW4cfZ2x5rnE01Opi6lnp87KVzwsY2l"
+    },
+    {
+      "id": "dp600-q-34-1",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 34,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Forty measures each need year to date, prior year and year over year variants, and nobody wants to write a hundred and twenty measures. What solves this?",
+      "options": [
+        "A calculation group holding one calculation item per variant",
+        "A field parameter listing the forty measures",
+        "Forty more measures, generated with a script",
+        "A dynamic format string on each measure"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/transform-model/calculation-groups",
+      "sourceSkillBullet": "Implement calculation groups, dynamic format strings, and field parameters",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/transform-model/calculation-groups",
+      "reviewStatus": "draft",
+      "tags": [
+        "calculation-groups",
+        "dax"
+      ],
+      "answerHash": "a71459bc0254d02ec1d97aed1098807a1d9b654d97bfaf9ef1613e165f587abe",
+      "explanationCipher": "Em20sLlyg8RewXKffPWvnmb5AgSkbOLZQdI5FsFXEuiKQaJ8+VZ9t8nx+N3/NE/At35jNe6DQNhbhnx7XTc/pxZD/+cGz8aCWEhHGeg9ULAVuI9LMEoL47qJlFXaV0n93Lmlsj3c+5n//PY3UIsVMyWlYH0lexdCSmGkTavGAehlKYstLv9Yd9osGQorSYIcWN60CyQHrBeHx4/uhLvK1CCXNkblaA2XizDHM44UPFD1WQB/yGMX8ZlDcauyRR6rl3zg5DAXqOiaZmKRESph1FLSid/j5b+Q3GgJpOI2a1ZFOW8HDP7gHyFsERDLtZ8/HHBPYsJYa20Ivr3JTLHaIS4aeYnF/CV5u932FQeqLj7HUzYZtZh4AcfF8Uh/VIaTpqiO2nykPEWdXT+EswQFSPMba5mJKfksSKOI1ZG7S2tg6vxRVMhsYz6GgEH5bZ6z/RgOwfx40n6N0y/CkyjfpX/BFV2MKoE="
+    },
+    {
+      "id": "dp600-q-34-2",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 34,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "One measure must display as currency when the user selects an amount and as a percentage when they select a ratio. What makes a single measure do that?",
+      "options": [
+        "A dynamic format string, which is a DAX expression returning the format",
+        "A calculated column holding the formatted text",
+        "Two measures and a bookmark for each state",
+        "A conditional formatting rule on the visual"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/create-reports/desktop-dynamic-format-strings",
+      "sourceSkillBullet": "Implement calculation groups, dynamic format strings, and field parameters",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/create-reports/desktop-dynamic-format-strings",
+      "reviewStatus": "draft",
+      "tags": [
+        "dynamic-format-strings",
+        "dax"
+      ],
+      "answerHash": "f96bf8bd4a341d1ed6aa2994181d46808f0aac9a4d07046f9f31fd3027d1c2cc",
+      "explanationCipher": "p76J6H3LZOXwhL+uqwDIJsqAxOQEM8PQImeHnz4a6SBWwPEqJ/eU+UiMeJ+m268m1V2Pp4DBmpzQRDVbtLprg0nwonZL+vOoJhG50whst5xE2v+WNIY4OLK46H8vT2Yeg1a4IKGJ8Bbs943KCOylnLWJHl3qKMarKTTsp34bLoxQ4qk7sNLrkXQ0xIsPx3pF0YtdhvT6F7/9Z3lAHsL5l0ZXdaTazbG5WMCrYBTdD6bw7O9hgauX8l3kBXbVB+wgfcQBc+o61THRIJpiaAeVO4QvKqzNDju0vmvFMPvQaot40s9zsRC9RQgWmg7swI9MMTfxUns3tthzxMtUd3VVE9fO96R4FRcncQ0zvoh6nvRHxtdbO5Pcpiqe0KuvL6nTkUlvePikF/f4SYTMW/9eX6X5t6AvqpKJnGGhWTTQ6dEYHIYOjRHGGzcbWeNUwffIKNjC6SBFbn36NkQMxQx55bHCgzmCSD6LMA=="
+    },
+    {
+      "id": "dp600-q-34-3",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 34,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "Users want to choose from a slicer whether a chart is broken down by product, region or channel, without you building three charts. What provides that?",
+      "options": [
+        "A field parameter, which exposes a chosen set of fields as a slicer",
+        "Row-level security roles for each breakdown",
+        "A calculation group with one item per breakdown",
+        "A bookmark for each breakdown, wired to buttons"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/create-reports/power-bi-field-parameters",
+      "sourceSkillBullet": "Implement calculation groups, dynamic format strings, and field parameters",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/create-reports/power-bi-field-parameters",
+      "reviewStatus": "draft",
+      "tags": [
+        "field-parameters",
+        "reports"
+      ],
+      "answerHash": "cf7076e314376280f3a6ee49dbfc54baf8418c44980244b759f795c214d5bcf8",
+      "explanationCipher": "NVPDXukUtFfuZMahaWiU9xSKDOaaMKS3ywtB2pLLu1PJKmntTB3cedRTDFuau0cchT9xN9LD8MNkMJyhhFszrriYqWM96f5sOl/282TtklPvkEhUIMrz+S1oEnMotf1vCssHZYjF3lCOZSw66XqNaRKSvzy14B1a38pI1plnoANKER4U4LTt084j/m64T43/FQ6mRsCFp6hDYbIghpWbO5y69KbpQfMeXp9tUO/80Q94jedK2QKxhoUcVL9EtfgeQnusJ74HV2ZjP5MGxo6RJTflaybNaC+m0ZUT6od+6+106mWORJmX659LrfkauhjdhM52o307Hti4yEhtedTxMPKSras0w/51RetO8nRisE3nbTkl0+gPidJ5F3JVDfcPoph87awa76nC5fZuP6o10Xa/vDOANppY+va02uHr+kb8udBbrDM="
+    },
+    {
+      "id": "dp600-q-35-1",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 35,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "What does turning on the large semantic model storage format actually change about a model?",
+      "options": [
+        "It moves the model out of memory and onto disk permanently",
+        "It lets the model grow beyond the default size limit, up to the limit of the capacity",
+        "It compresses the data more aggressively so the model becomes smaller",
+        "It converts every table in the model to DirectQuery"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/enterprise/powerbi/service-premium-large-models",
+      "sourceSkillBullet": "Identify use cases for and configure large semantic model storage format",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/enterprise/powerbi/service-premium-large-models",
+      "reviewStatus": "draft",
+      "tags": [
+        "large-models",
+        "capacity"
+      ],
+      "answerHash": "fd58e46472b0226a4b57ae9e84be281c273aae009ad11d7bdf0d15b0161a510a",
+      "explanationCipher": "bYL6U1tRQB49IM+IWKgFdC1VOwerZd2dBUtEZi/BQ9JHv3TAg97jfcE6eL/Y6F/+tWtBrUQ/qvbwyDlM3aQcyTyFMekZ7fZ2muCeoblNLP/mbXwqISW6fvm8ihOTD8ZTd+IfS/YH/PcuztiOq9bp5T5rZAqb8qV3yTxdbuyUXsXWgrAUemIpz7yBsZmEidem2WB+40R/zvq+fi4vCYT9au1MtK6agwYi0fsEORDlcueI8TudHB+yk+UGFJjmNByTJWGskP8LxOh+77Dh8LPbAC8k/zllKiU4T5Nh20og0VxWPQk4kOJi1n4TnNdaX5m7j0SUG7KULSZFv0C6seYrJXrza4jL50Qk3VvYzPHHWCbGPBevTQ4cbnmq/sncJ2LcFRGszyQrJzvF6cT7386y/mc+Cw=="
+    },
+    {
+      "id": "dp600-q-35-2",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 35,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "Which of these is a genuine reason to put a semantic model into the large storage format?",
+      "options": [
+        "The model is expected to exceed the default size limit as history accumulates",
+        "The source system is slow to query during refresh",
+        "The report pages take too long to render",
+        "The model needs row-level security"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/enterprise/powerbi/service-premium-large-models",
+      "sourceSkillBullet": "Identify use cases for and configure large semantic model storage format",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/enterprise/powerbi/service-premium-large-models",
+      "reviewStatus": "draft",
+      "tags": [
+        "large-models",
+        "use-cases"
+      ],
+      "answerHash": "3b8d6826ad78dd05c92119006439bd1e76d1eb05c3ef67cf84f231480854cce0",
+      "explanationCipher": "pl0Zuep+zQU8lRRTp5gJivA++Ewq36T9X9CKGnRm6cQFSrIUClPW7IXnTEqmaQqAlS4R36nzpNN2s0zlrbpwYJX/nHUyVuKTcdtcQy54OHmUNXh3ZIbpYnldOJmmYG2mq8je0JvzBP702bb2Z3+RarPGr2aZ043w166H8htCxUb2NdfUL17haQfb6nBe3ZKK6DlxCGhrrkf22QfDf1w8kRYodeFYWoJHdoRUt1rHKXzfunrdn6w8a4veyg7qH1Ckx5cd25UK+ogsrSQTREeUURUQx3n3LUK/1hKEagTRNFdnGmv1oW0ccO/FyCyiCEq9fzKkeLPwr2QA1i7ehBo4KmSnXH5HxNdB7vmF22tcQ8TGHU3cmVfQsETUF3SW0YT5YanJ2Ml83o/81SYKUxpIo20CrUimx0Iv55H3Tv8ihezCDDYw2GLenVMUj397yUH97hj/8RwSVgaq9a/hVpxaF7qF9Tj8ZQ=="
+    },
+    {
+      "id": "dp600-q-35-3",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 35,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "A colleague plans to enable large semantic model storage format on every model in the tenant on the grounds that bigger is safer. What is the honest counterargument?",
+      "options": [
+        "It disables incremental refresh on every model it is applied to",
+        "It requires every report to be rebuilt against the model",
+        "It permanently prevents those models from being deleted",
+        "It is a size setting with no query benefit, so applying it everywhere adds capacity pressure for nothing"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/enterprise/powerbi/service-premium-large-models",
+      "sourceSkillBullet": "Identify use cases for and configure large semantic model storage format",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/enterprise/powerbi/service-premium-large-models",
+      "reviewStatus": "draft",
+      "tags": [
+        "large-models",
+        "misconception"
+      ],
+      "answerHash": "0370eb92d1033866a1d7ea1227356fbfb3fbf1214cc753ffff70a73de7dc2b48",
+      "explanationCipher": "DOs06A/C9WZsL0RS7sXeLslfSJ1+ztJutS9vL8Zwa0j8Etk9D03jQn0IIXoCUA2OM/wdttANjOsRRFTiVJ+phaAl52qzb/lg1oubWLLsyOWE1DJVyQSamfCOKxtRiUVF5oU6dTXOM3ZJWSLOh0F2DsrULRhNaHACnawoD6y8YgwGxNOWMAPvHANYSbckTHdZhXn/tjOl4HzYXD7bkTyd8Un/R8Lq5B5N2Hx/HU7/unbh/w4h0ncHhhfEJaggL7fsMBbhnUZy15bpvdcGU5Aa1ODRMtIpeNMman9huTw4HOD9T+y88Yqd4iVTYpehP4KVXeyhhyE93m4I2uPHSgOqJmsqcgUf9zKF8H4lqFVNQHDpyA7xqfMwOEy5l/RyILpHJ8fegSMKXE9XQm/IbEeZJ9wCLEdk8DQIyvedUkyF+cx7KESgIwJOynYsvqLVFxmiVRmZxtx97xtTVVsGK+Z/KgL6iw=="
+    },
+    {
+      "id": "dp600-q-36-1",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 36,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "What makes a semantic model a composite model rather than an ordinary one?",
+      "options": [
+        "It has been deployed through more than one workspace",
+        "It contains more than one fact table",
+        "It combines tables in more than one storage mode, or from more than one source",
+        "It uses calculation groups as well as measures"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/transform-model/desktop-composite-models",
+      "sourceSkillBullet": "Design and build composite models",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/transform-model/desktop-composite-models",
+      "reviewStatus": "draft",
+      "tags": [
+        "composite-models",
+        "modelling"
+      ],
+      "answerHash": "a2e90909076de73dc77fdcd00c6209fdcb8a5e7d2409345aa12fa08a7d75c87a",
+      "explanationCipher": "zDA2eNjMfoBvb6/S0U1yEOKC6PDEkqdT3f0WMA7/8aoDt4eaFgDCEV+vCvM1upwic6hVkvQLbHEr7tmthLaZrNrGYiOKXJ4abOLRAGTXEUNtppfbLfczSetA75Zia8T4VyXz+ic+mY2q4CduSj3ldyDt1RmHIFIWTXd4dzJjEAKyR3GWB5MhRqqF9hzFMQYQzBy+xy4dTAUJCU8v1vyfmnMfsTWuz63EFlB05CFXS7HvIZOJrI/Z7JXR87XZ8fGi4W3MSzVgVSfJLyiRHD5cP61u7Tg8EkPXAY3qGxmlRQwAzmVD/1xflzUKRjGFENltHXQAAfYRKHcccdLUihwNJ7BHMcXvZIiZ9g6m6lsoaoN6GyoA3U0V7h9v8yLdkAhV"
+    },
+    {
+      "id": "dp600-q-36-2",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 36,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "You want to extend the certified enterprise sales model with a small budget table of your own, without copying the enterprise model or asking its owners to change it. What do you build, and what do you need?",
+      "options": [
+        "A copy of the enterprise model, which requires Write permission on it",
+        "A composite model on top of the enterprise model, which requires Build permission on it",
+        "A DirectQuery connection to the enterprise model's underlying warehouse instead",
+        "A dataflow that reloads the enterprise model's tables into your workspace"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/transform-model/desktop-composite-models",
+      "sourceSkillBullet": "Design and build composite models",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/transform-model/desktop-composite-models",
+      "reviewStatus": "draft",
+      "tags": [
+        "composite-models",
+        "build-permission"
+      ],
+      "answerHash": "a39e7ce799a14d872e14e06b34384796680d0e27074d9a21a80e530e90e49e12",
+      "explanationCipher": "3Rm/z//LWqaOFFEY8ZhvPkPF5b0YlR9k9YntTIjPUXrTvGQTtdNvHvaAHYVVq67Ly5Jjc5eYnSUFoRexFoRvgLw+orq01pbH3oly7PDTRNA8XEdbQvbMQLzeGy4WVP+zE+01r/bJqn4Q2C+oAgWOTfqReuZXRdg/EOzXQAVQ3bh65zOdpVCenPKPhgFTI4Dx3oZyw9AMVg2lta3cGEukhBmEMRrgdNx2keVPLkZvoX5LOt2o09dBeifKbk+apCIORRFbXM+U/dzZVF0FrXho301NTSmxvE/nCwlt4CXHYxubtGMDfzUsfsNZsde/Eco3nso+q90jwc6MviaTZXYoT44Z7Xu/MT9k6DBBkADc+qmZbiNcwQF7y74DUvDuIZVSbwG1fUWwfMwMzHFDvIclCBTSzO+/2TzHzdJZ2tYoNbzAEk0phQJLNSEVyvAZeR1YlDzBjBdU+hwv7UXYMqiYYYTRSoiSyoRPfGZc5x+utaLGV2W0lJAFuV+ZbUY="
+    },
+    {
+      "id": "dp600-q-36-3",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C1",
+      "skillId": 36,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "A composite model holds a huge DirectQuery fact table and a small imported table of the same figures summarised by month. How do you make queries use the small one whenever they can?",
+      "options": [
+        "Configure the imported table as a user-defined aggregation over the detail table",
+        "Hide the DirectQuery table so users cannot pick it",
+        "Set the imported table to dual storage mode",
+        "Add a bidirectional relationship between the two tables"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/transform-model/aggregations-advanced",
+      "sourceSkillBullet": "Design and build composite models",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/transform-model/aggregations-advanced",
+      "reviewStatus": "draft",
+      "tags": [
+        "composite-models",
+        "aggregations"
+      ],
+      "answerHash": "31ff0bd909baf77a7057641d1c22af8b5b8156649324c64a40a4644dd68947fb",
+      "explanationCipher": "WQWI59zmActfHJIAU5JiIlHCLGz0bMqTIENJiBBlepbzwtn+1agvgYH2hukCl+JxxvIhyQBnJAubR/2BB4w9j6FffAOKNi9p8J2b4R3Z6eRWCAB/Wz5+0dz25mELATQx2qHqXaPq3bD2qR0Vv/hLJVM296yGWqpcEr00m0PfmzqhzPlIJmiSB0G8aK4PWrMyTKgKWxpgtTDcOShigET4K5gbNnCffjq/UN72fcSoUHyR5vtbRnHA6ukJ5iLWbjYeocZh6NpTC2IrTM29MC7TQ0C0adpEdHmo1WaTlIfHl1cIM8wHnbt+60NZkPCtmlc+Xz7C82l2thmo6Xr2x+skEGaxroaz0bI8+9k8BYwW/WxRRtPrYBTnNebrg7qe+iMNn3xizDdwwOMAVU7+4y0a3LVOqd8/Hl7MU2el"
+    }
+  ]
+}

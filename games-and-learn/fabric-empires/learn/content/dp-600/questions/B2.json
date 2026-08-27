@@ -1,0 +1,708 @@
+{
+  "cluster": "B2",
+  "generated": "tools/content/build-questions.mjs",
+  "questions": [
+    {
+      "id": "dp600-q-17-1",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 17,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Which warehouse object saves a SELECT statement under a name and always returns current data, without storing any rows of its own?",
+      "options": [
+        "A table",
+        "A stored procedure",
+        "A view",
+        "A common table expression"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/data-warehouse/tsql-surface-area",
+      "sourceSkillBullet": "Create views, functions, and stored procedures",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/data-warehouse/tsql-surface-area",
+      "reviewStatus": "draft",
+      "tags": [
+        "views",
+        "warehouse"
+      ],
+      "answerHash": "7c2ed46ef61d7b3afb2b3d1de1eee46c34146f86f6367e87229b718e0eba5d59",
+      "explanationCipher": "epFrololaiuqOi23tN+57ER0aJjYoPf6Snv1qoIXnQAH92oQqsiqs1Dc+axN7ZrgS3f9NweqKVsXPRGr3Sd/MBzDU1RuiLox0LEAFxcwG4n/EVE4iMcY4KLsdKYo9eL8L7AbCowxjKHGzVShKkzFa/Doc/XdsbHAFo0sQctVkTbedj1sRjBIbRijMgFtYA86gObryij+RIti/GM+C34YcTlHFQpyVSKYqVw7JmTcIqueaBUzxY6jKT8rC68nhnZ4PNZSqajvxgPTu9zIQrXFS+YHJfMhr1V+UOwOc/u1M69vgj8dQ2hmPz9ldaPuv7/PVCiUphH/iW47wijsrW51pK05+QB73RU2NcnMAb3wJYBDGePuOsgyzJZU7gigKEbeim5OH6gbF0DbjZAqwQS+GJyWetZQyQ=="
+    },
+    {
+      "id": "dp600-q-17-2",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 17,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "You need a reusable routine that accepts parameters, runs several statements in order, and is invoked with EXEC. Which object is that?",
+      "options": [
+        "A view",
+        "A materialized view",
+        "A stored procedure",
+        "A table-valued parameter"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/data-warehouse/tsql-surface-area",
+      "sourceSkillBullet": "Create views, functions, and stored procedures",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/data-warehouse/tsql-surface-area",
+      "reviewStatus": "draft",
+      "tags": [
+        "stored-procedures",
+        "warehouse"
+      ],
+      "answerHash": "5fb18928ee9b76dd83cea6209e1c8234e1f1ca6f45ba4181ded10389f7e7cfd3",
+      "explanationCipher": "arZb93ONlZMNjvLXUIFsvHAtbQlgCAg/q9njOOF+/SZgw3mbRRaLYLXBXNeiY6QDZzASdjjJnVz/2oatU1yipUyjaOvAEB+I8DYYN3tgGHx9y6ngjt7bS7iTEEVeeykw3r8/Lz9D3d0PIETTlzhnY/O/H3gMrFLtxZ7KHq4ETzKRPGNPZkPvd5LZ+QPWW8MNGQK0st81T5mnh/ftcP3ZoqAJ+oy6sG4Y2XWHa79sLa2Ypxg8si0rKhRKP5W4DPLK16QW7+IlDyvM6Nj60YWg/88rpzb9DYuI8eB/KGH0fosih1zPocc8ux8wO+pVBNXxHMubYK9U34Y5wkhA9KsqKEt1S/Clyq4="
+    },
+    {
+      "id": "dp600-q-17-3",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 17,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "A warehouse view needs to join one of its own tables to a table that lives in a lakehouse in the same workspace. Is that possible, and how?",
+      "options": [
+        "Only from a Spark notebook, never from T-SQL",
+        "Only if the lakehouse table is first copied into the warehouse",
+        "Yes, by writing a cross-database query using three-part names",
+        "No, a view can only reference tables in its own warehouse"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/data-warehouse/query-warehouse",
+      "sourceSkillBullet": "Create views, functions, and stored procedures",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/data-warehouse/query-warehouse",
+      "reviewStatus": "draft",
+      "tags": [
+        "views",
+        "cross-database"
+      ],
+      "answerHash": "446874ff922c20e9d189a87f7d332f9cf0541b91f2c2edaa6c03df3ba62dc13b",
+      "explanationCipher": "m2/sVC6ybSECzho2SThge9OlZdD7qx59mDfc624jSqBpq22xq6d8YpqM4/a+anvqXGn0VXf+s2uuwqB6cfXnIfUkNQuZ2zZ6tF+4OiActPRJ/dVD3zeAk6RiguVbhV8gCd2FZdxvaYOH19yEXGeyOeCxi78LH9dfI9MpaCI9qwQDPFdo4UQJQ4oSwRuyKNiItXDnf4nxbrx6+JL/I+Zko4CtqNJ3mNLtcYi6pvDGzTnZMm9kcgLS3PWw11h2AmNcVSYVKCjUYqUrd+ImJAniZPkk0D+HN5mPhVdnk+JAGUYYQmGgZ1EUWNJE6KAi8LK/nPyw8S5dDmkhPhF88bXt/eQ70xouD1++M2bCEH3WMVLGY/xe336onSiTYW3aEZwGSllUGXcfYOYpxiqkaJp58ENdiB+N294wfufXu9pPtyuiN20="
+    },
+    {
+      "id": "dp600-q-18-1",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 18,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "In Power Query, which action adds a column whose values are calculated from other columns in the same row?",
+      "options": [
+        "Merge Queries",
+        "Transpose",
+        "Add Custom Column",
+        "Group By"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-query/add-custom-column",
+      "sourceSkillBullet": "Enrich data by adding new columns or tables",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-query/add-custom-column",
+      "reviewStatus": "draft",
+      "tags": [
+        "power-query",
+        "enrichment"
+      ],
+      "answerHash": "34dddf6c1fb827c36aea48cfee87168dcb278e44354ff2020cfcb22a48dd7418",
+      "explanationCipher": "QlkEUbDVMHLwInAPaPjELJzrJXyyQ6PCIcOgGFRk9QyBTP303j9W8aK3LRgVkbxZm+nr0M8WbcoJwD5p0s6E5iGVHYr9+6egrZSjMOpktoqnHjVfbiK37WgOeEfn+tXE5k3MZl0PhVy8NtfE1CQdQCFQ53sGbwBwffh12cKilutj+9apYVxJ6n22/FIeBpcEnA1g+4eo4DQWKF7uJydWjB0OUat58YX79lcSTV5w7xORKbDuWmvWUxzHVhAlsvuNO2+IzQTaR+O15FvrauDzIVCfOtNIZY0g6sXDJpk4c4yTiz6vi5vMyY7iVYYoWhZT5U5SPecy8YltTb6BqvSDzAUmin/00ol/"
+    },
+    {
+      "id": "dp600-q-18-2",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 18,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "In a lakehouse notebook, which PySpark method returns a DataFrame with an additional derived column?",
+      "options": [
+        "groupBy",
+        "select",
+        "filter",
+        "withColumn"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/data-engineering/lakehouse-notebook-explore",
+      "sourceSkillBullet": "Enrich data by adding new columns or tables",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/data-engineering/lakehouse-notebook-explore",
+      "reviewStatus": "draft",
+      "tags": [
+        "spark",
+        "enrichment"
+      ],
+      "answerHash": "e43ad785fdc62f6bfb59e7d6cd9d8efe80f70910a3836abdb1e3fd66910dad58",
+      "explanationCipher": "lk0HvY2FF9Wb7JgsYKR13Rc9yDnNMXJK3H+hMG+Sed6H1VDHszAYqhHzi+VAbIh4fi/eh077dOI5whLbrKaCRVfgR+yhqCyYQd1K3XAUKVyhLfx7t9eOvniy6kMOyoNO1qoH91Lfxk+F08Zied+KCANXjRDqB9jYGY7wRvLe46Wsi1xwaMW0AkvjbJ/ttff3qOhZqJmJVEhLkKMPbGjP3PSU74N70/bCpwYHfzJChrwHWje/KdAcNXzGN87qSaoTYH4NISwDg8dzBAfbHeaj80iuEkXMR5FNZNh2T5gbPjRCiuKyuoYWZrfiNFOAS8/jS8W7WBEG"
+    },
+    {
+      "id": "dp600-q-18-3",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 18,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "Reports need to slice by fiscal quarter and day of week, but the source system supplies only a transaction date. What is the standard way to enable that?",
+      "options": [
+        "Add a calculated column to the fact table for every attribute needed",
+        "Ask the source system owner to add the columns",
+        "Add a date dimension table covering the required range and relate it to the fact table",
+        "Use a slicer on the raw transaction date"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/guidance/model-date-tables",
+      "sourceSkillBullet": "Enrich data by adding new columns or tables",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/guidance/model-date-tables",
+      "reviewStatus": "draft",
+      "tags": [
+        "date-dimension",
+        "enrichment"
+      ],
+      "answerHash": "19c9d15d03cd388dce7e844812fb8bb394298495c95d1aac0d2dd252f7c14038",
+      "explanationCipher": "mWhfI5jWfsrxeAhCHyX9RtRThoFJvFRVQkFP43RgtndOHxeYHenmpnl84sYdfGzOpPr5oFWvjxRqOKJXvMmWCXJiOpCtB9E3A4+x/7c0L9K4Tct+LcdS8j5PG5VyV4qxCmzBVEEDLB3EW//Q2AFhchj1fM+cfzpymPseeepVjGTXBOFeyIal2qZGLpcTGfgbrWl9NAxB1bxSmgWKifjJcw22cOhfMKcUTug5wSfN+ixtVUNBJhXCCwcarEMFWCEyLA0kfrxTlUW9TVpeodQ49/+bWDXnXbRnSLqr2kk+WoT78jR8IOgaBCE9EduNIlan5iZN5A47UWCJnqItifWa5RfsASXAfti40XETLj/tdA=="
+    },
+    {
+      "id": "dp600-q-19-1",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 19,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "In a star schema, which table holds the numeric measures and the foreign keys pointing at the surrounding tables?",
+      "options": [
+        "A dimension table",
+        "The fact table",
+        "The date table",
+        "A bridge table"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/guidance/star-schema",
+      "sourceSkillBullet": "Implement a star schema for a lakehouse or warehouse",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/guidance/star-schema",
+      "reviewStatus": "draft",
+      "tags": [
+        "star-schema",
+        "modelling"
+      ],
+      "answerHash": "3d7444959ac45250c02a822fe5909611432df1b41445f24662737b62a1a6ec2a",
+      "explanationCipher": "gurXcuuVNvF8BMz+0CSr61YMNFBDPlLyf/3JthRyqq+ZEVMFzLJywJh3IWyOteoIMsoqA+YUcsbW8wXl16uBoPZ4otPQPyuIGCwsYNBletd5OqtNcNfTzZaezrNyygZsW8858/K1Sr4M7BUQWgaILi5MFd5h9S9fTrkxj2rNPE8pC4fWNSaUq67BvItpAlHdTRld9VGi0mMqCCkoV5wJCzBaOnkjWVPBnf+HEUBxrdwRn7gVo/WekkrF4z5ZqwHZyoqxZlZwFU7O3txG6I+BYR7L8u1eqyVTx1tQq+I+DUNA3t6FeqPiagmbmFPOJeYoJu5S6nSn"
+    },
+    {
+      "id": "dp600-q-19-2",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 19,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "What is the main analytical advantage of a star schema over one very wide table containing every attribute?",
+      "options": [
+        "It guarantees the data is stored in third normal form",
+        "It allows more rows to be loaded per table",
+        "It removes the need to define any relationships",
+        "Filters applied to small dimension tables propagate to the large fact table, so queries stay simple and fast"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/guidance/star-schema",
+      "sourceSkillBullet": "Implement a star schema for a lakehouse or warehouse",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/guidance/star-schema",
+      "reviewStatus": "draft",
+      "tags": [
+        "star-schema",
+        "performance"
+      ],
+      "answerHash": "0f4030b646feb16dec0d0c259322d79e7014ee5633896655c8ee239a9b441f1d",
+      "explanationCipher": "pph6yGotqJmY4P3snF0wqf3zl7MoVuUR3o2U4WHLyfJletix11Tv3+9pa+qfbuB7q1WXWxtit/kt/WS4iwrlxXV4jk6gVVjh+NRFRnuqmMBa6eKQ1tpgrOHvPrtVKjx1T6/sg/X2oYTeVWwwAWTnhYx2evxCwI096wBSp+5PJGwZ9qZRCvkGcRjNqF0rQ/ygSQ5KFAZzMpkfP4v7k1OpPYZjj7Yeupb9I0loT9SHWM6yd4Nz+DImhfx6seJDOU4FyQeJiF7IhyEoChYpKlheLN5ebTeuwufb9xG2PPf8C79i+XrSi5js2w97I9VjIuYd7JtkCMQPZ+uPEO33SJ1y/xJYhJCKI/YzL0NGw+NREFY0fJkUSkZsUiHhgCTADPtThc8zB/9uEeamZZEQCEfeCZ4="
+    },
+    {
+      "id": "dp600-q-19-3",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 19,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "Why is a surrogate key usually preferred over the source system's business key as the primary key of a dimension?",
+      "options": [
+        "It stays stable when the source key changes or is reused, and it supports tracking history in the dimension",
+        "It removes the need for a relationship to the fact table",
+        "It is always smaller than the business key",
+        "It prevents duplicate rows from ever being loaded"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/guidance/star-schema",
+      "sourceSkillBullet": "Implement a star schema for a lakehouse or warehouse",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/guidance/star-schema",
+      "reviewStatus": "draft",
+      "tags": [
+        "star-schema",
+        "surrogate-keys"
+      ],
+      "answerHash": "f8b10126805398c1d5cfdb41ff773ac412aa8eda2d4b2572c9dbec326f75bf17",
+      "explanationCipher": "1o5MTbuuSM61Qk5X8ffQCq/qYuhg+fC3zy6faCPZ/o1P/wvhGP1n/IjHEs33yQqV/m2hPJf1Mq/HJtXKWZpT8mIa4NUGQUjTVrIJLotFRXlfAmfYOHB9xAXlFTn91bzq+yjVMel4ETVWTHiSyyobiRchWnzo/7/QpMW+kCHAog6RxpTUFRC1v/z5HWEsj/nULMTlqV8HmuMVXzl0ZoKLju/bMKvKPeJQnEKChQc6AiYwhlycN2A+UIiYykDip1KeiXuD3T5DU2Ehwjp1j+9lezSglRMH6Y9/X9OAtOY73Fs2YTMbp3Oe2aF+k0e34R/MGv5FPboNG7ofgDgZ42j0gWgjgvCrk02c1gCOgco6UKD/zA7FhumEdPte5EVNQB8MGhA/E750nl+eYYq5uB5P7Y2hbuq7kcEfLrJv57k="
+    },
+    {
+      "id": "dp600-q-20-1",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 20,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "What does it mean to denormalize data for analytics?",
+      "options": [
+        "Combine related tables so that fewer joins are needed at query time",
+        "Convert every column to its narrowest data type",
+        "Remove all duplicate rows from a table",
+        "Split a table into smaller tables to remove repetition"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/guidance/star-schema",
+      "sourceSkillBullet": "Denormalize data",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/guidance/star-schema",
+      "reviewStatus": "draft",
+      "tags": [
+        "denormalization",
+        "modelling"
+      ],
+      "answerHash": "3f6c4c4aa47c41d8c1d7dc47e4ff6d2e64116d1421ab5ec2a4b792f864010b06",
+      "explanationCipher": "8qF6pkjJ9cCOtYacz5wkv3ixxk0HWarXlXROkiMYT0SMbwW0eSIg1JCVsFf1hbsZpKI1SRhtE57NYlZJcheLYeXQoosqtOlpcbgsAp1honvwcyhjC7twl7wxn3zUc3SaUtph2eugU6I/WDJgSBLIFX5K2I30sYc/w1cz8E/m44peGw/KSXK4W9o6oT2Cmo9IpX6iir/okvq6bRWf4/Epk+XnJCNHPkETBUQajWGHwLnn6q0gOEBoVdRqLrnDhacRiQhokzo+6SP16LfTo/mzbF/8WbDvpHvzYUmynl0WJZAUrFoekuU3kiIWtWBX4IzKRShwzA7d3dpEGktfuRImWRk95Kqt95ig4AKwwUo="
+    },
+    {
+      "id": "dp600-q-20-2",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 20,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "What is the principal cost of denormalizing?",
+      "options": [
+        "The data can no longer be stored in Delta format",
+        "Relationships can no longer be defined",
+        "The same attribute is repeated on many rows, so a change has to be applied everywhere it appears",
+        "Queries always run more slowly"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/guidance/star-schema",
+      "sourceSkillBullet": "Denormalize data",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/guidance/star-schema",
+      "reviewStatus": "draft",
+      "tags": [
+        "denormalization",
+        "trade-offs"
+      ],
+      "answerHash": "3545a5e9ffbe076b7370afa209c66ee0ce4fa9d7a092e53f0375d99f7497fc9d",
+      "explanationCipher": "zKRyeLezF7kMQQM7MRyngYe26iuljQhNbJiOqZX+hGqKsW61VBkL7frbNQNNJoBWKpPKZSAwgI+cc7DoOfrRLuZL+fvYjXuPu7GsUUidaXndzA6PvAjuw0QBVlnWD0w8zk4zkaMg9flisaOKGhMe8JuJtuNg/7th9B1VOHpJ2OpAk9I8Vl7uw/kGFJAt1moySstD/z0F/r0voH9afgGiopqN2kWhRVrBBrmK1jvTNpAJ5IE7Vaa5I06b/nGCHgNbxA6tZJYdm+4dzU/2Q/TSxbJuJ/QjvZWZP2ltXDw5cITHvW7jzkSKVDc7+uLpZvAkgvRr2nf3qzICPzgaoHs7e6FxcfNoXVe/HtUOlgg2rHt4HAqHQRloLv95xrUmZbMM/hj3VFlp5+r9"
+    },
+    {
+      "id": "dp600-q-20-3",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 20,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "A source model has Product related to ProductSubcategory, which is related to ProductCategory. What is the usual step to turn this into a star schema?",
+      "options": [
+        "Leave the chain intact, since it is already normalized",
+        "Relate ProductCategory directly to the fact table",
+        "Create a bridge table between Product and ProductCategory",
+        "Flatten subcategory and category attributes into a single Product dimension"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/guidance/star-schema",
+      "sourceSkillBullet": "Denormalize data",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/guidance/star-schema",
+      "reviewStatus": "draft",
+      "tags": [
+        "denormalization",
+        "snowflake"
+      ],
+      "answerHash": "05583b3e05f04862e6ca2fab23ea3b366ff76e98bc3ba2bef91fddcc9cb9f32a",
+      "explanationCipher": "3PfmTVXEYzaH94zIWCWjUEh7AFRj0e4aexKhjgMe46v8LrcCXFyPT9YujISsqnDlbPslV3IJrNFFxWAwPv4crWwGa7eGhPdpJr2FjcnBba1QmyWf/ltqsAFrVu6MkNXLUMgR5f25BpVaboWwQR3120jMiMRI/jIkol/2ZMh4xZMgRLoN4xRVMUKJF1G1Ryhbq+TiPmEofajilXl8pbv9PM59TJKhXL7dn799+2czvAhshH5Wg4VyR0AnlLBxiKniHHchPjo2Bf1P80VyEAnwPmLNu4vXXb1YguAESs2zIIPstv4VS5rBQXOYvhMuvE7dnnR88D1n4hDgAw=="
+    },
+    {
+      "id": "dp600-q-21-1",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 21,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "A fact table holds one row per transaction. Why might you build an additional table aggregated to one row per product per day?",
+      "options": [
+        "Aggregated tables cannot be filtered, which simplifies the model",
+        "It makes the original transaction rows unnecessary",
+        "Far fewer rows have to be scanned, so summary queries run much faster",
+        "It removes the need for a date dimension"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/transform-model/aggregations-advanced",
+      "sourceSkillBullet": "Aggregate data",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/transform-model/aggregations-advanced",
+      "reviewStatus": "draft",
+      "tags": [
+        "aggregation",
+        "performance"
+      ],
+      "answerHash": "178aa7e0b62753830ec914c35da68384669c0123004c97977c72698fb999f954",
+      "explanationCipher": "2wtOiVUWuV7+yVcmdEy5Rl2ap7a+NwGm7Y7WM9+0zCbOi4mpj3LZLR4vOcY5krogcGhAhyLOEJqUF3fssUisMUNsjth9q0GpjlNfSI37qeoi09Skn6qiKIrQyIfm0IlR7boyc5UhuH5jo+flNO7BhZraNrHm4dwmEo5QGzOYJnLqsEofB15QvwnTG5suk3U6w2si6x92rso1DafJqG3K4GWFDLrbEFG1DX79NypBhDjkABXMPi0qkFvHEPq5LkK7SrqCeVdVB7z2iP1L0pAgNpq4K8ub5/tzoSroac07uFrDtIa1zdB8bst2iSIzszugGrdGNiW4ss7tROaBzn/k2eqcBmZFlIQ="
+    },
+    {
+      "id": "dp600-q-21-2",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 21,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "In Power Query, what does the Group By transformation produce?",
+      "options": [
+        "The original rows, sorted by the grouping columns",
+        "One row per source row, with a group number added",
+        "A separate query for each group",
+        "One row per distinct combination of the grouping columns, with the requested aggregations"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-query/group-by",
+      "sourceSkillBullet": "Aggregate data",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-query/group-by",
+      "reviewStatus": "draft",
+      "tags": [
+        "power-query",
+        "aggregation"
+      ],
+      "answerHash": "38d563f21e7949be96813b65fece970bdffb2cec25427f16b53971406efd0d9c",
+      "explanationCipher": "rV0AhHE15Um5sce1ZEbG9O/FCbp1XnraKiigkUbCUujkcIoXvxC7olds87CN2zKjYiQyDJNGS/JOh3snSVYQxCgCMVTdQBPPgLSeShboDge7ifgaYyj5qN3lpL84XzWn47mG1/mUNvTT8C2EKrzWqOzBsiXQVr+zUNPEA/Y5/m/lOh+d9QQ0AKLsiBYLpW16hEgDiRcf1dMyZqEMd8NpdQidyeOwhtyW5YSPbg/O+/rGpwiO228fxcmhH5R3WDZymKfT6LtPoYwDYJQyq3PWiUSCf6yFBMQmv9S+VH1BfYI4s+b6wW37Y/SuKPluW+6bNDWG7SYLqQ8NRIQ2tFoN"
+    },
+    {
+      "id": "dp600-q-21-3",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 21,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "Before aggregating a fact table to a monthly grain, what must you establish?",
+      "options": [
+        "That every dimension has a surrogate key",
+        "That the fact table has fewer than one million rows",
+        "The lowest grain any current or planned report needs, since detail below the aggregate is lost",
+        "That the source system supports incremental refresh"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/guidance/star-schema",
+      "sourceSkillBullet": "Aggregate data",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/guidance/star-schema",
+      "reviewStatus": "draft",
+      "tags": [
+        "aggregation",
+        "grain"
+      ],
+      "answerHash": "c8eed234657a90eab16aa35ea6c0daac1f8a459ce69a111c96d11e4c42ca7c69",
+      "explanationCipher": "CZfRb/gj7ybiHEK8jSVBJ/c6bh3F139dZDSNGf1VUxxKpDUjEdln6d3mJUKv0gt9j1/7T+uDMhSPzv5XBn4dGSzZLa4mS0fpz734YfrmKafw1iOw8cLDhV6eb4PkV+SXOgt1pv99mOYAnQvsWz4CCdNSVBloKXzeQAkSc/+ZkH3DmxT95gyxCqCnbuhEgR3VzSMpbqDVqeE5c6i5/ui0vRCYqO5tFXWYp/0AGer/TqKAB7BwJa64jDQ0qjvASyBcmx0DjbE23R9RpWY+1vlMDluBsSJyb0eZS13EKUjD/IdfftTciS+p5s3TMMo0Ii4qRhT0lU/w3EB82vu26uUoqu3bwYLfZzZTmll6vF3NxIDC8vNNDy5kos+oGrpCz29RsZb0fL2yocmzGJWhJR9km0H0Z3DXNA0="
+    },
+    {
+      "id": "dp600-q-22-1",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 22,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "You need every order row kept, with customer details attached where a matching customer exists and blanks where none does. Which join is that?",
+      "options": [
+        "Left outer join",
+        "Full outer join",
+        "Right anti join",
+        "Inner join"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-query/merge-queries-overview",
+      "sourceSkillBullet": "Merge or join data",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-query/merge-queries-overview",
+      "reviewStatus": "draft",
+      "tags": [
+        "joins",
+        "power-query"
+      ],
+      "answerHash": "8253810241e2d6ca81948d8fdabd86788b68b7cc96e55cf53fce7be330298ab4",
+      "explanationCipher": "IGHV/Gk4sIcMCOLYF3SWNIWfxpntvbqh7xDlWmdYJtgP1EQj/9+M+uc5pBFbvSnAnlOETAmp9rW+Q9xSswQPWf/2asZbgr0BtfGtijPKJXw/9hvGiZ6LKz5atOhpb469wjvNbsNnqpAlX45teUrs5QqU/rF33e2NLOWZcKO0d8e3P88MNf3o/sPRpPe27CHD+lXKj9CPB0VcVQ1AsCEnGyPuhBC30fvwDeZf9KAmIXCBdWUu/ib5JKLnZRHUpEhLp1Ujdjx4zLv70eog3si9ia48vGz+V562hnCu9pJnai9P0Jy/axEI8KfiTc2uSlh79/dRO3DYLhcBrgCGaVt2P58NX6z4Yrf2n2NwhPgKy9MHgqANPPc="
+    },
+    {
+      "id": "dp600-q-22-2",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 22,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "In Power Query, what is the difference between Merge Queries and Append Queries?",
+      "options": [
+        "Merge stacks rows; Append joins on matching columns",
+        "Merge joins on matching columns and adds columns; Append stacks rows from tables with the same shape",
+        "They are two names for the same operation",
+        "Merge works only on files; Append works only on databases"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-query/merge-queries-overview",
+      "sourceSkillBullet": "Merge or join data",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-query/append-queries",
+      "reviewStatus": "draft",
+      "tags": [
+        "power-query",
+        "joins"
+      ],
+      "answerHash": "85cce48e626737d880608d78ec0f90097dfe0e079395638198e2f2a51fc863ed",
+      "explanationCipher": "nBLKoY+YD5Q5znyQapfRaYqiOhEXaCMSgKwX3YwmUTEeebl1BmzrcJ72gRbwtqUgRc9gA/RixyItIlbJXAAYbb4emWnmjr4DvbHPW3EG3oiiBqy8FIiMuNcw/PbzHTBcYAPBCMVLTWeI+CXihrlO72oxPZ/HgW8AuSg31L/PTDPgWXlblTL7CIe4rRa0fuqSgK8mygjvnK73c614vkVHYjN+TWBQpzpmddBUvcXCIcaXq2OF9ehEDkqBGy/m0Bdca07xRTTmMaaIUXyUjQnLa8fRmoT0fBjTBDGrb0k00N19RTchMj8FFbhFYTdMKrpCh40AygYLk6HpNDgAFSGnL95KSQ4="
+    },
+    {
+      "id": "dp600-q-22-3",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 22,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "After joining two tables on a key that is not unique on either side, the result has far more rows than either input. What happened?",
+      "options": [
+        "Duplicate rows were added by the engine to preserve row order",
+        "The key column was converted to text, breaking the match",
+        "The join silently switched to a full outer join",
+        "Each matching row on the left paired with every matching row on the right, multiplying the rows"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-query/merge-queries-overview",
+      "sourceSkillBullet": "Merge or join data",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-query/merge-queries-overview",
+      "reviewStatus": "draft",
+      "tags": [
+        "joins",
+        "fan-out"
+      ],
+      "answerHash": "43b5910d15d75668047769a25e1bfe3a58d33cdc7413fa39576336cefa7f133d",
+      "explanationCipher": "ndlJNBKzCVlkdBz9DE6zftVZPRxWXkRChs31Shmv8hQDU07pWaODzaW/ijyKQUWeGmUrNnNcvj16cIcF4Ke1CG5hUzAcjE+HMWQdTVmJSq8mBEZeFE8WLUMUZLKHSgsFoIRJxt72I+25pQbrs/lbTWl/vowrA7QLAauY8kutRplea4VjsCFr7pteg7s3g2u65aajYUg1BzjFNiv/9XPTr7BH0QrwOWA7s4XB7twELNfR1O0paTzEzhXAor9YZ7hECV4YctxUJveCvNh8fN8I3u/oYQwU7MCUydQScPXCx5gG8MBXqbbCE3ppG+m2InO04oH3a69l4xKokK2DgZh6VhcEjDAft1z9mB4VWa1HeuCH6qKtxPgFHdQpw/ar3SvFZ9ey4ttpy8zg1jVRdx0ISUxHLsh6SpZ3"
+    },
+    {
+      "id": "dp600-q-23-1",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 23,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "In Power Query, which action removes rows that repeat an identical combination of the selected columns?",
+      "options": [
+        "Remove Blank Rows",
+        "Keep Top Rows",
+        "Remove Duplicates",
+        "Remove Errors"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-query/working-with-duplicates",
+      "sourceSkillBullet": "Identify and resolve duplicate data, missing data, or null values",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-query/working-with-duplicates",
+      "reviewStatus": "draft",
+      "tags": [
+        "data-quality",
+        "power-query"
+      ],
+      "answerHash": "94029b005a93aef44294b60071c6d00d03199cf127302a073ef5f3bdd4f0be48",
+      "explanationCipher": "nKMJ9FJE5owt8OQQ/FkpV1zF4oh6KUiXOrMV6xVmjkvSKlIkUkZ6eIjXVt0KDrjTjBrLhLTxPtEQLUrlJEqjJauf8ulFxKtEmjUOO2I0R19ZBaiX/aSeuWbeQBYidaqUo1eUcMzzWyNkBWSNCPa/A+bIXiBC7GAHHBC8cyIGxzYivvxVQd2TX3vAmlZofBlMp5SOUevyd+7OjMtecGKVElCt016ijLczRgkOaLNWSUwPf1c4gbSNfhxj4ONeV2/vCNFluub7UDKrBT1tSjTfT+BV1hAHA6VlY89IJ7f1y/cBRAvEYVSQpVGrVYYhFOgh35a2B3n15DugeOw6Uw2+"
+    },
+    {
+      "id": "dp600-q-23-2",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 23,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Which T-SQL predicate correctly finds rows where a column holds no value?",
+      "options": [
+        "WHERE ShippedDate IS NULL",
+        "WHERE ShippedDate = NULL",
+        "WHERE ShippedDate <> ShippedDate",
+        "WHERE ShippedDate = ''"
+      ],
+      "learnUrl": "https://learn.microsoft.com/sql/t-sql/queries/is-null-transact-sql",
+      "sourceSkillBullet": "Identify and resolve duplicate data, missing data, or null values",
+      "sourceLearnUrl": "https://learn.microsoft.com/sql/t-sql/queries/is-null-transact-sql",
+      "reviewStatus": "draft",
+      "tags": [
+        "nulls",
+        "sql"
+      ],
+      "answerHash": "4d64b7fabb3d101bd9f390a08327a54f4cd12e46f108c996756f7a272644a12f",
+      "explanationCipher": "kIdZM2+bvQZ419onlFFRMTrLHK/40B2bCqM2PFik6JTvgSTWeN0ZANAuBcvtAzkjalaWDnlLVWM4In1udisqhIGIHtMC3w4eH75pqEM1vwVXAnXKS4bAX+W5JFvQ/o6dGjIxaPjE8iwGeJcoqz9o3oOVvyV8nvQy/SuoyON+ZqkqLOwd2c+Qrqinh+CeEuaUhNTWKkeEjHo0CTSQGcw6PbA4ceMdnLQMb35aOomUycHzqJx+syNxerwe6lJfSUjyLeJmOg/NF4WuOnQvW6G6a8rZwKN8l84vEdjs8/qGk2x1LGBH8O1lNbMwlyl70NULUy7A/HM="
+    },
+    {
+      "id": "dp600-q-23-3",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 23,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "A column of survey scores contains nulls where a respondent skipped the question. Why is replacing those nulls with 0 risky before computing an average?",
+      "options": [
+        "It prevents the column from being used in a relationship",
+        "The average function will return an error",
+        "Averages ignore nulls but include zeros, so the result is dragged down by people who did not answer",
+        "Zero cannot be stored in a numeric column that allows nulls"
+      ],
+      "learnUrl": "https://learn.microsoft.com/sql/t-sql/functions/avg-transact-sql",
+      "sourceSkillBullet": "Identify and resolve duplicate data, missing data, or null values",
+      "sourceLearnUrl": "https://learn.microsoft.com/sql/t-sql/functions/avg-transact-sql",
+      "reviewStatus": "draft",
+      "tags": [
+        "nulls",
+        "aggregation"
+      ],
+      "answerHash": "083d79669e30f9407bce3634e638bbb35ff9168e5da5c0dce8d1c1a6c1a3d889",
+      "explanationCipher": "IhYiNRbYhpFFLrIKCJY/v20tUFy7kP5MMB9r+GJ3Nmw/Hpykz6J1P4brJUR0Crd33sUIXk4BFDDXQHdRVt6NkAUpGwoSlzuyctFggBafPJKoi5YlHtAsHcos9WcCtLvdIc6maREROxF2wY/qVZJLY7XYyX2MgYS1Wl858jTxUuftuLZ4zEq1nuipb0VXtA2ShZ0fOsAhVA3dk+AtWyva2TiYGfKbTmXljgrIn3/KCceBQ0ekGQFJVekHVtiAlo7A1LXCvWGMTFf0XSMQ39LNtpQgCldV5j0Ly1Mpm8M9ijyxZV1SGwHluQWK1FFVd93UriyuawrdSHVTmTQGUll1yqYsMNRKVvdkxvLeTaBEl7M1rq0mUWQC0QtEiYQwjueWz4P54LgTWkhriFf/KUJS64hE5Q=="
+    },
+    {
+      "id": "dp600-q-24-1",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 24,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "A key column arrives as text but contains only digits. Why convert it to an integer before loading?",
+      "options": [
+        "It is required before the column can be made nullable",
+        "Text columns are not supported in Delta tables",
+        "Text columns cannot participate in joins at all",
+        "It stores and compresses better, sorts numerically, and joins faster"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-query/data-types",
+      "sourceSkillBullet": "Convert column data types",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-query/data-types",
+      "reviewStatus": "draft",
+      "tags": [
+        "data-types",
+        "performance"
+      ],
+      "answerHash": "aa383fc91dc482ce6d3c192fb29c5456be4d88dcc9dd0e544722d50f1c54c088",
+      "explanationCipher": "1oVx35/tThOLMsNIjAGUpqFutPoI2iNoXSYi5InCJgQbLrnYNRg6OX2j4uDcSrRP6AqIo/rXMT3pUa5YrHfE44IQoEDghLOqjtns6buL2KQUq4BndgD+0v8RJxTlSY6nAWUmAV+qu+A/uEMMQrvXhiJJNOwK3hLYWfOE9csxAeJE/zB12Rqq7Sowj46gYa59zZKIGeXyra5kE47Yc/6p9VSzqKFZjTEBznNUCXYPlxik1NQ9ywvS8tpnID25V8ZYKDZ4C8R+/l1IgEIsDJ4O6EennbxIZ+enruboEH3+4eCstYPXLABlYhHGTORguAovcmbtWEdBGzan"
+    },
+    {
+      "id": "dp600-q-24-2",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 24,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "During a type change in Power Query, some values cannot be converted. What happens to them?",
+      "options": [
+        "They are silently set to null",
+        "They become errors in that column, which you can then keep, remove or replace",
+        "The whole query fails and no rows are returned",
+        "They are left in their original type"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-query/dealing-with-errors",
+      "sourceSkillBullet": "Convert column data types",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-query/dealing-with-errors",
+      "reviewStatus": "draft",
+      "tags": [
+        "data-types",
+        "errors"
+      ],
+      "answerHash": "de106eca3196f987d4b6f159b18e62c56629f60830d83b858bd15a958af0bc69",
+      "explanationCipher": "fGzTY77J08CsdpMQkLHXD35zSWIzl0++HMjlcR+yBFSmx4dc0/8bXqk0b8XAk8+WOSdO5bBBaiypOfuXpn3PMdSaHXIH3dXGFtCKbXdIXVPg+eH7QtN3syCQKsQA7sBP6ujwhQKZ28uGBgUc/peML/UHmbWvJKfOIGTtHObBpXwPA0UK7q1GbFo3RbU3tpp+S+JeXXh8UYhzF6rBoJR+MYcTU7YL30WQ2mwfbY4dfQ3MlgLcXkN7id96rsaN9uVGMtHUVtI08wpZfaVuUlokKYQgLJonAsAPYa/1+ewJ4vbZ0LkpHcILImdnDat6dGpnLT5TX9ueb/XqvHNjFApepqxU144wkeGuQWha1yoY8UH3SlFxsgOj9ushVWuLqVIBEtpKTtiu"
+    },
+    {
+      "id": "dp600-q-24-3",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 24,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "A text column holds dates written as 03/04/2026. What must be specified so the conversion is not ambiguous?",
+      "options": [
+        "The time zone of the source system",
+        "Whether the column allows nulls",
+        "The locale to use, since the same text means March 4th or April 3rd depending on it",
+        "The target column's compression setting"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-query/data-types",
+      "sourceSkillBullet": "Convert column data types",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-query/data-types",
+      "reviewStatus": "draft",
+      "tags": [
+        "data-types",
+        "locale"
+      ],
+      "answerHash": "fb1bb6508dd0b8f5be9b79ff11548be44dfe36ff11f1cef08f10f2695c323d67",
+      "explanationCipher": "Y6hEt5Ou+jVbqssuOmzyn4HvVh/A4SeIU7TLRv3OYcNV27RxGPTNJysQzCbO2zLpPJCubTc6Tuw7hAJoSQzc+hrBjc2+9DzGeTvUYIdV8heZdRfkWde80ksuvCx0agtIy7BiKowa1oTHmo6eXNClYU1sUjRG1Z0SlyBDn5AXAsIYhb5pjlQxqdiYCyjU8pzDxH1qdJHFQqPMi655QQxHGkOylzgualVy6wZWun25ywNyfECmN4lHht6XNlf5Upw0f0UMhDEDFA3rgMYU4wGWqE522VjvfguKWUUtCxnxa0SIavgwwpq5xBy45na79lyNQFguoNUaoXaIDV1FqDLlgm5sG21jJyRBTjL+7c4F/Uqt+xFNOhEhHKF0ZmOzjp9Jbb69p2R8t3Vakz90wIM2ywwoK8Gs4m4REH00"
+    },
+    {
+      "id": "dp600-q-25-1",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 25,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Why is it good practice to filter rows as early as possible in a transformation?",
+      "options": [
+        "Filters can only be applied before any other transformation",
+        "It guarantees the query will fold to the source",
+        "Later filters are ignored by the engine",
+        "Every later step then has less data to process, so the whole query is faster"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-query/best-practices",
+      "sourceSkillBullet": "Filter data",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-query/best-practices",
+      "reviewStatus": "draft",
+      "tags": [
+        "filtering",
+        "performance"
+      ],
+      "answerHash": "206fbd7c40310ef6ed80191ce1424029b996b9fe8b70d7907e5b65cd430d4e39",
+      "explanationCipher": "8vAlthVvd87Te7U8aywcL9p3PIxpe4FQvhe+GcH5JC9qLQEd7yePJR2oAPmNQIK8Hbw8WacCzh8n/WGzBvconsgdjP12sF9kSLqhSSnYgeVuXy5eC3YHwTxR+9GZ2vbifueK4LilRYUvHc42kXNX/h56dkKTsHchgIPwF4PeHfVHi2OJVk20LTbvFyMEAO8NqZEQZzG+xkrqMxUviYkLRliZW1evXgOmjsY95BIeM38qz6nXhrCzGpp56YLNxWNntYOxJnYL0aP0YNzIHFTDWk8ss4+DT8sJfsSR7Zv6fmyP55/9oP+3"
+    },
+    {
+      "id": "dp600-q-25-2",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 25,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "What does it mean when a Power Query filter step folds?",
+      "options": [
+        "It is cached so later refreshes can skip it",
+        "It is translated into the source system's own query language and executed there",
+        "It is combined with the next step to save memory",
+        "It is applied twice, once locally and once at the source"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-query/power-query-folding",
+      "sourceSkillBullet": "Filter data",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-query/power-query-folding",
+      "reviewStatus": "draft",
+      "tags": [
+        "filtering",
+        "query-folding"
+      ],
+      "answerHash": "55be2e1d2c3c1baabf88fe356f9d5f5e8fd0c1684702d6b4526c410de0b768d9",
+      "explanationCipher": "TQWJvbGpSj7NITaw14kXx72+xUKoXivhNtTx/QliMUrb7sZyO6ktdzHggn5qo2z+ciaCOISZmYbkwpBU6fWsvED/f6pkHty9X0zSSXgmnSWFiOCzG/xTOSrgIQJCRMkzta5oKqqqM8mG/ro3xfrxIwgb3VJsfJ5Rv1in0QbytOfuhMOAA4GLKxwLb9C9rmTgwPvAKH5j/eSzGozHbDoZGCS67rHbd/3KPbSQcNmrNeKtMSqg8C02vXApgANQ33fcGam1RFnKNL5EENyPGhpkmG9xZzz4lHolNh2y/EXTQeIZJODBQUeYY5ZaFlaOFO99xzls5BOwrxUSP8skVqqGfzbvF/hfSESVJZS7eM1xz0TVzLaArzxAHDs="
+    },
+    {
+      "id": "dp600-q-25-3",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B2",
+      "skillId": 25,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "A refresh that used to be fast has become slow after a change. Which change is most likely to have stopped the query folding?",
+      "options": [
+        "A custom column using an M function the source cannot express was added before the filters",
+        "A filter on a date column was made more restrictive",
+        "A column was renamed",
+        "The rows were sorted by an indexed column"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-query/power-query-folding",
+      "sourceSkillBullet": "Filter data",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-query/power-query-folding",
+      "reviewStatus": "draft",
+      "tags": [
+        "filtering",
+        "query-folding"
+      ],
+      "answerHash": "93a01062ad0debf008b73fe3a36b6264f3446db08e138c881efcc5288753fdce",
+      "explanationCipher": "bqUkKVwn0MK1U09OabYVE3Ec8o5BpDrX/F+j9GWobJaRUHjPWzthqLIBm2hB4zetiAmebvuNyv6AS7YvLnbKbJFcVdyZwU3dm/gxdc22YAoN8qPfjpaDesSu2CTSvnrCQBRu59skcl+mr4jjZZdeh5XR+6Mq/7+uXIA8VQgyEuk3l/+ok6SJxhQzf92OA/u+Gbq4CPZshwn14F7oMsBIFqQ9vcnS09PLtTcnGkd0fUpJjT+L2VBDFr0v4r7GfYqVp3KH2ipLLMFon6kwq/wE73hoAnaZp3m9a9PIx2Alo2l+fIKv/+PKNOJO9wuaZWSpX0mEruMUtgHjy3T1HDT3pLnEcZuoIVnGhoCFaSHzpqKvASdRWqQKgBzJnZEiDAeBAnRQXYVuXPLHdG2/PEgsIIY50P+g1Ih8YIs3IPk2ib/khDU+uzOnpkBDVVOHYVxxHg=="
+    }
+  ]
+}

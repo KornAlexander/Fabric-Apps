@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Fabric Empires</title>
+    <!--
+      A hex, inline.
+
+      There was no icon link at all, so every browser fell back to requesting
+      /favicon.ico and every session opened with a 404 in the console. A data
+      URI fixes that without adding a binary asset to a repository that has
+      deliberately shipped none (D59).
+    -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 29 9.5v15L16 32 3 24.5v-15z' fill='%230e121a'/%3E%3Cpath d='M16 5.2 26.2 11v11.6L16 28.4 5.8 22.6V11z' fill='none' stroke='%234c8fd6' stroke-width='2.4'/%3E%3Ccircle cx='16' cy='16.8' r='3.4' fill='%23ffd166'/%3E%3C/svg%3E"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --panel: rgba(14, 18, 26, 0.88);
+        --border: rgba(255, 255, 255, 0.12);
+        --text: #e8eaf0;
+        --muted: #96a0b5;
+        --accent: #ffd166;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; overflow: hidden; background: #070a10; }
+      body { font: 13px/1.5 "Segoe UI", system-ui, sans-serif; color: var(--text); }
+      #map { display: block; width: 100vw; height: 100vh; cursor: grab; }
+      #map.dragging { cursor: grabbing; }
+      /* Damage numbers and impact rings ride above the 3D view. Drawing them
+         in 2D keeps text crisp at any distance, which projected 3D text is
+         not, and costs one composite. */
+      #fx { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 5; }
+
+      .panel {
+        position: fixed;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 10px 14px;
+        backdrop-filter: blur(8px);
+      }
+      h2 { margin: 0 0 4px; font-size: 13px; font-weight: 600; }
+      .muted { color: var(--muted); }
+
+      /* The capture-or-raze decision, asked at the moment the walls fall. */
+      .fe-choice {
+        position: fixed; inset: 0; z-index: 40;
+        /* See the note on .fe-setup: centring clips content taller than the box. */
+        display: flex; align-items: flex-start; justify-content: center;
+        overflow: auto; padding: 16px 0;
+        background: rgba(6, 9, 12, 0.72); backdrop-filter: blur(3px);
+      }
+      .fe-choice-card {
+        width: min(520px, 92vw);
+        margin: auto;
+        background: var(--panel); border: 1px solid var(--border);
+        border-radius: 12px; padding: 18px 20px;
+      }
+      .fe-choice-card h2 { font-size: 16px; margin-bottom: 8px; }
+      .fe-choice-body { margin: 0 0 14px; color: var(--muted); font-size: 12px; line-height: 1.5; }
+      .fe-choice-options { display: flex; flex-direction: column; gap: 8px; }
+      .fe-choice-option {
+        display: flex; flex-direction: column; gap: 3px;
+        text-align: left; padding: 10px 12px; cursor: pointer;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border); border-radius: 8px;
+        color: inherit; font: inherit;
+      }
+      .fe-choice-option:hover { background: rgba(255, 255, 255, 0.09); }
+      .fe-choice-option.primary { border-color: var(--accent); }
+      .fe-choice-label { font-weight: 600; font-size: 13px; }
+      .fe-choice-detail { color: var(--muted); font-size: 11px; line-height: 1.45; }
+
+      /* The setup screen, shown before the world is built. */      .fe-setup {
+        position: fixed; inset: 0; z-index: 60;
+        /*
+          ⚠️ `align-items: flex-start` plus `margin: auto` on the card, NOT
+          `align-items: center`.
+
+          Centring a flex child that is taller than its scrolling container
+          clips the overflow at the TOP and makes it unreachable: the browser
+          will not scroll above the start of the content box. Measured here at
+          800px tall, with 1293px of card: the container reported scrollTop 0
+          while the card's own top sat at -319, so the title, the blurb and the
+          "first five minutes" list simply could not be seen or scrolled to.
+
+          `margin: auto` on the child centres it when there IS room and
+          collapses to normal flow when there is not, which is the behaviour
+          centring is usually assumed to have.
+        */
+        display: flex; align-items: flex-start; justify-content: center;
+        background: radial-gradient(ellipse at 50% 30%, #14202a 0%, #070a0d 70%);
+        overflow: auto; padding: 24px 0;
+      }
+      .fe-setup-card {
+        width: min(760px, 92vw);
+        margin: auto;
+        background: var(--panel); border: 1px solid var(--border);
+        border-radius: 14px; padding: 26px 30px;
+      }
+      .fe-setup-card h1 {
+        margin: 0 0 6px; font-size: 26px; font-weight: 600;
+        letter-spacing: 0.01em; color: var(--accent);
+      }
+      .fe-setup-blurb {
+        margin: 0 0 20px; color: var(--muted);
+        font-size: 12px; line-height: 1.6; max-width: 56ch;
+      }
+      /*
+        The first five minutes. Set apart from the blurb because it is
+        instructions rather than flavour, and somebody skimming for "what do I
+        do" should find it without reading the paragraph above it.
+      */
+      .fe-setup-try {
+        margin: 0 0 20px; padding: 12px 14px; max-width: 60ch;
+        border: 1px solid var(--border); border-left: 3px solid var(--accent);
+        border-radius: 8px; background: rgba(255, 255, 255, 0.03);
+      }
+      .fe-setup-try h3 {
+        margin: 0 0 8px; font-size: 12px; font-weight: 600;
+        letter-spacing: 0.06em; text-transform: uppercase; color: var(--text);
+      }
+      .fe-setup-try ul { margin: 0; padding-left: 18px; }
+      .fe-setup-try li {
+        color: var(--muted); font-size: 12px; line-height: 1.6; margin-bottom: 4px;
+      }
+      .fe-setup-try li:last-child { margin-bottom: 0; }
+      .fe-setup-group { margin-bottom: 18px; }
+      .fe-setup-section {
+        margin: 22px 0 10px; font-size: 13px; font-weight: 600;
+        color: var(--text); padding-bottom: 6px;
+        border-bottom: 1px solid var(--border);
+      }
+      .fe-setup-section:first-of-type { margin-top: 4px; }
+      .fe-setup-group h3 {
+        margin: 0 0 8px; font-size: 11px; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted);
+      }
+      .fe-setup-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .fe-setup-option {
+        display: flex; flex-direction: column; gap: 4px; text-align: left;
+        padding: 11px 13px; cursor: pointer; color: inherit; font: inherit;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border); border-radius: 9px;
+      }
+      .fe-setup-option:hover { background: rgba(255, 255, 255, 0.08); }
+      .fe-setup-option.active {
+        border-color: var(--accent);
+        background: rgba(74, 159, 224, 0.14);
+      }
+      .fe-setup-label { font-weight: 600; font-size: 13px; }
+      .fe-setup-detail { color: var(--muted); font-size: 11px; line-height: 1.45; }
+      .fe-setup-seed { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+      .fe-setup-seed input {
+        background: rgba(0, 0, 0, 0.35); color: inherit; font: inherit;
+        border: 1px solid var(--border); border-radius: 7px;
+        padding: 8px 10px; width: 190px;
+      }
+      .fe-setup-play {
+        margin-top: 6px; width: 100%; padding: 12px;
+        font: inherit; font-weight: 600; font-size: 14px; cursor: pointer;
+        color: #06222f; background: var(--accent);
+        border: none; border-radius: 9px;
+      }
+      .fe-setup-play:hover { filter: brightness(1.1); }
+      @media (max-width: 640px) {
+        .fe-setup-options { grid-template-columns: 1fr; }
+      }
+
+      /*
+        The incoming-raid warning, shown BEFORE the defence question so the
+        player can see who is attacking before being asked to hold them.
+      */
+      .fe-raid {
+        position: fixed; top: 70px; left: 50%; z-index: 55;
+        transform: translate(-50%, -10px);
+        display: flex; align-items: stretch; gap: 11px;
+        min-width: 320px; max-width: min(520px, 90vw);
+        padding: 11px 15px 11px 11px;
+        background: rgba(12, 16, 22, 0.96);
+        border: 1px solid var(--raid-colour, #b5533f);
+        border-radius: 10px;
+        box-shadow: 0 14px 44px rgba(0, 0, 0, 0.55);
+        opacity: 0; pointer-events: none;
+      }
+      .fe-raid.in {
+        animation: raid-in 260ms ease-out forwards;
+      }
+      @keyframes raid-in {
+        from { opacity: 0; transform: translate(-50%, -18px); }
+        to { opacity: 1; transform: translate(-50%, 0); }
+      }
+      .fe-raid-flag {
+        width: 5px; border-radius: 3px; flex: none;
+        background: var(--raid-colour, #b5533f);
+      }
+      .fe-raid-head {
+        font-size: 14px; font-weight: 600;
+        color: var(--raid-colour, #b5533f);
+      }
+      .fe-raid-target { font-size: 12px; color: var(--text); margin-top: 2px; }
+      .fe-raid-topic { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+      /*
+        Two-player co-op: both questions on screen at once, one per seat.
+        Player 1 answers with 1-4, player 2 with A-D.
+      */
+      .fe-duo {
+        position: fixed; inset: 0; z-index: 52;
+        display: flex; align-items: center; justify-content: center; gap: 18px;
+        padding: 24px; flex-wrap: wrap;
+        background: rgba(4, 6, 10, 0.78); backdrop-filter: blur(3px);
+      }
+      .fe-duo[hidden] { display: none; }
+      .fe-duo-pane {
+        width: min(460px, 46vw); min-width: 300px;
+        background: #10141c; border: 1px solid rgba(255, 255, 255, 0.14);
+        border-top: 3px solid var(--seat, #4a9fe0);
+        border-radius: 12px; padding: 16px 18px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+      }
+      .fe-duo-pane.seat-1 { --seat: #4a9fe0; }
+      .fe-duo-pane.seat-2 { --seat: #f2b544; }
+      .fe-duo-head {
+        display: flex; justify-content: space-between; align-items: baseline;
+        gap: 10px; margin-bottom: 8px;
+      }
+      .fe-duo-head b { color: var(--seat); font-size: 13px; }
+      .fe-duo-head span { color: var(--muted); font-size: 11px; }
+      .fe-duo-stem { font-size: 16px; line-height: 1.45; margin-bottom: 12px; }
+      .fe-duo-pane.seat-2 .fe-duo-stem { font-size: 22px; font-weight: 600; }
+      .fe-duo-options { display: flex; flex-direction: column; gap: 7px; }
+      .fe-duo-option {
+        display: flex; align-items: center; gap: 10px; text-align: left;
+        padding: 9px 12px; cursor: pointer; font: inherit; color: inherit;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border); border-radius: 8px;
+      }
+      .fe-duo-option:hover:not(:disabled) { background: rgba(255, 255, 255, 0.1); }
+      .fe-duo-option kbd {
+        flex: none; min-width: 26px; text-align: center;
+        font: 600 13px ui-monospace, Consolas, monospace;
+        padding: 3px 6px; border-radius: 5px;
+        background: var(--seat); color: #08101c;
+      }
+      .fe-duo-pane.seat-2 .fe-duo-option { padding: 13px 14px; font-size: 19px; }
+      .fe-duo-pane.seat-2 .fe-duo-option kbd { min-width: 34px; font-size: 17px; }
+      .fe-duo-option.picked { border-color: #ffffff; }
+      .fe-duo-option.right { background: rgba(143, 214, 148, 0.22); border-color: #8fd694; }
+      .fe-duo-option.wrong { background: rgba(255, 155, 145, 0.2); border-color: #ff9b91; }
+      .fe-duo-verdict { margin-top: 10px; font-size: 13px; }
+      .fe-duo-verdict.good { color: #8fd694; }
+      .fe-duo-verdict.bad { color: #ffcf7a; }
+
+      /* The cheat console. Backtick opens it. */
+      .fe-cheat {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 45;
+        background: rgba(6, 10, 14, 0.94);
+        border-bottom: 1px solid var(--accent);
+        padding: 10px 14px 8px;
+        font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+      }
+      .fe-cheat-prompt { display: flex; align-items: center; gap: 8px; }
+      .fe-cheat-caret { color: var(--accent); font-weight: 700; }
+      .fe-cheat-prompt input {
+        flex: 1; background: transparent; border: none; outline: none;
+        color: var(--text); font: inherit; font-size: 13px;
+      }
+      .fe-cheat-output { margin-top: 6px; max-height: 26vh; overflow-y: auto; }
+      .fe-cheat-line {
+        font-size: 12px; line-height: 1.55; color: var(--muted);
+        /* The help listing pads codes into a column, and HTML would
+           otherwise collapse that padding into a single space. */
+        white-space: pre-wrap;
+      }
+      .fe-cheat-line.good { color: #8fd694; }
+      .fe-cheat-line.bad { color: #ff9b91; }
+
+      #resources { top: 14px; left: 14px; display: flex; gap: 18px; align-items: center; }
+      #resources .res { display: flex; gap: 6px; align-items: baseline; }
+      #resources .res b { font-size: 15px; font-weight: 600; }
+      #resources .res span {
+        color: var(--muted); font-size: 11px;
+        text-transform: uppercase; letter-spacing: 0.06em;
+      }
+      #turn-badge { font-weight: 600; color: var(--accent); }
+
+      /*
+        ⚠️ Capped, because this panel and `#research` are both `position:
+        fixed` and anchored to OPPOSITE edges: research hangs from the top,
+        selection stands on the bottom. Nothing in that arrangement stops them
+        meeting in the middle, and adding the proposed-sites list made them.
+
+        The number is the room the research panel needs at its tallest. It is
+        a magic constant and it is a smaller lie than the alternative, which
+        was a list that silently slid underneath another panel.
+      */
+      #selection {
+        bottom: 14px; left: 14px; width: 290px;
+        max-height: calc(100vh - 300px);
+        display: flex; flex-direction: column;
+      }
+      #selection .actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+      /*
+        Title row: name on the left, the stepper hard against the right edge.
+        ⚠️ `min-width: 0` on the heading, or a long unit name pushes the
+        arrows off the panel instead of ellipsing itself.
+      */
+      .sel-head { display: flex; align-items: center; gap: 8px; }
+      .sel-head h2 { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .sel-steps { display: flex; align-items: center; gap: 4px; flex: 0 0 auto; }
+      /*
+        ⚠️ Sized in a fixed square rather than by padding. These carry a single
+        glyph, and ‹ and › have different advance widths in the fallback font,
+        so padding alone gave two buttons of visibly different width.
+      */
+      .sel-steps button {
+        width: 24px; height: 24px; padding: 0;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 15px; line-height: 1;
+      }
+      #sel-count { font-size: 11px; min-width: 26px; text-align: center; }
+      button {
+        background: #1d2636; border: 1px solid var(--border); color: var(--text);
+        border-radius: 6px; padding: 6px 12px; font: inherit; cursor: pointer;
+      }
+      button:hover:not(:disabled) { background: #2a3750; }
+      button:disabled { opacity: 0.4; cursor: not-allowed; }
+      button.primary { background: #2f5d8c; border-color: #3f7cb8; }
+      button.primary:hover:not(:disabled) { background: #3a72a8; }
+
+      #controls { top: 14px; right: 14px; display: flex; gap: 8px; align-items: center; }
+      #controls input {
+        background: #0b0e14; border: 1px solid var(--border); color: var(--text);
+        border-radius: 6px; padding: 6px 8px; width: 110px; font: inherit;
+        text-transform: uppercase;
+      }
+
+      #log { bottom: 14px; right: 14px; width: 330px; max-height: 42vh; overflow-y: auto; }
+      #log .entry { padding: 3px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+      #log .entry:last-child { border-bottom: none; }
+      #log .entry.bad { color: #ff9b91; }
+      #log .entry.good { color: #8fd694; }
+
+      #research { top: 62px; left: 14px; width: 320px; }
+      #research .bar {
+        height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.1);
+        margin: 6px 0 8px; overflow: hidden;
+      }
+      #research .bar > div { height: 100%; background: #4c8fd6; width: 0%; }
+      #research .options { display: flex; flex-direction: column; gap: 4px; max-height: 30vh; overflow-y: auto; }
+      #research .options button {
+        text-align: left; font-size: 12px; line-height: 1.35; padding: 5px 8px;
+      }
+      /*
+        Proposed city sites. Same shape as the research options, because they
+        are the same kind of thing: a short ranked list you pick from.
+
+        The rank badge repeats the number drawn on the map, so the list and
+        the ground are legibly the same advice rather than two hints that
+        happen to agree.
+      */
+      #settle-sites {
+        display: flex; flex-direction: column; gap: 3px; margin: 6px 0 2px;
+        /* ⚠️ The LIST is what scrolls, never the panel. `#selection` is capped
+           below, and if the panel itself scrolled, the Found city button would
+           be the thing that went off the bottom. */
+        flex: 1 1 auto; min-height: 0; overflow-y: auto;
+      }
+      #settle-sites button {
+        text-align: left; font-size: 12px; line-height: 1.3; padding: 4px 8px;
+        display: flex; align-items: center; gap: 8px; white-space: nowrap;
+      }
+      #settle-sites .rank {
+        flex: 0 0 auto; min-width: 15px; height: 15px; border-radius: 50%;
+        display: inline-flex; align-items: center; justify-content: center;
+        font-size: 10px; font-weight: 700;
+        background: color-mix(in srgb, #8fd694 22%, transparent);
+        border: 1px solid #8fd694; color: #eafbec;
+      }
+      #settle-sites .now { color: #8fd694; margin-left: auto; font-size: 10px; }
+      #settle-sites button:first-child { border-color: #8fd694; }
+      /*
+        The one being studied. Marked, not removed: the list has to stay still
+        so the row you clicked is the row that changes.
+
+        Disabled, because the engine refuses to restart the current topic, so
+        a live button here could only ever log an error. `opacity` is left
+        alone deliberately — the usual dimming would make the ACTIVE entry the
+        faintest thing in the panel, which is backwards.
+      */
+      #research .options button.active {
+        border-color: var(--accent);
+        background: color-mix(in srgb, var(--accent) 18%, transparent);
+        color: var(--text);
+        cursor: default;
+        opacity: 1;
+      }
+      #research .options button.active .cluster { color: var(--accent); }
+      #research .cluster { color: var(--muted); font-size: 11px; }
+
+      #tile { bottom: 14px; left: 50%; transform: translateX(-50%); text-align: center; min-width: 240px; }
+      #help { top: 62px; right: 14px; color: var(--muted); text-align: right; font-size: 12px; }
+
+      #threats { top: 124px; right: 14px; width: 272px; max-height: 42vh; overflow-y: auto; }
+      #threats h2 { margin: 0 0 4px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+      #threats .foe {
+        display: grid; grid-template-columns: 8px minmax(0, 1fr) auto; gap: 8px;
+        align-items: start; padding: 5px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      #threats .foe:first-of-type { border-top: none; }
+      #threats .swatch { width: 8px; height: 8px; border-radius: 2px; margin-top: 4px; }
+      #threats .foe b { font-size: 12px; font-weight: 600; }
+      #threats .cluster { display: block; color: var(--muted); font-size: 11px; line-height: 1.25; overflow-wrap: anywhere; }
+      #threats .range { text-align: right; font-size: 11px; font-variant-numeric: tabular-nums; color: var(--muted); }
+      #threats .ready { display: block; font-size: 11px; font-variant-numeric: tabular-nums; }
+      #threats .foe.closing .range { color: #ffb64d; }
+      #threats .foe.closing b { color: #ffd7a1; }
+      #threats .foe.gone { opacity: 0.45; }
+      #threats .foe.gone .range { color: #8fd694; }
+      #threats .ready.weak { color: #ff9b91; }
+      #threats .ready.solid { color: #8fd694; }
+
+      /*
+        Under the research panel, because the two are the same decision seen
+        twice: both spend Compute, and a player choosing what to build should
+        be able to see what that costs them in study without moving their eyes.
+      */
+      #cities { top: 62px; left: 348px; width: 300px; max-height: 60vh; overflow-y: auto; }
+      #cities .city { padding: 7px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
+      #cities .city:last-child { border-bottom: none; }
+      #cities .city-head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+      #cities .city-head b { font-size: 13px; }
+      #cities .city-head span { color: var(--muted); font-size: 11px; }
+      /*
+        What the next rank wants. Muted while it is only a matter of time, and
+        picked out when the thing standing in the way is revision, because that
+        is the one the player can act on this minute.
+      */
+      #cities .city-need { color: var(--muted); font-size: 11px; margin-top: 3px; }
+      #cities .city-need.knowledge { color: #e0b552; }
+
+      /* Bring your own questions, on the setup screen. */
+      .fe-course { margin: 14px 0 4px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; background: rgba(255,255,255,0.02); }
+      .fe-course h3 { margin: 0 0 4px; font-size: 13px; }
+      .fe-course-buttons { display: flex; gap: 8px; margin-top: 9px; flex-wrap: wrap; }
+      .fe-course-buttons button { font: inherit; font-size: 12px; padding: 6px 11px; border-radius: 6px; border: 1px solid var(--border); background: #16202e; color: var(--text); cursor: pointer; }
+      .fe-course-buttons button:hover { background: #1d2a3c; }
+      .fe-course-report { margin-top: 10px; font-size: 12px; }
+      .fe-course-note { color: var(--muted); margin-bottom: 5px; }
+      .fe-course-note.good { color: #8fd694; }
+      .fe-course-note.bad { color: #ff9b91; }
+      .fe-course-note.warn { color: #e0b552; }
+      .fe-course-topics { color: var(--muted); font-size: 11px; margin-bottom: 7px; }
+      .fe-course-issues { border-left: 2px solid var(--border); padding: 4px 0 4px 9px; margin: 6px 0; color: var(--muted); font-size: 11px; }
+      .fe-course-issues.bad { border-left-color: #ff9b91; }
+      .fe-course-issues.warn { border-left-color: #e0b552; }
+      .fe-course-issues b { display: block; margin-bottom: 3px; color: var(--text); font-size: 11px; }
+      .fe-course-use { font: inherit; font-size: 12px; margin-top: 8px; padding: 7px 13px; border-radius: 6px; border: 1px solid #3f7a4b; background: #24462c; color: #d8f0dc; cursor: pointer; }
+      .fe-course-use:hover { background: #2c5636; }
+      .fe-course-use + .fe-course-use { margin-left: 8px; }
+      /*
+        Writing questions for a new topic. Separated by a rule rather than a
+        heading weight, because it is a different kind of thing from uploading
+        a file, not a smaller one.
+      */
+      .fe-course-forge { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+      .fe-course-forge h4 { margin: 0 0 4px; font-size: 13px; font-weight: 600; }
+      .fe-course-forge input[type="text"] { flex: 1 1 220px; min-width: 160px; }
+      .fe-course-forge input[type="number"] { width: 62px; }
+      .fe-course-forge input { font: inherit; font-size: 12px; padding: 6px 9px; border-radius: 6px; border: 1px solid var(--border); background: #101822; color: var(--text); }
+
+      /* The study coach, inside the Great Library. */
+      .fe-coach { margin: 12px 0 16px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 8px; background: rgba(255,255,255,0.02); }
+      .fe-coach-headline { font-size: 13px; margin-bottom: 9px; }
+      .fe-coach-list { display: flex; flex-direction: column; gap: 7px; }
+      .fe-coach-item { display: flex; gap: 9px; align-items: baseline; font-size: 12px; }
+      .fe-coach-item b { font-weight: 600; }
+      .fe-coach-why { color: var(--muted); font-size: 11px; margin-top: 1px; }
+      .fe-coach-band { flex: 0 0 62px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.4px; color: var(--muted); }
+      .fe-coach-band.unseen { color: #8b93a1; }
+      .fe-coach-band.learning { color: #e0b552; }
+      .fe-coach-band.familiar { color: #6fb4e0; }
+      .fe-coach-band.strong { color: #8fd694; }
+      .fe-coach-due { margin-left: auto; font-size: 10px; color: #e0b552; text-transform: uppercase; }
+      .fe-coach-empty { color: var(--muted); font-size: 12px; }
+      .fe-coach-chat { margin-top: 13px; border-top: 1px solid var(--border); padding-top: 11px; }
+      .fe-coach-thread { max-height: 190px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; margin-bottom: 9px; }
+      .fe-coach-msg { font-size: 12px; line-height: 1.45; padding: 6px 9px; border-radius: 7px; max-width: 88%; white-space: pre-wrap; }
+      .fe-coach-msg.you { align-self: flex-end; background: #22364d; }
+      .fe-coach-msg.coach { align-self: flex-start; background: #1a2230; color: #cfd6e0; }
+      .fe-coach-msg.waiting { opacity: 0.6; font-style: italic; }
+      .fe-coach-msg.bad { color: #ff9b91; }
+      .fe-coach-ask { display: flex; gap: 7px; }
+      .fe-coach-ask input { flex: 1; font: inherit; font-size: 12px; padding: 7px 9px; border-radius: 6px; border: 1px solid var(--border); background: #131a25; color: var(--text); }
+      .fe-coach-ask button { font: inherit; font-size: 12px; padding: 7px 14px; border-radius: 6px; border: 1px solid var(--border); background: #16202e; color: var(--text); cursor: pointer; }
+      .fe-coach-ask button:hover { background: #1d2a3c; }
+      #cities .bar { height: 5px; border-radius: 3px; background: rgba(255, 255, 255, 0.1); margin: 5px 0; overflow: hidden; }
+      #cities .bar > div { height: 100%; background: #8fd694; width: 0%; }
+      #cities .build { display: flex; gap: 5px; align-items: center; margin-top: 4px; }
+      #cities select { flex: 1; font: inherit; font-size: 12px; padding: 3px 4px; background: #131a25; color: var(--text); border: 1px solid var(--border); border-radius: 4px; }
+      #cities .status { color: var(--muted); font-size: 11px; }
+      #cities .status.blocked { color: #ff9b91; }
+      /*
+        A damaged city is called out in warm amber rather than the muted grey.
+        ⚠️ Amber, not the red used by `.blocked`: red on this panel already
+        means "this cannot proceed", and a chipped town is a fact rather than
+        an obstruction. `tabular-nums` so the figure does not jitter as the
+        digits change width during a siege.
+      */
+      #cities .status.hurt { color: #ffcf7a; font-variant-numeric: tabular-nums; }
+
+      #readiness { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+      /*
+        Muted music reads as a struck-through note. No second glyph, no icon
+        font, no image: one character and one rule, which is also the only
+        version of this that cannot fail to load.
+      */
+      #music-toggle { font-size: 15px; line-height: 1; padding: 4px 9px; }
+      #music-toggle.muted { color: var(--muted); text-decoration: line-through; }
+      #fullscreen-toggle { font-size: 15px; line-height: 1; padding: 4px 9px; }
+      #fullscreen-toggle.on { color: var(--accent); border-color: var(--accent); }
+      #face-proctor {
+        background: #6b4ea8; border-color: #8a6fd0; color: #f2ecff; font-weight: 600;
+        animation: proctor 2.2s ease-in-out infinite;
+      }
+      @keyframes proctor {
+        0%, 100% { box-shadow: 0 0 0 rgba(138, 111, 208, 0); }
+        50% { box-shadow: 0 0 14px rgba(138, 111, 208, 0.75); }
+      }
+
+      /* ==================================================================
+         Phones and small tablets.
+
+         ⚠️ The desktop HUD is eight panels pinned to four corners at fixed
+         pixel widths, between 272px and 330px. On a 390px screen they do not
+         merely look cramped, they stack on top of each other: the research
+         panel covers the top bar, the threat list runs off the right edge
+         mid-word, and the map is left as a sliver between them. Measured on a
+         390x844 viewport before any of this was written.
+
+         The fix is a different layout rather than smaller text. The map keeps
+         the top of the screen, because a strategy map you cannot see is not a
+         game, and every panel moves into one scrolling column underneath it.
+         ================================================================== */
+      #hud { display: contents; }
+
+      @media (max-width: 760px) {
+        /*
+          The wrapper stops being invisible and becomes the column. Because it
+          was `display: contents` above, this is the only place the panels'
+          own positioning has to be undone.
+        */
+        #hud {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          position: fixed;
+          left: 0;
+          right: 0;
+          top: 56vh;
+          bottom: 0;
+          padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
+          z-index: 20;
+        }
+
+        /* The board keeps the upper half and stays put while the HUD scrolls. */
+        #map, #fx {
+          position: fixed;
+          top: 0;
+          left: 0;
+          height: 56vh;
+          width: 100vw;
+        }
+
+        /*
+          ⚠️ Without this a drag on the map scrolls the page instead of panning
+          the camera, which makes the map unusable by touch even though every
+          pointer handler is already correct.
+        */
+        #map { touch-action: none; }
+
+        /* Undo every corner pin in one place. */
+        #hud > .panel {
+          position: static;
+          width: auto;
+          min-width: 0;
+          max-width: none;
+          transform: none;
+          max-height: none;
+          flex: 0 0 auto;
+        }
+
+        /* These two scroll internally on desktop; in a column they must not. */
+        #log, #threats, #research .options { max-height: 30vh; }
+
+        #tile { text-align: left; }
+        #help { text-align: left; }
+
+        /*
+          The top bar wraps rather than overflowing. Turn, resources and the
+          buttons are the one row a player needs at a glance.
+        */
+        #resources, #controls { flex-wrap: wrap; gap: 10px; }
+
+        /* Touch targets. 44px is the smallest a finger reliably hits. */
+        #hud button,
+        .fe-option,
+        .fe-choice-option,
+        .fe-setup-option { min-height: 44px; }
+
+        /* Dialogs are already full-screen; just stop them being letterboxed. */
+        .fe-setup-card, .fe-choice-card, .fe-modal { max-width: none; }
+      }
+
+      /*
+        Landscape phones have almost no vertical room, so the split above would
+        leave the map a letterbox slit. Give the board more of it and let the
+        HUD column be the thing that scrolls.
+      */
+      @media (max-width: 900px) and (orientation: landscape) and (max-height: 520px) {
+        #hud { top: 62vh; }
+        #map, #fx { height: 62vh; }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="map"></canvas>
+    <canvas id="fx"></canvas>
+
+    <!--
+      Every HUD panel lives in here.
+
+      ⚠️ On a wide screen this wrapper is `display: contents`, so it vanishes
+      from layout entirely and each panel keeps the fixed corner position it
+      has always had. Nothing about the desktop HUD changes.
+
+      On a narrow screen it becomes a real scrolling column under the map,
+      which is the only way eight panels pinned to four corners can coexist on
+      a 390px phone. Without a wrapper they are siblings of the canvas and
+      there is nothing to scroll.
+    -->
+    <div id="hud">
+
+    <div class="panel" id="resources">
+      <span id="turn-badge">Turn 1</span>
+      <div class="res"><b id="res-compute">0</b><span>Compute</span></div>
+      <div class="res"><b id="res-cu">0</b><span>CU</span></div>
+      <div class="res"><b id="res-trust">0</b><span data-i18n="Trust">Trust</span></div>
+      <button id="open-library" title="The Great Library: what you actually know (l)" data-i18n="Library">Library</button>
+      <!--
+        Exam readiness, weighted by the published branch percentages.
+
+        In the resource bar rather than buried in the Library, because it is
+        the number the Proctor watches and a threshold nobody can see is a
+        threshold nobody can aim at.
+      -->
+      <span id="readiness" title="Share of the exam, by published weight, at familiar or better">0% exam</span>
+      <!--
+        The seats.
+
+        Every empire on the board is a seat, and the ones nobody is playing are
+        held by the machine. This opens the table so one can be taken. In the
+        resource bar rather than in a menu because it is a thing you do while
+        looking at the board, not a setup screen.
+      -->
+      <button id="open-seats" title="The empires on the board, and which of them you may take (o)" data-i18n="Seats">Seats</button>
+      <button id="face-proctor" hidden title="Sit the exam: 40 questions in the published proportions" data-i18n="Face the Proctor">Face the Proctor</button>
+      <button id="end-turn" class="primary" data-i18n="End turn">End turn</button>
+      <!--
+        The language switch.
+
+        In the resource bar because it has to be found without hunting, and
+        because a player who opened the game in the wrong language cannot read
+        the menu they would otherwise have to look in.
+      -->
+      <button id="lang-toggle" title="Deutsch / English">DE</button>
+      <!--
+        The sound switch.
+
+        A glyph rather than a word, because it sits next to a language toggle
+        that is already two letters and because the one thing everybody
+        recognises without reading is a note with a line through it. The title
+        carries the sentence, and the title is translated.
+
+        It says sound, not music: it silences the cinematic cues too, because
+        it is the only audio control there is.
+      -->
+      <button id="music-toggle" hidden title="Turn the sound off">&#9834;</button>
+      <!--
+        Fullscreen.
+
+        ⚠️ Hidden until the browser is asked whether it can do it, for the same
+        reason the sound switch is: iOS Safari has no Fullscreen API on an
+        iPhone at all, and a button that visibly does nothing teaches the
+        player that buttons here do nothing (D304).
+
+        A glyph again, next to the note and the language pair, with the
+        sentence in the translated title.
+      -->
+      <button id="fullscreen-toggle" hidden data-i18n-title="Fullscreen" title="Fullscreen">&#9974;</button>
+    </div>
+
+    <div class="panel" id="controls">
+      <input id="seed-input" value="FABRIC" spellcheck="false" />
+      <button id="seed-go" data-i18n-title="Choose a world and start again" title="Choose a world and start again" data-i18n="New game">New game</button>
+    </div>
+
+    <div class="panel" id="help">
+      <span data-i18n="click a unit to select, click to move or attack">click a unit to select &middot; click to move or attack</span><br />
+      <span data-i18n="drag to pan, wheel to zoom, space ends turn">drag to pan &middot; wheel to zoom &middot; space ends turn</span><br />
+      <span class="muted" data-i18n="` opens the console, type help">` opens the console &middot; type help</span>
+    </div>
+
+    <!--
+      Who is coming, and what they will ask about.
+
+      The seven antagonists each quiz one cluster of the outline, which is the
+      whole design: who is marching on you tells you what you are about to be
+      tested on. That was completely unreadable until this panel existed - the
+      mechanic worked and nothing on screen said so.
+    -->
+    <div class="panel" id="threats">
+      <h2 data-i18n="Who is coming">Who is coming</h2>
+      <div id="threats-list"></div>
+    </div>
+
+    <div class="panel" id="tile">
+      <div id="tile-name" data-i18n="Hover a tile">Hover a tile</div>
+      <div class="muted" id="tile-detail">&nbsp;</div>
+    </div>
+
+    <div class="panel" id="selection">
+      <!--
+        The title, with a way to step through the army.
+        ⚠️ These arrows walk EVERY unit you own, not just the ones still
+        awaiting orders. Tab already jumps between idle units and deliberately
+        skips anything dug in or out of moves; if the arrows did the same, the
+        unit on screen in that state could not be stepped away from and back
+        to, which is exactly when you want to look at your line.
+      -->
+      <div class="sel-head">
+        <h2 id="sel-title" data-i18n="Nothing selected">Nothing selected</h2>
+        <div class="sel-steps">
+          <button id="sel-prev" disabled data-i18n-title="Previous unit ([)" title="Previous unit ([)" aria-label="Previous unit">‹</button>
+          <span id="sel-count" class="muted"></span>
+          <button id="sel-next" disabled data-i18n-title="Next unit (])" title="Next unit (])" aria-label="Next unit">›</button>
+        </div>
+      </div>
+      <div class="muted" id="sel-detail" data-i18n="Click one of your units.">Click one of your units.</div>
+      <!--
+        Proposed city sites, best first. Empty and hidden unless an Architect
+        is selected. ⚠️ This exists because the same advice drawn on the map
+        is unreadable at the zoom a player plans at: five proposed hexes at the
+        opening camera covered about 24 by 11 pixels between them. Text has no
+        such problem, and it can carry the numbers the ranking is based on.
+      -->
+      <div id="settle-sites" hidden></div>
+      <div class="actions">
+        <button id="act-found" disabled title="Found a city here (b)" data-i18n="Found city">Found city</button>
+        <button id="act-raid" disabled title="Plunder the neighbouring village (p). R flies the camera, so this is not on r" data-i18n="Raid">Raid</button>
+        <!--
+          Fortify doubles as Wake once the unit is dug in, so the live label
+          is written by `refreshSelection`.
+          ⚠️ The `data-i18n` here is only the RESTING label, for the paint
+          before any game has started: `refreshSelection` does not run on the
+          setup screen, so without it a German game showed one English button.
+          This is safe because `onLangChange` runs `applyStaticTranslations`
+          FIRST and `refreshSelection` after, so the dynamic Wake label always
+          wins. `refreshSelection` rewrites this on its "nothing selected"
+          path too, or deselecting a dug-in unit would leave "Wake" behind.
+        -->
+        <button id="act-fortify" disabled title="Fortify (h). W A S D fly the camera, so this is not on f" data-i18n="Fortify">Fortify</button>
+        <button id="act-skip" disabled title="Skip this unit (x). W A S D fly the camera, so this is not on s" data-i18n="Skip">Skip</button>
+        <button id="act-council" disabled title="Hold a council review (c)" data-i18n="Council">Council</button>
+      </div>
+    </div>
+
+    <div class="panel" id="research">
+      <h2 id="res-title" data-i18n="Researching nothing">Researching nothing</h2>
+      <div class="bar"><div id="res-bar"></div></div>
+      <div class="muted" id="res-status" data-i18n="Choose what to study.">Choose what to study.</div>
+      <div class="options" id="res-options"></div>
+    </div>
+
+    <!--
+      Cities and what they are building.
+
+      A panel of its own rather than part of the selection panel: a player
+      wants to see what is being built while they are moving a unit, and
+      routing city orders through unit selection would have meant clicking
+      away from the thing they were commanding to check.
+    -->
+    <div class="panel" id="cities" hidden>
+      <h2 id="cities-title" data-i18n="Cities">Cities</h2>
+      <div id="cities-list"></div>
+    </div>
+
+    <div class="panel" id="log"><div class="entry muted" data-i18n="Your empire begins.">Your empire begins.</div></div>
+
+    </div><!-- #hud -->
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

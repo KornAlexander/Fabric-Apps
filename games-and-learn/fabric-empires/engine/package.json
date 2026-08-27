@@ -1,0 +1,12 @@
+{
+  "name": "@fabric-empires/engine",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./hex": "./src/hex/index.ts",
+    "./rng": "./src/rng/index.ts"
+  }
+}

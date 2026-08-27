@@ -1,0 +1,475 @@
+{
+  "cluster": "A2",
+  "generated": "tools/content/build-questions.mjs",
+  "questions": [
+    {
+      "id": "dp600-q-6-1",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A2",
+      "skillId": 6,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "You are putting a Fabric workspace under source control for the first time. Which two repository providers can a workspace be connected to?",
+      "options": [
+        "GitLab and Bitbucket",
+        "Azure DevOps and GitHub",
+        "Azure DevOps and GitLab",
+        "GitHub and Subversion"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/cicd/cicd-tutorial",
+      "sourceSkillBullet": "Configure version control for a workspace",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/cicd/cicd-tutorial",
+      "reviewStatus": "draft",
+      "tags": [
+        "git",
+        "source-control"
+      ],
+      "answerHash": "421f6156e37e29937091b172ec0318de26b1f6402a86d8e6fa63a5a62a87ad0e",
+      "explanationCipher": "XGIsVbGPEd8sZGk6j1L58FnvOd01t4TMiva0SZ2/rkoLYhzZNxQX29VyGvL3Ah5fLTQhgGdazlY4/E+DPqLTwIDasypceiFn1poHhBiv0kWctCX07HU03pG9hoqebYWGD+82ORLdFPk1IGgm3bfGPLj8qtV1HiF38N4TMSGqgzTQQ4WPE0bsKKr+X+Lk8OL21N6nojmtAqpccQ9qVqPPlpgRPIK42+Vz/KjiGXRr5QHaGT+KSNR9NYaIrBv33pERdHl313j8FeR1IdB1hhtvwUCzfGS5j/Jm4QUkkick7JvPgOOQdaQbPKUpPn09GlO0KvNZUxHkfYqkiChpNe42zd80JSTnUDbbRNlyaC7I"
+    },
+    {
+      "id": "dp600-q-6-2",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A2",
+      "skillId": 6,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "Two developers want to work on separate features without disturbing each other, using git integration in Fabric. What is the usual arrangement?",
+      "options": [
+        "Both work in one workspace and commit alternately",
+        "Each developer works in their own workspace connected to their own branch",
+        "Both connect the same workspace to two branches at once",
+        "Each developer connects their own workspace to the same shared branch"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/fundamentals/understand-best-practices-fabric-cicd",
+      "sourceSkillBullet": "Configure version control for a workspace",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/fundamentals/understand-best-practices-fabric-cicd",
+      "reviewStatus": "draft",
+      "tags": [
+        "git",
+        "branching"
+      ],
+      "answerHash": "06eb1ae55436600a8c3d89006abc07d82d13d21904e231f22f0d030ac460e5f8",
+      "explanationCipher": "AtoVq5bDaNINlHqLt8isB+D8FPt5Cw4jfUOcwygSE50QnL5UrVMY1e5vfROih7c5zzD05dtQjrJjBlfSrnNl5iL7fX/+42abKkxsgSAp5HNH1gbBHuXWwzcbDx+Feh2QTgxMMNByO+hKZa1/N0oHrz09qHXO/RjFF+Ju5DcPxcTUjl3vdpxDV7y1YFm6UUEFJQtcvN39ROy8q1NkrXuamSZxloZZF2J28s7Z10fgQJn5NhQ3Aswg9RVvpo9Jd8fvr3oTUuG8FJOehcmuQS7pf67JUVtl8RXnTF2otI6K+COq+QAZJknxsHvUg6EhPoh8x/IbpaRNryVv0F09z/WfsxRZ+Rg5rG3qSC2INA51jQbFMwCMDwM6oNhDNs/LwMxmpeR6drtVjuGQTjUa0dmgsUhRsdzixNZxP3Q2qnFQd9LjZI+/V1w="
+    },
+    {
+      "id": "dp600-q-6-3",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A2",
+      "skillId": 6,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "A teammate merged a change into the branch your workspace is connected to, and your workspace still shows the old definition. What brings it into line?",
+      "options": [
+        "Refresh the semantic models in the workspace",
+        "Commit, which reconciles both directions",
+        "Reconnect the workspace to the branch",
+        "Update from the source control pane, which pulls the branch into the workspace"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/cicd/troubleshoot-cicd",
+      "sourceSkillBullet": "Configure version control for a workspace",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/cicd/cicd-tutorial",
+      "reviewStatus": "draft",
+      "tags": [
+        "git",
+        "sync"
+      ],
+      "answerHash": "5e8f58efb45926938da3bfbca569d6603f764a0cc3dec871d8889dd98246b0c6",
+      "explanationCipher": "zdTxfK1+eXuXARD4nUzxi/f+s/18nwaqB97NfHup9iImCGUx7Y2ePXi1SS9dhlO8F6n5iwqJ5KCfye5yWScI++btFO6IEV+yCTs6e/mM/jJTcxq2DNtk84xRHzabHe/f6gcutv1I0lXqy7WHgJR7lvXgceuCCFCqZB/d6aau5d6GD1g3AwIeVg81vJTkbn0TP7/67MO3UrciosjMfmwVaNOkJg4xGMkQjiG2fY1TyPG7Kt/Prs/L+315+tBrLtW0UgktC5+lUFUxwY/8extaYNkn4vcZbdDTSpQOckAjnHvNJc1qeCVwgvIY4B+M7dGPiNfr6REddCSrVXz8vADp+NYS7/V35wDgHah2h1SdK5gmhI7zZI/mLqg5ro52va4w1daHCEjcPh01bwJa1wRdXriqLORkoO7lrX/2X4V9mQqzEeA="
+    },
+    {
+      "id": "dp600-q-7-1",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A2",
+      "skillId": 7,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Why would a team save their work as a Power BI Desktop project rather than as a single .pbix file when it is going into a repository?",
+      "options": [
+        "Because a project stores a compressed copy of the data alongside the report",
+        "Because .pbix files cannot be committed to git at all",
+        "Because a project refreshes faster in the service",
+        "Because a project writes plain text files that can be diffed and reviewed"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/developer/projects/projects-build-pipelines",
+      "sourceSkillBullet": "Create and manage a Power BI Desktop project (.pbip)",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/developer/projects/projects-build-pipelines",
+      "reviewStatus": "draft",
+      "tags": [
+        "pbip",
+        "source-control"
+      ],
+      "answerHash": "0c82be2209a5ff648afca72b69bfb76c514499e80d5157c8cbe4619430c40ea1",
+      "explanationCipher": "uyAGEoZGinV8P1LQGQt47jo2XO3WYiD19Nz7hwVp3SYR4BE3yAIqEytHIkGLX8NhWkwLuy7dNR7HS1fg7svMGPzlMJtRiCVIIY9DFplP6ua6z7kV3NYhIRCslirftOhQ5eaNfKwgIdQF3ZXnwZp76CmpXaWepmRNzzR5mNfXUuxMq0zf65PfjAb5gpoqxJ2l3WeEqMFCJNXKGVQakKkHfn0b6opdhGkN+gHlpO2KPfkQ4P1P18dfkoTMvaRWwFZ0MMDfDCjr8vGNH1Y/zvlzioN+EmyK9JlXZub7+6IuO6j5K0vhilSZrlptOHShnuBlKAvAA+8cNKOWpY+Spv2QRwwpq+oMclYI8oAhtjmcP64S1eMia9L6FmEQTVOLqG5sMt2u+75r9Tr0rnM46drz6WloDkkCCltkugbWML887Kv616wYs9cxOS9ZUjp+Tb6/Zzigorlfryfx"
+    },
+    {
+      "id": "dp600-q-7-2",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A2",
+      "skillId": 7,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "After saving a Power BI Desktop project, what do you find on disk next to the small .pbip file itself?",
+      "options": [
+        "A cache folder holding the imported data",
+        "A report folder and a semantic model folder holding the definitions",
+        "A single folder containing a copy of the .pbix",
+        "One folder per report page"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/developer/projects/projects-deploy-fabric-cicd",
+      "sourceSkillBullet": "Create and manage a Power BI Desktop project (.pbip)",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/developer/projects/projects-build-pipelines",
+      "reviewStatus": "draft",
+      "tags": [
+        "pbip",
+        "structure"
+      ],
+      "answerHash": "d34385d538d3119cfff34f0a090aa211c65b721c33bc39fda2f64150ba539bb4",
+      "explanationCipher": "UkeHb+NzMXjkE4km816Tbyn3HIU4g/pSORJt2bJK7XCtxvn0G1wCOh3WwRB6GS5tGSsV14m/PcTct+RwvtKJPbWh+mrV7Fgh06te+pDLj35uqfOvxkh/e9fq3P919R1FMPRC5mofUCAgpOR+0B7o/aaP3qGt+wMlNAP4JniYIT52CY1I0RCY6JQYJ9YW04hZb6MAJ98HnGRgmMZyHVCHiH+xAZYCjIC4cIh8U4Lz/QrRPCo6u8SPI3BLUnh+vVznomF7vo4UvzBCX0OruqNi5NLThFiBEmb1oRbF8gA6yNuuXjpy3eAOc9GWgIkGQKKnnPB8wETtGSGiFP5P002DOUf15gwu19qUg7b3"
+    },
+    {
+      "id": "dp600-q-7-3",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A2",
+      "skillId": 7,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "A reviewer wants to read the definition of a measure in a pull request without opening Power BI Desktop. Which format inside the project makes that possible?",
+      "options": [
+        "A rendered PDF of the report",
+        "The .pbip pointer file itself",
+        "The binary model cache",
+        "TMDL, the text definition language for the semantic model"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/developer/projects/projects-deploy-fabric-cicd",
+      "sourceSkillBullet": "Create and manage a Power BI Desktop project (.pbip)",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/developer/projects/projects-deploy-fabric-cicd",
+      "reviewStatus": "draft",
+      "tags": [
+        "pbip",
+        "tmdl",
+        "review"
+      ],
+      "answerHash": "e7f3e16bd08f5ca925bbc3227a7d465d7115972121e37afdd74a2fedff2bc59d",
+      "explanationCipher": "gGCX3CcFKzzhNBxttyrPGVYOA6DO8cE8ziYy21uIgxtBGRxLJ5VsGhaPQpoAL0cIs5qg/Api0Sifr/blCNKEahuTTLJbTIuDWiV67XSc+zKJKApKPrSKfTYLhcScYFIh58q/L6uQQeKK6185oj97teNc6k5UxPYX+8oYjo9wUJb28Duxe40pOYlxv1BSXNy0Dt1HEwjfrM6+zgd/nCg85/p+bDJbhGFShATy3g61wfP49qD4fE03MhfEGlMjp/Md5oMGoQWYD+YHETTfGu+SEknwuc//1PB8F4Mqu0mAEFRCXvJfSsQTvRYPpnHBJgwADteMU435AYwThel4aPRBdRDwv6okdTUvZlDO9aZtVHfoIuMGHc6iqAF9MgpffdlmMbl4ePq4rNHwioSQoEjn4rl1HiKKg2waoSAl2Y2hv1/4KSyVj20="
+    },
+    {
+      "id": "dp600-q-8-1",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A2",
+      "skillId": 8,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "You are setting up a deployment pipeline with development, test and production stages. What is assigned to each stage?",
+      "options": [
+        "A git branch",
+        "A workspace",
+        "A semantic model",
+        "A capacity"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/cicd/cicd-tutorial",
+      "sourceSkillBullet": "Create and configure deployment pipelines",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/cicd/cicd-tutorial",
+      "reviewStatus": "draft",
+      "tags": [
+        "deployment-pipelines",
+        "stages"
+      ],
+      "answerHash": "562977c21617c02e3bba7eac69ae6506bd389f4de47e54ac09efd0d1c76d82cc",
+      "explanationCipher": "/B2huRoTCSr3hYC3XHJSC+yYUPZRvzGgQTfM2ndfn3vJDNSSBTQeRTwpHvSJ+8OHicwWT3ET6HugtBjYIL7z9muCtZAd0syMQCTuTmZcbol0RFWasfmNXuRjEu0NfcvbKQ/WQr6vuIFp6V5fk3lGL8s2tLzFzRKT36j2szZLDYG5HlUfnbrCEB1umc2TpsnQK0NBCGIZ5mWszQk/VcIf8jOu/bVriyn4yfm3nOmmcldmiVRaiEAZnG06EGdy9hi9QPRbEOEiWtV51zmf0h+v7l6o6l2wN084h5l71exSqYMxSw+jZgExkUTJjpJ0xh8Swp47ldxkIUGehcY7y+P7OeLFAurzEA+Bz+2VqWJJI6gR3lf02h7hT/pVc0shmIOMXlAzBd7qQCnag1tthT7R5QZw32qh0qasVwaUAL8h0xYnWv76"
+    },
+    {
+      "id": "dp600-q-8-2",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A2",
+      "skillId": 8,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "After deploying a semantic model from development to test, it is still pointing at the development database. What is the mechanism that should have changed it?",
+      "options": [
+        "A deployment rule configured on the target stage",
+        "A refresh of the semantic model in the target stage",
+        "A second deployment run in the opposite direction",
+        "A parameter change made in the source stage before deploying"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/fundamentals/understand-best-practices-fabric-cicd",
+      "sourceSkillBullet": "Create and configure deployment pipelines",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/fundamentals/understand-best-practices-fabric-cicd",
+      "reviewStatus": "draft",
+      "tags": [
+        "deployment-pipelines",
+        "deployment-rules"
+      ],
+      "answerHash": "799e4295efabc6cd69a94a3bc9a37f2e102f11b7fc9ea80f266f0ef66f409059",
+      "explanationCipher": "PPe8zyF3qyH1UFATd+Tf32tV8y04iki5yScA2Zth/sVc0VvkLjFGSSvdHoszTWrR7i9AqU5uqGktZx0sjs8yumgjvu9NWnvU2cXRUhsORpKgpepd7O9mTKi2TTNDlZCYfDqHD9REj7a7FC+wlITVdG7Ov/fOZ+1yeHChU9PzAIgVGTVRtTSwPYqQuEv0Zx3Oicp+nDXILH+FHC9vDSkhHtz3izjNIuBWTwtpSI8x/1MxviBP4vDAuYOt8mDSG4MIJ4JFp3126wv0F14T6hYQ+fUSnKXGKlzYNP4pJNG7/yfL98ZTxS8XJNjBxeWD0Hwl9hhgreCn0Ma7aFy77BHpXXvXSeKJQGBAxhzfDK6L2zl5RYr07WR8cHoTil9w63Ldl1JzGnZIHIarWtUi83TmEhg/AR8UNpe4xS21GJ27jFITaC+IMrNGIj6nWUcBOT3n0wf8EFjGZ/n9ockK094="
+    },
+    {
+      "id": "dp600-q-8-3",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A2",
+      "skillId": 8,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "An import semantic model has just been deployed to the production stage and its visuals are empty. Assuming the connection is correct, what is the expected next step?",
+      "options": [
+        "Switch the model to DirectQuery so that no refresh is needed",
+        "Refresh the model in the production workspace, because deployment moves definitions and not data",
+        "Redeploy, because the first deployment always omits data",
+        "Recreate the deployment pipeline with production as the source"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/data-warehouse/development-deployment",
+      "sourceSkillBullet": "Create and configure deployment pipelines",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/cicd/cicd-tutorial",
+      "reviewStatus": "draft",
+      "tags": [
+        "deployment-pipelines",
+        "refresh"
+      ],
+      "answerHash": "9c35c3df0368f7d1a6d35f4e17a2a53934648bfde16be70c5315e03d56fd5e59",
+      "explanationCipher": "xcyND3zOlGiPApX6PHm+Pxxntyzm9H1yB6nK4ju4UPwAbBItLcqJrL74alUWiemZOvTf6CObG1UZ0qHaYd7fJ5tMH9+d+Bo2T1VCpnEIh6CCQbrz4kYYq/sLCLtguXFSV/jQ0czfRWwbaqerKXyep4mZgeV/RgNiC39Onlw5RiM17ZowyuetwNOP0DvN8zhUKypDjDyfxOepVqW2zVRAwBK1Ul6i+7wmY0ZxwZvoTkasMyhC/oDTrnavrQMIbcU2Rii6/Juafz+Xq+x38g+WPMWnVXF0qKi8P3SecmCUQvQnmZxWR1Zqvf08kl3WJwFavv2tdhTxMAO5GopNxpExnUWdvwh8d87T1PA53/Nb9gsFcQs4Jebtz1xNGPm2r27EstEN8p6WMB+53OIibw/nCxYzaAsztLyljTWNd6r1YoClp5PMeYdY4RvWfephzRASovqzjlkigUInZydubQH64Eh5qmRoGQ4="
+    },
+    {
+      "id": "dp600-q-9-1",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A2",
+      "skillId": 9,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Before removing a column from a widely used semantic model, you need to know which reports would break. What do you run?",
+      "options": [
+        "The performance analyzer in Power BI Desktop",
+        "A refresh history check on the model",
+        "A capacity metrics report for the workspace",
+        "Impact analysis on the semantic model"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/collaborate-share/service-dataset-impact-analysis",
+      "sourceSkillBullet": "Perform impact analysis of downstream dependencies from lakehouses, warehouses, dataflows, and semantic models",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/collaborate-share/service-dataset-impact-analysis",
+      "reviewStatus": "draft",
+      "tags": [
+        "impact-analysis",
+        "change-management"
+      ],
+      "answerHash": "d4466829cdd47f3587add09a312d19b4712396edef9a05cb2b34579fc1d61c3f",
+      "explanationCipher": "L6iJxOPDG9gLXFu81x+KwI2iJw/2X8UEiELTQhGYbXw6fCu+PhgNsQi3grnD9GaOx9VeJvrIthALjxEA7YwKkCp7Hsg3JcV7u7SriOheb/u6LJwHaSIk3imvglPBIpNcEzwXw2TRxKcZErwJRUJx+ZawVs40CCO3IG0N/fkcxFrXaWmvGxmwT0IA4l5LoGvMPSRtTUU4F/h4dWjtcP9XH7clXNRUG3aK077tZ+/0UHeAWEWcUkcLslGB/FhqXSpHvX9a6tLA0w3zb24FrNGPBWvA8XkbBvCjHOy+J1wizV20seObAr4xOWG6dqBq4RV9Syp2S4cB3Isfyfmglc6wHomklSgvSFFXNQayJxYAGiYIrmw+djLjcf0NiwYpqQ3GWPtlLkf7sOAFzB6g4CXUlIwqGuD8XpcOcaHm+9xQ9dkC+r7KmnJWvw=="
+    },
+    {
+      "id": "dp600-q-9-2",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A2",
+      "skillId": 9,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "Impact analysis has listed thirty downstream reports owned by other teams, and you want to warn those owners before you make the change. What does it let you do directly?",
+      "options": [
+        "Roll the change back after deployment",
+        "Lock the downstream reports until the change is finished",
+        "Notify the contacts of the downstream items",
+        "Automatically patch the affected reports"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/collaborate-share/service-dataset-impact-analysis",
+      "sourceSkillBullet": "Perform impact analysis of downstream dependencies from lakehouses, warehouses, dataflows, and semantic models",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/collaborate-share/service-dataset-impact-analysis",
+      "reviewStatus": "draft",
+      "tags": [
+        "impact-analysis",
+        "communication"
+      ],
+      "answerHash": "0549a8c9ffcb84a6a5582b2fdb330cd115c45e498d4b3575ffe2ea089acb636f",
+      "explanationCipher": "XwAnp7aCkdfLIkbSn+hDREeq7b9OBcegwNuRuWtkVWXwMtzFkjvDBNZPoz7qQkJkz5mmmwFzZh7VrgdIElL9Berl6qJ5QHwUatgqri2xuE9XkFat6R8hB23XIczHOpTj0CMXfnPXRsz+M9UUa8IBUj+M7CmsKtRzZc3AAZAXRtP4amsWLugDkiZrlL543F0Fj3GJ4kGmELnWbhAt50aG1JWgArJmMEQ295H3xwc/d12IFb3aEQFokRJVsBP30s/hAGwMuL/8DRV5Eji5QJiUz5uvWgTpg4TUXaH2ETSsOKApDegVvi22f4OPM9yHq2xmUmlzHu4lMuXpq3LvS1Clmh3PirbOcTve3wDIXhr3ue8FqJCNKvvfAEmDNeWrxjyDNac="
+    },
+    {
+      "id": "dp600-q-9-3",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A2",
+      "skillId": 9,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "You need to trace a wrong number all the way back from a report through the semantic model to the dataflow that loaded it. Which view is designed for that direction of travel?",
+      "options": [
+        "Impact analysis, which only ever looks upstream",
+        "The workspace item list sorted by modified date",
+        "The refresh history of the report",
+        "Lineage view, which shows the whole chain of items in the workspace including upstream sources"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/collaborate-share/service-dataset-impact-analysis",
+      "sourceSkillBullet": "Perform impact analysis of downstream dependencies from lakehouses, warehouses, dataflows, and semantic models",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/guidance/powerbi-implementation-planning-usage-scenario-managed-self-service-bi",
+      "reviewStatus": "draft",
+      "tags": [
+        "lineage",
+        "troubleshooting"
+      ],
+      "answerHash": "0b002751150d891f2959aff8020e6ac3d74ae83661d549d16e9a473c7cc14329",
+      "explanationCipher": "vxoWw5RD+6lAhobbrf2Qj6Eajz2Jyb4yZvpolN3fmzVA/Q6ipPTyj49Dzg3SP2ScKBW7xtIMzXHM9T1om1jXsYJNIDZrGoHs7jProKaybxvtVoATHiYnWJUuPLHIpBri9ZN8wCeqVBxYvZJvLpkauiuH9nrJG+//ovEE4xcu93YRkZltslRRqDkxM6TszoF52KpvMIml3f7PrFNNFl9faNiO5QLtlBdjMCHmm2U+vYXqZBAvulCil88v2bDAep4cU9R3gX31MLlU79jeZjqBJMZAIAXOA9rSbOZFoOamtZ0c59NIj1A7V3LjcMgWym8G6I/uhNjVIAfT0IuKncAVAXSR7iFqQZyXI3FpIwFsJl9zwYI6LFFPC7yGRjeQAoGNm1P4sA/M41Lh/QpKZ93o12CQtU/taIsq23JClIpo0LzG5L9U+xH/b6x6dsUofsJ0lB5RCQwYOOQ="
+    },
+    {
+      "id": "dp600-q-10-1",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A2",
+      "skillId": 10,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "An external tool can connect to a workspace and read the semantic model, but every attempt to deploy a change fails. Which setting is the first thing to check?",
+      "options": [
+        "The semantic model is in import mode rather than DirectQuery",
+        "The tool is signed in with a different browser profile",
+        "The XMLA endpoint is set to read only rather than read write",
+        "The workspace has no sensitivity label applied"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/enterprise/powerbi/service-premium-connect-tools",
+      "sourceSkillBullet": "Deploy and manage semantic models by using the XMLA endpoint",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/enterprise/powerbi/service-premium-connect-tools",
+      "reviewStatus": "draft",
+      "tags": [
+        "xmla",
+        "troubleshooting"
+      ],
+      "answerHash": "f11fbfb487d89be49670e5567062bd93c64e2cccf85a9c46b2483bc90bc91335",
+      "explanationCipher": "uKPXzkFc7U4YP221NL9yM2kYKJDxN/PxxQGqARdojvFpekbdTK7SF78c8Cs/IP0UHk9oEkRHXmmIOydIM19GInIQQuAl3l7c2ISLbatO+Im3XeT3wq2UISKDQdJxC/QIh8zlCQSZ2hDMkZ7zNPmYyAyXJi165Pkfio4j5jBE+Y6+50L5wWmEJwwAACqx3KqnZRoFPOT7oxMmKVIf1CqS88s03vO2jTrW6NX5OUX+8DWr5tPgS0ZRm8lHWnFIe1fYkg3kLM+IGvaF+b+2DyK8KgWm+92K5KBfItEjPYjHg1f/Nkrwjgzq1qFPrKl3DLgnCIAaxtheXb+xvpL2p6G9YjFaVqrA9pHKENpLvMCKFTtgVqwfYY+6kJdOnpKYzMWCEvQfomrR7HqcjmZLDY5XpKTl+gin3cuZOch4uB/o6uC0q4c+9+GXW7BV6D3L"
+    },
+    {
+      "id": "dp600-q-10-2",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A2",
+      "skillId": 10,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "Which of these is a legitimate reason to manage a semantic model through the XMLA endpoint instead of publishing from Power BI Desktop?",
+      "options": [
+        "It lets the model exceed the tenant storage limit",
+        "It allows deploying only the changed metadata rather than republishing the whole model",
+        "It removes the need for the model to sit on a Fabric or Premium capacity",
+        "It converts an import model into Direct Lake automatically"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/guidance/powerbi-implementation-planning-usage-scenario-advanced-data-model-management",
+      "sourceSkillBullet": "Deploy and manage semantic models by using the XMLA endpoint",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/guidance/powerbi-implementation-planning-usage-scenario-advanced-data-model-management",
+      "reviewStatus": "draft",
+      "tags": [
+        "xmla",
+        "deployment"
+      ],
+      "answerHash": "d1856446ffba0b77f4e3daa549914b792fcc2824abcee72c250cdb7521b85cd5",
+      "explanationCipher": "rljccZ+t+PKyQtTncIXCU5m7I/l+pGOLZ6VZFkJIVG95hoMxzOpXVBHKoSQAX9R26d3wmh7GIPMWUQ07GrWxmpiwwtdsrdIC+4SSyasQ5JEEMga7/vJ6cJ5cGZrjw265V0fD3/+T0wwm0l7QXfJyNt2H8bY/tTsUoJeo4kN3FL9iuhkcodaNECZEx9A/ZKDrJUi9uHx+oVhioxNKgXzt2TmFHyYNqbtxqKjIPryYWAUQ5gekTkJkbXzruzA4lDtRJKHObRytmpadaQwYZg3U3CJO2/e0TI05QuRK1ZcVuB/704GrRNeOtxDR2PjeFnAyY6BhETXeYoHXoXZPUeVO//dUo6eD105LzuJX59kNXtZUnyCVdawtWmejR9Cydc1UHGyC9pgJsSOTmQ=="
+    },
+    {
+      "id": "dp600-q-10-3",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A2",
+      "skillId": 10,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "You are pointing SQL Server Management Studio at a workspace for the first time. What form does the XMLA connection string take?",
+      "options": [
+        "https://app.powerbi.com/groups/ followed by the workspace id",
+        "powerbi://api.powerbi.com/v1.0/myorg/ followed by the workspace name",
+        "abfss:// followed by the OneLake path of the workspace",
+        "The SQL analytics endpoint of the workspace lakehouse"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/enterprise/powerbi/service-premium-connect-tools",
+      "sourceSkillBullet": "Deploy and manage semantic models by using the XMLA endpoint",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/enterprise/powerbi/service-premium-connect-tools",
+      "reviewStatus": "draft",
+      "tags": [
+        "xmla",
+        "connection"
+      ],
+      "answerHash": "c75e4195c903b9a5b01513cae554d85e029cca2767acfd85c7ceb6974eddac6b",
+      "explanationCipher": "Yh8jTaeO37551iEGstvNjCl8CxoxFfLSO7CDNCq52kBAddGKu318LVgcW9q9NDmIsY4kCPZjg0G9f/21u/iN6kfSsiMPnelBnhvB0f4JSyS+nCj/4mJIL3kw5Be7r9nLt33LEglvC1zzX8dM1arjWd467UXt8A0D3nqC63J+qj7pcD0y1gdC/mDufpsJfctzkYsmrwbp+7Rum35wDiGcZi3+V3kgCn5csR2732o5BydAva/Mf3pKNQ/9FXvZeyTSgGxwGc5k6ckTTSxjxJg/GbmwnB0qWp9DcnLG4iQnQ86VhM3mVcnQvV1kccN//PF3v7yEiNyPTmBuLDfZP2edCPOfNSfVRsnBWTH/jTg+5mTn96WcPYmvtS3s8ilHZfH8eI0BKTwazCJWrxUqnF1HajPxm2YMczU14dr19eyvcVFWgvxh8EzVJ0N4N31K6Q=="
+    },
+    {
+      "id": "dp600-q-11-1",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A2",
+      "skillId": 11,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "You distribute a Power BI template file to several regional teams so each can point it at their own database. What does that file contain?",
+      "options": [
+        "Only the connection details, with no visuals",
+        "The report layout, queries and model definition, but no data",
+        "The report and a cached copy of the source data",
+        "A read only rendering of the report pages"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/guidance/powerbi-implementation-planning-usage-scenario-customizable-managed-self-service-bi",
+      "sourceSkillBullet": "Create and update reusable assets, including Power BI template (.pbit) files, Power BI data source (.pbids) files, and shared semantic models",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/guidance/powerbi-implementation-planning-usage-scenario-customizable-managed-self-service-bi",
+      "reviewStatus": "draft",
+      "tags": [
+        "pbit",
+        "templates"
+      ],
+      "answerHash": "06e0578d67295abaf4dea9bfc5eb67d6be2f7bdfa4385aa26482be16399809cc",
+      "explanationCipher": "oq1aiOf1hyXKZ2afxQIWPUJ7K9mYD0AyX2wCPrbVVzxmhsnFDWvedNYXwBYDCXPUN47tnUf9JawBj8ZogxtJgUqXxZC23TylXI1i10EIIGylCM0CXhjX4vTAx9GvgW10L+qeQZBMUuzfbMw5NF5PB6913/WJs+p4rdgKzcIXfkvNHoH/XsiDhxZcBmHN8tz6TIVcBPFapHg6zIabtz+VUIAiPdh7LGEBPAP4diqGImi2DGw0My3fU0JRuyC/e2q0EJcvQlcv3TWLsG+BtWK2tM6l5ulky9rMg34vqEkERfCPWAmXdorwsvlBqlEgI9nuRPJANyd7Pz6YLLeeYUsDHDV1y/rFh85BzmYgRGZtYKXhjsvYlNjPxSrvbrYR3ckyBwc="
+    },
+    {
+      "id": "dp600-q-11-2",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A2",
+      "skillId": 11,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "Analysts keep mistyping the server name when they start a new report against the approved warehouse. Which artifact removes that step for them?",
+      "options": [
+        "A deployment rule on the development stage",
+        "A Power BI template file containing the finished report",
+        "A shared semantic model published to their workspace",
+        "A Power BI data source file that opens Desktop straight into the right connection"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/guidance/powerbi-implementation-planning-usage-scenario-customizable-managed-self-service-bi",
+      "sourceSkillBullet": "Create and update reusable assets, including Power BI template (.pbit) files, Power BI data source (.pbids) files, and shared semantic models",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/guidance/powerbi-implementation-planning-usage-scenario-managed-self-service-bi",
+      "reviewStatus": "draft",
+      "tags": [
+        "pbids",
+        "self-service"
+      ],
+      "answerHash": "97e61575e5173be385e4349953b8e0e85e5a384f9117d62c3df8d062db188cf3",
+      "explanationCipher": "Xw+d0VGY78ZcdI/ZUzLHUTwvvqMYXA2ZKtSGGmb6OcSa8vu+iwqXD878G++KjUZGGvmZyess+5b4ZfUY/WCTEy0gRb+K8u0ijJxtvEmql4TffqjBm/N9LL5n0rT0mym8cQH/QfaYwShifXkyC6hz5o+Nim/a3cHzvNT81J1rB87R+ivYWbmnUuIGsjJKefpC5SKG6XjHaaj+63e5kLrPdR0QDQOuJ1UQahMk4vazpgu+6fS6qdxpGxTJKJja3IaBDadwwA0Qekp+PMtJ24Fx4UDuocO8s8Ov1GgOTnj1qP/mtvk9sei3JeFcV1WvSjVhmchOjnoTceJIJcFXkeYCLd3SeaFoEKGetBpzAl5KfxnUTZdksBDID+d5w5zFa89zGYurE+k8SSZA96PIaCgBvcAjuxW6AbRRyrK7PQpBsgAX4HAIQ7aEvqZ5O+Pi0Q=="
+    },
+    {
+      "id": "dp600-q-11-3",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A2",
+      "skillId": 11,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "One certified semantic model is meant to serve report authors across five different workspaces. What must those authors be granted on it?",
+      "options": [
+        "A certified endorsement on their own reports",
+        "Reshare permission on the model",
+        "Build permission on the semantic model",
+        "The Contributor role in the model's own workspace"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/connect-data/service-datasets-build-permissions",
+      "sourceSkillBullet": "Create and update reusable assets, including Power BI template (.pbit) files, Power BI data source (.pbids) files, and shared semantic models",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/connect-data/service-datasets-build-permissions",
+      "reviewStatus": "draft",
+      "tags": [
+        "shared-semantic-model",
+        "build-permission"
+      ],
+      "answerHash": "655194773de730fac73b4a0bea4d4a00fc4c359a210f564a05aa56c1e6dd5b2b",
+      "explanationCipher": "k7vyPAoOY12aWZna/ResdMvPRZLo2f24FEyIyWpSRRdwYORCRhqa4P0hd/YqttJmpjghEwtY/TGcVM1o7hmbHGZ0ZqYOH2oyAONFUAEQZvc9mZr2tvlk4TdC/KmHpJZtEzzklqdJoH4q8CSnWUXpkYzN2GPr3uHq/nxpj8DCiTbqBKbQnB+ymQWlDfkJFLACM5s6nP78AXhlfj3EMrhq3g3/6W2efzDcTT2ItwK8CGJOACjwbdh6pApVUms6dJ8fbkjUDM8hDNUsIduJ1V8DbQ3PN4kKVqkYpRYv+bv5p4gRtg4uti7DfdDpPHvmUOPXXRylFYTOOlSCMO3QlalnOZAoLcL0/GYN/vjOEbfukDznwGHnegYIvIm3xVOwPbwf0sZjvFw6TL1eIyuczQlKZRVbUhuvZsEWQK0WZMg2m0X/a0D5bXJSqhEMOhdRyqjjmZorltTYNxVugOAN+g=="
+    }
+  ]
+}

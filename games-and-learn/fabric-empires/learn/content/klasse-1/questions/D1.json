@@ -1,0 +1,174 @@
+{
+  "cluster": "D1",
+  "generated": "tools/content/build-questions.mjs",
+  "questions": [
+    {
+      "id": "klasse1-q-4-1",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D1",
+      "skillId": 15,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Womit fängt das Wort Sonne an?",
+      "options": [
+        "N",
+        "O",
+        "S",
+        "E"
+      ],
+      "tags": [
+        "anlaut"
+      ],
+      "answerHash": "413cca231fb25335e9e440b031880ab7207202c46299fb131776805a0f076ab1",
+      "explanationCipher": "YcssHX88Axfwde3rsHpLuuD3UFv1yyNtF0bT5XFTS4tDFSIWUz4IecIOkOkCTVUvtz+jy1FxAdI/3B7YMoJIlohV34jtvsuG/0tYisVJWusD2v9w/qE="
+    },
+    {
+      "id": "klasse1-q-4-2",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D1",
+      "skillId": 15,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Womit fängt das Wort Baum an?",
+      "options": [
+        "M",
+        "B",
+        "A",
+        "U"
+      ],
+      "tags": [
+        "anlaut"
+      ],
+      "answerHash": "83590ba2c70f2c8f390f0074bf1a93e7ac4e12a5aecc98904acd107ef447c8a3",
+      "explanationCipher": "4VzErWq+Edrd+fQFB2GauMJ03fy6l7sUnf7sXEMtKOF9g7GC2IavShove1Iur6VOvHevsLi62KPX2QOrKFxHER2Pm3vpmUZj9xu9eoBO"
+    },
+    {
+      "id": "klasse1-q-4-3",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D1",
+      "skillId": 16,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Welchen Laut hörst du am Ende von Hund?",
+      "options": [
+        "t",
+        "n",
+        "h",
+        "u"
+      ],
+      "tags": [
+        "endlaut"
+      ],
+      "answerHash": "0e8235ac2ec64a9c9cd17a2336b0186fcfbbbef08e2ff22d4e06eef82a9c496b",
+      "explanationCipher": "aI5xjt/uYBgo7EOKEO5ZuvXvuZzNBxg338QA0cTlB9R7RL7Y+Pil4elF0jqlNdocWYgmUb86UP+D+CDMQrso5WlZOdzrkDYn3GNoa95Az1mOyiO5rJgtZMKna/YzbA=="
+    },
+    {
+      "id": "klasse1-q-4-4",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D1",
+      "skillId": 17,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Welcher Buchstabe ist ein Vokal?",
+      "options": [
+        "B",
+        "T",
+        "A",
+        "K"
+      ],
+      "tags": [
+        "vokale"
+      ],
+      "answerHash": "c2041e8055cddef5f62af106c370ee3b3ee0c04d732f338a161b89b4d781cf3f",
+      "explanationCipher": "cfIT29K74KVqFaYaVwu6KBeRLg4lH1m0OSzQNBpgA8CN7SQc/txTWdMmME2BHWUm0ToQXOhGrjjLCCk46z0zlSDfdEZQ6u06FoW/d2v6hXga4EijnkkCHzR6ziiU"
+    },
+    {
+      "id": "klasse1-q-4-5",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D1",
+      "skillId": 17,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Welcher Buchstabe ist KEIN Vokal?",
+      "options": [
+        "M",
+        "O",
+        "E",
+        "I"
+      ],
+      "tags": [
+        "vokale"
+      ],
+      "answerHash": "71a8e31adb9c9f2bb7056d731481c0576517dbf804f7bd22e27f1164ee0f93f6",
+      "explanationCipher": "2D9Ae/vdKh13BdIOJadCaUf+0x7d1L5aulBrWmIV13mQmq4jwolDLkgWQ7TJ3KU6vjOLOFAUG+PGrQ2o8KLgItwBKIt9atB6EJymj1luJQijC0duCA=="
+    },
+    {
+      "id": "klasse1-q-4-6",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D1",
+      "skillId": 18,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Welcher Buchstabe kommt im Alphabet nach B?",
+      "options": [
+        "C",
+        "D",
+        "A",
+        "Z"
+      ],
+      "tags": [
+        "alphabet"
+      ],
+      "answerHash": "c26e2d29ab649a8155bc52dd66437c39df95cadf7c96c357f14f570f6e4ebe0e",
+      "explanationCipher": "ZW6tl86yVjUjvl15B3hJTk7lqaZlpcODLuXKGpzAmNkKYhgXq3T6sbJZEyPULbjZWTbKAScGiB0eLlo/QTOZMy6ySmHu2fCyVCrsUCs/O7Ry5GaX"
+    },
+    {
+      "id": "klasse1-q-4-7",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D1",
+      "skillId": 18,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Mit welchem Buchstaben endet das Alphabet?",
+      "options": [
+        "A",
+        "Y",
+        "X",
+        "Z"
+      ],
+      "tags": [
+        "alphabet"
+      ],
+      "answerHash": "b81eba4480c737b289f7144b1316c124b2f4612db0b41493a9a9291f59420613",
+      "explanationCipher": "c1SoWmq3td9see7s10hz/1EmmilV6fr7SXzTXWvUrCKEBWxFrqzEEpBq1vU76r2z6BmK28RomQTZGMKRyy6kRLfKFIr/DGmsqXnjOOlmLg=="
+    },
+    {
+      "id": "klasse1-q-4-8",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D1",
+      "skillId": 15,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Womit fängt das Wort Maus an?",
+      "options": [
+        "U",
+        "S",
+        "A",
+        "M"
+      ],
+      "tags": [
+        "anlaut"
+      ],
+      "answerHash": "a9ab3f62e3d204b65d10237eb4fa23afecfc9ebcb1f1db89888ebb05ec50373d",
+      "explanationCipher": "5V8iuqBcsozFtz9QnCM3OFDkusCPSWUMatRT2vHQHvW9zwRO6xih+AlGaKkmb62wPRPB6Xrvx/3NVKPu"
+    }
+  ]
+}

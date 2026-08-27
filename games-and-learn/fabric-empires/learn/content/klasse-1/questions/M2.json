@@ -1,0 +1,219 @@
+{
+  "cluster": "M2",
+  "generated": "tools/content/build-questions.mjs",
+  "questions": [
+    {
+      "id": "klasse1-q-2-1",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M2",
+      "skillId": 6,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "3 + 4 = ?",
+      "options": [
+        "6",
+        "7",
+        "34",
+        "8"
+      ],
+      "tags": [
+        "plus"
+      ],
+      "answerHash": "1dad2c3627581eb39b408046e55afe9308049ba181dd677c5b966faeca7474ec",
+      "explanationCipher": "UUZrtPV2GLp/aNdWB7aEKaLhtUwLKbiqa3Mo3VyC8WIRDSaAzejnuBb9a5c0rmADjtyXLV+4Mh4jieVfirA9TsfjBEQ/CNXTlZe+wqlhyunp7ALinekdAzXxw8UewDE="
+    },
+    {
+      "id": "klasse1-q-2-2",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M2",
+      "skillId": 6,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "5 + 5 = ?",
+      "options": [
+        "9",
+        "10",
+        "55",
+        "11"
+      ],
+      "tags": [
+        "plus"
+      ],
+      "answerHash": "648fa08b6f6497649bd07931069262e44004fd53150f56ffe331527b011456c4",
+      "explanationCipher": "DCnSwVEabbgU3KqKOMr0259CbGq0y0gIGqwIKlrKOMVmWi8BfZDmjoT9rYk85zOn/msSo7W24SCIiW8EEoI/apmGFosA2Z4dMZUKgUsjUwF5nfLh4Gq1oa9lSd3f0W7DJ/8CP91ElAU="
+    },
+    {
+      "id": "klasse1-q-2-3",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M2",
+      "skillId": 7,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "9 - 4 = ?",
+      "options": [
+        "5",
+        "13",
+        "4",
+        "6"
+      ],
+      "tags": [
+        "minus"
+      ],
+      "answerHash": "cfb6c9e5844682ce8b337f66700364bf6d03f6ff4b43604a94a46ad27ebadf84",
+      "explanationCipher": "raWcyc0jn4wCVHCoW73ppEthXUgqXzWbKvv3p98qfZ8fhh7yUtTA3rixXiVVDgtpF420W/++9tJtGWmblacsj5T6zaj6xo5xmUKNEPk6EgDS9Z35qDyT"
+    },
+    {
+      "id": "klasse1-q-2-4",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M2",
+      "skillId": 8,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "7 + 5 = ?",
+      "options": [
+        "2",
+        "13",
+        "11",
+        "12"
+      ],
+      "tags": [
+        "plus",
+        "zehnerueberschreitung"
+      ],
+      "answerHash": "4005027eb1622245074a4567912ddfed1ea68d0284f0dc7d967bb2bbbd4dc7e8",
+      "explanationCipher": "zgrCQRxUAHWwUCwLjreAliSBLE/kp5cVap8038Qo8Wmp53p8HWjxn405XHjP+3MQt1emOUIgTDDMWrV1edwkxN1d2JzyR0ysSsJElHU3gA18IpodKIrWUbB5Cn6JVDYsamStdw=="
+    },
+    {
+      "id": "klasse1-q-2-5",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M2",
+      "skillId": 8,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "8 + 6 = ?",
+      "options": [
+        "12",
+        "13",
+        "14",
+        "15"
+      ],
+      "tags": [
+        "plus",
+        "zehnerueberschreitung"
+      ],
+      "answerHash": "ddd979eca405a989dfc0c105206da98a35e06c854f580d057170eb36352abae5",
+      "explanationCipher": "FxwjD4NaMv62Z7dX32Yp6cXeDenPxNUioUJpJdfE9UF0KX75svQdosGbKJLrttLdqqdgDL6c5aFNjufDZ6SK1zBULKpvkA=="
+    },
+    {
+      "id": "klasse1-q-2-6",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M2",
+      "skillId": 9,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "15 - 7 = ?",
+      "options": [
+        "8",
+        "7",
+        "22",
+        "9"
+      ],
+      "tags": [
+        "minus",
+        "zehnerunterschreitung"
+      ],
+      "answerHash": "a40b3cd083a7ecabd147e8afb5724ce7d77f9558a258beb8c3826c6d461c9c87",
+      "explanationCipher": "mCu6fqwahEdf0p3RWuIdI0doxMgJv0vbiEF+nXrF9nYMJ0SoacYBjmbNNtbVlAPykOH4KWjDL+NfZpo9tflN6RLfbew6e2q4k+l3EWlSjJfytw2TTQ=="
+    },
+    {
+      "id": "klasse1-q-2-7",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M2",
+      "skillId": 10,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Das Doppelte von 6 ist?",
+      "options": [
+        "12",
+        "10",
+        "8",
+        "3"
+      ],
+      "tags": [
+        "verdoppeln"
+      ],
+      "answerHash": "fb4e2319b05fda4b465951c8bdaf73a583b8f14d8b4d23379dfeb8a5663aed1a",
+      "explanationCipher": "6TlAS2FS5epf1YJXwxEjlpQmMjm/ykyCUlWDN2k2RjR4ZbKnTFV4p7ARKhCJ+jWXte7rdC/vIQH6bWuPuyIvSQwU7PA="
+    },
+    {
+      "id": "klasse1-q-2-8",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M2",
+      "skillId": 11,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Die Hälfte von 10 ist?",
+      "options": [
+        "2",
+        "6",
+        "20",
+        "5"
+      ],
+      "tags": [
+        "halbieren"
+      ],
+      "answerHash": "9504c3beeb87ff6b5e6519772165a2f8024bbc2650ec31acc46e6f9ac829fb4c",
+      "explanationCipher": "q+HApmB2U1kLNOWFjl8SsEQrebb5Tdy9Bo8njeA4BUurcjx1I4ggA+GOxVA1Ck/9QEtmd9Llkw711l8kLZj6396CtwvTMG0di78ChnAiL2I//Dl2YXA="
+    },
+    {
+      "id": "klasse1-q-2-9",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M2",
+      "skillId": 7,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "10 - 10 = ?",
+      "options": [
+        "10",
+        "0",
+        "1",
+        "20"
+      ],
+      "tags": [
+        "minus"
+      ],
+      "answerHash": "1786e2d5e41dd82658bc93277432e7a7ede68c31461d53104149e5d10f3bd901",
+      "explanationCipher": "Wx4Nt4zxHTSPDAKyRfys25jAdF8CX8BO/t/GMnpd9AbG8I0rj7Df3aMn/8ob4VVNHdX2AQvt+ix2N9EUwWRUxN9GuH0Iaiu3/TVh//vTgdoManGLpr6+wHHa1sk="
+    },
+    {
+      "id": "klasse1-q-2-10",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M2",
+      "skillId": 6,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "6 + 0 = ?",
+      "options": [
+        "6",
+        "60",
+        "7",
+        "0"
+      ],
+      "tags": [
+        "plus"
+      ],
+      "answerHash": "f24c311e70435e2e17cd14167f2f132c4cbfa4df322f191d4fc059040e66bd06",
+      "explanationCipher": "W9IvyxJ5JLc1evtzS6jG5O8nunC3+DM6o1djBCjjdyxFYCmOZaZnNj+4KL/daRnYy/j/cIDEQD7srlHwSsjTsEd62aH6X1v3hhXQ8WwsOdCwiiGoWrbF8/kFxKpKOcduc2jbdjLf5HviRA=="
+    }
+  ]
+}

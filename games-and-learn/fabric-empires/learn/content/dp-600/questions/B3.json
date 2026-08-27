@@ -1,0 +1,319 @@
+{
+  "cluster": "B3",
+  "generated": "tools/content/build-questions.mjs",
+  "questions": [
+    {
+      "id": "dp600-q-26-1",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B3",
+      "skillId": 26,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Which experience lets an analyst build a query over warehouse tables by dragging and combining steps, without writing any T-SQL by hand?",
+      "options": [
+        "A KQL queryset",
+        "The SQL query editor",
+        "The visual query editor",
+        "A Spark notebook"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/data-warehouse/visual-query-editor",
+      "sourceSkillBullet": "Select, filter, and aggregate data by using the Visual Query Editor",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/data-warehouse/visual-query-editor",
+      "reviewStatus": "draft",
+      "tags": [
+        "visual-query",
+        "warehouse"
+      ],
+      "answerHash": "a5b610b8fdc66184011f098f1275b506a5071e25192c2d9df51be2c00bddd712",
+      "explanationCipher": "NaifJN55yy3kbdOKRXYJX4ldjoSXWc+SP+agU3dmD+HuhMAKbk0E34VFRcvEIIcZI28qPDXScK1YZsWRFQc2AYRnOgyBlHbKsVQYo5rPcYmAp/CTFYwyBm7j2WUTHyz0K/CCA/ZoLPWB9fmtliwe5PAr2C6JTzdus2s7za5E/Tr67hYI0tfj3mXADg7B+Tkw5GmZ1ol4Np4K6aIE5AorA5a7XWHcTzUl3i9+LDoL3XH/RI1jRQO94ZnfYTiVQcpGSFKMbkKWCZ8FAMkrWH7y/ved7oDE6roiTBNCnTN+BpoEy+R9oI44CqNhXMSqzULavQb6Z3fVXAZMhNF9YXsNpx1DnC6dBadgxBD9e2opl9wrDaxO3fZgiOSkoA=="
+    },
+    {
+      "id": "dp600-q-26-2",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B3",
+      "skillId": 26,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "The transformation steps offered by the visual query editor will look familiar to anyone who has used which other Microsoft tool?",
+      "options": [
+        "Tabular Editor",
+        "SQL Server Profiler",
+        "Power Query",
+        "SQL Server Integration Services"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/data-warehouse/visual-query-editor",
+      "sourceSkillBullet": "Select, filter, and aggregate data by using the Visual Query Editor",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/data-warehouse/visual-query-editor",
+      "reviewStatus": "draft",
+      "tags": [
+        "visual-query",
+        "power-query"
+      ],
+      "answerHash": "eb4f804ce001d837e70ff00b9cdd741d63e2fcbfa5fad73f9cdf72f59562d639",
+      "explanationCipher": "lj37kc/+IC0Sy5DpwQhQKTeBpsGRelIzfwHJ7MZRVWXeG+O3fKXyCPykkBF0ebU7gJsicgKSF1RJHFZQp68Etg+c8bHT0tLyWZmCb3gx27QH/Lng4HqtNIVerMCgw+tucUFD6dQgcf25ICz5Z1mzwZxjV9VQM8tG7/krQGcP+/tjh2Ile0rpKeBZxiPD0fZ6nG0HZ9iqefP/v4ZIx1nkwQwpuWF7s9HZmOjBiReSlK/Np0jIb3CdrV+rMy+PDLv1tbvdbJhWlk1CA365xJrhlZkuZTPXtgD3XFfJbcjCUvN7qYY7+97Zoj6HoU62RLBOvXmD6f2qhDL20ZOz8ygdXIr9"
+    },
+    {
+      "id": "dp600-q-26-3",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B3",
+      "skillId": 26,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "You have built a query visually and want other people to query the same shaped result from T-SQL. What is the most direct way to make that possible?",
+      "options": [
+        "Save the query as a view in the warehouse",
+        "Create a semantic model over the query",
+        "Copy the generated T-SQL into every consumer's query",
+        "Export the result to CSV and re-import it"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/data-warehouse/tsql-surface-area",
+      "sourceSkillBullet": "Select, filter, and aggregate data by using the Visual Query Editor",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/data-warehouse/visual-query-editor",
+      "reviewStatus": "draft",
+      "tags": [
+        "visual-query",
+        "views"
+      ],
+      "answerHash": "7d7508f23f91a567bd1a6f1eb00f0b2e5f129324427afa377869712677a963ae",
+      "explanationCipher": "gbi6rswm0jdTWIvomdi5Xl96rjIaRJjRFsh9+juxcY2mfp+qVkVl6iR+QUBcjvFLmUd3XoiVZom9HeBwCpYN7udsgtAisgMllbwR8VmoaiJWbJBY+S+2FSbu3/ZS24JUL5yBP9+105/Ry1QlJOzaUmbvostiu10l6JbNRlG8Kwo/z3SejCIcYx8EKjY0CF3Yzc3O5kAPh4HD46ASS/ouA5GBL6epFhy3Sc22m/ySqtALGYmscsGwotgBgAOpt4CDnNUQr5YuH6G2brCQa9qbND2rd9LLgUarv+KcPo5inyBuPsrjqRrG6EKMs3EOISPsG8J/h23Gj0R1wR4bewrFEcytqmwkBPo9ihXP5DptUdzZ+jXUEkU7klwqlc4K0F2ZyeHVylPUcYbXnoc="
+    },
+    {
+      "id": "dp600-q-27-1",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B3",
+      "skillId": 27,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "In a T-SQL query that groups sales by region, which clause keeps only those regions whose total exceeds a threshold?",
+      "options": [
+        "QUALIFY",
+        "FILTER",
+        "WHERE",
+        "HAVING"
+      ],
+      "learnUrl": "https://learn.microsoft.com/sql/t-sql/queries/select-having-transact-sql",
+      "sourceSkillBullet": "Select, filter, and aggregate data by using SQL",
+      "sourceLearnUrl": "https://learn.microsoft.com/sql/t-sql/queries/select-having-transact-sql",
+      "reviewStatus": "draft",
+      "tags": [
+        "sql",
+        "aggregation"
+      ],
+      "answerHash": "61a2930b662ad4b6e09fcbc8c03efbbeec607517b8295851f26a2a0692c90c0e",
+      "explanationCipher": "LGwHDFdcD2iqES5gZrXAehsWoxnnVH6sBHAMC0GnbD5taWHAnwZtkyYn1uEFjyl66P0/ejh6JgQL1AkrBLbe2A9f3h0e9asadK08p/YDXf7IjBWqlfuU5SO8/MwTwKsODSpbILue2G0Dnez0HHWA5EfP+qstNdSMGmzV4oGaIgy5CGgmCE8GRMnaIgyDQ/B/xmpJBBf+gvh8QUFNKdzanBKBJQnjXVCjo3m6bXF5/npk3K2He2wFHUuB5+MkizurTYTjukB5rV1bu+BWjczy5YwsqJ/aKGIesLoKi2a8eHxpYkHyqE8skv4EWSYIM+dEzcj3uXTxNW41dbpBjW9antqm9LzeTzU+1QVPTAIAixAmvWNl/owrWWMmllOekg83"
+    },
+    {
+      "id": "dp600-q-27-2",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B3",
+      "skillId": 27,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "An orders table has one row per order and many orders per customer. Which expression returns how many different customers placed an order?",
+      "options": [
+        "COUNT(DISTINCT CustomerKey)",
+        "COUNT(CustomerKey)",
+        "SUM(DISTINCT CustomerKey)",
+        "COUNT(*)"
+      ],
+      "learnUrl": "https://learn.microsoft.com/sql/t-sql/functions/count-transact-sql",
+      "sourceSkillBullet": "Select, filter, and aggregate data by using SQL",
+      "sourceLearnUrl": "https://learn.microsoft.com/sql/t-sql/functions/count-transact-sql",
+      "reviewStatus": "draft",
+      "tags": [
+        "sql",
+        "aggregation"
+      ],
+      "answerHash": "9f8ffb3b2219a2f57355850ef27a54fcfdaab244b69d13fc767fa7cddedc66d7",
+      "explanationCipher": "Z5ipH2Ug9WVPMP1xHtiwpKwxVMv/Mm0COAVklGaN/u8+QkCKW/nl01JqSlSfSzgcR6/v+AApPexrY7Unn0JavJxOC4u67HNEslxwL+9l6N/oa9irr8Q+HLMF5xwJQuQLZha3nyMn2ENCqU38zBYOQQJNlc1WzkouKjafVoSLHFfEzDdC7w6wwl6MvBYvtoE526C+ksRcZdUvxsxLPH4V9vB23Q/abTIJflRMMaoycjr5as+aEEck0wADhwUHFJzxMkQXMUU/rWocdpyva0Q3kdeDrquMPJ6T3PHJal0Iz54Gqo0kU9G/PBRZ42u96K59saZTVbExa68ZoGRsEqgObF24KTXAiUdo"
+    },
+    {
+      "id": "dp600-q-27-3",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B3",
+      "skillId": 27,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "You need a running total of daily revenue alongside each day's own revenue, in a single result set. Which T-SQL construct gives you that?",
+      "options": [
+        "A window function, SUM(Revenue) OVER (ORDER BY OrderDate)",
+        "A HAVING clause comparing to a running value",
+        "A self-join of the table to itself on a date range",
+        "GROUP BY OrderDate with SUM(Revenue)"
+      ],
+      "learnUrl": "https://learn.microsoft.com/sql/t-sql/queries/select-over-clause-transact-sql",
+      "sourceSkillBullet": "Select, filter, and aggregate data by using SQL",
+      "sourceLearnUrl": "https://learn.microsoft.com/sql/t-sql/queries/select-over-clause-transact-sql",
+      "reviewStatus": "draft",
+      "tags": [
+        "sql",
+        "window-functions"
+      ],
+      "answerHash": "88086d0ff48fa70fa1e2e6946113b5ff63cf3fbe793db37d4f2a9f1c0edacf99",
+      "explanationCipher": "szWAdnMlJedUCDezJB4mT6ZI62gfplpACkjfHUA9xkbcVvxik+S1RWftgMIpDHLgx7XC2neSmhdP1uCB+hHqQUOxhcQrD4QCX8aDi3zTnqHtflnnLY7vsupEyyKzAsFm/mjN+XzPGyUSVF098UFNyDRH+TDW8VWQldWGOzQ6b7HfNGcXUn7UggZYOfbLeja2kqgltpvZKxOsFyIhVtK/xmXNh9rzP8z1LQZdP+tg4MYS8Mo1Gjd7Hl5vINT/eh7pIOTNPWLUqYu2KgY7ZXYguHxeWx7r4DMOHpVjdGKcxW9tSUmOFC9qSjhF1TtPC+fQFLNr7ARyII621DsudY9hSGFNiFBKHtjJDz0lM5OKhHddxKp+UO4QajSpjzHOgjIRxDRfVFglmPg3kj6PMw2xw0WUdcucC5V9dK75Am0ucpZ1KwwJTdfPsCXCHwH7F3t0GoFoXda008syyQ=="
+    },
+    {
+      "id": "dp600-q-28-1",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B3",
+      "skillId": 28,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Which KQL operator restricts a table to the rows matching a condition?",
+      "options": [
+        "where",
+        "summarize",
+        "project",
+        "extend"
+      ],
+      "learnUrl": "https://learn.microsoft.com/kusto/query/where-operator",
+      "sourceSkillBullet": "Select, filter, and aggregate data by using KQL",
+      "sourceLearnUrl": "https://learn.microsoft.com/kusto/query/where-operator",
+      "reviewStatus": "draft",
+      "tags": [
+        "kql",
+        "filtering"
+      ],
+      "answerHash": "607693d99e50ed2f972cc461104ebb322df14731773b5d7c11b5f72f66aad1c5",
+      "explanationCipher": "DJhDIpWtQv7cxr2Z55gySWt9D9MHhGYdBTLCCxYSIBq6duVy4zLwcclRZRqDMcEJWZ9YZLEGYwQy5RYhf8dpseRw9dCwei2H38ppgTxdf1yogYJkLqQGOVwuLx8+JCplD1bKyXjr8ttN2oEx3ze9HE7VxbT/k0v/ECjfuK1s5qbWsm2tWpiLa2RYn5tcpOzF+8vppjR/g2/QlaU0hq0CyhyxqHmDlM/0XH1DFM9DFV2eTWq+P4dF67FwcPHpCx5qzp8M4Al8251qO86lfdc34jh1qSCj7FFgO+JuytFJecGnWcsZ0huceeO88aNyTuhDK6NfBcexy1U1tAmGvB9W/oIqLVXjyUqz/6SOBCnGYba122Njl2R3efBKvnmv"
+    },
+    {
+      "id": "dp600-q-28-2",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B3",
+      "skillId": 28,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "Which KQL operator produces a count of events grouped by device?",
+      "options": [
+        "distinct DeviceId, count()",
+        "summarize count() by DeviceId",
+        "project count() by DeviceId",
+        "extend count() by DeviceId"
+      ],
+      "learnUrl": "https://learn.microsoft.com/kusto/query/summarize-operator",
+      "sourceSkillBullet": "Select, filter, and aggregate data by using KQL",
+      "sourceLearnUrl": "https://learn.microsoft.com/kusto/query/summarize-operator",
+      "reviewStatus": "draft",
+      "tags": [
+        "kql",
+        "aggregation"
+      ],
+      "answerHash": "12f16c69ffc4bd7ca41cb316f6fab2b038316ef10acaaaa49fbc059d3c37e1ae",
+      "explanationCipher": "y8lCbdm+5sF0P72y8zsbdeYrxRNvaQFjIX2XwkR1p5M+ttL6eF2qVoEu+a6UQkCNdTVMZ8zPeJ5OLIuLx8kxffjqDsLDALCLS4fieTtOkU5pJN3u9KCokhZJ4aVGbVH9u5gZw6nCms3N4NaqQyLn2JXZoSs6IcCUH7HffCVuFEN3HSbG0SfkldBNaTdy2rVLq5sGemaKnL7Y+1cz7tWWURWBxSAjZennp9c5C1cqIO8EG/B5r0k3IkyGBZ1bD9ejcH3/hYnpuBfX2WAhSx5S+R/MHvtYnzC9tGtqg55rb3oZ7WBYWGdzTSI7uw7X85DG2Arbvpa1SqkzKt2ZqfUq6P1uQE9ww6mi/+Ll3r3hFNuR"
+    },
+    {
+      "id": "dp600-q-28-3",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B3",
+      "skillId": 28,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "You want one row per hour showing how many events arrived in that hour. Which KQL function rounds each timestamp down into an hourly bucket so summarize can group on it?",
+      "options": [
+        "todatetime(Timestamp, 1h)",
+        "floor(Timestamp, 1h)",
+        "bin(Timestamp, 1h)",
+        "datetime_diff('hour', Timestamp, 1h)"
+      ],
+      "learnUrl": "https://learn.microsoft.com/kusto/query/bin-function",
+      "sourceSkillBullet": "Select, filter, and aggregate data by using KQL",
+      "sourceLearnUrl": "https://learn.microsoft.com/kusto/query/bin-function",
+      "reviewStatus": "draft",
+      "tags": [
+        "kql",
+        "time-series"
+      ],
+      "answerHash": "ac7e42eab5eaacbbd6d3aa4c843433b434214fadef2c1e0deddec7fbebbe1f84",
+      "explanationCipher": "GQ7psqJo2awzofZE4yxdLy+jHqYlb3LL+mX9yncCXUvzbwhrePo4Aez/dWIx+wy9JAV7V1Ss8brXMT+wz1bBi8k2m6VRjGVY3qlM9KjJqVQH1ZFUnVYvrb1eM4uJ3pNp/LF2ErkT1DBjQyGrQ4BleyozkE3yOTdhR0Y7G0Wa+hKRoGsztsu+vozozRTQOuJJVi61gZ9fVKdO9yYFpxhvHFOj/prlambBAbHdtM6lyEn22zq63VfabokuLTfAysfXAsfEoiqbw3mTKnhYAEOxKWbYRxKnERLSiYEtkmopWrA7yVD71ZKyWsuEwKZpw8RaMQeIoYdtcSbZxIYIiuEYrwcr+7izadTSIsfbVSn3QLuKPtSZsc6qLAZ9WmxlaJnZD7DrxKbq"
+    },
+    {
+      "id": "dp600-q-29-1",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B3",
+      "skillId": 29,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "Which DAX function removes the filters currently applied to a table, so a measure can report a total that ignores a slicer?",
+      "options": [
+        "FILTER",
+        "KEEPFILTERS",
+        "RELATED",
+        "REMOVEFILTERS"
+      ],
+      "learnUrl": "https://learn.microsoft.com/dax/removefilters-function-dax",
+      "sourceSkillBullet": "Select, filter, and aggregate data by using DAX",
+      "sourceLearnUrl": "https://learn.microsoft.com/dax/removefilters-function-dax",
+      "reviewStatus": "draft",
+      "tags": [
+        "dax",
+        "filter-context"
+      ],
+      "answerHash": "fdf1bc2b77194d3a642a12a654ac2d9b8064a27c86da0481c79c55effae0d98b",
+      "explanationCipher": "M6Vn5xMSeVQFT/cmzmgwKjczGMZADJ4Qs9bHrLglae1QNhEv4TMkOqopsox8ASWgOCZZ+HtdLd6TUahTER6MsIMmAiCoIM+8eemIv9cppjq69i0WoNjckJLGRR+YFxRmt7SRHB2E9nwyWHfI2VA+V0tzU0BPC9EYXdhZRwh17Aor4K3qNskgmeQaiBZI47W0SLnzY9UAUNqA467iz7KSvqxt5Aq47qrt+iqzP2KPrNT4aHJFt1osw4VAdITVlNFhvuru64L6m6DopWCJnH2XM+l6v5t3ml46HZ+AvsgNGfkmDk3U8nZvoY68amfLmj2g+doOYeGhS7d+ZvtLUVm6JJ2fk4sKbdE4DIJxEtiDRZmi1jzhHQ=="
+    },
+    {
+      "id": "dp600-q-29-2",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B3",
+      "skillId": 29,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "Line total must be quantity multiplied by unit price, computed for each row and then added up, without adding a calculated column. Which DAX expression does that?",
+      "options": [
+        "SUM(Sales[Quantity] * Sales[UnitPrice])",
+        "SUM(Sales[Quantity]) * SUM(Sales[UnitPrice])",
+        "CALCULATE(SUM(Sales[Quantity]), Sales[UnitPrice])",
+        "SUMX(Sales, Sales[Quantity] * Sales[UnitPrice])"
+      ],
+      "learnUrl": "https://learn.microsoft.com/dax/sumx-function-dax",
+      "sourceSkillBullet": "Select, filter, and aggregate data by using DAX",
+      "sourceLearnUrl": "https://learn.microsoft.com/dax/sumx-function-dax",
+      "reviewStatus": "draft",
+      "tags": [
+        "dax",
+        "iterators"
+      ],
+      "answerHash": "7766c5f5713ecea511a73090467a2cce8cf9fdf4164e1ea0ace8c1fd26dafc34",
+      "explanationCipher": "8x+NsOL0gJH7E8G/HEGMQHhGpcRSqzKZldEoqGzYjwRlwL4q1Mo2Dk6V1lguuZ3F6nBDL4kX8ekT2+mRQyHLj8DSvyTuvjkEBjzcR9LAjt1rWIaZDbYIvMg7jxDvjEpnaF/ng3k0RgkqxaCzheJqWGE9fHTmnaO+biyfr8QAQdmiCx4LtjbvvVFROmNW5TPhd3HJo414aMfCTdTdxT2qNThG/fVAh8XuuGsr8sr82jewN5hfP2Iu+hE18y541AP7UYltEy718tEB7pAL+FL2QcqwHGeQQXOl5SJCrUxnzT9RPMslPqi0ZVbGgB5/7g9hXrRQgkCG+zQqrgBgGitwNqR+E/9nZaObC84hvwAqpUsM1Z47gcFQqz4ckrpsqBkhF4FbclWGJ9CIU0L5Jsohf4JNci/lmGfS9IGGuu1Ncf500Jlvam0ru51hFwbGIHgNO6p/Q2Lj1QLvn3tsF1UAeSU="
+    },
+    {
+      "id": "dp600-q-29-3",
+      "cert": "DP-600",
+      "branch": "B",
+      "cluster": "B3",
+      "skillId": 29,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "A measure must show each product's sales as a share of sales across all products, while a product slicer is active. Which denominator is correct?",
+      "options": [
+        "CALCULATE(SUM(Sales[Amount]), Product)",
+        "SUMX(Product, SUM(Sales[Amount]))",
+        "CALCULATE(SUM(Sales[Amount]), REMOVEFILTERS(Product))",
+        "SUM(Sales[Amount])"
+      ],
+      "learnUrl": "https://learn.microsoft.com/dax/calculate-function-dax",
+      "sourceSkillBullet": "Select, filter, and aggregate data by using DAX",
+      "sourceLearnUrl": "https://learn.microsoft.com/dax/removefilters-function-dax",
+      "reviewStatus": "draft",
+      "tags": [
+        "dax",
+        "filter-context",
+        "ratios"
+      ],
+      "answerHash": "5121063e532c68021ead8fa366aaf64eb0d574f6b1c91a01cf250bbf13771cd5",
+      "explanationCipher": "R5LSeFLlh/L5FsrZTQsrpsVEkjevRtXCAzt+JmOvwa/bnlGyQK5yTnmrYr+RceYkPmMtgoFAFDdeniX1c/4PXl25JUViOpA8cWKNYuIg830ocMm4vtLIYHeJTGw++hJCbzEl6wMi58t1gUUXVvHaUHlgqu1ayEhRVHiQ8W0ObhnYtDeRSg09aAswSBWIBlQUdGV/ZFFto70ATMCFaWfdT4E2Ba3EnRGZX+//kMwZbdR1PpTsMH3WZPYzy9z5msqM6SGPt03aFTbAzrVxuX0wp6bR26nW27fX85U2uL4+x2XnzqBXlbD2tmU956Hpwam9YVcvZsUSmbxXWCP9sLZHkQXxGo0e+wVF3v8="
+    }
+  ]
+}

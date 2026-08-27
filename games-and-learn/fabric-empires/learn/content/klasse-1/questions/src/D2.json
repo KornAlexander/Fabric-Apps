@@ -1,0 +1,90 @@
+{
+  "cluster": "D2",
+  "note": "Klasse 1, Silben klatschen und trennen.",
+  "questions": [
+    {
+      "id": "klasse1-q-5-1",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D2",
+      "skillId": 19,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Wie viele Silben hat Banane?",
+      "options": ["3", "2", "1", "4"],
+      "answer": "3",
+      "explanation": "Ba-na-ne. Dreimal klatschen.",
+      "tags": ["silben"]
+    },
+    {
+      "id": "klasse1-q-5-2",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D2",
+      "skillId": 19,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Wie viele Silben hat Haus?",
+      "options": ["1", "2", "3", "4"],
+      "answer": "1",
+      "explanation": "Haus ist eine einzige Silbe. Einmal klatschen.",
+      "tags": ["silben"]
+    },
+    {
+      "id": "klasse1-q-5-3",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D2",
+      "skillId": 19,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Wie viele Silben hat Schulranzen?",
+      "options": ["3", "2", "4", "1"],
+      "answer": "3",
+      "explanation": "Schul-ran-zen. Dreimal klatschen.",
+      "tags": ["silben"]
+    },
+    {
+      "id": "klasse1-q-5-4",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D2",
+      "skillId": 20,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Wie trennt man Blume richtig?",
+      "options": ["Blu-me", "Bl-ume", "Blum-e", "B-lume"],
+      "answer": "Blu-me",
+      "explanation": "Jede Silbe braucht einen Vokal: Blu-me.",
+      "tags": ["trennen"]
+    },
+    {
+      "id": "klasse1-q-5-5",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D2",
+      "skillId": 20,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Wie trennt man Garten richtig?",
+      "options": ["Gar-ten", "Ga-rten", "Gart-en", "G-arten"],
+      "answer": "Gar-ten",
+      "explanation": "Gar-ten. Zwischen den beiden Silben wird getrennt.",
+      "tags": ["trennen"]
+    },
+    {
+      "id": "klasse1-q-5-6",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D2",
+      "skillId": 19,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Wie viele Silben hat Elefant?",
+      "options": ["3", "2", "4", "1"],
+      "answer": "3",
+      "explanation": "E-le-fant. Dreimal klatschen.",
+      "tags": ["silben"]
+    }
+  ]
+}

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>IBCS Escape Room</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a1a;display:flex;justify-content:center;align-items:center;min-height:100vh;overflow:hidden;font-family:'Segoe UI',system-ui,sans-serif}
+canvas{border-radius:8px;box-shadow:0 0 60px rgba(80,160,255,0.25);cursor:pointer;max-width:100vw;max-height:100vh;touch-action:manipulation}
+#nameContainer{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;display:none;padding:32px 40px;border-radius:16px;border:2px solid #60a8ff;background:#0d1428;box-shadow:0 0 0 100vmax rgba(5,8,18,0.82),0 12px 48px rgba(0,0,0,0.6);z-index:10}
+#nameContainer input{font-size:18px;padding:10px 15px;border-radius:8px;border:2px solid #60a8ff;background:rgba(20,30,50,0.9);color:#fff;text-align:center;width:240px}
+</style>
+</head><body>
+<canvas id="c" width="900" height="600" tabindex="0"></canvas>
+<div id="nameContainer">
+  <label style="color:#fff;font-size:20px;display:block;margin-bottom:12px">Enter your name:</label>
+  <input id="playerNameInput" type="text" maxlength="20" placeholder="Player" />
+  <div style="margin-top:12px;color:#aaa;font-size:14px">Press Enter to start</div>
+</div>
+<pre id="gameStats" style="display:none"></pre>
+<script src="ibcs_rules.js"></script>
+<script src="ibcs_charts.js"></script>
+<script src="ibcs_stats.js"></script>
+<script src="ibcs_mobile.js"></script>
+<script>
+(() => {
+"use strict";
+const cv=document.getElementById('c'), ctx=cv.getContext('2d',{alpha:false});
+const W=900,H=600;
+if (window.IBCSMobile) window.IBCSMobile.makeResponsive(cv);
+// Crisp on every display: makeResponsive() sets the canvas CSS size to fit the
+// viewport; we then size the pixel buffer to THAT displayed size x devicePixelRatio
+// (recomputed on resize / zoom / monitor change), so the canvas is never up-scaled
+// and never blurry. All drawing stays in logical 900x600 coords; loop() applies
+// ctx.setTransform(cv.width/W,0,0,cv.height/H).
+function hidpi(){
+  const dpr = Math.min(3, window.devicePixelRatio || 1);
+  const cssW = parseFloat(cv.style.width) || cv.clientWidth || W;
+  const bw = Math.max(W, Math.round(cssW * dpr));
+  const bh = Math.round(bw * H / W);   // keep exact 3:2 so the transform stays uniform
+  if (cv.width !== bw || cv.height !== bh){ cv.width = bw; cv.height = bh; }
+}
+hidpi();
+addEventListener('resize', hidpi, { passive: true });
+addEventListener('orientationchange', () => setTimeout(hidpi, 260), { passive: true });
+const charts=IBCSCharts(ctx);
+const {RULES,STAGES}=window.IBCS;
+
+function txt(t,size,x,y,c,center,bold){ctx.fillStyle=c;ctx.font=(bold?'bold ':'')+size+"px 'Segoe UI',system-ui,sans-serif";ctx.textAlign=center?'center':'left';ctx.textBaseline='alphabetic';ctx.fillText(t,x,y);ctx.textAlign='left';}
+function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function wrap(t,size,maxW){ctx.font=size+"px 'Segoe UI',system-ui,sans-serif";const words=String(t).split(' ');const lines=[];let cur='';for(const w of words){const test=cur?cur+' '+w:w;if(ctx.measureText(test).width>maxW&&cur){lines.push(cur);cur=w;}else cur=test;}if(cur)lines.push(cur);return lines;}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+// ---------- state ----------
+let state='title';   // title | door | message | keypad | won
+let playerName='';
+let doors=[];        // one puzzle per door
+let doorIdx=0;
+let code=[];         // the secret combination (one digit revealed per door)
+let revealed=[];     // digits revealed so far
+let attempts=0, hintsUsed=0, startTime=0;
+let flash=null, flashT=0;   // {idx, ok}
+let entry=[];        // keypad entry
+let titleAnim=0;
+let hotspots=[];     // clickable regions for current frame
+
+// The final message-room: choose the IBCS-correct board headline.
+const MESSAGES=[
+  {t:'Group revenue rose 8% vs PY to €124m, led by EMEA (+15%).', ok:true},
+  {t:'Here is a chart showing the revenue figures for this year.', ok:false},
+  {t:'Revenue. EMEA, APAC, Americas. Plan and Actual and Forecast.', ok:false},
+];
+
+function buildDoors(){
+  // pick one representative rule from 5 distinct pillars that have a clear good chart.
+  const byPillar={};
+  RULES.forEach(r=>{ (byPillar[r.pillar]=byPillar[r.pillar]||[]).push(r); });
+  const pillars=shuffle(Object.keys(byPillar)).slice(0,5);
+  doors=pillars.map(p=>{
+    const r=byPillar[p][Math.floor(Math.random()*byPillar[p].length)];
+    // 3 option charts: the rule's GOOD chart (correct) + 2 violation distractors
+    const others=shuffle(RULES.filter(x=>x.enemyKind!==r.good)).slice(0,2);
+    const opts=shuffle([
+      {kind:r.good, correct:true, code:r.code, side:'do'},
+      {kind:others[0].enemyKind, correct:false, code:others[0].code, side:'dont'},
+      {kind:others[1].enemyKind, correct:false, code:others[1].code, side:'dont'},
+    ]);
+    return {rule:r, opts, solved:false};
+  });
+  code=doors.map(()=>Math.floor(Math.random()*10));
+  revealed=[];
+}
+
+function startGame(){
+  attempts=0;hintsUsed=0;doorIdx=0;entry=[];flash=null;
+  startTime=performance.now(); buildDoors(); state='door';
+}
+
+function win(){
+  state='won';
+  const dur=(performance.now()-startTime)/1000;
+  publishRayfinStats({
+    player_name:playerName||'Player',
+    duration_seconds:Math.round(dur*10)/10,
+    score:Math.max(0, 1000 - attempts*50 - hintsUsed*25),
+    won:true, lives_left:1,
+    deaths_total:attempts, coins_collected:doors.length,
+    enemies_stomped:doors.length, attacks_used:attempts,
+    final_form:'escape', level_reached:doors.length+1,
+    ibcs_certified:true,
+  });
+}
+
+// ---------- input ----------
+function canvasXY(e){const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)*(W/r.width),y:(e.clientY-r.top)*(H/r.height)};}
+cv.addEventListener('click',e=>{
+  const {x,y}=canvasXY(e);
+  if(state==='title'){ nameBox.style.display='block'; nameInput.focus(); return; }
+  if(state==='won'){ startGame(); return; }
+  for(const hs of hotspots){ if(x>=hs.x&&x<=hs.x+hs.w&&y>=hs.y&&y<=hs.y+hs.h){ hs.fn(); return; } }
+});
+addEventListener('keydown',e=>{
+  if(state==='keypad'){
+    if(e.code.startsWith('Digit')){ pressKey(+e.code.slice(5)); }
+    else if(e.code==='Backspace'){ entry.pop(); }
+    else if(e.code==='Enter'){ submitCode(); }
+  } else if(state==='won' && e.code==='KeyR'){ startGame(); }
+});
+
+const nameBox=document.getElementById('nameContainer'), nameInput=document.getElementById('playerNameInput');
+nameInput.addEventListener('keydown',e=>{ if(e.code==='Enter'){ playerName=nameInput.value.trim()||'Player'; nameBox.style.display='none'; startGame(); } });
+
+// ---------- door logic ----------
+function pickOption(i){
+  const d=doors[doorIdx];
+  if(d.opts[i].correct){
+    d.solved=true; revealed.push(code[doorIdx]);
+    flash={ok:true, idx:i}; flashT=1.6;
+  } else {
+    attempts++; hintsUsed++; flash={ok:false, idx:i}; flashT=2.2;
+  }
+}
+function advanceDoor(){
+  doorIdx++;
+  if(doorIdx>=doors.length){ state='message'; }
+}
+
+// ---------- keypad ----------
+function pressKey(n){ if(entry.length<code.length) entry.push(n); }
+function submitCode(){
+  if(entry.length!==code.length) return;
+  if(entry.every((d,i)=>d===code[i])){ win(); }
+  else { attempts++; flash={ok:false, keypad:true}; flashT=1.4; entry=[]; }
+}
+
+// ---------- drawing ----------
+function bg(){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#10182c');g.addColorStop(1,'#070b16');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  // subtle brick lines for "room" feel
+  ctx.strokeStyle='rgba(255,255,255,0.03)';ctx.lineWidth=1;
+  for(let y=40;y<H;y+=40)dLineRaw(0,y,W,y);
+}
+function dLineRaw(a,b,c,d){ctx.beginPath();ctx.moveTo(a,b);ctx.lineTo(c,d);ctx.stroke();}
+
+function progressBar(){
+  txt('IBCS ESCAPE ROOM', 16, 24, 34, '#cfe0ff', false, true);
+  for(let i=0;i<doors.length;i++){
+    const lx=W-30-(doors.length-1-i)*30, ly=28;
+    ctx.fillStyle=doors[i].solved?'#37d67a':(i===doorIdx&&state==='door'?'#60a8ff':'#2a3550');
+    ctx.beginPath();ctx.arc(lx,ly,8,0,Math.PI*2);ctx.fill();
+  }
+  txt('Code so far: '+revealed.map(()=>'●').join(' '), 13, 24, 56, '#7a8499', false, false);
+}
+
+function drawDoor(){
+  bg(); progressBar();
+  const d=doors[doorIdx];
+  txt('DOOR '+(doorIdx+1)+' / '+doors.length+'  ·  '+d.rule.pillar, 16, W/2, 96, '#60a8ff', true, true);
+  txt('To unlock, click the chart that FOLLOWS this rule:', 17, W/2, 128, '#fff', true, true);
+  txt(d.rule.code+' — '+d.rule.title, 15, W/2, 154, '#cfe0ff', true, false);
+  const clue=wrap('Rule: '+d.rule.do, 14, W-160);
+  let cy=178; for(const l of clue){ txt(l,14,W/2,cy,'#9fe6bd',true,false); cy+=20; }
+
+  hotspots=[];
+  const cw=230, ch=210, gap=24, total=cw*3+gap*2, x0=(W-total)/2, y0=230;
+  for(let i=0;i<3;i++){
+    const x=x0+i*(cw+gap);
+    const isFlash=flash&&flash.idx===i;
+    ctx.fillStyle='#fbfdff'; rr(x,y0,cw,ch,14); ctx.fill();
+    ctx.lineWidth=isFlash?4:2;
+    ctx.strokeStyle=isFlash?(flash.ok?'#37a76a':'#e23b3b'):'#2a3550';
+    rr(x,y0,cw,ch,14); ctx.stroke();
+    charts.glyph(d.opts[i].kind, x+26, y0+26, cw-52, ch-90, d.opts[i].code, d.opts[i].side);
+    txt('Option '+(i+1), 14, x+cw/2, y0+ch-22, '#5a6678', true, false);
+    if(!flash) hotspots.push({x,y:y0,w:cw,h:ch,fn:()=>pickOption(i)});
+  }
+  if(flash){
+    const by=H-128, bh=96;
+    ctx.fillStyle='rgba(8,12,24,0.85)'; ctx.fillRect(0,by,W,bh);
+    ctx.fillStyle=flash.ok?'#37d67a':'#e23b3b'; ctx.fillRect(0,by,6,bh);
+    if(flash.ok){
+      txt('Unlocked! Revealed code digit:  '+code[doorIdx], 20, W/2, by+38, '#37d67a', true, true);
+      txt('Click anywhere to continue', 14, W/2, by+66, '#9fb0c8', true, false);
+      hotspots=[{x:0,y:0,w:W,h:H,fn:()=>{flash=null;advanceDoor();}}];
+    }else{
+      txt('Wrong — that chart breaks the rule.', 18, W/2, by+32, '#ff7a7a', true, true);
+      const dl=wrap("Avoid: "+d.rule.dont, 14, W-120);
+      txt(dl[0], 14, W/2, by+58, '#f3b0b0', true, false);
+      txt('Click anywhere to try again', 13, W/2, by+82, '#9fb0c8', true, false);
+      hotspots=[{x:0,y:0,w:W,h:H,fn:()=>{flash=null;}}];
+    }
+  }
+}
+
+function drawMessage(){
+  bg(); progressBar();
+  txt('FINAL ROOM — PRESENT THE BOARD MESSAGE', 20, W/2, 110, '#ffd86b', true, true);
+  txt('All doors open. To escape, choose the IBCS-compliant headline (SAY pillar):', 15, W/2, 142, '#fff', true, false);
+  hotspots=[];
+  let y=185; const bw=720, x=(W-bw)/2;
+  MESSAGES.forEach((m,i)=>{
+    const lines=wrap(m.t,16,bw-44);
+    const bh=28+lines.length*22;
+    const isFlash=flash&&flash.idx===i;
+    ctx.fillStyle='rgba(255,255,255,0.05)'; rr(x,y,bw,bh,10); ctx.fill();
+    ctx.lineWidth=isFlash?3:1.5; ctx.strokeStyle=isFlash?(flash.ok?'#37a76a':'#e23b3b'):'#2a3550'; rr(x,y,bw,bh,10); ctx.stroke();
+    let ly=y+26; for(const l of lines){ txt(l,16,x+22,ly,'#e8eef7',false,false); ly+=22; }
+    if(!flash) hotspots.push({x,y,w:bw,h:bh,fn:()=>pickMessage(i)});
+    y+=bh+16;
+  });
+  if(flash){
+    const by=H-96;
+    ctx.fillStyle='rgba(8,12,24,0.85)'; ctx.fillRect(0,by,W,96);
+    if(flash.ok){ txt('Correct — message-first, specific, quantified. The vault keypad appears…',16,W/2,by+44,'#37d67a',true,true); hotspots=[{x:0,y:0,w:W,h:H,fn:()=>{flash=null;state='keypad';}}]; }
+    else { txt('Not IBCS: a headline must state the insight, not describe the chart.',16,W/2,by+44,'#ff7a7a',true,true); hotspots=[{x:0,y:0,w:W,h:H,fn:()=>{flash=null;}}]; }
+  }
+}
+function pickMessage(i){ if(MESSAGES[i].ok){ flash={ok:true,idx:i}; flashT=1.6; } else { attempts++; hintsUsed++; flash={ok:false,idx:i}; flashT=2.0; } }
+
+function drawKeypad(){
+  bg();
+  txt('THE VAULT', 30, W/2, 96, '#ffd86b', true, true);
+  txt('Enter the '+code.length+'-digit code revealed behind the doors.', 16, W/2, 130, '#fff', true, false);
+  // display entry
+  const slotW=54, gap=14, total=code.length*slotW+(code.length-1)*gap, sx=(W-total)/2;
+  for(let i=0;i<code.length;i++){
+    const x=sx+i*(slotW+gap);
+    ctx.fillStyle='rgba(255,255,255,0.06)'; rr(x,160,slotW,64,8); ctx.fill();
+    ctx.strokeStyle='#60a8ff'; ctx.lineWidth=2; rr(x,160,slotW,64,8); ctx.stroke();
+    txt(entry[i]!==undefined?String(entry[i]):'–', 30, x+slotW/2, 202, '#fff', true, true);
+  }
+  // hint: which digits go where
+  txt('Reminder — digits in door order:  '+code.map(d=>'●').join(' '), 13, W/2, 248, '#7a8499', true, false);
+  // keypad 0-9 + clear + enter
+  hotspots=[];
+  const keys=['1','2','3','4','5','6','7','8','9','C','0','OK'];
+  const kw=80, kh=54, kgap=12, cols=3, gx=(W-(cols*kw+(cols-1)*kgap))/2, gy=266;
+  keys.forEach((k,i)=>{
+    const col=i%cols, row=Math.floor(i/cols);
+    const x=gx+col*(kw+kgap), y=gy+row*(kh+kgap);
+    ctx.fillStyle=k==='OK'?'rgba(55,167,106,0.18)':(k==='C'?'rgba(226,59,59,0.18)':'rgba(96,168,255,0.12)');
+    rr(x,y,kw,kh,10); ctx.fill();
+    ctx.strokeStyle=k==='OK'?'#37a76a':(k==='C'?'#e23b3b':'#3a4a6a'); ctx.lineWidth=2; rr(x,y,kw,kh,10); ctx.stroke();
+    txt(k, 22, x+kw/2, y+kh/2+8, '#fff', true, true);
+    hotspots.push({x,y,w:kw,h:kh,fn:()=>{ if(k==='C') entry=[]; else if(k==='OK') submitCode(); else pressKey(+k); }});
+  });
+  if(flash&&!flash.ok&&flash.keypad){ txt('Wrong code — try again.', 16, W/2, H-30, '#ff7a7a', true, true); }
+  else txt('Type on your keyboard too · Enter = submit · Backspace = delete', 12, W/2, H-30, '#7a8499', true, false);
+}
+
+function drawWon(){
+  bg();
+  const dur=((performance.now()-startTime)/1000);
+  txt('YOU ESCAPED!', 46, W/2, 180, '#37d67a', true, true);
+  txt('You solved every IBCS door and presented the message.', 18, W/2, 226, '#fff', true, false);
+  const rows=[['Doors solved',doors.length],['Wrong attempts',attempts],['Hints used',hintsUsed],['Time',Math.round(dur)+'s']];
+  let y=280; for(const [k,v] of rows){ txt(k,16,W/2-140,y,'#9fb0c8',false,false); ctx.textAlign='right'; txt(String(v),16,W/2+140,y,'#fff',false,true); ctx.textAlign='left'; y+=30; }
+  const a=Math.sin(titleAnim*3)*0.3+0.7; ctx.save(); ctx.globalAlpha=a; txt('Press R or click to play again',18,W/2,H-90,'#fff',true,true); ctx.restore();
+}
+
+function drawTitle(){
+  bg();
+  txt('IBCS ESCAPE ROOM', 42, W/2, 170, '#fff', true, true);
+  txt('Solve an IBCS puzzle on every door to escape the vault', 18, W/2, 212, 'rgba(96,168,255,0.9)', true, false);
+  const lines=['Each locked door shows a rule and three charts.','Click the chart that FOLLOWS the rule to reveal a code digit.','Open all doors, present the board message,','then enter the code to escape.'];
+  let y=270; for(const l of lines){ txt(l,16,W/2,y,'rgba(255,255,255,0.75)',true,false); y+=30; }
+  const a=Math.sin(titleAnim*3)*0.3+0.7; ctx.save(); ctx.globalAlpha=a; txt('Click to enter your name',20,W/2,H-110,'#fff',true,true); ctx.restore();
+}
+
+// ---------- loop ----------
+let last=performance.now();
+function loop(now){
+  ctx.setTransform(cv.width/W, 0, 0, cv.height/H, 0, 0); // map logical 900x600 onto the hi-dpi backing buffer
+  const dt=Math.min(0.05,(now-last)/1000); last=now; titleAnim+=dt;
+  if(flash&&flashT>0){ flashT-=dt; }
+  if(state==='title') drawTitle();
+  else if(state==='door') drawDoor();
+  else if(state==='message') drawMessage();
+  else if(state==='keypad') drawKeypad();
+  else if(state==='won') drawWon();
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+})();
+</script>
+</body></html>

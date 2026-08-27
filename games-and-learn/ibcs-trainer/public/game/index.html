@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>IBCS Trainer — Learn Chart Design by Playing</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Three browser mini-games that teach the IBCS SUCCESS rules for business charts: a rule platformer, Chart Swipe and an escape room.">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0a0a1a; --panel:#0d1428; --panel2:#11193a;
+    --accent:#60a8ff; --accent2:#3b6fe2; --good:#37a76a; --text:#eef2fb; --muted:#9aa6c4;
+    --border:rgba(96,168,255,0.22);
+  }
+  html,body{height:100%}
+  body{
+    background:radial-gradient(1200px 700px at 50% -10%,#16224d 0%,var(--bg) 60%);
+    color:var(--text); font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+    min-height:100%; display:flex; flex-direction:column; overflow-x:hidden;
+  }
+  /* ---------- menu ---------- */
+  #menu{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+        padding:32px 20px 48px;width:100%}
+  .logo{width:88px;height:88px;margin-bottom:8px;
+        filter:drop-shadow(0 8px 22px rgba(48,104,220,.45))}
+  .brand{display:flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.16em;
+         text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+  h1{font-size:clamp(26px,4.5vw,42px);font-weight:800;letter-spacing:-.02em;text-align:center;line-height:1.1}
+  h1 .hl{color:var(--accent)}
+  .sub{margin-top:12px;max-width:640px;text-align:center;color:var(--muted);font-size:clamp(14px,1.8vw,16px);line-height:1.55}
+  .cards{margin-top:36px;display:grid;gap:20px;width:100%;max-width:1040px;
+         grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .card{background:linear-gradient(180deg,var(--panel2) 0%,var(--panel) 100%);
+        border:1px solid var(--border);border-radius:16px;padding:24px 22px 22px;
+        display:flex;flex-direction:column;position:relative;overflow:hidden;
+        transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease}
+  .card:hover{transform:translateY(-4px);border-color:var(--accent);
+              box-shadow:0 14px 40px rgba(20,40,90,.55)}
+  .card .ico{font-size:34px;line-height:1;margin-bottom:14px}
+  .card h2{font-size:20px;font-weight:700;margin-bottom:8px}
+  .card p{color:var(--muted);font-size:14px;line-height:1.55;flex:1}
+  .tag{display:inline-block;margin-top:14px;margin-bottom:18px;align-self:flex-start;
+       font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);
+       background:rgba(96,168,255,.1);border:1px solid var(--border);padding:4px 10px;border-radius:999px}
+  .play{appearance:none;cursor:pointer;border:0;border-radius:10px;
+        background:linear-gradient(180deg,var(--accent) 0%,var(--accent2) 100%);
+        color:#04102b;font-weight:700;font-size:15px;padding:11px 16px;width:100%;
+        transition:filter .15s ease}
+  .play:hover{filter:brightness(1.08)}
+  .foot{margin-top:34px;color:var(--muted);font-size:12.5px;text-align:center;line-height:1.6}
+  .foot a{color:var(--accent);text-decoration:none}
+  .foot a:hover{text-decoration:underline}
+  /* ---------- player ---------- */
+  #player{position:fixed;inset:0;background:var(--bg);display:none;flex-direction:column;z-index:50}
+  #player.on{display:flex}
+  #bar{display:flex;align-items:center;gap:14px;padding:10px 14px;background:#070a16;
+       border-bottom:1px solid var(--border);flex:0 0 auto}
+  #back{appearance:none;cursor:pointer;border:1px solid var(--border);background:transparent;
+        color:var(--text);font-size:14px;font-weight:600;padding:8px 14px;border-radius:9px;
+        display:flex;align-items:center;gap:7px;transition:background .15s ease}
+  #back:hover{background:rgba(96,168,255,.12)}
+  #ptitle{font-size:14px;font-weight:600;color:var(--muted)}
+  #frameWrap{flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#05060e}
+  #frame{width:100%;height:100%;border:0;display:block}
+  @media(max-width:520px){ #menu{padding:24px 14px 36px} .card{padding:20px 18px} }
+</style>
+</head>
+<body>
+
+  <main id="menu">
+    <img class="logo" src="logo.svg" width="88" height="88" alt="IBCS Trainer Arcade logo" decoding="async">
+    <div class="brand"><span class="dot"></span>Actionable Reporting · Learn by Playing</div>
+    <h1>The <span class="hl">IBCS</span> Trainer Arcade</h1>
+    <p class="sub">Three browser mini-games that teach the <strong>IBCS&reg; SUCCESS</strong> rules for
+       business charts &mdash; spot the violations, collect the compliant visuals and make better
+       reports without reading a single standard. No install, runs right here.</p>
+
+    <section class="cards">
+      <article class="card">
+        <div class="ico">🎮</div>
+        <span class="tag">Platformer</span>
+        <h2>Rule Platformer</h2>
+        <p>Run and jump through nine IBCS rule levels. Stomp the bad charts, collect the compliant
+           ones and learn one SUCCESS rule per stage. Arrow keys / WASD&nbsp;+&nbsp;Space &mdash; or touch controls on mobile.</p>
+        <button class="play" data-src="ibcs_trainer.html">▶ Play Platformer</button>
+      </article>
+
+      <article class="card">
+        <div class="ico">🔥</div>
+        <span class="tag">Quick reflex</span>
+        <h2>Chart Swipe</h2>
+        <p>Swipe right on the IBCS-compliant chart, left on the rule-breaker. A fast-paced way to
+           train your eye for clean design. How many can you classify before the timer runs out?</p>
+        <button class="play" data-src="ibcs_swipe.html">▶ Play Chart Swipe</button>
+      </article>
+
+      <article class="card">
+        <div class="ico">🔐</div>
+        <span class="tag">Puzzle</span>
+        <h2>IBCS Escape Room</h2>
+        <p>Work through chart puzzles room by room. Pick the compliant visual to unlock the next door
+           and escape &mdash; each room hides a different SUCCESS rule.</p>
+        <button class="play" data-src="ibcs_escape.html">▶ Play Escape Room</button>
+      </article>
+    </section>
+
+    <p class="foot">
+      Built on <strong>Rayfin Apps</strong> in Microsoft Fabric · charts illustrate the
+      <a href="https://www.ibcs.com/standards/" target="_blank" rel="noopener">IBCS&reg; Standards</a>.<br>
+      Tip: click a game, then click the canvas once so keyboard &amp; sound activate.
+    </p>
+  </main>
+
+  <div id="player" aria-hidden="true">
+    <div id="bar">
+      <button id="back">‹ All games</button>
+      <span id="ptitle"></span>
+    </div>
+    <div id="frameWrap"><iframe id="frame" title="IBCS game" allow="autoplay"></iframe></div>
+  </div>
+
+<script>
+(function(){
+  "use strict";
+  var menu   = document.getElementById('menu');
+  var player = document.getElementById('player');
+  var frame  = document.getElementById('frame');
+  var ptitle = document.getElementById('ptitle');
+  var titles = {
+    'ibcs_trainer.html':'Rule Platformer',
+    'ibcs_swipe.html':'Chart Swipe',
+    'ibcs_escape.html':'IBCS Escape Room'
+  };
+  function launch(src){
+    frame.src = src;
+    ptitle.textContent = titles[src] || '';
+    player.classList.add('on');
+    player.setAttribute('aria-hidden','false');
+    menu.style.display = 'none';
+    if (location.hash !== '#play') history.pushState({play:src}, '', '#play');
+    setTimeout(function(){ try{ frame.focus(); }catch(e){} }, 60);
+  }
+  function home(){
+    player.classList.remove('on');
+    player.setAttribute('aria-hidden','true');
+    frame.src = 'about:blank';      // stop audio / game loop
+    menu.style.display = 'flex';
+  }
+  document.querySelectorAll('.play').forEach(function(b){
+    b.addEventListener('click', function(){ launch(b.getAttribute('data-src')); });
+  });
+  document.getElementById('back').addEventListener('click', function(){
+    home();
+    // Clear the #play hash directly (history.back() is unreliable once the
+    // iframe load + pushState have stacked extra session-history entries).
+    try { if (location.hash === '#play') history.replaceState(null, '', location.pathname + location.search); } catch(e){}
+  });
+  // browser back button returns to the menu instead of leaving the page
+  window.addEventListener('popstate', function(){
+    if (location.hash === '#play' && player.classList.contains('on')) return;
+    home();
+  });
+})();
+</script>
+</body>
+</html>

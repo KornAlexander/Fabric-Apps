@@ -1,0 +1,90 @@
+{
+  "cluster": "D4",
+  "note": "Klasse 1, Lesen. Kurze Saetze, hoechstens sechs sehr einfache Woerter.",
+  "questions": [
+    {
+      "id": "klasse1-q-7-1",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D4",
+      "skillId": 23,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Was ist ein Tier?",
+      "options": ["Katze", "Tisch", "Auto", "Buch"],
+      "answer": "Katze",
+      "explanation": "Eine Katze lebt und atmet, sie ist ein Tier. Die anderen sind Dinge.",
+      "tags": ["lesen"]
+    },
+    {
+      "id": "klasse1-q-7-2",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D4",
+      "skillId": 23,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Was kann man essen?",
+      "options": ["Apfel", "Stuhl", "Stein", "Schuh"],
+      "answer": "Apfel",
+      "explanation": "Ein Apfel ist Obst und schmeckt gut. Die anderen kann man nicht essen.",
+      "tags": ["lesen"]
+    },
+    {
+      "id": "klasse1-q-7-3",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D4",
+      "skillId": 24,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Die Sonne scheint. Wie ist das Wetter?",
+      "options": ["schön", "nass", "kalt", "dunkel"],
+      "answer": "schön",
+      "explanation": "Wenn die Sonne scheint, ist das Wetter schön und hell.",
+      "tags": ["lesen"]
+    },
+    {
+      "id": "klasse1-q-7-4",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D4",
+      "skillId": 24,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Tim hat drei Äpfel. Wie viele hat er?",
+      "options": ["3", "1", "4", "0"],
+      "answer": "3",
+      "explanation": "Im Satz steht drei. Drei Äpfel sind 3.",
+      "tags": ["lesen"]
+    },
+    {
+      "id": "klasse1-q-7-5",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D4",
+      "skillId": 24,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Der Hund bellt. Wer bellt?",
+      "options": ["der Hund", "die Katze", "das Kind", "niemand"],
+      "answer": "der Hund",
+      "explanation": "Im Satz steht: Der Hund bellt. Also bellt der Hund.",
+      "tags": ["lesen"]
+    },
+    {
+      "id": "klasse1-q-7-6",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D4",
+      "skillId": 23,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Was hat Räder?",
+      "options": ["Auto", "Baum", "Brot", "Hand"],
+      "answer": "Auto",
+      "explanation": "Ein Auto fährt auf vier Rädern.",
+      "tags": ["lesen"]
+    }
+  ]
+}

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IBCS Picture Review — pick what to improve</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2330; --line:#2a3340;
+    --txt:#e6edf3; --dim:#9aa7b4; --do:#37a76a; --dont:#e2706a;
+    --sel:#f0b429; --accent:#4a90e2;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);}
+  header{position:sticky;top:0;z-index:20;background:linear-gradient(180deg,#0d1117,#0d1117f0);
+    border-bottom:1px solid var(--line);padding:14px 20px;}
+  h1{margin:0 0 4px;font-size:20px}
+  .sub{color:var(--dim);font-size:13px;line-height:1.5;margin:0}
+  .tabs{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .tab{background:var(--panel2);border:1px solid var(--line);color:var(--txt);
+    padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600}
+  .tab.active{background:var(--accent);border-color:var(--accent)}
+  .tab .n{opacity:.7;font-weight:400;margin-left:6px;font-size:12px}
+  .toolbar{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
+  button.act{background:var(--panel2);border:1px solid var(--line);color:var(--txt);
+    padding:7px 14px;border-radius:8px;cursor:pointer;font-size:13px}
+  button.act:hover{border-color:var(--accent)}
+  button.primary{background:var(--sel);border-color:var(--sel);color:#231a00;font-weight:700}
+  .count{color:var(--sel);font-weight:700;font-size:13px}
+  main{padding:16px 20px 140px;max-width:1180px;margin:0 auto}
+  .view{display:none}.view.active{display:block}
+  .stage{margin:22px 0 8px;font-size:15px;font-weight:700;letter-spacing:.3px;
+    padding:6px 10px;border-left:4px solid var(--accent);background:var(--panel);border-radius:0 8px 8px 0}
+  .stage small{color:var(--dim);font-weight:400;margin-left:8px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
+  .rule{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}
+  .rhead{display:flex;align-items:baseline;gap:8px;margin-bottom:10px}
+  .code{font-weight:800;font-size:15px;color:#fff;font-variant-numeric:tabular-nums}
+  .title{color:var(--dim);font-size:12.5px;line-height:1.3}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .pic{position:relative;border:2px solid var(--line);border-radius:10px;overflow:hidden;
+    cursor:pointer;background:#0a0e14;transition:border-color .12s, box-shadow .12s}
+  .pic:hover{border-color:#3d4a5c}
+  .pic.sel{border-color:var(--sel);box-shadow:0 0 0 2px rgba(240,180,41,.35)}
+  .pic .lab{display:flex;align-items:center;justify-content:space-between;padding:5px 8px;font-size:11px;font-weight:700}
+  .pic.do .lab{background:rgba(55,167,106,.16);color:var(--do)}
+  .pic.dont .lab{background:rgba(226,112,106,.16);color:var(--dont)}
+  .pic .chk{width:15px;height:15px;border-radius:4px;border:2px solid currentColor;display:inline-block;position:relative}
+  .pic.sel .chk{background:var(--sel);border-color:var(--sel)}
+  .pic.sel .chk::after{content:'✓';position:absolute;inset:-3px 0 0 1px;color:#231a00;font-size:12px;font-weight:900}
+  .media{height:118px;display:flex;align-items:center;justify-content:center;background:#0a0e14}
+  .media canvas{display:block}
+  .media img{max-width:100%;max-height:118px;object-fit:contain;background:#fff}
+  .missing{color:var(--dim);font-size:12px;text-align:center;padding:0 10px;line-height:1.4}
+  .missing b{color:var(--dont)}
+  .kind{font-size:10.5px;color:var(--dim);text-align:center;padding:4px 6px 0;font-family:ui-monospace,monospace}
+  .caption{font-size:11px;color:var(--dim);padding:2px 8px 6px;line-height:1.35;min-height:30px}
+  .loading{color:var(--dim);padding:40px;text-align:center;font-size:15px}
+  /* selection drawer */
+  #drawer{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--panel2);
+    border-top:1px solid var(--line);padding:10px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  #selText{flex:1;min-width:240px;max-height:90px;overflow:auto;background:var(--bg);border:1px solid var(--line);
+    border-radius:8px;padding:8px 10px;font-family:ui-monospace,monospace;font-size:12px;color:var(--txt);white-space:pre-wrap}
+  .legend{font-size:12px;color:var(--dim)}
+  .legend b{color:var(--txt)}
+</style>
+</head>
+<body>
+<header>
+  <h1>IBCS Picture Review — pick what to improve</h1>
+  <p class="sub">Two picture sets, exactly as each game renders them. <b>IBCS Trainer</b> = procedural chart glyphs (the platformer stomps/collects these).
+  <b>Chart Swipe</b> = the do/don't photos you swipe. Click any picture to mark it for improvement, then <b>Copy selection</b> and paste it back to me.</p>
+  <div class="tabs">
+    <div class="tab active" data-view="trainer">IBCS Trainer<span class="n">glyphs · <span id="tn">–</span></span></div>
+    <div class="tab" data-view="swipe">Chart Swipe<span class="n">photos · <span id="sn">–</span></span></div>
+  </div>
+  <div class="toolbar">
+    <button class="act" id="btnMissing">Highlight missing photos</button>
+    <button class="act" id="btnClear">Clear selection</button>
+    <span class="count"><span id="cnt">0</span> marked</span>
+    <span class="legend">&nbsp;·&nbsp; <b style="color:var(--do)">DO</b> = positive (should be a good example) &nbsp; <b style="color:var(--dont)">DON'T</b> = negative (bad example)</span>
+  </div>
+</header>
+
+<main>
+  <div class="view active" id="view-trainer"><div class="loading">Loading live rule set &amp; glyph renderer…</div></div>
+  <div class="view" id="view-swipe"></div>
+</main>
+
+<div id="drawer">
+  <div style="font-weight:700;font-size:13px">Selected to improve:</div>
+  <div id="selText">(nothing marked yet)</div>
+  <button class="act primary" id="btnCopy">Copy selection</button>
+</div>
+
+<!-- Live registry + glyph renderer straight from the deployed game -->
+<script src="https://kornalexander.github.io/ibcs-trainer/ibcs_rules.js?v=2026070615"></script>
+<script src="https://kornalexander.github.io/ibcs-trainer/ibcs_charts.js?v=2026070615"></script>
+<script>
+const BASE = 'https://kornalexander.github.io/ibcs-trainer';
+const PHOTO_VER = '2026070602'; // bump to force-refresh swipe photos past any cached 404
+const selected = new Map(); // key -> {list, code, side, extra}
+
+function keyOf(list, code, side){ return list + '|' + code + '|' + side; }
+
+function toggle(el, list, code, side, extra){
+  const k = keyOf(list, code, side);
+  if(selected.has(k)){ selected.delete(k); el.classList.remove('sel'); }
+  else { selected.set(k, {list, code, side, extra}); el.classList.add('sel'); }
+  renderSelection();
+}
+
+function renderSelection(){
+  document.getElementById('cnt').textContent = selected.size;
+  if(!selected.size){ document.getElementById('selText').textContent = '(nothing marked yet)'; return; }
+  const groups = {trainer:[], swipe:[]};
+  for(const {list, code, side, extra} of selected.values()){
+    groups[list].push('  ' + code.padEnd(7) + ' — ' + (side==='do'?'DO ':"DON'T") + '  ' + (extra||''));
+  }
+  let out = '';
+  if(groups.trainer.length){ out += '=== IBCS Trainer (glyphs) — improve ===\n' + groups.trainer.sort().join('\n') + '\n\n'; }
+  if(groups.swipe.length){ out += '=== Chart Swipe (photos) — improve ===\n' + groups.swipe.sort().join('\n') + '\n'; }
+  document.getElementById('selText').textContent = out.trim();
+}
+
+// Render a procedural glyph onto a canvas, mimicking the platformer's white "screen".
+function renderGlyph(canvas, kind){
+  const dpr = Math.min(3, window.devicePixelRatio || 1);
+  const W = 150, H = 106;
+  canvas.width = W*dpr; canvas.height = H*dpr;
+  canvas.style.width = W+'px'; canvas.style.height = H+'px';
+  const ctx = canvas.getContext('2d');
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  // white card background (the in-game chart screen)
+  ctx.fillStyle = '#ffffff';
+  const r=7; ctx.beginPath();
+  ctx.moveTo(r,0); ctx.arcTo(W,0,W,H,r); ctx.arcTo(W,H,0,H,r); ctx.arcTo(0,H,0,0,r); ctx.arcTo(0,0,W,0,r); ctx.closePath(); ctx.fill();
+  try{ IBCSCharts(ctx).glyph(kind, 12, 11, W-24, H-22); }
+  catch(e){ ctx.fillStyle='#c33'; ctx.font='11px sans-serif'; ctx.fillText('glyph error', 12, 20); }
+}
+
+function stageBlock(pillar, world, area, color){
+  const d = document.createElement('div');
+  d.className = 'stage';
+  d.style.borderLeftColor = color || '#4a90e2';
+  d.innerHTML = pillar + ' <small>' + world + ' · ' + area + '</small>';
+  return d;
+}
+
+function build(){
+  const IBCS = window.IBCS;
+  if(!IBCS || !IBCS.RULES){ document.getElementById('view-trainer').innerHTML =
+    '<div class="loading">Could not load the rule set. Check your internet connection (the page pulls the live registry from GitHub Pages).</div>'; return; }
+  const rules = IBCS.RULES, stages = IBCS.STAGES;
+  document.getElementById('tn').textContent = rules.length + ' rules';
+  document.getElementById('sn').textContent = rules.length + ' rules';
+
+  const vT = document.getElementById('view-trainer'); vT.innerHTML='';
+  const vS = document.getElementById('view-swipe'); vS.innerHTML='';
+
+  let curStage = -1, gridT=null, gridS=null;
+  rules.forEach(r=>{
+    if(r.stageIdx !== curStage){
+      curStage = r.stageIdx; const st = stages[curStage];
+      vT.appendChild(stageBlock(st.pillar, st.world, st.area, st.color));
+      vS.appendChild(stageBlock(st.pillar, st.world, st.area, st.color));
+      gridT = document.createElement('div'); gridT.className='grid'; vT.appendChild(gridT);
+      gridS = document.createElement('div'); gridS.className='grid'; vS.appendChild(gridS);
+    }
+    gridT.appendChild(trainerCard(r));
+    gridS.appendChild(swipeCard(r));
+  });
+  renderSelection();
+}
+
+// ---- IBCS Trainer card: two procedural glyphs (good = DO, enemy = DON'T) ----
+function trainerCard(r){
+  const card = document.createElement('div'); card.className='rule';
+  card.innerHTML = '<div class="rhead"><span class="code">'+r.code+'</span><span class="title">'+r.title+'</span></div>';
+  const pair = document.createElement('div'); pair.className='pair';
+  pair.appendChild(glyphCell('do',   r.good,      r.do,   r.code));
+  pair.appendChild(glyphCell('dont', r.enemyKind, r.dont, r.code));
+  card.appendChild(pair);
+  return card;
+}
+function glyphCell(side, kind, caption, code){
+  const cell = document.createElement('div'); cell.className='pic '+side;
+  cell.innerHTML = '<div class="lab"><span>'+(side==='do'?'DO':"DON'T")+'</span><span class="chk"></span></div>'+
+                   '<div class="media"><canvas></canvas></div>'+
+                   '<div class="kind">'+kind+'</div>'+
+                   '<div class="caption">'+caption+'</div>';
+  renderGlyph(cell.querySelector('canvas'), kind);
+  cell.addEventListener('click', ()=>toggle(cell,'trainer',code,side,'('+kind+')'));
+  return cell;
+}
+
+// ---- Chart Swipe card: two photos (do / dont). Missing photo => placeholder ----
+function swipeCard(r){
+  const card = document.createElement('div'); card.className='rule';
+  card.innerHTML = '<div class="rhead"><span class="code">'+r.code+'</span><span class="title">'+r.title+'</span></div>';
+  const pair = document.createElement('div'); pair.className='pair';
+  pair.appendChild(photoCell('do',   r.do,   r.code, r.good));
+  pair.appendChild(photoCell('dont', r.dont, r.code, r.enemyKind));
+  card.appendChild(pair);
+  return card;
+}
+function photoCell(side, caption, code, fallbackKind){
+  const cell = document.createElement('div'); cell.className='pic '+side;
+  const file = code.replace(/[ .]/g,'-') + '.png';
+  // cache-bust so freshly-added photos load even if a prior 404 was cached
+  const url = BASE + '/img/' + side + '/' + file + '?v=' + PHOTO_VER;
+  cell.innerHTML = '<div class="lab"><span>'+(side==='do'?'DO':"DON'T")+'</span><span class="chk"></span></div>'+
+                   '<div class="media"><img alt=""></div>'+
+                   '<div class="caption">'+caption+'</div>';
+  const img = cell.querySelector('img');
+  img.src = url;
+  img.onerror = ()=>{
+    cell.dataset.missing='1';
+    cell.querySelector('.media').innerHTML =
+      '<div class="missing"><b>no photo yet</b><br>falls back to glyph<br><span style="font-family:monospace">'+fallbackKind+'</span></div>';
+  };
+  cell.addEventListener('click', ()=>toggle(cell,'swipe',code,side, cell.dataset.missing?'[NO PHOTO — '+fallbackKind+']':''));
+  return cell;
+}
+
+// ---- UI wiring ----
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  document.getElementById('view-'+t.dataset.view).classList.add('active');
+}));
+document.getElementById('btnClear').addEventListener('click',()=>{
+  selected.clear(); document.querySelectorAll('.pic.sel').forEach(p=>p.classList.remove('sel')); renderSelection();
+});
+document.getElementById('btnCopy').addEventListener('click',async()=>{
+  const txt = document.getElementById('selText').textContent;
+  try{ await navigator.clipboard.writeText(txt); const b=document.getElementById('btnCopy'); const o=b.textContent; b.textContent='Copied ✓'; setTimeout(()=>b.textContent=o,1400);}catch(e){ alert('Copy failed — select the text manually.'); }
+});
+document.getElementById('btnMissing').addEventListener('click',()=>{
+  document.getElementById('view-swipe').scrollIntoView({behavior:'smooth'});
+  document.querySelector('.tab[data-view="swipe"]').click();
+  document.querySelectorAll('#view-swipe .pic[data-missing]').forEach(p=>{
+    p.animate([{outline:'2px solid #e2706a'},{outline:'2px solid transparent'}],{duration:1400,iterations:2});
+  });
+});
+
+// Re-render the Trainer glyph canvases (e.g. once the embedded fancy font loads).
+function rerenderGlyphs(){
+  document.querySelectorAll('#view-trainer .pic').forEach(cell=>{
+    const canvas = cell.querySelector('canvas');
+    const kind = cell.querySelector('.kind')?.textContent;
+    if(canvas && kind) renderGlyph(canvas, kind);
+  });
+}
+
+// Kick off once both external scripts are in.
+if(window.IBCS) build();
+else window.addEventListener('load', build);
+// Upgrade fontFancy (and any web-font glyph) to the real typeface once it loads.
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(rerenderGlyphs);
+</script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+{
+  "cluster": "D3",
+  "generated": "tools/content/build-questions.mjs",
+  "questions": [
+    {
+      "id": "klasse1-q-6-1",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D3",
+      "skillId": 21,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Welches Wort schreibt man groß?",
+      "options": [
+        "laufen",
+        "schnell",
+        "und",
+        "Hund"
+      ],
+      "tags": [
+        "grossschreibung"
+      ],
+      "answerHash": "c92c189b2042cb573ff6c2ea580aca1033af18cb78357f0d1be0acd78f53b05d",
+      "explanationCipher": "+PN+XwPUVCJp0BEZbmsFrmWEymPCZ4ux2ddWuaxJqDqAbd0GrYGiQ0R8VViw1Tg8Ay8btEAVa1167n+9ZKPVtDEYBHOH2eXSARu708dLSYNDwsMuU6rzxWI="
+    },
+    {
+      "id": "klasse1-q-6-2",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D3",
+      "skillId": 21,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Welches Wort schreibt man groß?",
+      "options": [
+        "Schule",
+        "klein",
+        "gehen",
+        "aber"
+      ],
+      "tags": [
+        "grossschreibung"
+      ],
+      "answerHash": "bae9f0798a4c9da6aeabef87b9d5e943aa285f3ed2bdd158c451eb1acf4bc94a",
+      "explanationCipher": "mP3CW2vjOwABc0XClkVm86e4bmH8knl9kOFw6qwU612jzd2kG75a09syLO2sbFMEkWQqMeJibiXp19NW7fyJY7BdWCjAUYqN3Bz5uaYtTViOU3WkDK5awdvh"
+    },
+    {
+      "id": "klasse1-q-6-3",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D3",
+      "skillId": 21,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Was schreibt man am Satzanfang?",
+      "options": [
+        "kursiv",
+        "klein",
+        "groß",
+        "egal"
+      ],
+      "tags": [
+        "grossschreibung"
+      ],
+      "answerHash": "a6a7d992365549bd2fadc8bb67f9707cebf9fa81ced529274cbf3c285c5caa5e",
+      "explanationCipher": "nr/ffIgIdzUqn3aOc0ynJuAXZQHES/6DQc0c0CJZlXjYrFZgVGmeMb7fWm58dtYg/BT4wEmqIlq3FN4qP9/EfHxHTPFOS+ag/+XsSQ=="
+    },
+    {
+      "id": "klasse1-q-6-4",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D3",
+      "skillId": 22,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Welches Wort ist richtig geschrieben?",
+      "options": [
+        "Fater",
+        "Vatter",
+        "Faterr",
+        "Vater"
+      ],
+      "tags": [
+        "rechtschreibung"
+      ],
+      "answerHash": "69572a19f215f8658145a4b2cd7ee5aebcb17cb9c4daf9fa80238b277dda310d",
+      "explanationCipher": "0IczcFUr+DF1vmkWP9dnY3n2tkn13E5O18oNOmdG2qAXyjNlTJoxtzhTvxrOU1EvGBA/ayz6AFfbrty+4h6TFZWJgOXdbJA6ys4GQVlrQYM="
+    },
+    {
+      "id": "klasse1-q-6-5",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D3",
+      "skillId": 22,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Welches Wort ist richtig geschrieben?",
+      "options": [
+        "Shule",
+        "Schule",
+        "Schulle",
+        "Schuhle"
+      ],
+      "tags": [
+        "rechtschreibung"
+      ],
+      "answerHash": "9898c20e6cded79624784b50db01531ef8af33294714da5dc9d2e34d42b81b00",
+      "explanationCipher": "KNBs8k/5gElVmjswJ5skd6u971SqcfNSxRJIE5H+acLccfGc8EMY2LH5kbR9nPAJeAd66o+i0K8PoYT1SfnGgQl0dSfOFuE="
+    },
+    {
+      "id": "klasse1-q-6-6",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D3",
+      "skillId": 22,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Welches Wort ist richtig geschrieben?",
+      "options": [
+        "Blumme",
+        "Bluhme",
+        "Blume",
+        "Plume"
+      ],
+      "tags": [
+        "rechtschreibung"
+      ],
+      "answerHash": "159bf5268af7e6d203f43a582483951e5dd2a737ee0e8133cd45082d03a55a26",
+      "explanationCipher": "hS7AmRYWtpivUXzD7XtqqrZvVA4DAfjAvoQTvvbC/FquUpd/eYD8u55JBskqiNAVmE3UfUSGvIQUWbvxc9notminTwKzsl2Klx9+GvOoz+AXIIzwK4fQ"
+    }
+  ]
+}

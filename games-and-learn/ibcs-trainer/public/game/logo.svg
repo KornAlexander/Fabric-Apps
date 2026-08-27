@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="IBCS Trainer Arcade logo">
+  <defs>
+    <linearGradient id="ibcsBadge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a2a5c"/>
+      <stop offset="1" stop-color="#0a1024"/>
+    </linearGradient>
+    <linearGradient id="ibcsAccent" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#3b6fe2"/>
+      <stop offset="1" stop-color="#74b6ff"/>
+    </linearGradient>
+    <filter id="ibcsGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2.4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- app badge -->
+  <rect x="7" y="7" width="114" height="114" rx="27" fill="url(#ibcsBadge)"/>
+  <rect x="7.5" y="7.5" width="113" height="113" rx="26.5" fill="none"
+        stroke="#60a8ff" stroke-opacity="0.45" stroke-width="2.2"/>
+
+  <!-- chart baseline -->
+  <rect x="26" y="93" width="76" height="3.4" rx="1.7" fill="#aab2bf" opacity="0.75"/>
+
+  <!-- IBCS columns: monochrome bars rising to one bright accent bar -->
+  <rect x="28" y="69" width="13" height="24" rx="2.2" fill="#586273"/>
+  <rect x="45" y="57" width="13" height="36" rx="2.2" fill="#6f7a8b"/>
+  <rect x="62" y="40" width="13" height="53" rx="2.2" fill="url(#ibcsAccent)" filter="url(#ibcsGlow)"/>
+  <rect x="79" y="52" width="13" height="41" rx="2.2" fill="#586273"/>
+
+  <!-- arcade play badge, top-right -->
+  <circle cx="95" cy="33" r="15" fill="#0a1024" stroke="#74b6ff" stroke-width="2.4"/>
+  <path d="M90.5 25.5 L103 33 L90.5 40.5 Z" fill="#74b6ff"/>
+</svg>

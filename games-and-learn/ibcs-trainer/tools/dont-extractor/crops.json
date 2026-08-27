@@ -1,0 +1,13 @@
+{
+  "source_dir": "docs/poster",
+  "output_dir": "public/game/img/dont",
+  "dark_threshold": 110,
+  "line_width": 7,
+  "cells": [
+    {
+      "code": "ST 2.2",
+      "source": "poster-03.jpeg",
+      "box": [150, 72, 455, 300]
+    }
+  ]
+}

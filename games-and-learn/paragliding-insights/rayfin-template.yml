@@ -1,0 +1,8 @@
+apiVersion: v1
+metadata:
+  name: gleitschirm-insights
+  displayName: Gleitschirm-Insights
+  description: Interactive 3D paragliding twin of the Nebelhorn above Oberstdorf, built entirely from open geodata — a true-scale DGM1 terrain with LoD2 buildings and measured vegetation, a coarse Copernicus DEM shell for the horizon, anonymised flight tracks, and live FANET/FLARM traffic from the Open Glider Network.
+entries:
+  - path: .
+    name: Gleitschirm-Insights

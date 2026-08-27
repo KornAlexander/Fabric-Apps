@@ -1,0 +1,90 @@
+{
+  "cert": "klasse-1",
+  "title": "Reich der Zahlen und Buchstaben",
+  "revision": "2026-08-22",
+  "source": "Lehrplan Grundschule Klasse 1, Mathematik und Deutsch",
+  "branches": [
+    {
+      "id": "M",
+      "label": "Mathe",
+      "weightMin": 50,
+      "weightMax": 50,
+      "clusters": [
+        {
+          "id": "M1",
+          "label": "Zahlen bis 20",
+          "skills": [
+            { "id": 1, "label": "Zählen bis 20" },
+            { "id": 2, "label": "Nachbarzahlen" },
+            { "id": 3, "label": "Zahlen vergleichen" },
+            { "id": 4, "label": "Zahlen zerlegen" },
+            { "id": 5, "label": "Zahlenstrahl" }
+          ]
+        },
+        {
+          "id": "M2",
+          "label": "Plus und Minus",
+          "skills": [
+            { "id": 6, "label": "Plus bis 10" },
+            { "id": 7, "label": "Minus bis 10" },
+            { "id": 8, "label": "Plus bis 20" },
+            { "id": 9, "label": "Minus bis 20" },
+            { "id": 10, "label": "Verdoppeln" },
+            { "id": 11, "label": "Halbieren" }
+          ]
+        },
+        {
+          "id": "M3",
+          "label": "Formen und Größen",
+          "skills": [
+            { "id": 12, "label": "Formen erkennen" },
+            { "id": 13, "label": "Muster fortsetzen" },
+            { "id": 14, "label": "Volle Stunde ablesen" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "Deutsch",
+      "weightMin": 50,
+      "weightMax": 50,
+      "clusters": [
+        {
+          "id": "D1",
+          "label": "Laute und Buchstaben",
+          "skills": [
+            { "id": 15, "label": "Anlaut hören" },
+            { "id": 16, "label": "Endlaut hören" },
+            { "id": 17, "label": "Vokale erkennen" },
+            { "id": 18, "label": "Das Alphabet" }
+          ]
+        },
+        {
+          "id": "D2",
+          "label": "Silben",
+          "skills": [
+            { "id": 19, "label": "Silben zählen" },
+            { "id": 20, "label": "Wörter trennen" }
+          ]
+        },
+        {
+          "id": "D3",
+          "label": "Wörter schreiben",
+          "skills": [
+            { "id": 21, "label": "Groß und klein" },
+            { "id": 22, "label": "Richtig geschrieben" }
+          ]
+        },
+        {
+          "id": "D4",
+          "label": "Lesen und verstehen",
+          "skills": [
+            { "id": 23, "label": "Wort und Bild" },
+            { "id": 24, "label": "Einen Satz lesen" }
+          ]
+        }
+      ]
+    }
+  ]
+}

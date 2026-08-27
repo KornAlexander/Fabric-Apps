@@ -1,0 +1,90 @@
+{
+  "cluster": "D3",
+  "note": "Klasse 1, gross und klein, und erste Rechtschreibung.",
+  "questions": [
+    {
+      "id": "klasse1-q-6-1",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D3",
+      "skillId": 21,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Welches Wort schreibt man groß?",
+      "options": ["Hund", "laufen", "schnell", "und"],
+      "answer": "Hund",
+      "explanation": "Hund ist ein Nomen, ein Ding. Nomen schreibt man immer groß.",
+      "tags": ["grossschreibung"]
+    },
+    {
+      "id": "klasse1-q-6-2",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D3",
+      "skillId": 21,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Welches Wort schreibt man groß?",
+      "options": ["Schule", "gehen", "klein", "aber"],
+      "answer": "Schule",
+      "explanation": "Schule ist ein Nomen. Vor Nomen passt ein Artikel: die Schule.",
+      "tags": ["grossschreibung"]
+    },
+    {
+      "id": "klasse1-q-6-3",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D3",
+      "skillId": 21,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Was schreibt man am Satzanfang?",
+      "options": ["groß", "klein", "egal", "kursiv"],
+      "answer": "groß",
+      "explanation": "Jeder Satz beginnt mit einem großen Buchstaben.",
+      "tags": ["grossschreibung"]
+    },
+    {
+      "id": "klasse1-q-6-4",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D3",
+      "skillId": 22,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Welches Wort ist richtig geschrieben?",
+      "options": ["Vater", "Fater", "Vatter", "Faterr"],
+      "answer": "Vater",
+      "explanation": "Vater schreibt man mit V, auch wenn man ein F hört.",
+      "tags": ["rechtschreibung"]
+    },
+    {
+      "id": "klasse1-q-6-5",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D3",
+      "skillId": 22,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Welches Wort ist richtig geschrieben?",
+      "options": ["Schule", "Schuhle", "Shule", "Schulle"],
+      "answer": "Schule",
+      "explanation": "Schule hat nur ein l und kein h nach dem u.",
+      "tags": ["rechtschreibung"]
+    },
+    {
+      "id": "klasse1-q-6-6",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D3",
+      "skillId": 22,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Welches Wort ist richtig geschrieben?",
+      "options": ["Blume", "Bluhme", "Blumme", "Plume"],
+      "answer": "Blume",
+      "explanation": "Blume schreibt man einfach so, wie man es hört: B-l-u-m-e.",
+      "tags": ["rechtschreibung"]
+    }
+  ]
+}

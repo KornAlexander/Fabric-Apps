@@ -1,0 +1,132 @@
+{
+  "cluster": "D4",
+  "generated": "tools/content/build-questions.mjs",
+  "questions": [
+    {
+      "id": "klasse1-q-7-1",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D4",
+      "skillId": 23,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Was ist ein Tier?",
+      "options": [
+        "Katze",
+        "Auto",
+        "Tisch",
+        "Buch"
+      ],
+      "tags": [
+        "lesen"
+      ],
+      "answerHash": "c3b8e368f9f050d8a6b861b69c0f42b2acc1f739bff4a9d3064fe6e689b40329",
+      "explanationCipher": "uax88LaYZb+D8GXqbgRwhznu9y3zguoz9p9s3LEXddmtpmnQkHqlFOmAfqlnVADOa4mOJil1Jt4PewajED3dqZEXDIiPAxEOdGKBfBAOl0lxH3SBnStA8Udjj88B/Ace"
+    },
+    {
+      "id": "klasse1-q-7-2",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D4",
+      "skillId": 23,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Was kann man essen?",
+      "options": [
+        "Apfel",
+        "Stein",
+        "Schuh",
+        "Stuhl"
+      ],
+      "tags": [
+        "lesen"
+      ],
+      "answerHash": "a838984ea902edd4f3ed98fc8523ba15cb0cf65da09d1ef3d56b1079e8430e3a",
+      "explanationCipher": "Z2tOrSW+GNIcund9dUY35oufDvHanZ6IV4PGX3jKUpO+cJwnfHkUjRwfxJa+7GIEBCs8P3BfQfw4A6Rz4Eytf9Ipr3LMEL6KcLky4lhViUcTqSLS1NdNJPr4348LxfwdcYM="
+    },
+    {
+      "id": "klasse1-q-7-3",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D4",
+      "skillId": 24,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Die Sonne scheint. Wie ist das Wetter?",
+      "options": [
+        "schön",
+        "dunkel",
+        "kalt",
+        "nass"
+      ],
+      "tags": [
+        "lesen"
+      ],
+      "answerHash": "70c07787ab276b926a81579fbeee21c10e0702e618919dda5fbd1a2e20b89588",
+      "explanationCipher": "XDlflu9DUt41r4EoGDyYpEHQM91LMEyTvcQLRduduwJG4gAD1ld7wZtfoXBuWM1MGQnazUfiAM3vIKijBsmwLYvi4ehLRDzZRmZqzVdH2aAUGq4="
+    },
+    {
+      "id": "klasse1-q-7-4",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D4",
+      "skillId": 24,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Tim hat drei Äpfel. Wie viele hat er?",
+      "options": [
+        "0",
+        "1",
+        "4",
+        "3"
+      ],
+      "tags": [
+        "lesen"
+      ],
+      "answerHash": "c377b41d5674aa0c8b515e8acb91a79c2e145861685de2ef27052a97d8140dc6",
+      "explanationCipher": "mTIr82O6tDzyNTZ4zlpG/okES5XMhm5dwFBDJU7fxD/enbjA4/Bfn7sSULr08Pcq0uxXPo0Lt83WqdE2H8tBbSjBTg=="
+    },
+    {
+      "id": "klasse1-q-7-5",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D4",
+      "skillId": 24,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Der Hund bellt. Wer bellt?",
+      "options": [
+        "die Katze",
+        "niemand",
+        "das Kind",
+        "der Hund"
+      ],
+      "tags": [
+        "lesen"
+      ],
+      "answerHash": "f68608920ce26565e9395d792d3136ea0cdff0549d95f6dd25711556c587689b",
+      "explanationCipher": "dKMHMjkRb7haXd6k/thsFd+CmcahpNxPh9sqLnyLgbPPubkHB+OkF8BJm3S8T9yZEK6/B6qih5izXYf0dGdOgFcAqfkCpZzDXimTvhE2ag=="
+    },
+    {
+      "id": "klasse1-q-7-6",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D4",
+      "skillId": 23,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Was hat Räder?",
+      "options": [
+        "Auto",
+        "Brot",
+        "Baum",
+        "Hand"
+      ],
+      "tags": [
+        "lesen"
+      ],
+      "answerHash": "e7aa90e72d9b10ff959be78b526e8080d42fbf6d15efce1325e6bfaba03f9bda",
+      "explanationCipher": "kbNk6zMqN5DR91k4x/8E6SqOe63IYwuKBI5pdDPfW0aks7s7mfrVkkoEVFZcgKFDe74fA1FlmnSY33ms4A=="
+    }
+  ]
+}

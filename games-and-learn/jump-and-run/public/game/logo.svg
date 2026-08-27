@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 220" role="img" aria-label="Jump &amp; Run — Evolution">
+  <title>Jump &amp; Run — Evolution</title>
+  <defs>
+    <radialGradient id="disc" cx="38%" cy="32%" r="75%">
+      <stop offset="0%" stop-color="#3f86ff"/>
+      <stop offset="55%" stop-color="#1b4fb8"/>
+      <stop offset="100%" stop-color="#0a2350"/>
+    </radialGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffe884"/>
+      <stop offset="55%" stop-color="#ffc032"/>
+      <stop offset="100%" stop-color="#ff9d1c"/>
+    </linearGradient>
+    <linearGradient id="word" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eaf3ff"/>
+      <stop offset="55%" stop-color="#9cc4ff"/>
+      <stop offset="100%" stop-color="#5f9bff"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Emblem -->
+  <g filter="url(#glow)">
+    <circle cx="110" cy="110" r="92" fill="url(#disc)" stroke="#7fb4ff" stroke-width="4"/>
+  </g>
+  <circle cx="110" cy="110" r="92" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+
+  <!-- coins orbiting -->
+  <g fill="#ffd23f" stroke="#c8860f" stroke-width="2">
+    <circle cx="178" cy="58" r="11"/>
+    <circle cx="44"  cy="150" r="9"/>
+  </g>
+
+  <!-- Sparky mascot (electric starter form), leaning into a jump -->
+  <g transform="rotate(-12 110 112)">
+    <!-- back foot -->
+    <rect x="86" y="150" width="20" height="20" rx="9" fill="#ff9d1c"/>
+    <!-- front foot (kicked forward) -->
+    <rect x="118" y="156" width="24" height="18" rx="9" fill="#ffb52e"/>
+    <!-- body -->
+    <rect x="70" y="62" width="92" height="100" rx="40" fill="url(#body)" stroke="#e98a10" stroke-width="3"/>
+    <!-- raised arm -->
+    <rect x="150" y="70" width="34" height="16" rx="8" fill="#ffb52e" transform="rotate(-32 150 78)"/>
+    <!-- lightning belly mark -->
+    <path d="M120 86 L101 120 L116 120 L104 150 L138 110 L121 110 Z" fill="#fff3c4" stroke="#e98a10" stroke-width="2.5" stroke-linejoin="round"/>
+    <!-- cheeks -->
+    <circle cx="84" cy="120" r="9" fill="#ff7a59" opacity="0.85"/>
+    <circle cx="150" cy="116" r="9" fill="#ff7a59" opacity="0.85"/>
+    <!-- eyes -->
+    <circle cx="98"  cy="96" r="14" fill="#fff"/>
+    <circle cx="132" cy="92" r="14" fill="#fff"/>
+    <circle cx="101" cy="98" r="7" fill="#21304a"/>
+    <circle cx="135" cy="94" r="7" fill="#21304a"/>
+    <circle cx="103" cy="95" r="2.6" fill="#fff"/>
+    <circle cx="137" cy="91" r="2.6" fill="#fff"/>
+    <!-- smile -->
+    <path d="M104 124 Q116 136 130 122" fill="none" stroke="#21304a" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- Wordmark -->
+  <g font-family="'Segoe UI', 'Trebuchet MS', system-ui, sans-serif">
+    <text x="232" y="108" font-size="62" font-weight="800" fill="url(#word)" filter="url(#glow)" letter-spacing="1">JUMP &amp; RUN</text>
+    <text x="234" y="150" font-size="23" font-weight="700" fill="#7fb4ff" letter-spacing="11">EVOLUTION</text>
+  </g>
+</svg>

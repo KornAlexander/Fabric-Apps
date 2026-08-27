@@ -1,0 +1,396 @@
+{
+  "cluster": "C2",
+  "generated": "tools/content/build-questions.mjs",
+  "questions": [
+    {
+      "id": "dp600-q-37-1",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C2",
+      "skillId": 37,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "A report page feels slow and you need to know which visual is responsible and where its time goes. What do you use first?",
+      "options": [
+        "The refresh history of the semantic model",
+        "Performance analyzer in Power BI Desktop",
+        "The capacity metrics app",
+        "The lineage view of the workspace"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/create-reports/performance-analyzer",
+      "sourceSkillBullet": "Implement performance improvements in queries and report visuals",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/create-reports/performance-analyzer",
+      "reviewStatus": "draft",
+      "tags": [
+        "performance",
+        "performance-analyzer"
+      ],
+      "answerHash": "607547411c0aec4eb7fb21d9378a11a22308bdf32634287f2819140fea1412f4",
+      "explanationCipher": "SwHbeYYOG5idcmn+c1HZYcJSGsMwFTls2NA0u3ohj2IimKQd6g4+1scpHTlEPDxI//QgjmydnkgS3XmkCMQUoJ+wZmweqM5fhcX6amj1ZcdYCVJ5ecjnqITSOMCa8Ijb5FIxbNGewWTf/Tov8qTmd8nhVeoJtsPtINC1DWGaK9U+7rT/n/nEHRilUk56pv5FYmPDpdAtYkAoS7SDamL54MZ5LfvcGbEAV4WlZigMGpZ0h3fLmpPMjLn2ALIBoNO2X4kuUBT+gRQzdzKlJClpotSBvDeLjsnhy8w32DR1CLPLwxLKFdUB2/UOf+pmGIpJHVYt0POAN8EHI9dKa6ZBq2OhpJ+lFHIeeHQsgKw4qOQgz+Z5Pi0Al8mnAVCLnZiJ8tj4eyxGAa4aX2akv862sTSMpuN6Z6k98K47EN3fsf/OlpqO"
+    },
+    {
+      "id": "dp600-q-37-2",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C2",
+      "skillId": 37,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "Performance analyzer reports a visual with a DAX query of 40 milliseconds and a visual display of nearly four seconds. Where is the problem?",
+      "options": [
+        "In the rendering of the visual, most likely because it is being asked to draw far too many data points",
+        "In the data source, which is responding slowly",
+        "In the DAX measure, which needs variables",
+        "In the refresh schedule, which is running at the same time"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/guidance/monitor-report-performance",
+      "sourceSkillBullet": "Implement performance improvements in queries and report visuals",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/guidance/monitor-report-performance",
+      "reviewStatus": "draft",
+      "tags": [
+        "performance",
+        "diagnosis"
+      ],
+      "answerHash": "ef3fe994deba0e2442c1a82185a7039c7a9ac1c4607629a4878783ebbb7d9b9d",
+      "explanationCipher": "c4FIUjPiQehzkeNpiRCleTXwGxhyX7b7rX4MaGdXnecpOfgvMwZUldMsqbctEyuszHQ8iOS0Tc+8pN904hS2HWLBYcnbpogeDtVZwA8IFZMq+2pwbWvNqG78JXtDIc+E7+qzatPp79FeodYI3XmOhnXbtTKYTmZYIq2wjc0ST7jaiS3Yb3mHadE+GdCOk1IxQIUn0P7YXAbzjhNYA2sXe8eHU3lRw5wF/GlRtUdPR0ET3oDzSNAyddLh1Y4NDcWrgZk0BU8QilOqAgP2o53oY1Le1YlYJeSvxgrr+Mmd1PX12EgYu8slfh6V6bJZJ7YNHQk77MTAg57UTgr20b3cUFxc0SyOPItcXdTWXqkxUjJ3gfMHGm5++2KW/XSbu/9v7+3tKDLqjLa8GbZvP79/xQkDcLlVDNx3InXeXlE="
+    },
+    {
+      "id": "dp600-q-37-3",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C2",
+      "skillId": 37,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "A page holds thirty visuals and takes a long time to open even though every individual measure is fast. What is the most likely explanation?",
+      "options": [
+        "The page is being rendered on the capacity rather than in the browser",
+        "Thirty visuals exceed the maximum a page may contain",
+        "The model must be refreshed before the page can render",
+        "Each visual issues its own query, so thirty visuals mean thirty queries competing on open"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/guidance/monitor-report-performance",
+      "sourceSkillBullet": "Implement performance improvements in queries and report visuals",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/create-reports/desktop-optimize-ribbon",
+      "reviewStatus": "draft",
+      "tags": [
+        "performance",
+        "report-design"
+      ],
+      "answerHash": "699b95dc3f946e2642fead11271f0ec539b7919523658f006af395c3372a7890",
+      "explanationCipher": "DAp1Al1KW34t+uw7Udj5kJZzybKvvL1JpK0lIJiOfXvbqAbipg830bAgWs+0sKDijW/BwB6VQwCTS5a6A/DW3TMzcBWg8RnKdrFCdhJ0AZnus3o/RdRxjwAVZB3OSC6chefNNIjscnsMbLvVZwhFbTnCctLs4S7Ve8CEfs9Exm7z/be/g7e9UNkkAne6KxqRF+Ko4LKftLrwQGvvcdlTV0KyMrVBqavgOnVxocoq/wobH9lJMStWE0n9WLrV6scB2ygV92/xXhWt+5s10HqF9EMF7/XDP9hLKCABnjr5wkdkjUGuiM7DJbBSofthp+AiM7EvJ+2SVkjPvSBqKgZ4wBByOPbmFaJAxsQknj8NC8anbgWQcLvmkfQ4fw=="
+    },
+    {
+      "id": "dp600-q-38-1",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C2",
+      "skillId": 38,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Which rewrite is usually faster: CALCULATE with FILTER over the whole fact table, or CALCULATE with a predicate on a single column?",
+      "options": [
+        "The FILTER version, because it can use the storage engine directly",
+        "They are identical, because DAX rewrites one into the other",
+        "The FILTER version, because it is more explicit about intent",
+        "The predicate on a single column, because FILTER over the fact table materialises far more rows"
+      ],
+      "learnUrl": "https://learn.microsoft.com/dax/best-practices/dax-variables",
+      "sourceSkillBullet": "Improve DAX performance",
+      "sourceLearnUrl": "https://learn.microsoft.com/dax/removefilters-function-dax",
+      "reviewStatus": "draft",
+      "tags": [
+        "dax-performance",
+        "filter"
+      ],
+      "answerHash": "5315d95fd2093c627cd20e6e205c7bca78bd1a0687b009dac8219a00492d1fd3",
+      "explanationCipher": "LvyhnceWDTvWo3EZSxKlXGyKqX/qEMjBY3M5CXiXvZugbFLwQ3ZH8UPDuw6Z2EeTP3Hx7qvmgKLq8cXaJnAF1AcX315uo1DDCxeDJeVkj/9KK7ogE4sOthnTRdco5+7pqTc4p13PBj/fLB1vm/3PdTThmAcQakI5csDnfCteJWMC5b6+Is0tBY7pBYD0AtHwSCgoXIpB47g7eMJD8rnptMsQrRHCi6ZVJmYYmMBxFWNr6qgukkLpGhVi5VeOYFT0T0/ca4hSjbrHWqNEEZmUTkYEmsNMLb+7HY1Ggz1CQMMSQI0qkga8J2NdjstKwlqfJNprntmwGLLh1sWvWz9tpUweCVJ1kRZQnN+zfzETNJXCyhtUifv5Pulq6zQA/lGHqCz1nr4gR63IZsVDlRSJY7fXx/yX9YckHR3Pf/TZRfGLn/sOFf0="
+    },
+    {
+      "id": "dp600-q-38-2",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C2",
+      "skillId": 38,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "A measure computes a complex total, then uses it again for a share and a third time for a variance. What is the first change to make?",
+      "options": [
+        "Wrap each use in CALCULATE",
+        "Convert it into a calculated column",
+        "Split it into three separate measures",
+        "Assign the total to a variable and reuse the variable"
+      ],
+      "learnUrl": "https://learn.microsoft.com/dax/best-practices/dax-variables",
+      "sourceSkillBullet": "Improve DAX performance",
+      "sourceLearnUrl": "https://learn.microsoft.com/dax/best-practices/dax-variables",
+      "reviewStatus": "draft",
+      "tags": [
+        "dax-performance",
+        "variables"
+      ],
+      "answerHash": "2916540245949dfa5dc8754f55d81c486d2fc7c432e6aa76467bddd4fb6a27fc",
+      "explanationCipher": "WlKn33hphY6x6MvhNZPe1dUTtv2Ma6doLd31j471W8/4uuSCc9QtcBAY2fiUHlmbOyFMEuJng29fgBxa0m7EC59uDCWzDkM+hf7+9lOIHncewKURZZXThB3psbGeLyNJG946hz7ba5DtQtcOFg576KDq4eSONh9wvT5pyHaV1nOWwWapsOtwtMtLYgqAEe660utRuMto+3EMKWTJNTURli1oqRWwpF0k2bfzI/pyiHNvVVerrdoIoEL4HNY/0HEyMTkR1tLVCHc0cn5JVM06zOeX2BFSnaG0TepkLPykDPa39XiPdxN5xQeiOAC0y1UN/MmvDA5QdwtMg9nXu0YoIGWmRfB+I4hPTpIzWkuoQfRGj0vuTJEm0M2CIQVPdrFntbbCWbiQbiGdYKpcrvEsm65v/1eaP+4nmTp3+GFJh1mn8sbnZ5jIuY1ON4QIkAOqVRwMHZL/ER67ZCW5"
+    },
+    {
+      "id": "dp600-q-38-3",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C2",
+      "skillId": 38,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "A margin measure divides profit by revenue and must return blank rather than an error when revenue is zero. What is the recommended way to write it?",
+      "options": [
+        "Use DIVIDE, which handles the zero case internally",
+        "Wrap the division in IFERROR",
+        "Filter out the zero revenue rows in the model",
+        "Test revenue with an IF before dividing"
+      ],
+      "learnUrl": "https://learn.microsoft.com/dax/divide-function-dax",
+      "sourceSkillBullet": "Improve DAX performance",
+      "sourceLearnUrl": "https://learn.microsoft.com/dax/divide-function-dax",
+      "reviewStatus": "draft",
+      "tags": [
+        "dax-performance",
+        "divide"
+      ],
+      "answerHash": "f410e9f93f2c5e3a200252e038995da3bced35b394c34a1428050dc784e7ba75",
+      "explanationCipher": "4HNS5FLXnigvPc2p866QMK3RXLS4FIzqRzcN2lelYX5eYp+WnSxYu7wK6wR2rtQRxU8XkuMWYbtJn/QVM7nufscqSyYMl7MkXLc1gpKgd214MmOKpCFuQslnmZQRkEgg2c4QJYzaV0STHC4ZdVnMpoi98cjb89iRUaVxU6s+NtNLdaxusRVwc4Hx8JsChKrrO+85Pmhj5hei+uPHbzcn2SuHsyVOf9AxFvkWWhm8fe/F/eNLf1uvNKtY/64Zah1+h1dcM2Ksa1pGvl90rRUkfocMQoRnJMq11Ub3YuSKg2WZUFIuWGbOxzaR98cKPDBIG1jRiu8GZ4I+gD6IS1hks0gIWQ3jBUfp35vQ3i1p3bRmXDCQeyaCsMqW8FEDVY//TXn6iBaSffW8h6/A/PaC1vZcN0sMACEmWeIVgJhO8LeBYov8pm/+biwhgwXmLzkuFBVB9dQ="
+    },
+    {
+      "id": "dp600-q-39-1",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C2",
+      "skillId": 39,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "What does a refresh actually do to a Direct Lake semantic model, as opposed to an import one?",
+      "options": [
+        "It reloads a full cached copy of the data, exactly as import does",
+        "It rewrites the underlying Delta tables into a new format",
+        "It copies only metadata, updating the model's references to the latest files in OneLake",
+        "It clears the model so the next query has to read from the source"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/fundamentals/direct-lake-overview",
+      "sourceSkillBullet": "Configure Direct Lake, including default fallback and refresh behavior",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/fundamentals/direct-lake-how-it-works",
+      "reviewStatus": "draft",
+      "tags": [
+        "direct-lake",
+        "framing"
+      ],
+      "answerHash": "e946eebec33b31b9ae55989253f76437a91a3d6fa93d3657c2ae6149b9dcb627",
+      "explanationCipher": "onukScdFh6VmGbO51hcKBJKf/umHmazPBm+Rd+JvfLlCTswA0JIuJApWgDp5aFmcCxG54TQt5BFkJiF4qThvPaohW4DN7GZM08ySSZIZo4hDYcOOj6Cweb7V43fLJ1LwsPJTOlZGp6EGR22J7qUVmRXl1s+7lPYv85cs7opnmWhWZvUSTfzTXDqIxPS04xPEspu3W1zouuPhbvLtqJTRBm5He/P+BUVWjzAIzI4f6qZm79KAUBsWal+6NuWEN2oql1eFyeFEGqNamq2VtwsMqvfpjDxayM8x3Uh6MYTML/9kD7bQoShokMY6UEmE8ensLWOrYSWl9p2DG2mPMe9GwlZ7cVWMB9YKAT/WiCtObYos3ET+a7mDsE5fZUavizwUwMPMYXZdkw8LOPOpwX6SJb2Pf6f1Ib0="
+    },
+    {
+      "id": "dp600-q-39-2",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C2",
+      "skillId": 39,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "You would rather a query failed visibly than quietly served an answer through DirectQuery at a different speed. Which model property controls that?",
+      "options": [
+        "Large semantic model storage format",
+        "Direct Lake behavior",
+        "The refresh schedule of the model",
+        "The storage mode of each individual table"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/fundamentals/direct-lake-overview",
+      "sourceSkillBullet": "Configure Direct Lake, including default fallback and refresh behavior",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/fundamentals/direct-lake-overview",
+      "reviewStatus": "draft",
+      "tags": [
+        "direct-lake",
+        "fallback"
+      ],
+      "answerHash": "11ed996b1d14be9bb1a158d562d8e01cbc5e2a5a79b1011cf39232646289dc9c",
+      "explanationCipher": "1IrBkrVNjfkYemTD4E//Vy6eMiV10plZ7/2pVH22mYfrxS6DTeZyVTC/1pvbkJ09+Ka31ttKxdV6qakGq8A6MMEdFkKv6yTUOutLsg/NxFf+UVGuhuV9pIvTeAU6pgJf0I/mRcSeS5A2x8GZSMK1HHkmb+BdJ73JQ+KmgeVfBUQsPBIyBvEobh+OMaL6vLGEzk7kNFPn42vjfuDj99zIgopseOA/lFMotCwMB7OfsjVlVWcxPl23WL0Ju7NgMOabcsieFu3em6ugXTpyebD8Fz94q+KKFHfb9Q+NK1fjGaAD6jQSjfrwB8Qw9MM0Iw3eQaBYVc43ijfKUXSqeci6Guae+uCZOmsPEZ98ccPoUO8Gbu6NYx/bBXKyeIXvtlHSkJMmJu8uz6HjPuEhLHehFWSdk4rOUGxYWH2wcGc8CQ+P2Gy0CV6IIORaRkVB2KDMS4HDtLyKFVv336Pvk608W1t6ObjFeGZeB/vFBDeHxje2MfM="
+    },
+    {
+      "id": "dp600-q-39-3",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C2",
+      "skillId": 39,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "Which situation causes a Direct Lake table on a SQL analytics endpoint to fall back to DirectQuery rather than reading the Delta files?",
+      "options": [
+        "The report contains more than ten visuals",
+        "The model has row-level security roles defined",
+        "The Delta table has been refreshed within the last hour",
+        "The data source is a SQL view, or the warehouse applies SQL based granular access control"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/fundamentals/direct-lake-overview",
+      "sourceSkillBullet": "Configure Direct Lake, including default fallback and refresh behavior",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/fundamentals/direct-lake-overview",
+      "reviewStatus": "draft",
+      "tags": [
+        "direct-lake",
+        "fallback"
+      ],
+      "answerHash": "761e64355a604cf806e3d1016111da1d9f8d7681185bef3e820a1921c630453a",
+      "explanationCipher": "IRCgnsCNXOn0O/lp2KpCXRCdkRZTvMpHp8AhLIZjeCW3xtRCCvKoZzxSYCwgSB36RYL7lxxhq1Po08xjH1RIy5FSNBCJEahL2YmnAbOizMVFfEeLRwTUju8G+qw7qsL74318y9/fhV2GDLFa7OvMSKgC+k1lMKg/iXH0R5GCOWXCVR25laGxAtJ15j1kVJ0CGLY/2OdLHUuYlYAYYuJ5LSlLpAno2TiNZPiNdBJM3wDKwOjnSWz+WuSqE6/sI8G9JZHlYJDOs99UT/Ww3orGnkkE0Gn4uST4zAkD3ZD4WBTcdh6pGSYSiivp5KQopjfKZ+DYunG/HyJak5p1QSjK8UZF/uKryUWwZNfAU+xXfOGsRPaxv2NsYGPZt/npwCKMcU+xyM21BmmasYGkY+fHYbmzvFOQVVbFS3XsQayE4rVcUp+0b4a93eZti2jsM9E1mnwHnRwoWCe2D/3Z742yqgIETY2u2Q=="
+    },
+    {
+      "id": "dp600-q-40-1",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C2",
+      "skillId": 40,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Which statement about fallback distinguishes Direct Lake on OneLake from Direct Lake on a SQL analytics endpoint?",
+      "options": [
+        "Direct Lake on OneLake does not fall back to DirectQuery through the SQL analytics endpoint",
+        "Direct Lake on OneLake falls back more readily, because it reads files rather than tables",
+        "Both fall back identically, and the difference is only about licensing",
+        "Neither of them can ever fall back to DirectQuery"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/fundamentals/direct-lake-overview",
+      "sourceSkillBullet": "Choose between Direct Lake on OneLake and Direct Lake on SQL analytics endpoint",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/fundamentals/direct-lake-overview",
+      "reviewStatus": "draft",
+      "tags": [
+        "direct-lake",
+        "onelake"
+      ],
+      "answerHash": "00b71504179ce87534b50bcee360350ea6c62d815b246fafdd2f9965b6dc56d2",
+      "explanationCipher": "LwZBZRYfHkAzHRleB5Qhs7ZGn/3frwJQLg9FscEeV6J2PM8YaQl/V8givdpsl7FD+lwqn57Q6+ErTKMbxE9sBtnGaWwDqH298X0M3sM3G35nS6J5oxFYmvIGOSCh7LYdZ+qezVXSG6uozZ6uhL0547dv3kEgAafiIVM8aBCPZ71bNjysWeYKJbO0evjLC1amO+NoTrTMazENSPrTVI5chjZ5xPqdGnkyvyN3VDKm01X76b8O38ckGrl3oeu1HBqOM58yam5cRsoOryPYUP80ZJdqkDbiIODFUM5ZXxfSyh6OjQE14D9vJvEFpZEBVq625uMYfix+vmPVRFxE2nmzNv0jpmMSfMmsoCqJz8p1HAyglUDvwcPFyZjCp4k7j0vGCaDQvSHVRh5/9MhTEb0zj4SavbeK07h8eNHk/vdr/lolMBgl6l9v6AFC6I8duV2Rlb6+F9sg69/tRHC4kbLbtDF8EyxBfo0EP4KlnOgGsttcmdOFTk+hMeLVT5Ty5V28Akfvip+O1z3AmlY="
+    },
+    {
+      "id": "dp600-q-40-2",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C2",
+      "skillId": 40,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "A model needs Delta tables that live in two different Fabric items, plus one small imported table from an external system. Which choice supports that?",
+      "options": [
+        "Direct Lake on OneLake, which can use more than one Fabric source and allows import tables alongside",
+        "Import mode, because Direct Lake never allows more than one source",
+        "Direct Lake on a SQL analytics endpoint, which is the only mode that permits import tables",
+        "DirectQuery, because Delta tables cannot be combined at all"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/fundamentals/direct-lake-overview",
+      "sourceSkillBullet": "Choose between Direct Lake on OneLake and Direct Lake on SQL analytics endpoint",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/fundamentals/direct-lake-develop",
+      "reviewStatus": "draft",
+      "tags": [
+        "direct-lake",
+        "composite"
+      ],
+      "answerHash": "312bc51f9d9ff927178cefe74ed7efab5c96c7dfcfaf91c5ba528444599e0dab",
+      "explanationCipher": "1pPQxWCgWum/rdhL04kNfCFscONJQVRpT+L3+7LiGV1ue8gHLisiy/txcHazo3s9DcbfOqdmeesaeB8+xYOTneOIH0PufHK5a1Fx9enhFJ5IVwJfcYVSsPUuvdmF2wMJMdk79DjZENGEBzGOokrfi5dXYOPZQ2YI9uBF0u0jeS+3Hl0F6yApHMRyBUjRLa3iBzJeNYO8dJGtgYubNYZ1PHH3JTrs1GEoGSN+91zeC/4YGMaVsb4zeHumypcwRVnzicKhf57Q0b4V1IkSNMP8+V/tfdpGaWa5HwhfEvVbD0BECgYLqnYrn/g5FxmUKMhuVB2DtRfbCtqHFD7EOHGJL14l6tG5HcT5Th1gC9rfvQp3PMT18AK+sSM2q7PS+tR7rPLPFPbgfmXDbcjPn2Kz+G90JiM5s2/czMaPUnfjjSUowZxpyai7RkIu63SXByvh"
+    },
+    {
+      "id": "dp600-q-40-3",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C2",
+      "skillId": 40,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "A warehouse enforces access with SQL based granular controls, and the reporting team needs those controls to keep applying. Which consideration follows?",
+      "options": [
+        "Reading through the SQL analytics endpoint keeps those controls in play, at the cost of falling back to DirectQuery",
+        "Direct Lake on OneLake will reproduce the SQL controls automatically",
+        "Granular SQL controls are ignored by every Direct Lake mode",
+        "The controls must be removed before any Direct Lake model can be built"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/fundamentals/direct-lake-overview",
+      "sourceSkillBullet": "Choose between Direct Lake on OneLake and Direct Lake on SQL analytics endpoint",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/fundamentals/direct-lake-security-integration",
+      "reviewStatus": "draft",
+      "tags": [
+        "direct-lake",
+        "security"
+      ],
+      "answerHash": "8b14b339baaeceafc4d7364fb362f1ddee83873c529ba26c39e3dd9afd8150f9",
+      "explanationCipher": "b0KXwStqp2ged1xIRd7zvDsUGMISpHSQn/7ASuN84pjDNPEMEMmHOl6+0SFCxFaNFLcFkY7bnbDnu5jzAvnckxqxghZA/GXJ2ObloLVBh6c+UmEb2llG5p3awyOmaQKjppjYQCzkqnNtmhgBksVJKOqLyY1sJ6SVT5rPCBUOaTmKFwKj2V+dNzssLJSJJQaxnves4XF8dL2odpo306EUki3gtxyRsBTchlhI4sYQ7qEgUr5T4u4N76Wg51IbQ9NOB9B1eQ04NY4TE57WCaGxOwFyz3QKD4vDJqrK1nHdVDBU43Y/v66ZvNfPzFY6OgcSkwHrXCOE5i9gzE/VpjWf4QkUeZZDKFx8FH/zomKjAAnl/8yFj+7xZwMxV6jWBpMcVdycPaEEHJRvEO1WRkrGONpoS+ifPP92je9PHJfa/vqfFCxQRipOvVsKIU+b82yrkqmYBoqoPTbf7gnXeMCYk8Kh2n1Ejkwtzs0lb7Q+eNCcnb97ss+yAs4iEPLVMMZLhHfJoCcYMg+k/EXuHpaYyfc2eg=="
+    },
+    {
+      "id": "dp600-q-41-1",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C2",
+      "skillId": 41,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Which two parameters must exist before an incremental refresh policy can be configured on a table?",
+      "options": [
+        "PeriodFrom and PeriodTo, both whole numbers",
+        "StartDate and EndDate, both of text type",
+        "RefreshFrom and RefreshTo, both of date type",
+        "RangeStart and RangeEnd, both of date and time type"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/connect-data/incremental-refresh-configure",
+      "sourceSkillBullet": "Implement incremental refresh for semantic models",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/connect-data/incremental-refresh-configure",
+      "reviewStatus": "draft",
+      "tags": [
+        "incremental-refresh",
+        "parameters"
+      ],
+      "answerHash": "00f27006cd6cac80d2f750e48162eaf6b66a31b10aa6b62ea2ec248c9ab81302",
+      "explanationCipher": "OTfNgIbQBKrOSTMqezhKCDvVEf8Wi4WDXBCKT0tPGbRx5zA3Ov7h0jUIwdw7L41ftPPTlYxHMLRvvBtOor6f+DnH4GIifRexUylx+e/9wuqESvRaa6XCHf1m/uFsds6b1sw1U/WTdDdAQAVtJlTPUYaBKUS9eGEuN73L9//9hn3O4nE5m0FK5OJVTtT3yZZnTrBsekAPQ69kUU2xb8kEBldlLPW1PBPs8LbkffQ06cVHG4b+hLDGvb6KoZwjdbe74zeakNNa3yxgUItKh7Kts6w3do1BWjo8I+2iWOX6EbCyXR2wOhp5kXd34089HOXBbm8fwcfT1BBzbAnKtXt9F57/TokD6yPPtL2J07amnrFjpy7F+uonluupzqWa9jdEaHrT9sRsWebLr3DPJvQ51iNLfmOLJ/eZxm7z4dzMJvlq2Vkq"
+    },
+    {
+      "id": "dp600-q-41-2",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C2",
+      "skillId": 41,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "A policy archives five years of data and refreshes the last ten days. What happens on a scheduled refresh?",
+      "options": [
+        "Nothing is reloaded until the ten day window has fully elapsed",
+        "The archived years are deleted and reloaded from the source",
+        "Only the partitions covering the last ten days are reprocessed, and the archived years are left alone",
+        "All five years are reloaded, but more quickly than before"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/connect-data/incremental-refresh-overview",
+      "sourceSkillBullet": "Implement incremental refresh for semantic models",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/connect-data/incremental-refresh-overview",
+      "reviewStatus": "draft",
+      "tags": [
+        "incremental-refresh",
+        "partitions"
+      ],
+      "answerHash": "09de5c578bebf748237de8ea26fac8e8ff9357a56f3ab98c9dfdbf1a4ac104cc",
+      "explanationCipher": "IPwqneSZHwMLmpC1ncOeqlS0AxB3XmcycjYgufaDdmdN/a4IeoVAFVFDs7grlnhDapHx4bxO9ZSYR116BtaapgWhs0ccbNkEpeiHn3sPl4XB30HRHVnU0uVupdSIFHkaIJiu0QWFoHyOXzSLBuLMa3IQRUgCHlzG+q43dpnOcky9ck8LVcV7BDfQvayjMyqGe7LbYdD7j27B3H+Gs7daH12FWZfz1sRoPDCPYuhpFBK4L6RkKBT9LIevAfaJkB9NVvp0qPEcUu7gLkPVocxKIeS/ntgKALNPh0oN/Sva2uIrhROvIqeDJyguwDMqaJZiIkC/zRBTmJirC98qjQVOZkQJax4nZhf+tAfiuw=="
+    },
+    {
+      "id": "dp600-q-41-3",
+      "cert": "DP-600",
+      "branch": "C",
+      "cluster": "C2",
+      "skillId": 41,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "Incremental refresh has been configured correctly, yet every run still pulls the entire history from the source. What should you suspect first?",
+      "options": [
+        "The archive period is set too short",
+        "The model needs the large storage format enabled",
+        "The refresh is scheduled too frequently",
+        "The query does not fold, so the date filter is never pushed down to the source"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/connect-data/incremental-refresh-troubleshoot",
+      "sourceSkillBullet": "Implement incremental refresh for semantic models",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-query/power-query-folding",
+      "reviewStatus": "draft",
+      "tags": [
+        "incremental-refresh",
+        "query-folding"
+      ],
+      "answerHash": "0e9c45da32c6355be07116e28406b825df54d925bbea12175406505c7576c795",
+      "explanationCipher": "KBAt084vboKMEN8DfpVHqC9EVmev4gMFuyipmTHrriArJd9hliDuoDtTmLQ/30Fl298Nho0motEeHHeQRCWfvhbNLepCRobWOjP3RtEu1uDt7FnzU8NuY5R0dEirZ/o4jNSmK+/TZFJfjdmfQODXcHm+e+Ub7Vljp8SCUROXmG5m93EQv9Cm0Y4eBjY06tI/ltE2wt34fVEYjsRIGyWeIpszSZzZhilEt/0Yekm1Hjvk7NIcJwHWuC7gWiFXcR5eLSRXT1UArGia30CF6ofjsu+jnfviTXZfhJwStxvprfOXdZPzSNUGHGehrw8S+ZDcmIDiErSW44oc2rhTP0ZT/TOE6oDUUESWHeVE37eBXgpw46mIHp8MATXtKomx+cxv/JRJpBqLA8u7VXWPxYWG61ScGLtWWDy72VAUzDMUsFnZH21pULh3ZvLoTaP1sbyrocsB84hDhuaAUHzg4BvJ2/EWsb4GHM286QojAB5rxFlGFBchi5wcLifAPlJiOIGAwyBBudqXzw=="
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "cluster": "M3",
+  "generated": "tools/content/build-questions.mjs",
+  "questions": [
+    {
+      "id": "klasse1-q-3-1",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M3",
+      "skillId": 12,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Wie viele Ecken hat ein Dreieck?",
+      "options": [
+        "3",
+        "6",
+        "4",
+        "0"
+      ],
+      "tags": [
+        "formen"
+      ],
+      "answerHash": "621fc351bc8a677450965400cb868319c2310db8f700b3c6e1d19e415b900715",
+      "explanationCipher": "TowNZlAZd5mnSX9mQGvmqwQwy0EqyUNkyEEVyX/SxWxJSJS6wCtsIscwO9IOQSZ7Nkg8D5FwzB3qNhA1jz7DaxwVBCP+M/aHq3lqSZ2VyOIgjt0uUllDw9IF6yJajfs="
+    },
+    {
+      "id": "klasse1-q-3-2",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M3",
+      "skillId": 12,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Welche Form hat keine Ecken?",
+      "options": [
+        "Kreis",
+        "Dreieck",
+        "Rechteck",
+        "Quadrat"
+      ],
+      "tags": [
+        "formen"
+      ],
+      "answerHash": "deba550d8f4cffc3259063489f02cefe06c2889ade97079319b829f1e5c2611c",
+      "explanationCipher": "e0+coy7po/z24vKa8i/zO8X+n+rdzLwRRqGIIo/WC1ErgXTTNNxj6HdvFWPT7iqB6SHcF3oN38gfy6S/rQblnJ1o080UXbG/q/A="
+    },
+    {
+      "id": "klasse1-q-3-3",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M3",
+      "skillId": 12,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Wie viele Ecken hat ein Quadrat?",
+      "options": [
+        "4",
+        "3",
+        "5",
+        "8"
+      ],
+      "tags": [
+        "formen"
+      ],
+      "answerHash": "6da17d51b246623613bf694d08260223c1c36ccea2924b7fdcb0c27a9ed0cc0c",
+      "explanationCipher": "MHhzGMvF4bFjUvcxEjP8EP60Os8fZj9SP6Z3VSh1PZKJE5RrcrQ4nFTptPa+tj6N0uyTAxGs9+5K7m4UZ8Utsbxy825XZSy7/rf6JPyONqchT9Fo"
+    },
+    {
+      "id": "klasse1-q-3-4",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M3",
+      "skillId": 13,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "2, 4, 6, 8, und dann?",
+      "options": [
+        "10",
+        "7",
+        "12",
+        "9"
+      ],
+      "tags": [
+        "muster"
+      ],
+      "answerHash": "b5567d9c7b901f6d229f4f36bfda8f81052f4094eddbfe5cb90e917abfdcbd39",
+      "explanationCipher": "KI1IwRQdHRnR0fvAXt6lVKIfk79BXmiWt2QtRaeU4Ht7jzM2tfLu7BTFStVE6Lun/UO0gQw03sp2+MEFe5VuADUTh1s26DnY6gF5eFYVUg=="
+    },
+    {
+      "id": "klasse1-q-3-5",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M3",
+      "skillId": 13,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "5, 10, 15, und dann?",
+      "options": [
+        "18",
+        "16",
+        "25",
+        "20"
+      ],
+      "tags": [
+        "muster"
+      ],
+      "answerHash": "dc2e588f562c9da28e49c52ffe6e20faaee35a89c7aa8b05926cd6599fba68bb",
+      "explanationCipher": "iPAllnWN/ygP1aAestVT4NWYOsOwFkwPEIXTf8VkhHJqo9ggwwDIHTEWjcrLoTD9pmzDGsGIJncJz6BGBsvCFZM="
+    },
+    {
+      "id": "klasse1-q-3-6",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M3",
+      "skillId": 14,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Wie viele Stunden hat ein Tag?",
+      "options": [
+        "24",
+        "7",
+        "12",
+        "60"
+      ],
+      "tags": [
+        "uhrzeit"
+      ],
+      "answerHash": "80439014e42929c4652d3d3b03395801a5fee11397bfce7561d318f841873a70",
+      "explanationCipher": "aDBLmRW6J5PLzvF8HqI1sxB0DEkpNqO/drfk88biYj58UAeg/63d6/1DWrR3YagxfIb/zGRaCPuAX25fEwo1PHvnhnCu0kvyjsTUYmjkiNJQ0A=="
+    },
+    {
+      "id": "klasse1-q-3-7",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M3",
+      "skillId": 14,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Wie viele Minuten hat eine Stunde?",
+      "options": [
+        "100",
+        "24",
+        "30",
+        "60"
+      ],
+      "tags": [
+        "uhrzeit"
+      ],
+      "answerHash": "79cc10164edfb41c213daeadaf759b6b11e82cde07a10b708909f15aed036cba",
+      "explanationCipher": "MgOCAXtrAM5P0JH7LnAo9tPMjSR14WYhyaeqaEy3ipCArGMs1cgB70n+aadWzeQA0xubtErBX2BUwZdBbfNR0kDa3OfdNm84KMWS7vifmy1MrwBI7TZquTsCbpMpOeulJw=="
+    }
+  ]
+}

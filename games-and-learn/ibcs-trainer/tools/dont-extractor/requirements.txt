@@ -1,0 +1,4 @@
+# OpenCV + NumPy are only needed to *prepare* the chart images, not to run the
+# game, so they live here instead of in package.json.
+opencv-python-headless>=4.9
+numpy>=1.26

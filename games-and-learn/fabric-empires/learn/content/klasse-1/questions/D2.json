@@ -1,0 +1,132 @@
+{
+  "cluster": "D2",
+  "generated": "tools/content/build-questions.mjs",
+  "questions": [
+    {
+      "id": "klasse1-q-5-1",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D2",
+      "skillId": 19,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Wie viele Silben hat Banane?",
+      "options": [
+        "1",
+        "3",
+        "4",
+        "2"
+      ],
+      "tags": [
+        "silben"
+      ],
+      "answerHash": "1590de884700a4b35ecc1839207cf6bf5fb936faed46f2608641741e785c9834",
+      "explanationCipher": "pq8y4SHXNgova9u5kkUJQ8nlMZ6dT5bh/TwVAJUlXsIH5vpCyKDQJbiVaKQ4+UWqc2NJJIvy/4g="
+    },
+    {
+      "id": "klasse1-q-5-2",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D2",
+      "skillId": 19,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Wie viele Silben hat Haus?",
+      "options": [
+        "3",
+        "1",
+        "2",
+        "4"
+      ],
+      "tags": [
+        "silben"
+      ],
+      "answerHash": "46232e3c2c9e5ca0e09f0eb261d04c374d24281be72fbec5c55db6f024f458fe",
+      "explanationCipher": "wfooZBnSZZ3i86le0lbw3Dg/BF114c6lUVOxSCXFzNlWwPNOmlRAfNPr8mgfR40ExwV0+fCQDrpGv1YLI7harpVmjOdpmhEzlkk="
+    },
+    {
+      "id": "klasse1-q-5-3",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D2",
+      "skillId": 19,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Wie viele Silben hat Schulranzen?",
+      "options": [
+        "4",
+        "2",
+        "3",
+        "1"
+      ],
+      "tags": [
+        "silben"
+      ],
+      "answerHash": "5d9dbf25bbd990fca0a9b14b7c02285e4e515a2b1fbe5f9ae2feebbe1fa16cc3",
+      "explanationCipher": "8iUZPOPkwYbV4kg+MLSPUbTnEP3T70bGVgFwzTCPC9gsHbJJ6bLbZm0/ZuTsc2ghrVISucMHMFTbLp3H7g=="
+    },
+    {
+      "id": "klasse1-q-5-4",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D2",
+      "skillId": 20,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Wie trennt man Blume richtig?",
+      "options": [
+        "Blum-e",
+        "Bl-ume",
+        "Blu-me",
+        "B-lume"
+      ],
+      "tags": [
+        "trennen"
+      ],
+      "answerHash": "e1a1a2838fc51301560255156cd4868a9ba940eb145e564a57cf8a572eb7b3ed",
+      "explanationCipher": "yP322+5vZNR42CDrnzNNY2KWCOxWV+VUE2HUlhPM5n7YPbtiAlQREf92v6/NRnDPlX/7jzsDIweCOsOtBmaOnMjyNQ=="
+    },
+    {
+      "id": "klasse1-q-5-5",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D2",
+      "skillId": 20,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Wie trennt man Garten richtig?",
+      "options": [
+        "Gart-en",
+        "G-arten",
+        "Ga-rten",
+        "Gar-ten"
+      ],
+      "tags": [
+        "trennen"
+      ],
+      "answerHash": "c2acaea23e1846f48a6b6f3e16a21154d0d6808a0f41621b745309c9ab8c6f41",
+      "explanationCipher": "DIeQR369ajBGkqWmi02JMIyeeSuM6MYUg3qtP+J+RLecC2rUBUbwg4Z5BU2sfFy9exBbs0GDnRdVkJe08ZJbcNBMdMd0W4z0SGnezBrf"
+    },
+    {
+      "id": "klasse1-q-5-6",
+      "cert": "klasse-1",
+      "branch": "D",
+      "cluster": "D2",
+      "skillId": 19,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Wie viele Silben hat Elefant?",
+      "options": [
+        "4",
+        "3",
+        "1",
+        "2"
+      ],
+      "tags": [
+        "silben"
+      ],
+      "answerHash": "5603f774d1441b7752bc8a35527be3aff0a9380f51717e41a9c05e9366f52169",
+      "explanationCipher": "H5DqR4DMPQnZJeKO/w83HfOllG+9CQwhZbQV6R97guMM9Wef3SvEYWxsvCP3gztoxH2lUS8J0Oxt"
+    }
+  ]
+}

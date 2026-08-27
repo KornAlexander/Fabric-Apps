@@ -1,0 +1,174 @@
+{
+  "cluster": "M1",
+  "generated": "tools/content/build-questions.mjs",
+  "questions": [
+    {
+      "id": "klasse1-q-1-1",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M1",
+      "skillId": 1,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Welche Zahl kommt nach 12?",
+      "options": [
+        "20",
+        "13",
+        "2",
+        "11"
+      ],
+      "tags": [
+        "zaehlen"
+      ],
+      "answerHash": "d6df1c61b686be1e3aa8fd6fe6fec444e22cb385aabcb80a8c9cf6c3c83ac3ab",
+      "explanationCipher": "0fvgavTk75kv6MZfU5ewgBBi5yQPYTss9Qv+yk5ggyI8IiMz70ppBB28Qy+TPMMWOg/U72KJqQglAfLItTVlm4ux0JMzAqQY32VkEjwunpxKbsnGwL08AOmm94kmTdS9kA8R2l8="
+    },
+    {
+      "id": "klasse1-q-1-2",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M1",
+      "skillId": 2,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Welche Zahl kommt vor 8?",
+      "options": [
+        "6",
+        "18",
+        "7",
+        "9"
+      ],
+      "tags": [
+        "nachbarzahlen"
+      ],
+      "answerHash": "3ab527c8b648f4c9ce4c61f142a3f4ad9b02ef047aab3829742687a1066d40d6",
+      "explanationCipher": "IcF0USZ86IpDcwATadJ4S5NfA2/+yIhC8PVTbwMsl55VyY8x2AAyIr3a05z6ma5kq/zZ1EyaUclJ3ztajBaUItL7FZPNaETEIT/jUNznfv0="
+    },
+    {
+      "id": "klasse1-q-1-3",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M1",
+      "skillId": 3,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Welche Zahl ist größer?",
+      "options": [
+        "gleich groß",
+        "9",
+        "keine",
+        "15"
+      ],
+      "tags": [
+        "vergleichen"
+      ],
+      "answerHash": "5d28fde95675e78a93fe98ec10f86fd7139dd834da1bf4d7fea88e41e77dc142",
+      "explanationCipher": "ryNyGHFy+8Vvm5E0dpiN4IUbD5pQFmnN4oAV8DgW/BZWfovTnTOL3d7tTi3aTB8SOeJwUMKvIw6+1+1TswZtbG9q5lXC+jS1c0GffTaFBr7Gi/VyhwvMoFYbq+qmcoFx7NwwPvckvBloQMAj"
+    },
+    {
+      "id": "klasse1-q-1-4",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M1",
+      "skillId": 4,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "7 ist 5 und wie viel?",
+      "options": [
+        "1",
+        "3",
+        "2",
+        "12"
+      ],
+      "tags": [
+        "zerlegen"
+      ],
+      "answerHash": "1618cb277b178243937b9611feab85079c447afe7447b14b554111bb73fb5f17",
+      "explanationCipher": "Xw2enQY+LAxkFMspfhV0iCykvptsUmw5z/8ZkuVbj8njlu5VT6kIFS+Q3Ed/d3R4OrkPNJW856zEDsuj9Xix/hRxKQ7CyARxsuOkgxcJ3+SAiUsZVQ9FeWs="
+    },
+    {
+      "id": "klasse1-q-1-5",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M1",
+      "skillId": 5,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Welche Zahl liegt genau zwischen 10 und 14?",
+      "options": [
+        "12",
+        "13",
+        "11",
+        "15"
+      ],
+      "tags": [
+        "zahlenstrahl"
+      ],
+      "answerHash": "54818ad57defb1b206397ac8be4cd2ea8a842fef9dbee8a5ef69485f29c1350e",
+      "explanationCipher": "r/SqAU/Wc8giVzXBFZfFUPa49PGO57I+TF5+e0taJUj+7jtanCDupDTr4Y1Gsfn5AHnYQSdeMZ2XoCfep9oDjw5vo/+MEkYHsyXLAMBxM5SUHnoHD+bCfqrhovwlzghFHr+sfS0qGLRN8qsWIdPtBv0clGaDkgo="
+    },
+    {
+      "id": "klasse1-q-1-6",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M1",
+      "skillId": 1,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Wie viele Finger hast du an zwei Händen?",
+      "options": [
+        "20",
+        "12",
+        "10",
+        "5"
+      ],
+      "tags": [
+        "zaehlen"
+      ],
+      "answerHash": "b5a67574073d5325dfd31dcf8706a019daedad9e79f643c6196d7e0283d91206",
+      "explanationCipher": "Hd5DBXUK4Sqwu8d7HONpO8D+9ggxbk+vfprDCmtERz62Oypf1kSgv0b9yHzX3KhmrVmPXmYGqtLxXZvMRip1alqFsrkzsAHGnLRp+dXlYIM/GA=="
+    },
+    {
+      "id": "klasse1-q-1-7",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M1",
+      "skillId": 3,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Welche Zahl ist die kleinste?",
+      "options": [
+        "14",
+        "4",
+        "9",
+        "11"
+      ],
+      "tags": [
+        "vergleichen"
+      ],
+      "answerHash": "26e3603a658852e55052c2595dea261f8c3fe8bac274d07bb064ee6d0f2ea217",
+      "explanationCipher": "cMreUBnmrAWLmjuc1rgxsbs4oliJzpkKOnuXql8ByOsMOEElPAanMkc7lIx7e4uq7R5K12Vqzl88weI8zUhPSyzRXBTw6I99g/tBB9XFhPb3exZYlANvgX9Ucvk="
+    },
+    {
+      "id": "klasse1-q-1-8",
+      "cert": "klasse-1",
+      "branch": "M",
+      "cluster": "M1",
+      "skillId": 4,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "10 ist 6 und wie viel?",
+      "options": [
+        "5",
+        "3",
+        "16",
+        "4"
+      ],
+      "tags": [
+        "zerlegen"
+      ],
+      "answerHash": "848c9c7ae9e104438d6b610e228bafedec52e4d867b90ed6d9208912eeca2d2c",
+      "explanationCipher": "V6FiG4ntzDpDcBhORIbV16gP4EuCvNRPg6wBv4+mpNs7kKADMKLNlkkBcuXdOZkUpbqmz5b0Ha4bhddJlo5l0JU91+kJt0FqkmQ4ipx+LPsaWaA3/Rm4mJZCSPpj555IYw=="
+    }
+  ]
+}

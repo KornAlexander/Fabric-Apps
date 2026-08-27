@@ -1,0 +1,22 @@
+{
+  "name": "@fabric-empires/app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fabric-empires/engine": "*",
+    "@fabric-empires/learn": "*",
+    "read-excel-file": "^9.3.10",
+    "three": "^0.185.1",
+    "write-excel-file": "^4.1.1"
+  },
+  "devDependencies": {
+    "@types/three": "^0.185.4",
+    "vite": "^7.1.3"
+  }
+}

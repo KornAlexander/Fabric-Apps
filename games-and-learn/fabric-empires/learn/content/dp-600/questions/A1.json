@@ -1,0 +1,396 @@
+{
+  "cluster": "A1",
+  "generated": "tools/content/build-questions.mjs",
+  "questions": [
+    {
+      "id": "dp600-q-1-1",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A1",
+      "skillId": 1,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "A data engineer needs to create and edit notebooks and pipelines in a workspace, but must not be able to grant anyone else access to it. Which workspace role fits?",
+      "options": [
+        "Member",
+        "Viewer",
+        "Contributor",
+        "Admin"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/fundamentals/roles-workspaces",
+      "sourceSkillBullet": "Implement workspace-level access controls",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/fundamentals/roles-workspaces",
+      "reviewStatus": "draft",
+      "tags": [
+        "workspace-roles",
+        "least-privilege"
+      ],
+      "answerHash": "06c9f645997664cf44bb446b68c9794608406c11b7d3b8f6fa0514710f679fb2",
+      "explanationCipher": "J3aVtWTXg/HrA8ypH0Qu4aCC98F49PKRdKHGm3oFM3K3oJK+MRxaGd05yz/oUJX9N/g+qtaM8tFX8rZNZj7yeWtWFvpPPklNnW4knvL4B4ioFnAJoS4OexxchuSGpQZIiUVusLHuckLLjhkQTkWH9X1h7rfUDBJEJp68qyjfwxMEIa2BcNVvZiMLNRXTOtqLPc8LvRqbau7WadWaQAu4ocbDoaxosz5sgj4fyLTvGVuj3FRKSbvGDRuBmiiM+mCO0PNOwdNu+BNgS/oRtddlScDu/5C7PK06pEi6uj6N02yUFLGhJd08tlfoDMjhYNKh58Yf9a5Un7eOtAp3BpOu3nV0dObhWuYLOO6soAIN4I59kRNqoSlkpAP+5Ezf3wSVRoR4hFzYgwxbjGCBmbG5XQ=="
+    },
+    {
+      "id": "dp600-q-1-2",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A1",
+      "skillId": 1,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "An entire finance department of about ninety people needs Viewer access to a workspace, and the membership of that department changes every month. What should the role be granted to?",
+      "options": [
+        "The workspace app audience list",
+        "A sensitivity label applied to the workspace",
+        "A Microsoft Entra security group that already contains the department",
+        "Each of the ninety users individually"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/fundamentals/give-access-workspaces",
+      "sourceSkillBullet": "Implement workspace-level access controls",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/fundamentals/give-access-workspaces",
+      "reviewStatus": "draft",
+      "tags": [
+        "workspace-roles",
+        "groups"
+      ],
+      "answerHash": "4babc7855d5431225de62cfab842096bf6f8301fa279bb8784fed84ae8e43959",
+      "explanationCipher": "d32385CwkBbW4FJgsShcwNmOVe1fUMFkj5dXqC5t9Lv0MTAQK9qi/YoWb/GtM1JuXd8A4BoY0j/a2xzUmTgnLnShw0pNUBHLjz+iaiX/GGm9+2VOShbe4c+9YwDjNPxZ1SrdNahBuVgmoIEnyZjY2Spkj3fQhMdaC48If6ZJ3niboPmEldh9OsnTjjJtz33AZINVVteeyU7SHzWJgn/y8gM8C1Wk8Tn0RZi7sOhI1skcNudloJmkVlEvQJx6H7dgnRNd4xvjep1xqEp/GGEsH6qGqMolxOJ9QCeQej9Hspk+ipsxs92sdVdUK7GCT3kVefx0o1zrMjranBXrI0u8+ikq5CDmzpP2k0b+K4kiT3ECIosLpGQnrYs0JymlZELa+xVVUEdzOPpA1qc0ai4vJpQQJlvT9y2m74ojXbvRBPo4Q25DLeIAEQjjFhpxWh6QGnnKghMhv3vejQX00uQRVDUhFKXGL82XHnc1KHoAwvBiz27F3kkptsdpdC9MWin+mqBJYskdK4NkTcYmh9Myu4Uq"
+    },
+    {
+      "id": "dp600-q-1-3",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A1",
+      "skillId": 1,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "You want a team lead to be able to add new analysts to a workspace as Contributors, without being able to delete the workspace itself. What is the lowest role that allows this?",
+      "options": [
+        "Member",
+        "Viewer",
+        "Admin",
+        "Contributor"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/fundamentals/roles-workspaces",
+      "sourceSkillBullet": "Implement workspace-level access controls",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/security/permission-model",
+      "reviewStatus": "draft",
+      "tags": [
+        "workspace-roles",
+        "delegation"
+      ],
+      "answerHash": "53f9c5bb1961acb36e92ec3733d6756c3db00bdcb840b5657b6a5c85799328c2",
+      "explanationCipher": "yj3yKFQgVT5foQb+DE49q9b1AovXzjeethSpgu3DgcHGKTlm6QJWASt9Tdi67u2w2fpWyFadltd6drj3+XXWYVCbJ8ko0mUV2KRjwUzDYv5II1A1ZMSAjV2SqzuPmq5A3xzoMT6AgQJdM0kSOKNwR44YQNmOB2uQdAZfNPKh1ogmpiUb8x5B7F5OXyFuXOfGnpOtZ/j31PwbghREqlLD9sTd9BdaH7KzhsVNSrKjpkxVoSaVMlQrbleY6MKWQenvXr5/QJoJUBJb3d+BwyOqx9OB50+HO0c29L+UMS2YJuuBYIDUWwn/HNPm0sBiF+srg3TcE+dCV/ZHr85X54aR7+N0fiIZK//Bgxlm6FLBaDrWlh3CW82h08VGPSuS3zQyZZ4aqxNsZRNzpyA5UA=="
+    },
+    {
+      "id": "dp600-q-2-1",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A1",
+      "skillId": 2,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "An analyst from another team needs to read exactly one warehouse in a workspace that also holds twenty other items they must not see. What is the right way to grant that?",
+      "options": [
+        "Give them the Viewer role on the workspace",
+        "Give them the Contributor role and ask them not to open the rest",
+        "Share the warehouse item with them and give them no workspace role",
+        "Move the warehouse into a new workspace for every such request"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/data-warehouse/share-warehouse-manage-permissions",
+      "sourceSkillBullet": "Implement item-level access controls",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/security/permission-model",
+      "reviewStatus": "draft",
+      "tags": [
+        "item-permissions",
+        "sharing"
+      ],
+      "answerHash": "949fd432a0de143eb1cec7fadcb29b841579f026f57cd56f989bfc1c25bce692",
+      "explanationCipher": "WZzpTZdNUbewkX5eWOgiw5C9ST0uVJz4YRGrS4H+9RX6X8HS1OJZl8Fi/lJ57ak6ABaSIwnifww1pn3616SYwV2nLAsePf5XCBAstyKxsOPkvb1jtVcenzghKNGw2ZJQYuHccb+y4f8Ii8ndQAfJQxmTlSBBI+EYfghgilHcpH/BNyYVuetVkeddZR12rJu4muOHnZi0Qt3MWDQnHQssbgI7J+vKBcIbjZEwpCKxSRI90fVYF0iMOZgUSZKzEag0WHZzE1uJkKh/CzTZ38uAvp4OGt2z05SnrxvhMt80DDhQlOzQgrPz4KqdHIFNnWd7KQzA6hhCC0JfK+ZPnrnYNjyXHHHik7n6S7tLY6ZwVIsiUlVMQ/1jW5yT+dE43OMLZM2HZw=="
+    },
+    {
+      "id": "dp600-q-2-2",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A1",
+      "skillId": 2,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "A report author in a different workspace needs to create brand new reports on top of an existing semantic model, without being allowed to edit that model. Which permission do they need on it?",
+      "options": [
+        "Build",
+        "Reshare",
+        "Write",
+        "Read"
+      ],
+      "learnUrl": "https://learn.microsoft.com/power-bi/connect-data/service-datasets-build-permissions",
+      "sourceSkillBullet": "Implement item-level access controls",
+      "sourceLearnUrl": "https://learn.microsoft.com/power-bi/connect-data/service-datasets-build-permissions",
+      "reviewStatus": "draft",
+      "tags": [
+        "item-permissions",
+        "build-permission"
+      ],
+      "answerHash": "2715e3638c69134b0d074348d15ac9debc5adc8ace99d2ef5f91b49407424cb2",
+      "explanationCipher": "XP0QspZxNcIK+3TBDQpD/pZ6CEHUKzEAxydOuxqGG4wdSsvDRcJLw+hP/1ZGnpYUxbHSke/hnBEpItHF9HBo2Mchzwp2ED4gT7hfJK/7EbHRNPgWnte2D4tdbZX4FvPonmbBk149btVsPi3rDalRTr0mSgzSUK7x/tEJIgiIHowpS8zEJn9b8RJH9tDqYRez4hzSjGRZ7LQfG/3F5zm7V06WLpj0ZPkxI0AKpIm5RLi2ATy0u3PzjZzx3SEmorO9pFa+RMs6D+MOSxPdXRiYjyzTJSAK/MAHT7bquMvd7MOH+WjnLhA7HJ93yxUMNr6KcgpDXj7ma5v767ljGGU3z42QLGvr2O3j6Zae9NJMs7qKAEWj0I8EP1dPipNjnLt+2ubVysp5EBlb4NO6OmbSlI633EqkjpCD5Mr8ctwVUxTJdcfGSktirKX+tBEK/1Gr"
+    },
+    {
+      "id": "dp600-q-2-3",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A1",
+      "skillId": 2,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "A colleague already holds the Viewer role on a workspace, and you now want to stop them seeing one particular report in it. What actually achieves that?",
+      "options": [
+        "Move the report to a folder inside the workspace",
+        "Apply a sensitivity label to the report",
+        "Add an explicit deny permission on that one report",
+        "Remove their workspace role and share only the items they should see"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/security/permission-model",
+      "sourceSkillBullet": "Implement item-level access controls",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/security/permission-model",
+      "reviewStatus": "draft",
+      "tags": [
+        "item-permissions",
+        "misconception"
+      ],
+      "answerHash": "02f5c096665dbaf47cae2acfb67c347ce8f12c3e76e7783a5738df77cad819a4",
+      "explanationCipher": "yOlbTVtcOWoqlAC7wc23e0p+MPmD42u+hbElLRHDLFRVC/5Aej+FIXOlYttzOtN75+Rm6YhQ9SHxtIKw+8y6CIFIouYsGRQRyrcU6bvXi28E8VMhhQ/ocz8sCm8fsVVriNj2feII5V/wqguS66+YasfziTxebR4NNtr6EAxK212UoGqVWO2tS0wgsWRp78MKcnpzO+IaOOYn5c4uR8cxWNJGw9nB/WVXUUpqdpyMv6QPXdVcgrMEH7XLaeGrqDGUPiblQ5eTSf6eJjdtBvtoWhTBI0+O4JnTeEBjXvNwWYrxgVuWDP/7ZN14N+++WCcS6jwAxpsbm4mt2WqClv/4nPeqkEZGgbGhD0+4sxhdcZpu29nQ1ZGcjFKUP8AKtTI7XpIibpf8HZs610OlcK/6VdB3wwEM6vYvRe+NxUOwpsHl1I+AAwaQop3FvTXSwcNr+iNq2XgoB9qqD8+KNRxKsDlxJVlGXMDnnfEQEnmXvFGU6b5DdH1ZfICFm0RD8ibalQ2PiQ=="
+    },
+    {
+      "id": "dp600-q-3-1",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A1",
+      "skillId": 3,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "Every regional manager opens the same report but must only see the rows for their own region. What do you configure in the semantic model to achieve that?",
+      "options": [
+        "A security role containing a DAX filter expression on the region table",
+        "A bookmark per region",
+        "A page-level filter set to the region",
+        "A separate copy of the report for each region"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/onelake/security/table-column-row-security",
+      "sourceSkillBullet": "Implement row-level, column-level, object-level, and file-level access control",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/onelake/security/table-column-row-security",
+      "reviewStatus": "draft",
+      "tags": [
+        "rls",
+        "security"
+      ],
+      "answerHash": "1eb37cdc39aa2fba9cae2d93e9d12eaa6b05c1768894099d5c5d957f5f06ca32",
+      "explanationCipher": "PDOhV6zeH4Oc4K4346b8Uljp3/WpJ6zD8e63XOSb2HRLniCX4/Dh/HaFZZnAEkWfUEv7PKqhU/b5iT4yYBWwAjVoef3WqgH7vuEZzCahj+Kh43BGq4yNoSk7fbPrdINqC85VVRgjOB+pxXaweTjGramYTvddx1CoIWoCmuMp0uNa5mjY4TiNW+jJM9vIFfgswxTz8WB3YHWc5UEyPA/sIrZnXmvmIniEjxxIZxTQURdsgmFIvL8HWwJK6InTxPj9qsqYRAWe00qSDacOv28etnl99uT3TgJrm03IuIj+yfYKbV/N40j2hvO0/vmeLTHfLGq4lQeJnHb3FfW95JltBmHOErDrtuPe2Qk21s5RFTHg48C1ouF9OzHTn52pX+E1ucD9POr32oIHMxqWW2CSIUH/1c+cxFtUxhFheKfV+2N0LwJkt/1FsZXhtXP9/sQRR6nQu5ZSD3gy7UGLs8DLtQ=="
+    },
+    {
+      "id": "dp600-q-3-2",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A1",
+      "skillId": 3,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "A salary column must not merely be blank for most users, it must not appear in the field list at all. Which kind of access control does that?",
+      "options": [
+        "A sensitivity label with encryption",
+        "Object-level security",
+        "Row-level security",
+        "Hiding the column in the model view"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/onelake/security/table-column-row-security",
+      "sourceSkillBullet": "Implement row-level, column-level, object-level, and file-level access control",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/onelake/security/table-column-row-security",
+      "reviewStatus": "draft",
+      "tags": [
+        "ols",
+        "security"
+      ],
+      "answerHash": "ca2dcbc47310761c89108a89999c2ba31931b829a922dbdf881971eb17e7f60f",
+      "explanationCipher": "i/Q9ZgoE23+qP+x2E73KrDAe9b7s9GJ0/P5+5NnGbdH+xFYBDjuf54IFaZ6k6b1NPDCge+w8ttmz78qsz3RFEHCJgaBwCUv4OLMwi81EYo5Wsa0w9F+9k8DURsS5nSDF6URfwJs2nIcCNr5b1xG8FAEBGKoNIta+brHL2I4wU/7LJ1zVsflz466qYfUzSmkae6se11d2BfvPBkt1Hoe6qxxq9BpVylkNeQxlYU6mvJcLgW1/0+r2oQK+yfGbojge6VJSmolDiCUPT4vbeN7yrfi8WJFWf9ePQwIwYy/+SavaG6qZR4kJBHecQ/FAE+54WRvVH1dU1PRiXaMNxMU53pxEJxtFeK3I565zD3kVKPi4sv2LSiOglM1WAzyw3XDhVEXIZAN2cxT+aL5LFetXG8lckYs3UF+9mJV6OUDC8O3RN6FQffMGHUSKS6TUdL3/pMSgPdQX9bk4jwUHmR38Uwcz3bpCFk3Bnj11C5DnRYi1HsYu52x30UjHnoONOQw="
+    },
+    {
+      "id": "dp600-q-3-3",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A1",
+      "skillId": 3,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "The same lakehouse table is read through the SQL analytics endpoint, through Spark notebooks and through a semantic model, and one row filter must apply identically to all three. Where should it be defined?",
+      "options": [
+        "In OneLake security roles on the lakehouse itself",
+        "Separately in each semantic model that reads the table",
+        "In a view that every consumer is asked to use",
+        "In the workspace Viewer role"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/onelake/security/data-access-control-model",
+      "sourceSkillBullet": "Implement row-level, column-level, object-level, and file-level access control",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/onelake/security/create-manage-roles",
+      "reviewStatus": "draft",
+      "tags": [
+        "onelake-security",
+        "defence-in-depth"
+      ],
+      "answerHash": "4010d62335ba7b9113ed72fdb391276c36c4c6e3f90cf399ce5fb922df17a540",
+      "explanationCipher": "tFAfadEmXTHQ+3QxTUxPRmp3hok39ppKhOOtTKnuD5AeP2KogTtFcsfaJoERgpRujXZ3gNPzWR9rOmLkBsqDRa6rsc5F5IPeJOI/c1hFRfZDgNj+6YQNWigUq/5aaLPjDLZ8Cz6+J8rMvktS9YtHzfhGRGlghaPdjX4Z6wR3v7XGxQd/BL4KDQ2AEyIfIs7AEVs89rOtYUBN4CawDRAANKaDpA2ytxPkh/kAmVdYl64XN9leF8vfmzy2Y8/oMzH6pXNracfhr1BIEFsGMWwCOjWlCH6WnQIYZC5VcC8/05iuzytpQ4sCbH4BDdojAWjburfHladd/MuuZTVuYoIDMRa/qZLXcDVkLi3FNXP04xrV7Ivmb2bEwXISMNDPQD7JQf7mvtYWpu83ybqqEjiV8RBIXhjljDqFlpbGzcdL361mj/y+hl3LQnu5uQmQ8eeO4YDmdfyPHLFhe7QwzxZubXZDPg=="
+    },
+    {
+      "id": "dp600-q-4-1",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A1",
+      "skillId": 4,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "A semantic model carries a Highly Confidential sensitivity label, and someone now builds a new report on top of that model. What happens to the report?",
+      "options": [
+        "It inherits the Highly Confidential label automatically",
+        "It inherits the label only if the author has the same clearance",
+        "It is blocked from being created",
+        "It is created with no label until someone applies one"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/fundamentals/apply-sensitivity-labels",
+      "sourceSkillBullet": "Apply sensitivity labels to items",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/enterprise/powerbi/service-security-sensitivity-label-overview",
+      "reviewStatus": "draft",
+      "tags": [
+        "sensitivity-labels",
+        "inheritance"
+      ],
+      "answerHash": "83e846913ee2883afbd7467ff7ae25aaa0b4ae254aafd3b7fbfde43b24a0bea4",
+      "explanationCipher": "w7RPGPPuxgzUzehmZ96l9z55Nz+vCxLS/614U5kRCTPafRmem+idzI1DHxl5f3KkSGx85rG9xvLZUW+gMRJQfTBvihRc2oRY4lK+ZXeLYLH/BxtTxvumhsL6j02JFXNarBNHlmwg9zICUZijXmXxoxQ/ATdDsl1lBBCuwXW2awIh/sTkQE+mVTQ/yUwD3Wo5B9KoknVwfc7TZgrXD/OgfA9V+GKEfKyK9m2JVZfgIDqePiqfKbmwzu8t/JfotSEC7y0peBUwt8xnm2VSxT5fJ+er8oJ0H0L17b1yEDOTd6wWF9oc7quFBs2nPFimX5BNozA+bwOycXqkM4QI4bd14DtQRO1ya8/NuSTQG8vu6T2RBDMrO+9xoWtpLbwOlJCZ51BCuZM5m9EbZ+RMStvcvZk="
+    },
+    {
+      "id": "dp600-q-4-2",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A1",
+      "skillId": 4,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "Data exported from a labelled report to an Excel file must stay unreadable to anyone outside the finance group, even after the file has left the tenant. What makes that true?",
+      "options": [
+        "The semantic model has row-level security",
+        "The label has encryption configured in its protection settings",
+        "The report is set to block export",
+        "The workspace is set to private"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/governance/protected-sensitivity-labels",
+      "sourceSkillBullet": "Apply sensitivity labels to items",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/governance/protected-sensitivity-labels",
+      "reviewStatus": "draft",
+      "tags": [
+        "sensitivity-labels",
+        "encryption"
+      ],
+      "answerHash": "6288bfce3d28aed594c3f67e94749a175cf919a58465b3393458c00d82ae62cf",
+      "explanationCipher": "27bOOxIwUj9sCmGWHvcrFqXIG1INDnEzcU1cEDOy4ARq3SY3EwdYctVScR3b5fgW5dhx4yTejrThwmS4jTMQHBHVVC7n09S5PeuTtdKMtlSs39ApBmzPip/FCH5uzwiiIVch/GxujkP8cxGFc+QM8VbPD3LAO4o+lcH392ilMSboyXFdKePU7flKJ0WeirmstuNwGykCgQWEhuzi8MmrKyK30qHNshjzNplG5g4Jl0AxId8j6B9wKCzK3BnoHrZQzqJF2yGuQCP6QvsUL8j8ND6A+UE3ZdyLY33KUdsJBFcMciVjDCv/Z38oaYS+1ZqRhVL3G4LEqn4662uBeGUvr+CDIuDSW2Zqq5uNTh1DFpE3rM54hH3aJBRCmPYCH5mT8EBMfGaLUHx70zL6iB2TeGz/cZrl/a3x0I+D4/TLkZlTexSWv/UFSTmjBL2i2w16i5Q8XEjiFzSRsRWh"
+    },
+    {
+      "id": "dp600-q-4-3",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A1",
+      "skillId": 4,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "Your tenant needs a new sensitivity label called Restricted Research that Fabric users can apply to lakehouses and reports. Where is that label defined?",
+      "options": [
+        "In Microsoft Purview, then published to users by a label policy",
+        "In the workspace settings of each workspace",
+        "In the semantic model, as a model-level property",
+        "In the Fabric admin portal under tenant settings"
+      ],
+      "learnUrl": "https://learn.microsoft.com/purview/sensitivity-labels",
+      "sourceSkillBullet": "Apply sensitivity labels to items",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/enterprise/powerbi/service-security-enable-data-sensitivity-labels",
+      "reviewStatus": "draft",
+      "tags": [
+        "sensitivity-labels",
+        "purview"
+      ],
+      "answerHash": "7eb1760693b2aedc14f1170b0e91b6200dce752307f0bb97751e37c5ff6b9229",
+      "explanationCipher": "gXXwTmpfYFlja4L6VZotvysvHRVevg/aZD+v3hrZxSM887ekd6Bgk+xljdXswvo+Cja4hZYGyQJAGJ3b0Hu+RvXMT7B5eG+5TyMonOsWq7jFUI4NvC+iTYLE3dkoUe2uEvIIAd+1rEXM0iri6eRkDySrTJORKkKS4kDdz68A2Z1BDkqSpczVIyMBgBWaqp6cONnqU7+iG5NceOiVmNONrGyIUIsbWIZuEQe8Apn4BA3mC3i03x+mHxEDvn2Lza6KnAXlI4tt3i5KPQFzGgfcNfgWBHRXtW76GPMTzhgCZWHbUo1rRDz9eJUWFIf7Bu4fFOzavopt4ImgHSpGIaxpaZCyzX50QSSUL3q/iP158ExdSTA/oDfgNT8PqvORVlzRdHqSfZokUX0N+LE2Lwtvxw/e67sGU9WXo3MtE4T4RgfYkZBRwUfXRauEBsFT9vzpYg+0TJGgkArRBvt/Qc8Iv77ywQ6L9jPqpwkrXn8szEJOTqQlMDCYtovYZqG26QwXRQAWZnKvYqk="
+    },
+    {
+      "id": "dp600-q-5-1",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A1",
+      "skillId": 5,
+      "type": "mcq",
+      "tier": 1,
+      "stem": "A team wants to signal that their semantic model is ready for others to use, and any of them can apply the marking themselves. Which endorsement level is that?",
+      "options": [
+        "Featured",
+        "Master data",
+        "Promoted",
+        "Certified"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/governance/endorsement-overview",
+      "sourceSkillBullet": "Endorse items",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/governance/endorsement-overview",
+      "reviewStatus": "draft",
+      "tags": [
+        "endorsement",
+        "promoted"
+      ],
+      "answerHash": "4fc286bf3f9d7cedb28191c1021d77581e377fe21eaf2ffde22790bc70d0b2e2",
+      "explanationCipher": "RDnZuegjMPeNHhx+yrrsHnG7G7NTLNEst+pEKSBIMeDQjcO/DiBNWEBKwipaxN5E5FbEvDztqnDZPSiis3il30/ZgYnB4dLleNPbwTDPO4bLdx3A66Lu5jUflSadumzlLgdm+ALvHb7FYGakdtj913OlCD6xB2g28N6vDQ3UNM4cJey/9S6SwddLMz0llJPj1Uv8h/DEp538xpMSYp9pdo+WFnQuLrN6ArElR68K2iheSgL9ha+hzqLxr5ZQegxeKeXmE4Y57K6DW80r9t47NB6xCL3aLZ00cdicayFIVcyABUtOQje0ZAYa+zff4FJ8rAzmWeC6UCnN9n/KgCB6i6cK4aTzcmq08s9vIPSt/is/qwWGCKMFqJWHd5ikoopsGOhenTsUHxgR"
+    },
+    {
+      "id": "dp600-q-5-2",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A1",
+      "skillId": 5,
+      "type": "mcq",
+      "tier": 2,
+      "stem": "Your organisation wants certification to mean something, so not everyone should be able to award it. Who decides which users may certify content?",
+      "options": [
+        "Any workspace Admin, for their own workspace",
+        "The owner of each individual item",
+        "The Fabric administrator, through a tenant setting that names the authorised users or groups",
+        "Anyone who already holds a Certified item"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/governance/endorsement-overview",
+      "sourceSkillBullet": "Endorse items",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/governance/endorsement-overview",
+      "reviewStatus": "draft",
+      "tags": [
+        "endorsement",
+        "certified"
+      ],
+      "answerHash": "251cc109cc9f098f197af81f953de3f030f0cf11bbc5833f9459a4227c216890",
+      "explanationCipher": "f/BVDzXdU96E4jUYsVRXKXaN1jGExY/wicyaIsu71gNCftuVvEJw2skEBaoBIgOhZc6sIXskVNNRuRzQSA1926hVmj5zbasemEsLmx+bS0WJUCFOkmmshS5J7M9MAc+JYJ9K81iLVE2VgLcuDtPmnvsNX46CnsbnBVuy1bSljAX2tDTPsUvwYsx9yvJE4Ld3AznYoZIbCfNWYiJ1ii+bRHU5teuWdNNLxSuXC/58x7uD2eu79zGc8l8kVbwa7ckVIf8TOhSoCkacBzH9WNKl1YMJgzi2POd4WcNKAepx++NPv53WsvPxPOeOK3rtRho0znZdjKNlpX6wL0rSZGDXro3mlhB4WqRqDu66ps7NvvxuE6i/nQzWEa2mh2ccuVdkRi4LnHzRkq13DhYYFnW638I9PkpaLziG/nRB/JvY"
+    },
+    {
+      "id": "dp600-q-5-3",
+      "cert": "DP-600",
+      "branch": "A",
+      "cluster": "A1",
+      "skillId": 5,
+      "type": "mcq",
+      "tier": 3,
+      "stem": "A colleague argues that certifying a semantic model will let the rest of the company query it. Why is that wrong?",
+      "options": [
+        "Endorsement affects discoverability and trust signals only, never permissions",
+        "Endorsement grants access only after the next scheduled refresh",
+        "Certification grants access, but only to members of the same workspace",
+        "Certification actually removes access until it is reviewed again"
+      ],
+      "learnUrl": "https://learn.microsoft.com/fabric/governance/endorsement-overview",
+      "sourceSkillBullet": "Endorse items",
+      "sourceLearnUrl": "https://learn.microsoft.com/fabric/governance/onelake-catalog",
+      "reviewStatus": "draft",
+      "tags": [
+        "endorsement",
+        "misconception"
+      ],
+      "answerHash": "40be34691c4a14cd8f43497b6fbeef202e3ec93789ee3b4f6abf0aa632976a35",
+      "explanationCipher": "+B3SornvLY8n7I4zjhmVVsoGdl1Cz/RCnXqbLEV/KkjGRpksOMSW85GJv8mn7/RJus5R/stpdBXI4bYuG+6p7lr7jrK6gFYDtCtORPbNbxWWCAubB80sXnoob+fZKINlQteRaZxnJwoMW3//xQBg63KCokkeMqZk0BBshD++X80pW7OtFpLrdPp7Qkc+RWTS7SaYz3oAAsqBw4PZ3WzpwMwhIvi6BXdPB5wRD0z4dHI/nlDMOv9hO3pH6rbHQCZAka52LGd/WKdGopHK2nXg3ygm/oTPnFaDRieqg2MkliDEZ50gnkmNm7Ux6Vmnc97z16sZ9l58TxKoU5LrwXERGuNtmTZYkJd2bMteO/2MeA+lx98xUjn4vj6iW5Nu9Pzfa9WIzmdUsS+0Re86RJbPJ4N7xLmEwlrCjzu0PJ2N5bhU8HNtKAafmyxrPmIA1i1kwZu+D7Nxm3l/BWSBulDKVbWE2SN0/ZQ37bRCF6T1/uodt1vz4fx36DehMMRV1v0Xg3PBriDHVWOmNO203K7q2iv8A4SyhcOWVZtn9CFTNgguuzE="
+    }
+  ]
+}
