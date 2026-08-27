@@ -7,5 +7,9 @@
     "and then the link is silently gone from the LinkedIn post and the README that point",
     "at it. phase2_gallery_drafts.py reads this file, so the URL outlives every rebuild."
   ],
-  "pbi-fixer": "https://community.fabric.microsoft.com/discussions/pbi_fabricappsgallery/power-bi-fixer-a-whole-power-bi-toolbench-running-inside-fabric/5362847"
+  "pbi-fixer": "https://community.fabric.microsoft.com/discussions/pbi_fabricappsgallery/power-bi-fixer-a-whole-power-bi-toolbench-running-inside-fabric/5362862",
+  "airport-iq": "https://community.fabric.microsoft.com/discussions/pbi_fabricappsgallery/airport-iq-live-approach-on-a-3d-airport-twin/5362868",
+  "doom": "https://community.fabric.microsoft.com/discussions/pbi_fabricappsgallery/doom-yes-it-runs-on-microsoft-fabric/5362866",
+  "dwd-klimaspirale": "https://community.fabric.microsoft.com/discussions/pbi_fabricappsgallery/climate-spiral-a-century-of-german-weather-in-five-views/5362867",
+  "flood-insights": "https://community.fabric.microsoft.com/discussions/pbi_fabricappsgallery/flood-insights-the-2021-ahr-valley-flood-reconstructed-from-open-data/5362869"
 }
