@@ -43,12 +43,19 @@ export default function AppPage({ params }: { params: { slug: string } }) {
               where the app declares one: most of these need a Fabric tenant, and a dead
               "try it" button is worse than none.
 
-              ⚠️ Points at our own /play/ route, never at the deployment host. The
-              fabricapps.net address is unmemorable and changes on redeploy, so it must
-              never be the thing people copy, bookmark or paste into a post.
+              The target is always a github.io address - catalog.ts refuses anything else -
+              so this can link straight out. An earlier version proxied through an iframe
+              on our own /play/ route to keep a Fabric deployment host out of the address
+              bar; that host is no longer used, and framing a github.io page inside a
+              github.io page bought nothing but a chance to break the game's fullscreen.
             */}
             {app.liveUrl && (
-              <a className="btn btn-primary" href={asset(`/apps/${app.slug}/play/`)}>
+              <a
+                className="btn btn-primary"
+                href={app.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 ▶ Try it live
               </a>
             )}

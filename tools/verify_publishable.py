@@ -160,14 +160,6 @@ ALLOWLIST: dict[str, tuple[set[str], str]] = {
     "industry/harbour-pulse/scripts/provision-environment.ps1": ({"tenant_guid"},
         'the literal placeholder "11111111-1111-1111-1111-111111111111" shown as the '
         'shape of the value a user must supply'),
-    # ⚠️ The ONE deployment hostname in this repository, and a deliberate exception to
-    # Phase 0, which stripped 27 of them. Justified only because all three hold:
-    #   1. it serves a GAME - no tenant data, no customer data, nothing to leak;
-    #   2. it is already anonymously reachable, verified HTTP 200 with no sign-in wall,
-    #      so publishing it changes discoverability, not exposure;
-    #   3. it is opt-in via `template.liveUrl` and drives the "Try it live" button.
-    # Do not copy this entry for an app that reads real data. The Fabric Usage App was
-    # exactly that shape and served 15 named customers as an unauthenticated JSON file.
 
     # --- german: proper nouns only. Each reason quotes the surviving text so the next
     # reader can judge it without re-opening the file. Prose was translated, not excused.

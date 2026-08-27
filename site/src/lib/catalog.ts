@@ -53,14 +53,31 @@ export type App = {
   /**
    * A publicly playable deployment, if the app has one.
    *
-   * ⚠️ Opt-in per app via `template.liveUrl`, never derived. Phase 0 deliberately
-   * stripped every deployment hostname from this repository, because a
-   * `*.webapp.fabricapps.net` host names a live app in a tenant. Publishing one is a
-   * decision, so it has to be written down deliberately - and only for an app that is
-   * safe to hand to strangers.
+   * ⚠️ MUST be a github.io address. This is enforced, not merely preferred.
+   *
+   * A Fabric deployment host (`*.webapp.fabricapps.net`) is unmemorable, reveals a live
+   * app in a tenant, and is not durable - the Fabric Empires one returned 500 the day
+   * after it was added here, while the GitHub Pages build of the same game served fine.
+   * A link that dies is worse than no link, and a link people bookmark and paste has to
+   * be one that survives a redeploy.
+   *
+   * So a non-github.io value is dropped and reported at build time rather than rendered.
    */
   liveUrl: string | null;
 };
+
+/** The only host a public "try it" link may point at. */
+const LIVE_HOST = /^https:\/\/[a-z0-9-]+\.github\.io\//i;
+
+function acceptLiveUrl(raw: unknown, slug: string): string | null {
+  if (typeof raw !== 'string' || !raw) return null;
+  if (LIVE_HOST.test(raw)) return raw;
+  console.warn(
+    `  [catalog] ${slug}: ignoring liveUrl ${raw}\n` +
+    '            Only a github.io address may be published as a "Try it live" link.',
+  );
+  return null;
+}
 
 function walk(folder: string, depth: number, out: string[]) {
   if (existsSync(join(folder, 'package.json'))) {
@@ -162,7 +179,7 @@ export function getApps(): App[] {
       mp4: existsSync(mp4File) ? asset(`/media/${slug}-demo.mp4`) : null,
       stack: detectStack(folder),
       upstream: detectUpstream(readme),
-      liveUrl: typeof t.liveUrl === 'string' && t.liveUrl.startsWith('https://') ? t.liveUrl : null,
+      liveUrl: acceptLiveUrl(t.liveUrl, slug),
     };
   });
 
