@@ -92,6 +92,34 @@ def main() -> int:
                             f"{rel}: {app}/NOTICE.md prescribes attribution, so this post "
                             f"MUST carry {where}")
 
+            # ⚠️ The NOTICE rule above only catches attribution a LICENCE compels. It is
+            # silent on the other kind: an app that is somebody else's idea. Nobody's
+            # terms oblige those, so they are the ones that go missing - Harbour Pulse
+            # (Fran Genoa), Doom (Sander van de Velde) and Helsinki (Kevin Thomas) were
+            # each credited in the app README and in none of the posts.
+            #
+            # Deliberately narrow: it only fires on the phrasings actually used in this
+            # repo's READMEs, and only on a bolded name. A loose match here would flag
+            # every "thanks to the community" line and get switched off.
+            if app:
+                app_readme = REPO / str(app) / "README.md"
+                if app_readme.exists():
+                    at = app_readme.read_text(encoding="utf-8", errors="replace")
+                    people: set[str] = set()
+                    for pat in (r"Credit to \*\*([^*]+)\*\*",
+                                r"is \*\*\[?([^\]*]+?)\]?[^*]*\*\*'s project",
+                                r"This is \[([^\]]+)\]\([^)]*\)'s project",
+                                r"entirely ([A-Z][\w.-]+(?: [A-Z]?[\w.-]+){1,3})'s work"):
+                        people |= {m.strip() for m in re.findall(pat, at)}
+                    for person in sorted(people):
+                        # Surname is enough: posts may write "Kevin Thomas's" or drop a
+                        # first name, and demanding an exact string would be brittle.
+                        surname = person.split()[-1]
+                        if surname and surname not in t:
+                            problems.append(
+                                f"{rel}: {app}/README.md credits {person} as the original "
+                                f"author, so this post MUST name them too")
+
             if claims_ready and not missing:
                 ready += 1
 
@@ -103,7 +131,7 @@ def main() -> int:
         for p in problems:
             print(f"  {p}")
         # Missing assets on a draft that honestly says so is expected mid-flight.
-        hard = [p for p in problems if "assetsReady is true but" in p or "does not exist" in p or "MUST carry" in p]
+        hard = [p for p in problems if "assetsReady is true but" in p or "does not exist" in p or "MUST carry" in p or "MUST name" in p]
         if hard:
             print(f"\n{len(hard)} blocking problem(s).")
             return 1

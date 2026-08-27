@@ -20,6 +20,8 @@ assets:
 ```text
 Every tram in Helsinki, moving on a 3D map, on Fabric Real-Time Intelligence.
 
+The idea is not mine: this is a rebuild of Kevin Thomas's original Helsinki real-time transit solution, using the same Real-Time Intelligence architecture and the same Fabric portal host bridge for querying the semantic model. What I added is a token-free 3D city twin and a fallback chain so it also runs outside the portal.
+
 Eventstream into an Eventhouse, a semantic model over KQL, and the app querying it with the signed-in user's own identity. No service principal, no shared secret.
 
 The producer notebook holds no credentials at all — it resolves the connection at run time, on an hourly schedule with a runtime budget so overlapping runs cannot pile up.

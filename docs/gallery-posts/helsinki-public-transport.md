@@ -37,6 +37,7 @@ Helsinki Regional Transport Authority (HSL) high-frequency positioning feed, pub
 
 ## Credits
 
+- **Kevin Thomas**: the original Helsinki real-time transit solution. This app is a rebuild of that idea, using the same Real-Time Intelligence architecture and the same Fabric portal host bridge for querying the semantic model.
 - **Vehicle positions**: Helsingin seudun liikenne / Helsinki Region Transport (HSL), GTFS Realtime, CC BY 4.0. Required attribution, verbatim: *"Contains data from HSL, licensed under CC BY 4.0."*
 - **3D city model, terrain and orthophoto**: Helsingin kaupunki / City of Helsinki, CC BY 4.0. Required attribution, verbatim: *"Imagery & 3D models (c) City of Helsinki (CC BY 4.0)."* — shown in the app whenever the 3D view is active.
 - Nothing is redistributed here: every tile and every feed is streamed from the publisher at run time, with no API key and no copy stored in the repository.
