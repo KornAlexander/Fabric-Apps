@@ -63,6 +63,7 @@ def app_meta(app_path: str) -> dict:
 
 
 RAW = "https://raw.githubusercontent.com/KornAlexander/Fabric-Apps/main"
+REPO_URL = "https://github.com/KornAlexander/Fabric-Apps"
 
 
 def to_html(md: str, slug: str) -> str:
@@ -89,12 +90,25 @@ def to_html(md: str, slug: str) -> str:
     def inline(s: str) -> str:
         s = esc(s)
         s = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", s)
+        # ⚠ After the ** rule, never before it, or "**bold**" is eaten from the inside out.
+        # Missing this shipped the licence block of flood-insights with literal asterisks
+        # around every attribution line: "*(c) GeoBasis-DE / LVermGeoRP ...*".
+        s = re.sub(r"(?<!\*)\*([^*\n]+)\*(?!\*)", r"<em>\1</em>", s)
         s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
         # ⚠⚠ NO target or rel. The gallery editor rejected the post outright with "contains
         # invalid HTML ... a", and the tag itself cannot be banned - its own Insert Link
         # button produces one. It is the extra attributes the sanitiser refuses. Stripped
         # to a bare href, which is also what the editor writes itself.
         s = re.sub(r"\[([^\]]+)\]\((https?://[^)]+)\)", r'<a href="\2">\1</a>', s)
+        # ⚠ Repo-relative markdown links resolve against the DRAFT folder, which does not
+        # exist on the community site. "[NOTICE.md](../../industry/flood-insights/NOTICE.md)"
+        # published as literal markdown pointing at nothing. Rewrite to an absolute blob URL.
+        s = re.sub(
+            r"\[([^\]]+)\]\((?!https?://)\.*/?([^)]+)\)",
+            lambda m: '<a href="%s/blob/main/%s">%s</a>'
+            % (REPO_URL, re.sub(r"^(?:\.\./)+", "", m.group(2)).lstrip("/"), m.group(1)),
+            s,
+        )
         # bare urls become links too, so nothing publishes as dead text
         s = re.sub(r'(?<![">])(?<!\()\b(https?://[^\s<]+)', r'<a href="\1">\1</a>', s)
         return s
@@ -153,7 +167,18 @@ def to_html(md: str, slug: str) -> str:
     close_list()
     if in_code and code:
         out.append("<pre>" + esc("\n".join(code)) + "</pre>")
-    return "\n".join(out) + "\n"
+    html = "\n".join(out) + "\n"
+
+    # ⚠ Fail loudly rather than publish markdown source as visible text. Both of these
+    # actually shipped into a staged flood-insights post before the rules above existed:
+    # "*(c) ...*" asterisks and a "[NOTICE.md](../../...)" that pointed at nothing.
+    # Anything inside <pre> is verbatim by design, so check only outside code blocks.
+    prose = re.sub(r"<pre>.*?</pre>", "", html, flags=re.S)
+    if leftovers := re.findall(r"\[[^\]]+\]\([^)]*\)", prose):
+        raise SystemExit(f"{slug}: markdown link survived to_html: {leftovers}")
+    if stray := re.findall(r"(?<!\w)\*[^*\n]+\*(?!\w)", prose):
+        raise SystemExit(f"{slug}: markdown emphasis survived to_html: {stray}")
+    return html
 
 
 def build(slug: str, draft: Path) -> bool:
