@@ -1,5 +1,5 @@
 ---
-order: 8
+order: 10
 app: games-and-learn/doom
 slug: doom
 galleryPost: docs/gallery-posts/doom.md
@@ -12,9 +12,9 @@ assets:
   - docs/media/doom-demo.gif
 ---
 
-# 08: doom
+# 10: doom
 
-*Post 8 of 15 in the Fabric Apps series. One per weekday.*
+*Post 9 of 13 in the Fabric Apps series, one per weekday.*
 
 ## Post text
 
@@ -27,17 +27,20 @@ Credit where it is due: the original concept and the Fabric integration are Sand
 
 The traditional proof that a platform has matured. Fabric passes.
 
+App page: https://kornalexander.github.io/Fabric-Apps/apps/doom/
+
 Source, and always the latest version:
 https://github.com/KornAlexander/Fabric-Apps/tree/main/games-and-learn/doom
 
-Gallery entry: {{galleryUrl}}
+Gallery entry: https://community.fabric.microsoft.com/discussions/pbi_fabricappsgallery/doom-yes-it-runs-on-microsoft-fabric/5362866
 
 #MicrosoftFabric #PowerBI #FabricApps #Doom #FabricSQL
 ```
 
 ## Notes for the composer
 
-- Attach: `docs/media/doom-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
+- Attach: `doom-demo.gif`, sitting beside this file. Local copy of `docs/media/doom-demo.gif`, gitignored; the source is not duplicated in git.
 - Paste as plain text; LinkedIn strips markdown. The blank lines are the formatting.
 - Mentions are added by hand in the composer, not here.
+- The app page link is mandatory and always the app's own subpage, never the front page: https://kornalexander.github.io/Fabric-Apps/apps/doom/
 - ⚠️ Tag Sander van de Velde by hand. The credit is the point of the post.

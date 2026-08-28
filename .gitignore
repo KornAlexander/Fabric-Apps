@@ -41,3 +41,12 @@ Thumbs.db
 # Generated submission bundles: regenerable, and copying media per app would
 # duplicate every GIF in git. Rebuild with tools/build_submissions.py
 submissions/
+
+# LinkedIn drafts: each post folder carries a LOCAL COPY of its demo clip so the text and the
+# media can be reviewed side by side. Same reasoning as submissions/ above - the committed
+# original already lives once in docs/media/, and a second copy would be permanent.
+# The post.md files themselves ARE tracked.
+docs/linkedin/**/*.gif
+docs/linkedin/**/*.mp4
+docs/linkedin/**/*.webm
+docs/linkedin/**/*.mov

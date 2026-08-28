@@ -1,19 +1,19 @@
 ---
-order: 2
+order: 4
 app: industry/helsinki-public-transport
 slug: helsinki-public-transport
 galleryPost: docs/gallery-posts/helsinki-public-transport.md
 galleryUrl:            # paste the live gallery URL here in Phase 5a, then it replaces {{galleryUrl}} below
 status: draft
 language: en
-assetsReady: true
+assetsReady: false
 assets:
   - docs/previews/helsinki-public-transport.webp
 ---
 
-# 02: helsinki-public-transport
+# 04: helsinki-public-transport
 
-*Post 2 of 15 in the Fabric Apps series. One per weekday.*
+*Post 4 of 13 in the Fabric Apps series, one per weekday.*
 
 ## Post text
 
@@ -32,17 +32,20 @@ Imagery & 3D models (c) City of Helsinki (CC BY 4.0).
 
 End-user SSO on a Kusto datasource is the detail worth stealing: every user queries as themselves, so row-level security means something.
 
+App page: https://kornalexander.github.io/Fabric-Apps/apps/helsinki-public-transport/
+
 Source, and always the latest version:
 https://github.com/KornAlexander/Fabric-Apps/tree/main/industry/helsinki-public-transport
 
-Gallery entry: {{galleryUrl}}
+Gallery entry: https://community.fabric.microsoft.com/discussions/pbi_fabricappsgallery/helsinki-public-transport-a-live-map-on-real-time-intelligence/5363079
 
 #MicrosoftFabric #PowerBI #FabricApps #RealTimeIntelligence #Eventhouse #KQL #OpenData
 ```
 
 ## Notes for the composer
 
-- Attach: `docs/media/helsinki-public-transport-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
+- ⚠️ No demo clip exists for this app yet. Record one before posting.
 - Paste as plain text; LinkedIn strips markdown. The blank lines are the formatting.
 - Mentions are added by hand in the composer, not here.
+- The app page link is mandatory and always the app's own subpage, never the front page: https://kornalexander.github.io/Fabric-Apps/apps/helsinki-public-transport/
 - ⚠️ The attribution lines are PRESCRIBED BY THE LICENCE. Reproduce them verbatim - re-wording or re-wrapping them stops them being the attribution. Do not cut them for length; cut something else.

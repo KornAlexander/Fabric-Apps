@@ -1,5 +1,5 @@
 ---
-order: 13
+order: 14
 app: games-and-learn/ibcs-trainer
 slug: ibcs-trainer
 galleryPost: docs/gallery-posts/ibcs-trainer.md
@@ -12,9 +12,9 @@ assets:
   - docs/media/ibcs-trainer-demo.gif
 ---
 
-# 13: ibcs-trainer
+# 14: ibcs-trainer
 
-*Post 13 of 15 in the Fabric Apps series. One per weekday.*
+*Post 13 of 13 in the Fabric Apps series, one per weekday.*
 
 ## Post text
 
@@ -27,16 +27,19 @@ It is the same standard you would otherwise learn from a 200-page manual, in the
 
 Scores persist to Fabric SQL, so a team can run it as a shared exercise.
 
+App page: https://kornalexander.github.io/Fabric-Apps/apps/ibcs-trainer/
+
 Source, and always the latest version:
 https://github.com/KornAlexander/Fabric-Apps/tree/main/games-and-learn/ibcs-trainer
 
-Gallery entry: {{galleryUrl}}
+Gallery entry: https://community.fabric.microsoft.com/discussions/pbi_fabricappsgallery/ibcs-trainer-learn-a-charting-standard-by-destroying-bad-charts/5363040
 
 #MicrosoftFabric #PowerBI #FabricApps #IBCS #DataViz #Training
 ```
 
 ## Notes for the composer
 
-- Attach: `docs/media/ibcs-trainer-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
+- Attach: `ibcs-trainer-demo.gif`, sitting beside this file. Local copy of `docs/media/ibcs-trainer-demo.gif`, gitignored; the source is not duplicated in git.
 - Paste as plain text; LinkedIn strips markdown. The blank lines are the formatting.
 - Mentions are added by hand in the composer, not here.
+- The app page link is mandatory and always the app's own subpage, never the front page: https://kornalexander.github.io/Fabric-Apps/apps/ibcs-trainer/

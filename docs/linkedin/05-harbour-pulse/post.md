@@ -1,19 +1,19 @@
 ---
-order: 9
+order: 5
 app: industry/harbour-pulse
 slug: harbour-pulse
 galleryPost: docs/gallery-posts/harbour-pulse.md
 galleryUrl:            # paste the live gallery URL here in Phase 5a, then it replaces {{galleryUrl}} below
 status: draft
 language: en
-assetsReady: true
+assetsReady: false
 assets:
   - docs/previews/harbour-pulse.webp
 ---
 
-# 09: harbour-pulse
+# 05: harbour-pulse
 
-*Post 9 of 15 in the Fabric Apps series. One per weekday.*
+*Post 5 of 13 in the Fabric Apps series, one per weekday.*
 
 ## Post text
 
@@ -29,18 +29,21 @@ https://github.com/FranGenoa/fabric-harbour-pulse
 
 The ferry photographs come from Wikimedia Commons and are credited individually, author and licence, in the repo's ATTRIBUTION.md, because those licences require it.
 
+App page: https://kornalexander.github.io/Fabric-Apps/apps/harbour-pulse/
+
 Source, and always the latest version:
 https://github.com/KornAlexander/Fabric-Apps/tree/main/industry/harbour-pulse
 
-Gallery entry: {{galleryUrl}}
+Gallery entry: https://community.fabric.microsoft.com/discussions/pbi_fabricappsgallery/harbour-pulse-live-sydney-ferries-on-a-photoreal-harbour/5363116
 
 #MicrosoftFabric #PowerBI #FabricApps #RealTimeIntelligence #DigitalTwin #Cesium
 ```
 
 ## Notes for the composer
 
-- Attach: `docs/media/harbour-pulse-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
+- ⚠️ No demo clip exists for this app yet. Record one before posting.
 - Paste as plain text; LinkedIn strips markdown. The blank lines are the formatting.
 - Mentions are added by hand in the composer, not here.
+- The app page link is mandatory and always the app's own subpage, never the front page: https://kornalexander.github.io/Fabric-Apps/apps/harbour-pulse/
 - ⚠️ Tag Fran Genoa by hand. This is his project; the post says so in the body, not in a footnote, and that placement is deliberate.
 - ⚠️ Do not trim the ATTRIBUTION.md line to save characters. The Wikimedia photo licences require the credit to travel with the image.

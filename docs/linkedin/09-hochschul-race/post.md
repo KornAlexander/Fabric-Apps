@@ -1,5 +1,5 @@
 ---
-order: 7
+order: 9
 app: industry/education/hochschul-race
 slug: hochschul-race
 galleryPost: docs/gallery-posts/hochschul-race.md
@@ -12,9 +12,9 @@ assets:
   - docs/media/hochschul-race-demo.gif
 ---
 
-# 07: hochschul-race
+# 09: hochschul-race
 
-*Post 7 of 15 in the Fabric Apps series. One per weekday.*
+*Post 8 of 13 in the Fabric Apps series, one per weekday.*
 
 ## Post text
 
@@ -29,16 +29,19 @@ Neither replaces the other. The point is that one model can feed both, and the a
 
 A build-time snapshot is inlined into the page, so the first frame renders before any query returns.
 
+App page: https://kornalexander.github.io/Fabric-Apps/apps/hochschul-race/
+
 Source, and always the latest version:
 https://github.com/KornAlexander/Fabric-Apps/tree/main/industry/education/hochschul-race
 
-Gallery entry: {{galleryUrl}}
+Gallery entry: https://community.fabric.microsoft.com/discussions/pbi_fabricappsgallery/higher-education-race-chart-20-years-of-enrolment-animated/5363039
 
 #MicrosoftFabric #PowerBI #FabricApps #DirectLake #DataViz #HigherEducation
 ```
 
 ## Notes for the composer
 
-- Attach: `docs/media/hochschul-race-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
+- Attach: `hochschul-race-demo.gif`, sitting beside this file. Local copy of `docs/media/hochschul-race-demo.gif`, gitignored; the source is not duplicated in git.
 - Paste as plain text; LinkedIn strips markdown. The blank lines are the formatting.
 - Mentions are added by hand in the composer, not here.
+- The app page link is mandatory and always the app's own subpage, never the front page: https://kornalexander.github.io/Fabric-Apps/apps/hochschul-race/

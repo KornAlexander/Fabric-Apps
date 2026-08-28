@@ -1,5 +1,5 @@
 ---
-order: 14
+order: 15
 app: fabric-admin/governance-hub
 slug: governance-hub
 galleryPost: docs/gallery-posts/governance-hub.md
@@ -12,9 +12,9 @@ assets:
   - docs/media/governance-hub-demo.gif
 ---
 
-# 14: governance-hub
+# 15: governance-hub
 
-*Post 14 of 15 in the Fabric Apps series. One per weekday.*
+*Parked: not part of the 13-post running order.*
 
 ## Post text
 
@@ -27,6 +27,8 @@ It covers Power Platform environments alongside Fabric, because in practice nobo
 
 The collector notebooks hold no secrets. Everything resolves at run time, under your own identity, in your own tenant.
 
+App page: https://kornalexander.github.io/Fabric-Apps/apps/governance-hub/
+
 Source, and always the latest version:
 https://github.com/KornAlexander/Fabric-Apps/tree/main/fabric-admin/governance-hub
 
@@ -37,6 +39,7 @@ Gallery entry: {{galleryUrl}}
 
 ## Notes for the composer
 
-- Attach: `docs/media/governance-hub-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
+- Attach: `governance-hub-demo.gif`, sitting beside this file. Local copy of `docs/media/governance-hub-demo.gif`, gitignored; the source is not duplicated in git.
 - Paste as plain text; LinkedIn strips markdown. The blank lines are the formatting.
 - Mentions are added by hand in the composer, not here.
+- The app page link is mandatory and always the app's own subpage, never the front page: https://kornalexander.github.io/Fabric-Apps/apps/governance-hub/

@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 6
 app: games-and-learn/paragliding-insights
 slug: paragliding-insights
 galleryPost: docs/gallery-posts/paragliding-insights.md
@@ -12,9 +12,9 @@ assets:
   - docs/media/paragliding-insights-demo.gif
 ---
 
-# 04: paragliding-insights
+# 06: paragliding-insights
 
-*Post 4 of 15 in the Fabric Apps series. One per weekday.*
+*Post 6 of 13 in the Fabric Apps series, one per weekday.*
 
 ## Post text
 
@@ -31,17 +31,20 @@ Terrain and buildings are Bavaria's, not mine:
 Datenquelle: Bayerische Vermessungsverwaltung – www.geodaten.bayern.de [Daten bearbeitet]
 Live traffic: Open Glider Network (ODbL).
 
+App page: https://kornalexander.github.io/Fabric-Apps/apps/paragliding-insights/
+
 Source, and always the latest version:
 https://github.com/KornAlexander/Fabric-Apps/tree/main/games-and-learn/paragliding-insights
 
-Gallery entry: {{galleryUrl}}
+Gallery entry: https://community.fabric.microsoft.com/discussions/pbi_fabricappsgallery/paragliding-insights-two-bavarian-flying-sites-as-3d-twins/5363107
 
 #MicrosoftFabric #PowerBI #FabricApps #DigitalTwin #Cesium #Geospatial #OpenData
 ```
 
 ## Notes for the composer
 
-- Attach: `docs/media/paragliding-insights-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
+- Attach: `paragliding-insights-demo.gif`, sitting beside this file. Local copy of `docs/media/paragliding-insights-demo.gif`, gitignored; the source is not duplicated in git.
 - Paste as plain text; LinkedIn strips markdown. The blank lines are the formatting.
 - Mentions are added by hand in the composer, not here.
+- The app page link is mandatory and always the app's own subpage, never the front page: https://kornalexander.github.io/Fabric-Apps/apps/paragliding-insights/
 - ⚠️ The attribution lines are PRESCRIBED BY THE LICENCE. Reproduce them verbatim - re-wording or re-wrapping them stops them being the attribution. Do not cut them for length; cut something else.

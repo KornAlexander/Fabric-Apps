@@ -1,5 +1,5 @@
 ---
-order: 15
+order: 16
 app: fabric-admin/data-catalog
 slug: data-catalog
 galleryPost: docs/gallery-posts/data-catalog.md
@@ -12,9 +12,9 @@ assets:
   - docs/media/data-catalog-demo.gif
 ---
 
-# 15: data-catalog
+# 16: data-catalog
 
-*Post 15 of 15 in the Fabric Apps series. One per weekday.*
+*Parked: not part of the 13-post running order.*
 
 ## Post text
 
@@ -27,6 +27,8 @@ It runs entirely inside your own tenant. Nothing is bundled, nothing leaves.
 
 This is the last of the series. Sixteen apps, all in one repo, all deployable with one command into your own workspace.
 
+App page: https://kornalexander.github.io/Fabric-Apps/apps/data-catalog/
+
 Source, and always the latest version:
 https://github.com/KornAlexander/Fabric-Apps/tree/main/fabric-admin/data-catalog
 
@@ -37,6 +39,7 @@ Gallery entry: {{galleryUrl}}
 
 ## Notes for the composer
 
-- Attach: `docs/media/data-catalog-demo.gif` (or the MP4 if LinkedIn handles it better on the day).
+- Attach: `data-catalog-demo.gif`, sitting beside this file. Local copy of `docs/media/data-catalog-demo.gif`, gitignored; the source is not duplicated in git.
 - Paste as plain text; LinkedIn strips markdown. The blank lines are the formatting.
 - Mentions are added by hand in the composer, not here.
+- The app page link is mandatory and always the app's own subpage, never the front page: https://kornalexander.github.io/Fabric-Apps/apps/data-catalog/
