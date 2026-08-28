@@ -1,7 +1,7 @@
 ---
 app: games-and-learn/paragliding-insights
 slug: paragliding-insights
-title: "Paragliding Insights: the airspace over Oberstdorf in 3D"
+title: "Paragliding Insights: two Bavarian flying sites as 3D twins"
 galleryUrl:            # filled in by Phase 5a once the post is live
 status: draft
 assetsReady: true
@@ -11,9 +11,11 @@ assets:
   - docs/media/paragliding-insights-demo.mp4
 ---
 
-# Paragliding Insights: the airspace over Oberstdorf in 3D
+# Paragliding Insights: two Bavarian flying sites as 3D twins
 
-9 by 8 km of the Allgäu Alps at true scale, from official 1 m terrain, with real flight tracks and live glider traffic drawn over it.
+Oberstdorf and the Nebelhorn in the Allgäu Alps, and the Tegelberg above Schwangau in the
+Ammergau Alps, both at true scale from official 1 m terrain, with real flight tracks and
+live glider traffic drawn over them.
 
 <!-- Attach the demo video or GIF here. A screenshot is the minimum; the video is what
      makes someone open the post rather than scroll past it. -->
@@ -22,7 +24,10 @@ assets:
 ## What it does
 
 - Photoreal 3D terrain built from official 1 m elevation data
-- Real IGC flight tracks, anonymised at import
+- **Two sites, switchable from a dropdown**: Oberstdorf / Nebelhorn, and Tegelberg /
+  Schwangau with Neuschwanstein below it. The area of interest is configuration, not a
+  set of constants, and a second site is what makes that claim checkable
+- Real IGC flight tracks, anonymised at import, with a height trace you can scrub
 - Live traffic from the Open Glider Network
 - Notebooks and pipelines behind it, the Fabric App in front
 
