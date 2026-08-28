@@ -1,0 +1,64 @@
+# Node / build
+node_modules/
+dist/
+fabric-dist/
+*.tsbuildinfo
+
+# Rayfin / Fabric
+rayfin/.env
+rayfin/.deployments.json
+# `npm run deploy` writes this while a deployment is running, so a second one refuses to start and
+# cannot collide with it (a collision answers 409 and takes the site down until it expires). Purely
+# local state — a pid and a timestamp from THIS machine — so committing it would block a colleague's
+# deploy for fifteen minutes over a process that was never theirs.
+rayfin/.deploy-in-progress.json
+# Build scratch from `rayfin up`: the compiled entity classes and the generated Data API Builder
+# config. Regenerated on every deploy from rayfin/data/, so committing it would just go stale.
+rayfin/.temp/
+.env
+.env.local
+
+# Geodata caches and generated datasets — large, regenerable, never committed.
+# ⚠️ ANCHORED with a leading slash on purpose. Plain `data/` matches a directory called `data`
+# at ANY depth, which silently swallowed `tools/data/` — the timetable generator and the
+# building fetcher were untracked for a whole session and would have been lost on a fresh clone.
+/data/
+/public/terrain/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Test output
+test-results/
+playwright-report/
+
+# Rendered demo video: 15 MB of binary, reproducible with tools/demo/record-campus.mjs.
+# The .srt beside it IS tracked - the narration is written, not rendered.
+media/*.mp4
+# Captions re-timed by tools/demo/join-intro.py when the intro is prepended. Derived from the
+# committed `*-de.srt` by a deterministic offset, so committing it would be storing an output —
+# same reason the rendered video above is not committed.
+media/*.captions-source.srt
+
+# Scratch store written by tools/tests/live_consumer_http.py (see the `ROOT / "temp"` path there).
+# A dev-seed identity file, regenerated on every probe run. It sat untracked and VISIBLE in
+# `git status` for a session, one `git add -A` away from publishing a seeded identity store into
+# the repo — which is the sort of file the publishable gate exists to keep out.
+/temp/
+
+# Alles unter media/ ist ERZEUGT, nicht gepflegt: build-short.py, build-teaser.py und
+# build-guide-video-*.py schreiben es aus den Mitschnitten neu. In git stand deshalb bisher genau
+# eine .srt. Die Regel sagte das nur halb - media/*.mp4 war gesperrt, media/promo-scenes/*.mp4
+# nicht -, und ohne diese Zeilen waeren 78 MB Bilder und Filme hereingerutscht, darunter 23,6 MB
+# GIFs, die die verworfene erste Fassung der Rundgangsfilme sind.
+media/**/*.mp4
+media/*.gif
+media/*.png
+media/**/*.png
+
+# "Beispielstadt", erfundene Gebaeudenamen, erfundene Lehrende. Alle anderen Filme
+
+# Kopie des ohnehin gitignorierten Gelaendes, nur als Docker-Build-Kontext.
+tools/terrain-host/payload/

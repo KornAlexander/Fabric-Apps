@@ -1,0 +1,183 @@
+{
+  "$comment": "Area of interest definition for RWTH Aachen — 5th nationally at 45 113 students (DESTATIS GENESIS, WS 2024/25). The second twin built on the Nordrhein-Westfalen adapter, and the one that made writing it worthwhile: NRW holds Köln (3), Aachen (5), Münster (7), Bochum (11), Duisburg-Essen (12) and Bonn (14), so one survey authority reaches more of the national top twenty than any other.",
+
+  "id": "aachen",
+
+  "site": {
+    "name": { "de": "RWTH Aachen", "en": "RWTH Aachen University" },
+    "region": { "de": "Aachen, Nordrhein-Westfalen", "en": "Aachen, North Rhine-Westphalia" },
+    "timezone": "Europe/Berlin"
+  },
+
+  "lenses": ["occupancy", "staffing", "quality"],
+  "schedulerSite": "rwth",
+  "planQuality": {
+    "source": "tools/data/build_plan_quality.py — whole-cohort lecture days + slot desirability",
+    "studentGroupMappingModelled": false
+  },
+  "staffing": {
+    "source": "tools/data/build_staffing.py — course.sws joined to teacher.contractSws",
+    "lecturerTypesModelled": false
+  },
+  "$lensesComment": "Declared only now that the data exists, and the empty array this replaces was correct for eight months. `world.test.ts` enforces that a lens may only be named where its requirements can be met — the test that failed the first OTH fork for declaring `occupancy` before there were any rooms — so this stayed EMPTY until `tools/data/build_room_geometry.py --site rwth` had written rooms.json / rooms.bin / occupancy.bin (19 015 rooms, 134 of them carrying bookings from the generated plan) and the two lens builders had written plan-quality.json and staffing.json.\n\n⚠️ `flow` IS STILL NOT HERE, and it cannot be. Decision D5 says Campus Flow is derived from the REAL lecture timetable; RWTH publishes none this project can read, so a flow map on the Templergraben could only be invented — and an invented crowd on a named real street is the kind of claim this project refuses to make quietly. `condition` is absent for the same reason it is absent everywhere except Tübingen: no German university publishes its Sanierungsstau per building.",
+
+  "rooms": {
+    "$comment": "⚠️ EVERY INTERIOR ON THIS SITE IS GENERATED, AND THAT IS THE WHOLE ENTRY. OTH and LMU are the two exceptions in this repository — both universities publish floor plans, and LMU additionally has 526 surveyed rooms in one OSM-mapped building. RWTH publishes neither, and the indoor probe of 2026-08-10 found nothing. So the plates are laid out inside the REAL footprint at the REAL storey count and every record is badged `generated`; `build_room_geometry.py` reports '0 aus Bauplan, 0 vermessen, 19015 generiert' and the UI says so. What is real here is the building: its outline, its area and its floor count are all measured.",
+    "codePattern": "^[a-z]{1,2} \\d{3}$",
+    "$codePatternComment": "⚠️ LOWER CASE, AND THE CASE IS THE PROVENANCE. Anywhere in this dataset a lower-case building letter means the identifier is OURS rather than the university's — OTH's published letters are upper case and so are LMU's Hauptgebäude wings. RWTH publishes no building letter scheme this project has found, so every one of the 206 teaching buildings carries a placeholder: 'a', 'b', … 'z', then 'aa', 'ab', … which is why the pattern allows two. A room reads 'a 202', and nobody at RWTH calls it that.",
+    "osmRefKey": "ref",
+    "heroBuilding": "a",
+    "heroBuildingOsmId": "relation/1382731",
+    "$heroBuildingComment": "The Informatikzentrum (7930 m² over three storeys, the largest teaching building on the site) — and it qualifies twice over, the same double test Gebäude K passes at OTH and Oettingenstraße 67 at LMU: it is the biggest interior on the site AND it belongs to one of the two modelled faculties. ⚠️ It reached the dataset at all only because relation/30697 is in `ownership.outlineIds`; OSM puts no operator tag on it, and the first fetch rejected it along with the Hauptgebäude, the Kármán-Auditorium and C.A.R.L.",
+    "storeyHeightM": 3.6,
+    "$storeyHeightComment": "ASSUMED, and the weakest number in the interior. LoD2 gives building heights but not floor-to-floor pitch and OSM has no level heights here. Same value as LMU. Get it wrong and the exploded floors interpenetrate, which is the one way this assumption becomes visible.",
+    "referenceSemester": {
+      "id": "synthetic",
+      "startDate": "2026-10-05",
+      "endDate": "2027-01-29",
+      "$comment": "One representative teaching week from the GENERATED plan, not a real semester, and the dates are the customary North-Rhine-Westphalian Wintersemester teaching period rather than anything RWTH has published. Earlier than the Bavarian sites (LMU starts 13 October) because NRW's lecture period begins in the first week of October."
+    }
+  },
+
+  "bbox": {
+    "crs": "EPSG:4326",
+    "west": 6.0442,
+    "east": 6.0853,
+    "south": 50.7718,
+    "north": 50.7937,
+    "$comment": "HIGH-RESOLUTION CORE, ~2.89 x 2.44 km. From the campus cluster find_campus_areas.py resolved out of OpenStreetMap (config/campus-candidates.json, HS148: 39 areas, discriminating tokens rwth/rheinisch/westfalische) plus ~250 m of margin. It holds BOTH halves of RWTH, which is the point: the historic Templergraben core in the east (Audimax, Zentralbibliothek, Sammelbau Maschinenwesen, Reiff-Museum) and the Melaten/Campus-West research estate in the west (Physik, Chemie, E.ON Energy Research Center), about 2.5 km apart with Aachen West station between them."
+  },
+
+  "shell": {
+    "crs": "EPSG:4326",
+    "west": 5.93,
+    "east": 6.2,
+    "south": 50.698,
+    "north": 50.868,
+    "$comment": "COARSE TERRAIN SHELL, ~19.0 x 18.9 km. Aachen sits in a bowl and the shell is doing real work here — the Eifel foothills close the horizon to the south and the Lousberg stands over the city to the north.\n\n⚠️ THIS SHELL CROSSES TWO NATIONAL BORDERS. Its western edge reaches into Belgium and the Netherlands, where Geobasis NRW publishes nothing at all. `fetch_nrw.py` reports those tiles as 'not published' and carries on, which is correct — a tile outside the state is a fact about NRW, not a failure — and the Copernicus shell covers the gap. The CORE (6.044-6.085 E) is entirely inside Germany, so the high-resolution twin itself has no hole in it."
+  },
+
+  "workingCrs": "EPSG:25832",
+  "verticalDatum": "DHHN2016",
+
+  "elevationRangeM": {
+    "min": 145,
+    "max": 275,
+    "$measured": true,
+    "$comment": "MEASURED 2026-08-10 by build_terrain.py over the core: 151.69 .. 264.04 m, from 16 Geobasis NRW DGM1 tiles at 100% coverage (grid 1498 x 1276 at 2 m). Left slightly loose around the measurement so a re-run after an NRW update does not trip the plausibility gate over a decimetre.\n\n112 m of relief — by far the most of the four twins added for the top-ten set (FAU 36 m, Köln 25 m, Münster 22 m) and the only one where the hypsometric ramp and the terrain shading genuinely do work. Aachen sits in a bowl and the campus climbs its side, which is also why the two halves of RWTH are at visibly different heights.\n\nThe starting guess was 150-300: the floor was very nearly right and the ceiling 36 m too generous, which is the same failure as FAU's 250-450 in a milder form — reasoning about a city's surroundings rather than about the box actually being rendered."
+  },
+
+  "drape": {
+    "maxPx": 4096,
+    "$comment": "Long side of the DOP mosaic, via the Geobasis NRW WMS (layer nw_dop_rgb, 10 cm source). NOT larger: at 8192 px the mipmap chain is ~300 MB, which Chromium accepts and then silently samples BLACK."
+  },
+
+  "grids": {
+    "sourceResolutionM": 1,
+    "renderResolutionM": 2,
+    "renderDecimation": 2,
+    "$comment": "Geobasis NRW DGM1, resampled to a 2 m heightmap, mesh decimated 2x -> 4 m posting. NRW publishes DGM1 already as a float32 GeoTIFF carrying the ModelTiepoint/ModelPixelScale pair build_terrain.py reads, so nothing is converted between download and grid."
+  },
+
+  "shellGrids": {
+    "sourceResolutionM": 30,
+    "renderResolutionM": 30,
+    "renderDecimation": 3,
+    "transitionBandM": 250,
+    "$comment": "Copernicus GLO-30 -> ~90 m posting. transitionBandM is written in metres for readability but MUST be applied as a fraction of the core (CORE_FADE_FRACTION ~0.08), never absolute."
+  },
+
+  "campuses": [
+    {
+      "id": "innenstadt",
+      "name": { "de": "Templergraben / Innenstadt", "en": "Templergraben / city centre" },
+      "anchor": { "lat": 50.77886, "lon": 6.07222 },
+      "anchorSource": "measured centroid of the 192 RWTH-attributed OSM features that single-linkage clustering at 350 m puts in this half (probe of 2026-08-21, temp/rwth-probe-sites.json). NOT an OSM object: RWTH's historic half has no single outline of its own — relation/30697 is the whole university and reaches Melaten too.",
+      "bbox": { "west": 6.0555, "east": 6.0853, "south": 50.7733, "north": 50.7856 },
+      "$bboxComment": "~2098 x 1369 m. MEASURED extent of the cluster (W6.05878 E6.08518 S50.77539 N50.78345) plus ~150 m of margin, clipped to the core's eastern edge. This is the Templergraben block the AOI comment names: Audimax, Zentralbibliothek, Sammelbau Templergraben and Maschinenwesen, Reiff-Museum, Couvenhalle."
+    },
+    {
+      "id": "melaten",
+      "name": { "de": "Campus Melaten / West", "en": "Melaten / West campus" },
+      "anchor": { "lat": 50.78384, "lon": 6.04632 },
+      "anchorSource": "OSM relation/6646598 name='RWTH Campus Melaten' — centre of its measured bounds (W6.03828 E6.05435 S50.77382 N50.79385, 1130 x 2228 m).",
+      "bbox": { "west": 6.0442, "east": 6.0655, "south": 50.7718, "north": 50.7937 },
+      "$bboxComment": "~1499 x 2438 m, running from the core's western edge to just past Aachen West station. Wider to the east than the Melaten relation itself ON PURPOSE: a third measured group of 12 institutes sits at 50.7889-50.7909 / 6.0567-6.0637 (Kopernikusstraße, Campus-Boulevard) — the Hörn extension of the same research estate, 440 m from the Dezernate block and 1.25 km from Melaten's centre. It has no outline of its own, and leaving it between the two boxes would have handed it to the nearest-anchor rule rather than to a campus. ⚠️ The eastern strip overlaps the innenstadt box; that is handled, because a building falls to the SMALLEST box containing its centroid and innenstadt (2.87 km²) is smaller than this one (3.66 km²)."
+    }
+  ],
+
+  "campusSeparation": {
+    "straightLineKm": 1.72,
+    "$comment": "MEASURED between the two cluster centroids. Shorter than OTH's 2.48 km and LMU's 2.44 km, and that is the interesting part rather than a weakness: 1.7 km is walkable in about twenty minutes and NOT in a fifteen-minute break, so the cross-campus constraint still bites but the honest instrument for it is the footpath network and the Campus-Bahn corridor rather than a U-Bahn journey. Aachen West station sits between the two halves and is the pivot of that walk."
+  },
+
+  "ownership": {
+    "$comment": "HOW A BUILDING IS RECOGNISED AS RWTH. The strongest signal here is the one OTH also has and LMU does not: RWTH tags its buildings with an `operator`, and the probe of 2026-08-21 found 335 features carrying it across the wide box. That is why there is no site relation in this list — RWTH does not publish one, and it does not need to.",
+    "outlineIds": ["relation/30697", "relation/6646598"],
+    "$outlineIdsComment": "⚠️ relation/30697 IS IN THIS LIST BECAUSE LEAVING IT OUT COST THE SITE ITS LECTURE THEATRES, and the first version of this file left it out on purpose. The reasoning was sound and the result was wrong: relation/30697 is tagged amenity=university and named 'RWTH Aachen', but its measured BOUNDING BOX is 6353 x 3283 m — most of western Aachen — so testing a point against it looked like accepting every shop and flat on the Templergraben. It is not one ring: it is a MULTIPOLYGON of the university's actual parcels, and a bounding box that spans two campuses says nothing about what the rings enclose. With only the operator tag and Melaten, the first fetch rejected 40 large named buildings including the Hauptgebäude, the Kármán-Auditorium, C.A.R.L. (the Central Auditorium for Research and Learning), the Informatikzentrum, Haus Hörn and the A-, C-, D- and Z-Hallen — i.e. very nearly every room RWTH actually lectures in, because OSM does not put an `operator` on them. That is the LMU Gebäude-K failure and the OTH Seybothstraße failure in one: the signal that is strongest at one university is the weakest at the next, and the union of several beats any single one. relation/6646598 (Campus Melaten, 1130 x 2228 m) stays as the second, tighter estate.",
+    "$outlineIdsCheck": "The rejection list is the test, not the acceptance list. 'Agentur für Arbeit' (5124 m²) sits in the middle of the campus and must STAY rejected after this change; if it is accepted, the rings are enclosing streets rather than parcels and this entry has to come back out.",
+    "siteRelations": [],
+    "$siteRelationsComment": "RWTH publishes none. Recorded as an empty list rather than omitted, so 'we looked and there is nothing' is distinguishable from 'nobody looked'.",
+    "operatorPattern": "rwth|rheinisch-westf",
+    "namePattern": "(?<![A-Za-z])RWTH(?![A-Za-z])|Rheinisch-Westf",
+    "$namePatternComment": "The word-boundary form, for the reason the LMU config records: a case-insensitive three-letter acronym matched as a substring over a German street index will always find something. Both spellings are needed because OSM carries the acronym on most buildings and the spelled-out 'Rheinisch-Westfälische Technische Hochschule' on a few.",
+    "extraIds": []
+  },
+
+  "walkRouting": {
+    "maxSameCampusDetour": 4.0,
+    "$comment": "⚠️ RAISED FROM THE 3.0x DEFAULT, AND THE FIRST ATTEMPT AT THIS NUMBER WAS 3.2 AND MEASURED THE WRONG NETWORK. Recorded in full because the sequence is the lesson.\n\nFirst run: exactly one pair of 21 115 over 3.0x, at 3.13x. That looked like ordinary geography — a smooth tail, healthy access points — so the limit went to 3.2, and the build then failed a DIFFERENT gate: 10 409 of 21 115 pairs had no route at all, including the Informatikzentrum to the Hauptgebäude, 1.3 km apart in the middle of the city. The pedestrian graph was in two pieces, and the 3.13x figure had been computed over one of them. A threshold tuned against a broken graph is worse than no threshold, because it looks like diligence.\n\nThe cause was in `tools/geodata/fetch_osm_footpaths.py`, not here: its walkable-highway list stopped at `service|residential|unclassified`, and Aachen's two halves are separated by the railway and the Süsterfeld/Schurzelter corridor, whose crossings are CLASSIFIED streets with pavements OSM does not map as separate footways. With `tertiary|secondary|primary` added the graph is one piece.\n\nSECOND MEASUREMENT, on the whole network: SEVEN pairs over 3.0x, worst 3.95x. Every one of them involves the Rotationsgebäude (ehem. Zollamt), Office West or the Stoßwellenlabor — the north-western corner of Campus Melaten, which sits across the A4 and the Süsterfeldstraße from the rest of the estate. 368 m direct becomes 1455 m because you have to walk to a crossing and back. Real, and exactly the sort of thing the straight-line placeholder used to report as five minutes.\n\n⚠️ 4.0 rather than 4.2: set it just above the measurement, so the next thing that breaks still trips it."
+  },
+
+  "indoorProbe": {
+    "probedOn": "2026-08-10",
+    "roomsFound": 0,
+    "$comment": "⚠️ Named `indoorProbe` and NOT `rooms` — a `rooms` block in this engine MEANS real indoor geometry exists and drives the hero-building explode. Nothing has been probed for RWTH, so buildings stay solid and the app says so rather than inventing interiors."
+  },
+
+  "focusPlaces": [
+    { "id": "audimax", "name": "Audimax", "lat": 50.78004, "lon": 6.0762 },
+    { "id": "zentralbibliothek", "name": "Zentralbibliothek", "lat": 50.77899, "lon": 6.08005 },
+    { "id": "templergraben", "name": "Sammelbau Templergraben", "lat": 50.77744, "lon": 6.07929 },
+    { "id": "maschinenwesen", "name": "Sammelbau Maschinenwesen", "lat": 50.77763, "lon": 6.08061 },
+    { "id": "rogowski", "name": "Rogowski-Institut", "lat": 50.77807, "lon": 6.07648 },
+    { "id": "mensa", "name": "Mensa Academica", "lat": 50.78169, "lon": 6.0764 },
+    { "id": "reiff", "name": "Reiff-Museum", "lat": 50.77731, "lon": 6.07684 },
+    { "id": "couvenhalle", "name": "Couvenhalle", "lat": 50.77658, "lon": 6.07798 },
+    { "id": "aerodynamik", "name": "Institut für Aerodynamik", "lat": 50.77866, "lon": 6.07659 },
+    { "id": "it_center", "name": "IT Center", "lat": 50.78093, "lon": 6.06513 },
+    { "id": "physik", "name": "Hörsaal Physik", "lat": 50.78133, "lon": 6.04842 },
+    { "id": "eon_erc", "name": "E.ON Energy Research Center", "lat": 50.78931, "lon": 6.05165 },
+    { "id": "bahnhof", "name": "Aachen West", "lat": 50.78072, "lon": 6.06961, "kind": "station" }
+  ],
+
+  "$focusPlacesComment": "Resolved 2026-08-10 from OpenStreetMap via Overpass BY TAG AND OPERATOR — `amenity=university`, `building=university`, buildings whose operator matches RWTH, libraries and stations inside the core box — and not by remembered name, for the reason Tübingen's config records at length. 120 named elements came back; the thirteen above are the ones that carry the campus's shape, deliberately split across both halves so the tour does not imply RWTH is only its historic core.",
+
+  "geobasis": {
+    "authority": "Geobasis NRW (Bezirksregierung Köln)",
+    "licence": "Datenlizenz Deutschland – Zero – Version 2.0",
+    "licenceUrl": "https://www.govdata.de/dl-de/zero-2-0",
+    "attribution": "Datenquelle: Land NRW (Geobasis NRW), dl-de/zero-2-0",
+    "downloadBase": "https://www.opengeodata.nrw.de/produkte/geobasis/",
+    "dopWms": "https://www.wms.nrw.de/geobasis/wms_nw_dop",
+    "$comment": "pipeline.py's `in_nordrhein_westfalen` predicate keys on the string 'Geobasis NRW' here, so this field is load-bearing rather than decoration. dl-de/ZERO-2-0 requires no attribution at all; it is given anyway, because every other source in this app is credited and a licence that permits silence is not a reason to be silent about where a campus came from."
+  },
+
+  "shellGeobasis": {
+    "authority": "ESA / DLR / Airbus Defence and Space — Copernicus DEM GLO-30",
+    "licence": "Copernicus DEM free licence (worldwide, free reuse with the prescribed notice)",
+    "licenceUrl": "https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM",
+    "attribution": "produced using Copernicus WorldDEM-30 © DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA; all rights reserved",
+    "$attributionComment": "The ADAPTED-DATA form of the notice, which is prescribed rather than stylistic: the pipeline resamples the tile onto a UTM grid and shifts it onto the core's vertical datum.",
+    "cogUrlTemplate": "https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com/Copernicus_DSM_COG_10_{NS}{lat:02d}_00_{EW}{lon:03d}_00_DEM/Copernicus_DSM_COG_10_{NS}{lat:02d}_00_{EW}{lon:03d}_00_DEM.tif",
+    "tiles": ["N50_E005", "N50_E006"],
+    "$tilesComment": "TWO tiles. The shell runs 5.93-6.20 E, so it crosses the 6 E meridian even though Aachen itself sits comfortably inside E006; latitude needs only N50. A missing tile does not raise an error — it renders as a flat shelf across that side of the horizon, which here would be the Belgian border."
+  },
+
+  "tour": [
+    { "placeId": "audimax", "captionKey": "tour.aachen.audimax", "rangeM": 700, "holdMs": 6500 },
+    { "placeId": "templergraben", "captionKey": "tour.aachen.templergraben", "rangeM": 600, "holdMs": 6000 },
+    { "placeId": "it_center", "captionKey": "tour.aachen.westcampus", "rangeM": 1100, "holdMs": 6500 },
+    { "placeId": "eon_erc", "captionKey": "tour.aachen.melaten", "rangeM": 800, "holdMs": 6000 }
+  ]
+}

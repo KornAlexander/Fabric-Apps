@@ -1,0 +1,207 @@
+{
+  "$comment": "Area of interest for Campus-Scheduler. Every coordinate and every count in this file was MEASURED on 2026-08-22, nothing here is recalled. The campus cluster came from tools/geodata/find_campus_areas.py --university HS134 (the project's own finder, run against config/universities.json); every other figure came from Overpass probes whose raw responses were written to temp/ur-probe-*.json. The rule is inherited from the OTH AOI: no coordinate enters config without being looked up, because an earlier project shipped an AOI built around a place node 4.6 km from the town it named.",
+  "id": "uni-regensburg",
+  "probedOn": "2026-08-22",
+  "site": {
+    "name": { "de": "Universität Regensburg", "en": "University of Regensburg" },
+    "region": { "de": "Regensburg, Bayern", "en": "Regensburg, Bavaria" },
+    "timezone": "Europe/Berlin"
+  },
+
+  "$whySeparateAoiComment": "⚠️ THIS AOI OVERLAPS `oth-regensburg` BY ROUGHLY A THIRD, AND THAT DUPLICATION IS DELIBERATE: it was argued against first and lost on a measurement. UR's campus sits 0.77 km from OTH's Seybothstraße campus, so the obvious economy is one Regensburg AOI serving both universities: it would cost ~7% more ground than OTH's core alone instead of a second 2 x 2 km build. What kills it is `tools/data/fetch_buildings.py`, which resolves the ownership test from `AOI[\"ownership\"]`: AOI-scoped, not site-scoped. One AOI can therefore carry exactly ONE university's rule for 'which buildings are mine'. Sharing would mean either UR's buildings file inheriting OTH's `operatorPattern` (and coming back empty) or the two institutions being merged into one, which is the precise error the OTH AOI's own $neighbourNote warns about. Making ownership per-site would fix it properly and is the better long-term shape; it needs a change to fetch_buildings.py and belongs in that file's own review, not here.",
+
+  "campuses": [
+    {
+      "id": "universitaetsstrasse",
+      "name": { "de": "Campus Universitätsstraße", "en": "Universitätsstraße campus" },
+      "anchor": { "lat": 48.99866, "lon": 12.09515 },
+      "anchorSource": "OSM relation/6576273 amenity=university name='Universität Regensburg'",
+      "bbox": { "west": 12.08912, "east": 12.10117, "south": 48.99446, "north": 49.00286 },
+      "$bboxComment": "~878 x 932 m. MEASURED cluster of UR's own buildings (find_campus_areas.py HS134: 68 areas seen, 17 accepted, every one carrying operator='Universität Regensburg'): west 12.09255, east 12.09774, south 48.99671, north 49.00061 = 380 x 430 m. The box adds ~250 m of margin, the same rule the OTH AOI uses, so the Universitätsstraße frontage and the outlying Verfügungsgebäude PT5 sit inside rather than on the edge. ⚠️ The building cluster is much SMALLER than the university's own OSM relation (relation/6576273 spans 48.99089..49.00217 / 12.08899..12.10332 = 1.25 x 1.04 km) because the relation also encloses the sports grounds and the Botanischer Garten. The campus box is deliberately the TEACHING estate; the core bbox below covers the whole relation."
+    }
+  ],
+
+  "$singleCampusComment": "One campus, unlike OTH's two. UR was built in the 1960s as a single contiguous site on the Galgenberg and has stayed that way, so there is no inter-campus transfer to model here and no travel-time matrix to build. That makes UR the SIMPLER scheduling problem of the two Regensburg universities despite being the larger institution (20 202 students against OTH's 10 999, per config/universities.json HS134/HS726).",
+
+  "ownership": {
+    "$comment": "How a UR building is recognised. Declared explicitly rather than left to the default, because the default derives `outlineIds` by splitting `anchorSource` and would then be the only test, and in this AOI proximity is actively dangerous: OTH's Seybothstraße campus lies inside the core box (see $neighbourNote), so ANY rule that reaches buildings by nearness will hand OTH's estate to UR.",
+    "outlineIds": ["relation/6576273"],
+    "$outlineComment": "UR's own campus relation, the single authoritative polygon.",
+    "operatorPattern": "universität regensburg",
+    "$operatorPatternComment": "⚠️ MEASURED, not assumed: 18 distinct named buildings in the core carry operator='Universität Regensburg' verbatim (Audimax, Zentralbibliothek, Rechenzentrum, Vielberth-Gebäude, the four Philosophie/Theologie Bauteile, the three Recht-und-Wirtschaft buildings, SGLG, Verwaltung, Mathematik, Wirtschaftsinformatik, Verfügungsgebäude PT5 …). The pattern is lowercased before comparison. It does NOT match 'Ostbayerische Technische Hochschule Regensburg', which is the whole point.",
+    "extraIds": [],
+    "$extraComment": "Empty, and deliberately so. OTH needed an allow-list entry for TechBase because OTH is a tenant in a building it does not operate. No comparable UR tenancy has been MEASURED, and an allow-list entry is a hand-made claim that must be justified one id at a time. Adding a UR entry requires the same standard of evidence the TechBase entry carries."
+  },
+
+  "bbox": {
+    "crs": "EPSG:4326",
+    "west": 12.08142,
+    "east": 12.10888,
+    "south": 48.98965,
+    "north": 49.00767,
+    "$comment": "PHOTOREAL CORE, exactly 2.00 x 2.00 km. Sized to contain the whole of UR's OSM relation (48.99089..49.00217 / 12.08899..12.10332) with ~350 m of margin on every side, so the sports grounds and the Botanischer Garten render rather than being clipped at the campus fence. ⚠️ THIS IS ALSO THE BOX EVERY COUNT IN THIS FILE WAS MEASURED IN, the core was set to the probe box on purpose, so `network`, `vegetation` and `buildings` below describe this exact rectangle and not an approximation of it. Roughly 1000 x 1000 samples at the 2 m grid."
+  },
+  "shell": {
+    "crs": "EPSG:4326",
+    "west": 11.98,
+    "east": 12.2,
+    "south": 48.93,
+    "north": 49.1,
+    "$comment": "COARSE TERRAIN SHELL, ~16 x 19 km. IDENTICAL to the oth-regensburg shell, because it is the same city seen from a point 0.77 km away, the Danube valley to the north and the Bayerischer-Wald foothills to the east are the same horizon. Keeping the numbers identical is not laziness: it means the Copernicus tiles already cached for OTH are reused byte-for-byte, and it means the two Regensburg twins cannot disagree about where the horizon is."
+  },
+  "workingCrs": "EPSG:25832",
+  "verticalDatum": "DHHN2016",
+
+  "elevationRangeM": {
+    "min": 330,
+    "max": 440,
+    "$measured": true,
+    "$comment": "MEASURED 2026-08-22 by build_terrain.py over the core: 337.94.. 429.21 m, mosaicked from 9 LDBV DGM1 tiles at 100.0% coverage on a 1046 x 1043 grid at 2 m. The declared bracket is left deliberately loose around the measurement so a re-run after an LDBV data update does not trip the plausibility gate over a decimetre; uint16 quantisation over a 110 m bracket is ~1.7 mm, far finer than the source. ⚠️ THE FIRST, INHERITED GUESS WAS 320..430 AND IT WOULD HAVE PASSED BY 0.79 m. That is not a margin, it is a coincidence: this core reaches 429.21 m because it climbs further onto the Galgenberg plateau than oth-regensburg's does (which topped out at 405.5 m), and a bracket copied from a neighbouring AOI came within a metre of clipping real ground. Copying a plausibility range from an adjacent AOI is not the same as measuring it. CONSEQUENCE: ~91 m of relief across a 2 km core, steeper ground than OTH's, so terrain shading does real work here, and the campus itself sits on a distinct shelf, with the 18 focus places sampling 369.0 m (Verfügungsgebäude PT5) to 380.6 m (Verwaltung), an 11.6 m spread across one contiguous campus."
+  },
+
+  "verification": {
+    "$comment": "Registration gate, composite form. As at OTH, the strategy of proving registration from >=5 published summits inside the core is impossible here: this is 2 x 2 km of city and plateau, not alpine terrain. Registration is proven from coverage, plausibility, focus places, shell control points and the LDBV-vs-Copernicus seam offset instead.",
+    "minCoveragePct": 99.5,
+    "toleranceM": 3.0,
+    "shellToleranceM": 12.0,
+    "maxSeamOffsetM": 3.0,
+    "controlPoints": [
+      { "name": "Ziegetsberg", "lat": 48.990092, "lon": 12.06664, "publishedM": 440, "tier": "shell", "source": "OSM node/1068928848 natural=peak ele=440" },
+      { "name": "Sallerner Berg", "lat": 49.042046, "lon": 12.107486, "publishedM": 390, "tier": "shell", "source": "OSM node/356304449 natural=peak ele=390" },
+      { "name": "Hoher Sand", "lat": 49.05444, "lon": 12.078738, "publishedM": 400, "tier": "shell", "source": "OSM node/1068890655 natural=peak ele=400" },
+      { "name": "Eichelberg", "lat": 49.065924, "lon": 12.072945, "publishedM": 420, "tier": "shell", "source": "OSM node/1068890653 natural=peak ele=420" },
+      { "name": "Mühlberg", "lat": 49.054818, "lon": 12.11269, "publishedM": 408, "tier": "shell", "source": "OSM node/1068936853 natural=peak ele=408" },
+      { "name": "Winzerer Höhe", "lat": 49.037703, "lon": 12.049844, "publishedM": 440, "tier": "shell", "source": "OSM node/1068931236 natural=peak ele=440" }
+    ],
+    "$controlPointsComment": "The same six named landforms the oth-regensburg AOI uses, and legitimately so: this shell is the identical rectangle, so these are the same points over the same Copernicus data. ⚠️ THE FIRST DRAFT OF THIS COMMENT SAID THEY 'MUST PRODUCE THE SAME RESIDUALS' AND THE BUILD DISPROVED IT. Measured here on 2026-08-22: +1.05 (Mühlberg), +3.82 (Winzerer Höhe), +4.82 (Sallerner Berg), +5.65 (Ziegetsberg), +7.08 (Eichelberg), +8.55 m (Hoher Sand), against oth-regensburg's +0.94 to +8.44 m. Every one of the six sits about +0.11 m higher than it does in the neighbouring AOI, a UNIFORM shift rather than scatter, because the seam offset is solved per AOI from that AOI's own core (+1.41 m on open ground here) and the shell is then shifted by it. Same data, same points, slightly different registration constant: that is the pipeline working as designed, and 'identical' was a careless word for it. What DID reproduce is the part that carries the evidence, all six read HIGH, by +1 to +9 m, which is exactly what a radar SURFACE model should do over vegetated ground, and a set of control points erring in one direction by a physically explicable amount is better proof than a set that scatters. Ziegetsberg is the nearest at ~2.5 km west-south-west of the campus.",
+    "$noCoreControlPoint": "There is no control point inside the core, and it is a measured conclusion rather than an omission. The one peak near this ground, node/3544035334 'Königswiesener Berg' (49.007556/12.069562, ele=397), was TESTED AND REJECTED for the oth-regensburg AOI by -14.21 m against two independent surveys (LDBV DGM1 bare-earth 382.82 m, Copernicus radar surface 384.20 m, which agree with each other and disagree with OSM). It is west of this core in any case. Checks A, B, C and E carry the proof."
+  },
+
+  "drape": {
+    "maxPx": 4096,
+    "$built": "4096 x 4084 px at 0.51 m per pixel, 3.45 MB JPEG (measured 2026-08-22).",
+    "$comment": "Long side of the DOP20 mosaic. At 2.09 km across this gives 0.51 m per pixel, FINER than the 0.78 m the oth-regensburg core achieves over 3.07 km at the same budget, a smaller AOI buys resolution for free. NOT larger: at 8192 px the mipmap chain is ~300 MB, which Chromium accepts and then silently samples BLACK. The drape texture must be loaded with flipY=false and WITHOUT mipmaps."
+  },
+  "grids": {
+    "sourceResolutionM": 1,
+    "renderResolutionM": 2,
+    "renderDecimation": 2,
+    "$comment": "LDBV DGM1 source, resampled to a 2 m heightmap, mesh decimated 2x -> 4 m posting. Same tier as oth-regensburg, on a core with roughly half the area, so the vertex budget is comfortably below OTH's ~450k."
+  },
+  "shellGrids": {
+    "sourceResolutionM": 30,
+    "renderResolutionM": 30,
+    "renderDecimation": 3,
+    "transitionBandM": 250,
+    "$comment": "Copernicus GLO-30 -> ~90 m posting. ⚠️ transitionBandM is written in metres for readability but MUST be applied as a fraction of the core (CORE_FADE_FRACTION ~0.08), never absolute. This matters MORE here than at OTH: an absolute 250 m band on a 2.00 km core is 12.5% of the width, and the failure mode is documented, an absolute band tuned for a 9 km alpine AOI once ate 43% of a 2 km campus and turned the drape into a dark blob. This core is that size."
+  },
+
+  "buildings": {
+    "measured": {
+      "osmBuildingsInCore": 2035,
+      "osmWithBuildingLevels": 1173,
+      "urOperatedNamedBuildings": 18,
+      "lod2BuildingsBuilt": 2812,
+      "lod2Triangles": 123024,
+      "lod2AssetMB": 2.11,
+      "builtAssetSetMB": 9.91,
+      "$comment": "MEASURED 2026-08-22 by Overpass over the core box above; raw responses in temp/ur-probe-*.json. 2 035 buildings, of which 1 173 carry building:levels, a 58% level-tag rate, which is what makes generated floor plates viable at real storey counts. ⚠️ A REPEAT QUERY MINUTES LATER RETURNED 2 013, a 1% drift; that is OSM being edited underneath the probe, not an error, and it is recorded here so a future re-probe that disagrees slightly is not treated as a bug. Only 18 of the 2 035 are UR's own NAMED buildings, the rest are the surrounding Königswiesen and Galgenberg housing plus, in the north of the box, OTH's Seybothstraße campus. THE BUILD then produced 2 812 buildings and 123 024 triangles from 4 LDBV CityGML tiles, skipping 485 structures under 18 m² and 10 999 outside the terrain extent; roof colour was measured for 2 788 of 2 812 (99.1%). The LoD2 count legitimately EXCEEDS the OSM probe because LoD2 is the authoritative cadastral source and holds buildings OSM has not mapped, the same relationship seen at oth-regensburg (8 193 probed, 9 105 built). The complete asset set is 9.91 MB against oth-regensburg's 21.68 MB."
+    },
+    "lodPolicy": {
+      "decision": "full LoD2 everywhere in the core",
+      "$comment": "Inherited from oth-regensburg, where the planned LoD1-corridor split was measured and turned out to be unnecessary: 9 105 buildings at full LoD2 came to 8.31 MB and the complete asset set to 20.2 MB. This core holds roughly a quarter of that building count in a quarter of the area, so there is no budget argument for simplifying anything. Revisit only if the asset set grows past ~30 MB."
+    }
+  },
+
+  "vegetation": {
+    "osmTrees": 2777,
+    "osmLanduseAreas": 474,
+    "cadastreTreesRendered": 10651,
+    "$comment": "The OSM figures (2 777 trees, 474 land-use areas) were the PROBE. The BUILD used the Bavarian tree cadastre, two Oberpfalz region tiles, 125039 Regensburg and 124005 Kelheim, 1.04 GB downloaded, cached and gitignored, scanned 4 498 304 rows and kept 10 651 trees at 9 m spacing, in 0.10 MB of instance data. Measured canopy 5.5.. 35.9 m, median 12.5 m. ⚠️ THE PREDICTION IN THIS FILE'S FIRST DRAFT WAS 'SEVERAL TIMES 2 777' AND IT WAS WRONG IN THE OTHER DIRECTION: the cadastre kept 3.8x the OSM count, but only ONE of the two downloaded region tiles actually intersected the terrain (125039 contributed 1 band, 124005 contributed 0 of its 20), and 4 486 136 of the scanned rows fell outside the core. Half a gigabyte was downloaded to be discarded entirely, which is a cost worth knowing about before adding the next Bavarian AOI."
+  },
+
+  "network": {
+    "measuredFootways": 1660,
+    "measuredRoads": 871,
+    "measuredPtStops": 47,
+    "measuredWater": 40,
+    "$comment": "MEASURED 2026-08-22 over the core. ⚠️ THE FIRST PROBE RETURNED 0 ROADS AND 0 WATER AND BOTH WERE FALSE. A rate-limited Overpass answered with a well-formed body carrying total=0, the caching probe stored it, and a zero is indistinguishable from a real absence once written down. They were caught only because 871 roads and 40 waterways in 2 km² of city is impossible to believe, re-queried three different ways, and confirmed against a control query that had to be non-zero. The lesson is recorded in the file the numbers landed in: A ZERO FROM A REMOTE API IS NOT A MEASUREMENT UNTIL A CONTROL QUERY PROVES THE ENDPOINT WAS ANSWERING.",
+    "$noTravelMatrixComment": "Unlike OTH there is no inter-campus travel-time matrix to build, because there is one campus. The footway network still matters for walking times BETWEEN buildings, the Philosophie/Theologie Bauteile to the Zentralbibliothek and so on, which on a single contiguous 1960s campus are short and, unusually, largely under cover."
+  },
+
+  "indoorProbe": {
+    "$comment": "⚠️ NOT a `rooms` block, deliberately. In this engine the presence of `rooms` MEANS 'this site has real indoor geometry', and UR has NONE. This block records what the probe FOUND so the absence is documented rather than merely missing.",
+    "osmIndoorRoomsInCampusBox": 0,
+    "osmIndoorRoomsInCoreBox": 29,
+    "$attributionComment": "⚠️ THESE TWO NUMBERS ARE THE WHOLE POINT, AND THE SECOND ONE NEARLY BECAME A LIE. A count of `indoor=room` over the CORE returns 29, which matches the OTH AOI's recorded 29 at Seybothstraße exactly, because this core CONTAINS OTH's Seybothstraße campus. Fetching each room with its centroid and bucketing by campus polygon settles it: 28 fall inside OTH's Seyboth box and carry OTH's own room refs ('K 001 Großer Hörsaal', 'K 014'…'K 018'), 1 is unattributed, and ZERO belong to UR. Counting a feature in a box that spans two institutions cannot answer a question about ownership. This is the trap the oth-regensburg AOI names in its $neighbourNote, 'filter by the relations, never by proximity', arriving from the opposite direction.",
+    "codePattern": null,
+    "$codePatternComment": "⚠️ NULL ON PURPOSE. OTH's pattern '^[A-Z]{1,2} ?\\d{3}$' was DERIVED from 29 real mapped rooms carrying refs like 'K 001'. UR has no mapped rooms, so there is nothing to derive a pattern from, and an invented pattern would be a fabricated fact wearing the same clothes as a measured one. UR does publish room codes of its own (the PT/VG/H shapes visible on its building signage), but this project has not READ any, so the field stays null until a real room list is loaded and the pattern is derived from it.",
+    "$consequence": "=> UR's interiors must be generated floor plates inside real LoD2 footprints at real storey counts, badged `generated` on every record, the option-2 path OTH uses everywhere except Gebäude K. The 1 173 building:levels tags in the core are what make the storey counts real."
+  },
+
+  "focusPlaces": [
+    { "id": "audimax", "name": "Audimax", "lat": 48.99867, "lon": 12.09454, "source": "OSM way/366361367" },
+    { "id": "zentralbibliothek", "name": "Zentralbibliothek", "lat": 48.99806, "lon": 12.09603, "source": "OSM way/29144400" },
+    { "id": "rechenzentrum", "name": "Rechenzentrum", "lat": 48.9972, "lon": 12.09637, "source": "OSM way/29133667" },
+    { "id": "mathematik", "name": "Mathematik", "lat": 48.99692, "lon": 12.09426, "source": "OSM way/29123124" },
+    { "id": "verwaltung", "name": "Verwaltung", "lat": 48.9977, "lon": 12.09421, "source": "OSM way/29144401" },
+    { "id": "vielberth", "name": "Vielberth-Gebäude", "lat": 49.00045, "lon": 12.09489, "source": "OSM way/100597042" },
+    { "id": "wirtschaftsinformatik", "name": "Wirtschaftsinformatik", "lat": 49.00009, "lon": 12.09283, "source": "OSM way/29291594" },
+    { "id": "pt5", "name": "Verfügungsgebäude PT5", "lat": 49.00012, "lon": 12.09761, "source": "OSM way/29176790" },
+    { "id": "sglg", "name": "SGLG - Sammelgebäude - Lehrstuhlgebäude", "lat": 48.99888, "lon": 12.09312, "source": "OSM way/29137414" },
+    { "id": "sammelgebaeude-bibliothek", "name": "Sammelgebäude - Bibliotheksgebäude", "lat": 48.99949, "lon": 12.09283, "source": "OSM way/365347233" },
+    { "id": "sammelgebaeude-hoersaal", "name": "Sammelgebäude Hörsaalgebäude", "lat": 48.99926, "lon": 12.0934, "source": "OSM way/365345729" },
+    { "id": "recht-hoersaal", "name": "Recht und Wirtschaft - Hörsaalgebäude", "lat": 48.99925, "lon": 12.09411, "source": "OSM way/365348028" },
+    { "id": "recht-lehrstuhl", "name": "Recht und Wirtschaft - Lehrstuhlgebäude", "lat": 48.99979, "lon": 12.09472, "source": "OSM way/28996029" },
+    { "id": "recht-seminar", "name": "Recht und Wirtschaft - Seminargebäude", "lat": 48.99975, "lon": 12.09378, "source": "OSM way/298672796" },
+    { "id": "pt-bauteil-1", "name": "Philosophie / Theologie Bauteil 1", "lat": 48.99892, "lon": 12.09604, "source": "OSM way/366371387" },
+    { "id": "pt-bauteil-2", "name": "Philosophie / Theologie Bauteil 2", "lat": 48.99963, "lon": 12.09609, "source": "OSM way/366369369" },
+    { "id": "pt-bauteil-3", "name": "Philosophie / Theologie Bauteil 3", "lat": 48.99896, "lon": 12.09682, "source": "OSM relation/18390907" },
+    { "id": "pt-bauteil-4", "name": "Philosophie / Theologie Bauteil 4", "lat": 48.99978, "lon": 12.09674, "source": "OSM relation/18390908" }
+  ],
+  "$focusPlacesComment": "All eighteen resolved from the Overpass probe on 2026-08-22 with their OSM ids recorded, and every one of them selected by `operator='Universität Regensburg'` rather than by falling inside a box, the ownership rule and the focus list agree because they were built from the same test. Fifteen of the eighteen also carry building:levels (1 to 7 storeys), so the generated interiors start from real heights. A coordinate is only verified once something independent agrees with it; here that will be the terrain build sampling each place and the LoD2 footprints landing on them.",
+
+  "tour": [
+    { "placeId": "audimax", "captionKey": "tour.ur.campus", "rangeM": 1300, "holdMs": 6500 },
+    { "placeId": "zentralbibliothek", "captionKey": "tour.ur.bibliothek", "rangeM": 450, "holdMs": 6000 },
+    { "placeId": "pt-bauteil-1", "captionKey": "tour.ur.pt", "rangeM": 520, "holdMs": 6000 },
+    { "placeId": "recht-hoersaal", "captionKey": "tour.ur.recht", "rangeM": 560, "holdMs": 7000 }
+  ],
+  "$tourComment": "Four stops, the house convention. The first opens wide enough (1 300 m) to show what the $singleCampusComment describes — one contiguous site — because UR has no campus-wide focus place to open on, every one of the eighteen being a building. ⚠️ THE LAST CAPTION CARRIES THE FACT THIS SITE EXISTS TO DEMONSTRATE: no second campus, so no travel-time matrix, and no published timetable, so no week to replan. That mirrors oth-regensburg's closing stop, which names its 2.5 km transfer as the constraint, and it is the honest reason this twin ships without lenses.",
+
+  "$neighbourNote": "⚠️ OTH REGENSBURG'S SEYBOTHSTRASSE CAMPUS IS INSIDE THIS CORE, in the northern third of the box (OTH's own campus bbox is 49.0000..49.0070 / 12.0900..12.1015, and this core reaches 49.00767). It will be rendered, and it MUST NEVER BE PRESENTED AS UR. This is the exact mirror of the note the oth-regensburg AOI carries about UR, and between them the two files describe one 0.77 km gap from both sides. Two concrete traps already sprung during this AOI's own probing and are recorded so they are not re-sprung: the 29 `indoor=room` features in this core are OTH's Gebäude K, not UR's (see indoorProbe), and a naive building count over the core returns 2 035 buildings of which UR operates 18. Filter by relation/6576273 and by operator, never by proximity.",
+
+  "$botanicalGardenNote": "The core's southern strip contains UR's Botanischer Garten and the university sports grounds, both inside relation/6576273. They are university land and correctly rendered as such, but they are NOT teaching space: nothing in them should ever acquire a room, a capacity or a timetable slot. The campus bbox above deliberately excludes them for that reason, so a rule that says 'teaching estate = campus box' and a rule that says 'university land = relation' both exist here and mean different things.",
+
+  "lenses": [],
+  "$lensesComment": "⚠️ EMPTY, AND IT MUST STAY EMPTY UNTIL THE DATA EXISTS. The engine's own test, 'declares only lenses whose data requirements it can meet', already failed one attempt to declare a lens early at OTH. UR currently has terrain and buildings and no timetable, no rooms and no staffing, so it can meet none of them. `occupancy` becomes declarable when tools/geodata/build_rooms.py has written rooms.json/rooms.bin/occupancy.bin; `staffing` and `quality` when tools/data/generate_timetable.py has produced a plan and build_staffing.py / build_plan_quality.py have run over it. `flow` stays off, as everywhere else.",
+
+  "$schedulerSiteComment": "⚠️ NO `schedulerSite` KEY, DELIBERATELY. oth-regensburg names one because TWO scheduler sites share that AOI, one built from generated data and one fed by the neighbouring university's own published timetable export, so something has to break the tie. UR has no scheduler site AT ALL yet: registering one means an entry in tools/data/sites.py, and that file is currently held by other in-flight work. When the site is registered this key should be added with the value of that site's id, and `lenses` should be filled in at the same time: the two go together, because a lens without a scheduler site has nothing to colour. ⚠️ NOTE ON WORDING: the neighbouring site's id and the name of the scheduling package it exports from are both deliberately NOT written out here. tools/verify_publishable.py treats those two strings as customer material and fails the gate on them, which is correct, and a comment is not a good enough reason to widen a leak allowlist.",
+
+  "geobasis": {
+    "authority": "Bayerische Vermessungsverwaltung (LDBV)",
+    "licence": "CC BY 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/4.0/deed.de",
+    "attribution": "Datenquelle: Bayerische Vermessungsverwaltung – www.geodaten.bayern.de [Daten bearbeitet]",
+    "downloadBase": "https://download1.bayernwolke.de",
+    "downloadMirror": "https://download2.bayernwolke.de",
+    "metalinkBase": "https://geodaten.bayern.de/odd",
+    "$comment": "Identical to the oth-regensburg and garching AOIs: Regensburg is in Bayern, so the same survey authority, the same portal and the same licence apply, and the pipeline needs no new fetcher (unlike Tübingen, which is Baden-Württemberg and required an LGL adapter). ⚠️ THE ATTRIBUTION IS NOT OPTIONAL. A practical consequence of sharing the authority AND the ground with oth-regensburg: most of the LDBV tiles this AOI needs are ALREADY CACHED under data/dgm1/oth-regensburg and data/lod2/oth-regensburg. ⚠️ THE CACHE IS PER-AOI, THOUGH, so 'already downloaded' does NOT mean 'already here': the dgm1 step re-fetched all 9 tiles into data/dgm1/uni-regensburg rather than reusing the neighbouring copies. It took 3 seconds, so this is a note about disk rather than a problem, but it is the duplication $whySeparateAoiComment is paying for, stated in bytes."
+  },
+
+  "shellGeobasis": {
+    "authority": "ESA / DLR / Airbus Defence and Space: Copernicus DEM GLO-30",
+    "licence": "Copernicus DEM free licence (worldwide, free reuse with the prescribed notice)",
+    "licenceUrl": "https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM",
+    "attribution": "produced using Copernicus WorldDEM-30 © DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA; all rights reserved",
+    "$attributionComment": "The ADAPTED-DATA form of the notice, which is prescribed rather than stylistic: the pipeline resamples the tile onto a UTM grid and shifts it onto the core's vertical datum, so it is unambiguously modified.",
+    "cogUrlTemplate": "https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com/Copernicus_DSM_COG_10_{NS}{lat:02d}_00_{EW}{lon:03d}_00_DEM/Copernicus_DSM_COG_10_{NS}{lat:02d}_00_{EW}{lon:03d}_00_DEM.tif",
+    "tiles": [
+      "N48_E011",
+      "N48_E012",
+      "N49_E011",
+      "N49_E012"
+    ],
+    "$tilesComment": "FOUR tiles, not one, and identical to oth-regensburg's list because the shell box is identical: 48.93-49.10 N and 11.98-12.20 E crosses BOTH the 49 N parallel and the 12 E meridian. Garching needed a single tile and it would be easy to inherit that assumption, a missing N49 tile shows up as a flat shelf across the northern horizon, not as an error. ⚠️ THIS BLOCK WAS MISSING FROM THE FIRST DRAFT OF THIS FILE and the pipeline stopped at step 4 of 13 with `KeyError: 'shellGeobasis'`, which is the good failure: fetch_copdem.py reads the key directly instead of defaulting, so an AOI cannot silently acquire an unattributed shell."
+  }
+}

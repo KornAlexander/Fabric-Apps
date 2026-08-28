@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="de" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <!--
+      ⚠️ A SECOND ENTRY POINT, NOT A ROUTE INSIDE THE PLANNER APP.
+
+      The planner bundle loads `three` and a terrain pipeline's worth of static assets because it
+      renders a digital twin. A lecturer checking when they teach on Thursday should not download a
+      3D engine to find out, and a route inside the existing shell would still ship one: the import
+      graph is decided at build time, not at navigation time.
+
+      Registered in `vite.config.ts` under `build.rollupOptions.input`.
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Mein Stundenplan</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/consumer/main.tsx"></script>
+  </body>
+</html>

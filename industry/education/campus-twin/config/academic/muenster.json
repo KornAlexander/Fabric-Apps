@@ -1,0 +1,146 @@
+{
+  "$comment": "The INVENTED half of the Universität Münster dataset. Everything here is synthetic; the buildings it hangs off are not — they were fetched from OpenStreetMap on 2026-08-21 and every name a rule below matches was measured in config/buildings-muenster.json.",
+  "$provenance": "synthetic — see data/synthetic-muenster/provenance.json. Nothing here is a claim about Münster's real faculties, staff, curriculum or room allocation.",
+  "id": "muenster",
+
+  "blockScheme": {
+    "$comment": "SIX blocks at 90 minutes, cum tempore — the ordinary German university scheme. ⚠️ NOT MEASURED FOR THIS UNIVERSITY; it is a defensible default applied to a German Volluniversität, and it is a default.",
+    "days": ["Mo", "Di", "Mi", "Do", "Fr"],
+    "blocks": [
+      ["08:15", "09:45"],
+      ["10:15", "11:45"],
+      ["12:15", "13:45"],
+      ["14:15", "15:45"],
+      ["16:15", "17:45"],
+      ["18:15", "19:45"]
+    ],
+    "desirability": [0.55, 1.0, 0.9, 1.0, 0.8, 0.45]
+  },
+
+  "faculties": [
+    { "id": "CHE", "name": "Fachbereich Chemie und Pharmazie", "teachers": 44 },
+    { "id": "PHIL", "name": "Philosophische Fakultät", "teachers": 42 }
+  ],
+  "$facultiesComment": "TWO faculties, and the pair IS the geography here. Münster's split is the cleanest of the seven sites: the humanities sit around the Schloss in the Innenstadt and the sciences sit 1.49 km north-west at the Coesfelder Kreuz, which is the division every Münster student describes and the reason the university runs its own bus corridor along the Steinfurter Straße. CHE is entirely at Coesfelder Kreuz, PHIL entirely at the Schlossplatz, and the shared lecture theatres are split between the two — so a cohort's crossing is not incidental, it is built into where the halls are. ⚠️ Münster has FIFTEEN faculties. The other thirteen are real, they render, and they carry no teaching rooms.",
+
+  "programmes": {
+    "CHE": ["Chemie", "Pharmazie", "Biochemie", "Lebensmittelchemie", "Verfahrenstechnik"],
+    "PHIL": ["Germanistik", "Anglistik", "Geschichte", "Erziehungswissenschaft", "Ethnologie"]
+  },
+  "$programmesComment": "⚠️ 'Verfahrenstechnik' IS HERE BECAUSE 'Chemieingenieurwesen' COLLIDED, and the collision was invisible. A cohort id is built as `{faculty}-{programme[:4].upper()}-{semester}`, so 'Chemie' and 'Chemieingenieurwesen' both produce `CHE-CHEM-1`, `CHE-CHEM-3` and `CHE-CHEM-5` — two different cohorts sharing one identity, their sessions counted against each other's slots and their attendance against each other's rooms. The symptom was 20-145 hard conflicts that would not go away: every one of them was labelled `CHE-CHEM-*`, and four rounds of tuning went into teaching shares, campus rules and generator seeds because the numbers all looked like a room shortage. It was not a room shortage. `generate_timetable.py` now refuses to build on a duplicate cohort id rather than producing one, the same way it refuses to wrap the surname pool — both are the same failure: an identifier that silently names two things.",
+  "cohortSemesters": [1, 3, 5],
+  "$cohortComment": "2 faculties x 5 programmes x 3 semesters = 30 cohorts, the same shape as every other generated site.",
+
+  "subjects": {
+    "CHE": [
+      "Allgemeine Chemie", "Anorganische Chemie", "Organische Chemie", "Physikalische Chemie",
+      "Analytische Chemie", "Instrumentelle Analytik", "Biochemie", "Makromolekulare Chemie",
+      "Festkörperchemie", "Elektrochemie", "Pharmazeutische Technologie",
+      "Pharmazeutische Biologie", "Pharmakologie", "Arzneimittelanalytik",
+      "Lebensmittelchemie", "Toxikologie", "Reaktionstechnik", "Spektroskopie",
+      "Katalyse", "Chemisches Praktikum"
+    ],
+    "PHIL": [
+      "Einführung in die Sprachwissenschaft", "Neuere deutsche Literatur",
+      "Mediävistik", "Englische Sprachwissenschaft", "Englische Literaturwissenschaft",
+      "Alte Geschichte", "Mittelalterliche Geschichte", "Neuere und Neueste Geschichte",
+      "Historische Hilfswissenschaften", "Allgemeine Erziehungswissenschaft",
+      "Bildungstheorie", "Empirische Bildungsforschung", "Ethnologie Europas",
+      "Sozialanthropologie", "Qualitative Methoden", "Wissenschaftstheorie",
+      "Rhetorik und Argumentation", "Editionswissenschaft", "Kulturgeschichte",
+      "Fachdidaktik"
+    ]
+  },
+
+  "surnames": [
+    "Averbeck", "Bültmann", "Determann", "Elsinghorst", "Feldkamp", "Grothues", "Hesselmann",
+    "Isfort", "Jostmeier", "Kortenbusch", "Lammerding", "Mesenbrink", "Niehoff", "Ostendorf",
+    "Plaggenborg", "Quante", "Rottmann", "Schlattmann", "Terhorst", "Uhlenbrock", "Vennemann",
+    "Wietkamp", "Zurholt", "Ahlbrand", "Bickmann", "Dahlhoff", "Egbering", "Fischedick",
+    "Große-Kock", "Hörstmann", "Imkamp", "Jägering", "Kleinschnittger", "Lülf", "Middendorf",
+    "Nienhaus", "Oelgemöller", "Pöppelmann", "Rüschenschmidt", "Schulze-Hessing", "Tenhagen",
+    "Uphoff", "Voskuhl", "Wewer", "Zumbusch", "Aldenhoff", "Berghaus", "Dirkmann", "Everding",
+    "Fleddermann", "Gövert", "Hunkemöller", "Ihmels", "Jüttner", "Kolvenbach", "Lechtermann",
+    "Meiwes", "Nölke", "Osthues", "Pieper-Rickmann", "Rensing", "Schepers", "Tewes",
+    "Uedink", "Vogelpohl", "Weischer", "Zurwieden", "Angenendt", "Beckedahl", "Drees",
+    "Emsbach", "Frielinghaus", "Gerdemann", "Hilbring", "Ikemann", "Junkerkalefeld",
+    "Kalthoff", "Lohaus", "Möllenbeck", "Nettelbeck", "Overesch", "Pletziger", "Rothert",
+    "Sunderhaus", "Twenhöven", "Ueding", "Vahrenhorst", "Wilkinghoff", "Zurmühlen",
+    "Ansmann", "Brinkschulte", "Depenbrock", "Espelkamp", "Focking", "Gieseking", "Hüppmeier"
+  ],
+  "$surnamesComment": "96 names for 86 teaching posts, drawn from Münsterland and Westphalian naming — the -ing, -mann and -hoff endings that are recognisably of this region and of nowhere else in this repository. ⚠️ MUST BE AT LEAST AS LONG AS THE FACULTY TEACHER COUNTS AND DISJOINT FROM EVERY OTHER SITE'S POOL, which `src/config/__tests__/surnames.test.ts` asserts: LMU's pool once held 82 names for 102 posts, the generator wrapped, and `find_teacher` — which resolves a lecturer by SURNAME — reported one professor's workload under another's name with complete confidence. ⚠️ This dataset must never read as a roster of real Münster staff.",
+
+  "nonTeachingNameWords": [
+    "mensa", "parkhaus", "parkplatz", "bibliothek", "universitätsarchiv", "uni print",
+    "prüfungsamt", "personalrat", "gewächshaus", "sportgeräteausgabe", "europagästehaus",
+    "musikhochschule", "p+r", "hochschulsport", "geomuseum", "botanicum"
+  ],
+  "$nonTeachingComment": "Buildings the ownership test correctly accepts and no timetable ever books. ⚠️ `p+r` removes 3721 m² at the Coesfelder Kreuz that is a park-and-ride deck, which the footprint rule would otherwise have made one of the science campus's larger teaching buildings. `geomuseum` and `botanicum` are collections and a glasshouse: real university buildings, open to the public, and not seminar rooms — the same judgement the LMU profile records for the Paläontologisches Museum.",
+
+  "buildingOwnership": {
+    "$comment": "OWNERSHIP IS SYNTHETIC. Rules are evaluated IN ORDER and the first match wins — which is why the shared-hall rule is first: 'Hörsaalgebäude Chemie' would otherwise be claimed by the CHE keyword rule and stop being contested, and it is one of only two large halls on the science campus. ⚠️ EVERY NAME TESTED BELOW WAS MEASURED in config/buildings-muenster.json on 2026-08-21.",
+    "rules": [
+      {
+        "owner": "shared",
+        "nameContains": ["hörsaalgebäude", "seminarraumzentrum", "aula"],
+        "$comment": "⚠️ AND THIS IS WHERE MÜNSTER'S CROSS-CAMPUS STORY ACTUALLY COMES FROM. The measured shared halls are 'Hörsaalgebäude Schlossplatz' (1599 m²) in the Innenstadt and 'Hörsaalgebäude Chemie' (2674 m²) and 'Hörsaalgebäude Physik' (2526 m²) at the Coesfelder Kreuz, plus the 'Seminarraumzentrum'. So two thirds of the shared lecture capacity is on the science campus and one of the two faculties is not — a humanities cohort with a large lecture has to travel 1.5 km for it, and the solver has to decide which cohort pays."
+      },
+      {
+        "owner": "shared",
+        "nameContains": ["fürstbischöfliches schloss"],
+        "$comment": "The Schloss (2550 m², way/13742054, operator='Universität Münster') is the Rektorat and holds the Aula. Shared because it is the one room the whole university uses."
+      },
+      {
+        "owner": "CHE",
+        "nameContains": [
+          "chemie", "chemisches", "pharmaz", "biochemie", "ocbc", "electrochemical",
+          "lebensmittelchemie"
+        ],
+        "$comment": "MEASURED: 'Pharmazeutische Institute' (4651 m²), 'OCBC I - Institut für Organische Chemie und Institut für Biochemie (Neubau 1)', 'Organisch Chemisches Institut (Altbau)', 'Anorganische und Analytische Chemie/ Physikalische Chemie II (IAAC / IPC ll)', 'Institut für Biochemie', 'Münster Electrochemical Energy Technology', 'Institut für Lebensmittelchemie'. ⚠️ 'chemisches' is listed SEPARATELY from 'chemie' because 'Organisch Chemisches Institut' contains neither the word Chemie nor the stem chemi- followed by an e — German adjectival endings are exactly where a keyword rule quietly misses the building it was written for."
+      },
+      {
+        "owner": "PHIL",
+        "nameContains": [
+          "fürstenberghaus", "vom-stein-haus", "englisches seminar", "rosenhof",
+          "erziehungswissenschaft", "baltische studien", "ethnologie", "germanistisch",
+          "philologie", "kunstgeschichte"
+        ],
+        "$comment": "MEASURED: 'Fürstenberghaus' (3187 m²), 'Vom-Stein-Haus' (3217 m²), 'Englisches Seminar', 'Rosenhof', 'Institut für Erziehungswissenschaft', 'Institut für Interdisziplinäre baltische Studien', 'Institut für Ethnologie', 'Germanistisches Institut', 'Fachbereich Philologie'. Named buildings only — deliberately NOT a campus-and-footprint rule, because the Schlossplatz box also holds the Juridicum (7009 m², the largest building there) and the theological faculties, and none of those belongs to the Philosophische Fakultät. They fall to `other`, which is what they are."
+      },
+      {
+        "owner": "CHE",
+        "campusId": "coesfelder-kreuz",
+        "minFootprintM2": 900,
+        "$comment": "⚠️ THE SCIENCE CAMPUS, NOT SEVEN NAMED INSTITUTES. With only the keyword rule above, CHE owned seven buildings while its curriculum needed Vorlesungen, Seminare, Übungen, Praktika and Rechnerübungen for fifteen cohorts. Coesfelder Kreuz holds 31 measured university buildings over 900 m² — a third of them unnamed in OSM — and every one of them is a science building, because that is all that is out there. Below 900 m² they fall through deliberately: a small unnamed structure on a science campus is a gas store or a substation more often than a seminar room. Same rule and same threshold as the LMU profile's Klinikum rule."
+      },
+      {
+        "owner": "PHIL",
+        "campusId": "schlossplatz",
+        "minFootprintM2": 900,
+        "$comment": "⚠️ AN INVENTION, AND THE ONE THAT MADE THIS DATASET PLACEABLE — read the measurement before removing it. An earlier version of this profile gave PHIL only the nine buildings it can be identified by name, and argued the case in writing: the Schlossplatz box also holds the Juridicum (7009 m², the largest building there) and the theological faculties, none of which belongs to the Philosophische Fakultät, so they should fall to `other`. The argument is sound about ownership and was catastrophic about capacity. MEASURED at that point: PHIL had 39 teaching rooms for 532 sessions a week, including TWO lecture halls for 64 hall sessions — a 107% load, i.e. arithmetically impossible before the solver started. CHE, meanwhile, had 223 rooms running at 2-11%. The conflicts the validator reported were all labelled CHE, which is why three rounds of tuning went into the wrong faculty: the placer was pushing CHE out of the shared rooms that PHIL could not do without. ⚠️ THE LESSON IS THE DIAGNOSTIC, NOT THE NUMBER. A conflict names the session that could not be placed, not the faculty that took the room. Count rooms per faculty per TYPE against demand per faculty per type before touching a share."
+      }
+    ],
+    "fallback": "other",
+    "$fallbackComment": "⚠️ SCOPE, not just ownership. Münster has fifteen faculties and this dataset models two, so most of the 207 buildings the twin renders — the Juridicum, the medical institutes, the theological faculties, the geosciences, Wirtschaftsinformatik — come back as `other`: REAL, rendered, and excluded from the teaching stock entirely."
+  },
+
+  "teachingShare": {
+    "$comment": "Fraction of a building's USABLE floor that becomes schedulable teaching space. ⚠️ THE TWO FACULTIES GET DIFFERENT TREATMENT ON PURPOSE, via the two keyword bands: a Philologie institute is offices and seminar rooms, and a chemistry institute of the same footprint is mostly bench space with a fume-hood extract stack through the middle of it. Giving them the same share would have made Chemie the larger teaching stock purely because its buildings are bigger.",
+    "byNameWords": [
+      { "share": 0.5, "words": ["hörsaalgebäude", "seminarraumzentrum"] },
+      { "share": 0.2, "words": ["fürstenberghaus", "vom-stein-haus", "englisches seminar", "germanistisch", "philologie", "erziehungswissenschaft"] },
+      { "share": 0.08, "words": ["chemie", "chemisches", "pharmaz", "biochemie", "ocbc"] }
+    ],
+    "default": 0.1,
+    "$shareCorrection": "⚠️ THE CHEMISTRY BAND WENT 0.12 → 0.22 → 0.24 → 0.30 AND THEN BACK DOWN TO 0.09, and the round trip is the finding. Every other site here had its shares CUT, because a generous share invents room stock, drops utilisation and produces a university with no room problem. Münster looked like the opposite case — hard conflicts rather than a flattering picture — and raising the chemistry share three times only moved them from 145 to 20 without ever clearing them, because the diagnosis was wrong. MEASURED room mix: CHE had 223 teaching rooms running at 2-11% load while PHIL had 39 for more sessions, with a 107% load on its two lecture halls. The starved faculty was the one the conflicts did NOT name. Once PHIL got the Innenstadt campus rule, chemistry could go back to a share that is actually defensible for a building full of fume hoods."
+  },
+  "lectureHalls": {
+    "$comment": "⚠️ LECTURE HALLS ARE DELIBERATELY SCARCE. The threshold is this site's: Münster's teaching buildings run 1000-3200 m², between Aachen's and Köln's, so neither of those numbers transfers. 1900 m² was the first try and produced 18 halls for 132 hall sessions — 24% occupancy, which the validator refused: with that much slack the two faculties would never have to want the same room.",
+    "nameWords": ["hörsaalgebäude", "aula"],
+    "minFootprintM2": 2700,
+    "secondHallMinFootprintM2": 6500
+  },
+
+  "cipPoolFaculties": ["CHE", "PHIL", "shared"],
+  "$cipPoolComment": "Which owners' buildings get computer rooms in the mix. ⚠️ BOTH FACULTIES, AND THE FIRST VERSION LISTED ONLY PHIL. The argument for that was tidy — a chemistry institute's practical rooms are wet labs, not computer rooms — and it produced 94 hard conflicts, because the curriculum still contains courses that REQUIRE a CIP-Pool and the only ones on the site were in the humanities buildings 1.5 km away at the Schlossplatz. The placer duly put chemistry cohorts into Seminarräume and the validator caught every one. The lesson is the same one `buildingOwnership` keeps teaching: a rule about which buildings contain what has to agree with the curriculum that books them, and the two are written in different halves of this file."
+}

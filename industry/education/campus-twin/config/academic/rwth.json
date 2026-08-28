@@ -1,0 +1,134 @@
+{
+  "$comment": "The INVENTED half of the RWTH Aachen dataset. Same structure as config/academic/oth.json and config/academic/lmu.json, and deliberately not the same content: a third university that differed only in coordinates would prove nothing about whether the app is configurable. Everything here is synthetic; the buildings it hangs off are not — they were fetched from OpenStreetMap on 2026-08-21 and every name a rule below matches was measured, not imagined.",
+  "$provenance": "synthetic — see data/synthetic-rwth/provenance.json. Nothing here is a claim about RWTH's real faculties, staff, curriculum or room allocation.",
+  "id": "rwth",
+
+  "blockScheme": {
+    "$comment": "SIX blocks at 90 minutes, cum tempore. RWTH is a Technische Hochschule and teaches on the akademisches Viertel like most German universities, so a lecture announced for 8 Uhr starts at 08:15 — the same shape as LMU and as OTH's real scheme, and NOT the seven-block 08:00 s.t. pattern this project once assumed was universal. ⚠️ This is the weakest measurement in the file: unlike OTH, where an availability form and a timetabling week view state the times, nothing RWTH publishes has been read here. It is the ordinary German university scheme applied to a German university, which is a defensible default and still a default.",
+    "days": ["Mo", "Di", "Mi", "Do", "Fr"],
+    "blocks": [
+      ["08:15", "09:45"],
+      ["10:15", "11:45"],
+      ["12:15", "13:45"],
+      ["14:15", "15:45"],
+      ["16:15", "17:45"],
+      ["18:15", "19:45"]
+    ],
+    "desirability": [0.6, 1.0, 0.85, 1.0, 0.8, 0.4],
+    "$desirabilityComment": "OURS, and an assumption. Early and late blocks are the ones everybody avoids and the solver's soft objective needs something to prefer against. The 12:15 dip is the lunch block. The 18:15 weight is lower than LMU's 0.45 because this site's two faculties are both laboratory-heavy: an evening slot competes with practicals that cannot start at six."
+  },
+
+  "faculties": [
+    { "id": "MB", "name": "Fakultät für Maschinenwesen", "teachers": 46 },
+    { "id": "MI", "name": "Fakultät für Mathematik, Informatik und Naturwissenschaften", "teachers": 42 }
+  ],
+  "$facultiesComment": "TWO faculties, for the reason the OTH profile locks down: with one, room pressure is an internal matter and the interesting conflict — two faculties wanting the same large hall in the same slot — cannot occur. The PAIR was chosen from this AOI's measured geography rather than copied. ⚠️ BOTH OF THEM STRADDLE BOTH CAMPUSES, which is what makes Aachen different from Regensburg and Munich: at OTH one faculty sits at Prüfening, at LMU one sits at the Klinikum, and in each case the crossing belongs to one cohort. Here Maschinenwesen owns the Sammelbau Maschinenwesen at Templergraben AND the Cluster Produktionstechnik at Melaten, while Mathematik/Informatik owns the Informatikzentrum at Templergraben AND the Physik, Chemie and Biologie Sammelbauten at Melaten. So the 1.72 km crossing is not one cohort's problem, it is everybody's, and the solver has to choose whose. ⚠️ RWTH has NINE faculties. The other seven are real, they render, and they carry no teaching rooms — see `buildingOwnership.fallback`.",
+
+  "programmes": {
+    "MB": ["Maschinenbau", "Fahrzeugtechnik", "Produktionstechnik", "Energietechnik", "Werkstofftechnik"],
+    "MI": ["Informatik", "Mathematik", "Physik", "Chemie", "Biologie"]
+  },
+  "cohortSemesters": [1, 3, 5],
+  "$cohortComment": "2 faculties x 5 programmes x 3 semesters = 30 cohorts, matching the OTH and LMU datasets' shape so the three are comparable. Cohort SIZES are not matched: RWTH's ~45 000 students against OTH's ~11 000 is what makes the shared halls scarce here.",
+
+  "subjects": {
+    "MB": [
+      "Technische Mechanik", "Thermodynamik", "Strömungsmechanik", "Werkstoffkunde",
+      "Maschinengestaltung", "Fertigungstechnik", "Maschinenelemente", "Regelungstechnik",
+      "Antriebstechnik", "Kraftfahrzeugtechnik", "Produktionssystematik", "Messtechnik",
+      "Finite-Elemente-Methode", "Kunststofftechnik", "Kraftwerkstechnik", "Mechatronik",
+      "Robotik und Automatisierung", "Qualitätsmanagement", "Additive Fertigung", "Leichtbau"
+    ],
+    "MI": [
+      "Analysis", "Lineare Algebra", "Numerische Mathematik", "Stochastik",
+      "Diskrete Strukturen", "Datenstrukturen und Algorithmen", "Datenbanken",
+      "Betriebssysteme", "Rechnerarchitektur", "Softwaretechnik", "Programmierung",
+      "Theoretische Informatik", "Maschinelles Lernen", "Computergrafik",
+      "Experimentalphysik", "Theoretische Physik", "Anorganische Chemie",
+      "Organische Chemie", "Physikalische Chemie", "Zellbiologie"
+    ]
+  },
+
+  "surnames": [
+    "Lennartz", "Brammertz", "Cremer", "Dahmen", "Erkens", "Frenken", "Gierlichs", "Havenith",
+    "Hilgers", "Jussen", "Kaulen", "Kliebisch", "Lousberg", "Mertens", "Nacken", "Offermanns",
+    "Palmen", "Quadflieg", "Radermacher", "Reuland", "Schleicher", "Schoenmakers", "Sistig",
+    "Thelen", "Uedelhoven", "Vaassen", "Wenzelburger", "Wynands", "Xhonneux", "Zilkens",
+    "Amelunxen", "Berretz", "Cadenbach", "Deckers", "Emonts", "Fastenrath", "Gilessen", "Heusch",
+    "Ingenbleek", "Jacoby", "Küpper", "Lövenich", "Mohren", "Nellessen", "Ortmanns", "Pesch",
+    "Quix", "Rombach", "Savelsberg", "Schunck", "Terhaag", "Uerlings", "Vossen", "Wiertz",
+    "Zanders", "Aretz", "Bardenheuer", "Contzen", "Drimborn", "Esser", "Falter", "Görtz",
+    "Hanff", "Ibach", "Jodocy", "Kockelkoren", "Lambertz", "Mostert", "Nierstenhöfer",
+    "Odenthal", "Pauels", "Reipen", "Schmetz", "Sürth", "Thönnissen", "Uphues", "Verheyen",
+    "Welter", "Zilligen", "Alsdorf", "Breuer", "Cörvers", "Dohmen", "Eichhorst", "Fußbroich",
+    "Grüttemeier", "Heinrichs", "Imgrund", "Jungbluth", "Kohnen", "Leufgens", "Möcker",
+    "Nettesheim", "Ophey", "Pelzer", "Rothkranz"
+  ],
+  "$surnamesComment": "96 names for 88 teaching posts. A DIFFERENT pool from OTH's Oberpfalz list and LMU's Munich one, drawn from Aachen, Eifel and Niederrhein naming — several are recognisably Öcher (Quadflieg, Xhonneux, Lousberg, Fußbroich) and reflect the Dutch and Walloon border the city sits on. ⚠️ MUST BE AT LEAST AS LONG AS THE FACULTY TEACHER COUNTS AND DISJOINT FROM EVERY OTHER SITE'S: `src/config/__tests__/surnames.test.ts` asserts both, and it exists because LMU's pool once held 82 names for 102 posts, the generator wrapped, and twenty professors shared a name with a colleague in another faculty — while `find_teacher` resolves by surname and reported the wrong workload with complete confidence. ⚠️ This dataset must never read as a roster of real RWTH staff; provenance.json says so and the UI badges it.",
+
+  "nonTeachingNameWords": [
+    "mensa", "parkhaus", "bibliothek", "heizkraftwerk", "kindertagesstätte", "schneebergkids",
+    "fraunhofer", "leibniz-institut", "uniklinik", "liegenschaftsbetrieb", "carpus",
+    "sporthalle", "aixtron", "rettende hand", "dezernate", "gleichstellungsbüro", "gästehaus",
+    "gästehäuser", "wirtschaftshof"
+  ],
+  "$nonTeachingComment": "Buildings the ownership test correctly accepts and no timetable ever books. A JUDGEMENT, written down rather than applied silently. Three entries here matter more than the rest:\n\n⚠️ `fraunhofer` and `leibniz-institut` remove FOUR buildings totalling 20 668 m² — the Fraunhofer ILT, the Fraunhofer IPT, the Fraunhofer IME and the DWI. They stand on RWTH's Melaten campus, they are inside the university's own OSM outline, and they are correctly attributed as being on RWTH land — but they are not RWTH's, nobody's Bachelor timetable is booked into them, and giving Maschinenwesen 20 000 m² of somebody else's research floor is the TechBase error from the OTH profile at five times the scale.\n\n⚠️ `uniklinik` removes the largest building on the site by a factor of three (33 205 m², twelve storeys). The Uniklinik is real, it renders, and the Medizinische Fakultät genuinely teaches there — but this dataset models Maschinenwesen and Mathematik/Informatik, so counting a university hospital as free capacity for a Thermodynamik lecture would be exactly the mistake `fallback: other` exists to prevent. Compare LMU, where `klinik` is deliberately NOT excluded, because there MED is one of the two modelled faculties.\n\n`gästehaus`/`gästehäuser` catch the Europagästehaus and the RWTH Gästehäuser, which are accommodation.",
+
+  "buildingOwnership": {
+    "$comment": "OWNERSHIP IS SYNTHETIC, and it is the single most load-bearing invention in the dataset. Rules are evaluated IN ORDER and the first match wins; the order encodes precedence, so a shared lecture hall beats a faculty keyword and a faculty keyword beats a campus default. ⚠️ EVERY NAME TESTED BELOW WAS MEASURED in config/buildings-rwth.json on 2026-08-21. The LMU config records what happens otherwise: a first version of its shared-building rule looked for sensible words that appear nowhere in the data, found nothing, and the generator reported success while putting all 797 sessions on one campus.",
+    "rules": [
+      {
+        "owner": "shared",
+        "nameContains": ["audimax", "auditorium", "hörsaalzentrum", "seminargebäude", "superc"],
+        "$comment": "The central teaching stock, and the reason two faculties can want the same room. MEASURED names: 'Audimax' (2461 m², five storeys), 'Kármán-Auditorium' (4526 m²), 'C.A.R.L. - Central Auditorium for Research and Learning' (4246 m²), 'Hörsaalzentrum PPS', 'Seminargebäude', 'Seminargebäude | SemiTemp', 'SuperC'. ⚠️ `auditorium` rather than the German word is not a stylistic choice: RWTH's two biggest lecture buildings are both named in English or after a person, and a rule testing 'hörsaal' alone would have found the Hörsaalzentrum and missed 8 772 m² of the largest halls on the campus."
+      },
+      {
+        "owner": "shared",
+        "nameIs": ["Hauptgebäude"],
+        "$comment": "EXACT, not a substring. relation/90586 is named literally 'Hauptgebäude' (4820 m², three storeys) — the 1870 building on Templergraben. An exact test because a substring 'hauptgebäude' also matches 'Fliednerstraße Hauptgebäude' and 'Angewandte Physik Hauptgebäude' at other sites, and the same rule text is copied between profiles more often than it is re-read."
+      },
+      {
+        "owner": "MI",
+        "nameContains": [
+          "informatik", "mathematik", "physik", "chemie", "biologie", "it center",
+          "zentralbibliothek"
+        ],
+        "$comment": "⚠️ THIS RULE MUST COME BEFORE THE MASCHINENWESEN ONE, because German compounds overlap. 'Institut für Physikalische Chemie' is Chemistry and contains neither. MEASURED buildings it picks up: Informatikzentrum (7930 m², the largest teaching building on the site), RWTH - Fachgruppe Mathematik, Physikzentrum, Halle Physik, Sammelbau Chemie, Sammelbau Biologie, 2. Sammelbau Biologie, Institut für Physikalische Chemie, the two IT Center buildings. That is 4 of MI's buildings at Templergraben and 6 at Melaten — the split that makes this faculty's cohorts cross the city."
+      },
+      {
+        "owner": "MB",
+        "nameContains": [
+          "maschinenwesen", "produktionstechnik", "wzl", "textiltechnik",
+          "kunststoffverarbeitung", "aerodynamik", "strahlantriebe", "schienenfahrzeuge",
+          "gießerei", "metallkunde", "eisenhütten", "gesteinshütten", "bergbau", "stahlbau",
+          "kraftfahrzeuge", "mobile propulsion", "manfred-weck", "walter-schottky",
+          "werkstoffanwendungen", "maschinenelemente", "regelungstechnik", "bildsame formgebung",
+          "stoßwellenlabor", "industrieofenbau"
+        ],
+        "$comment": "⚠️ STEMS AND FULL NAMES, NEVER THREE-LETTER FRAGMENTS. An earlier draft of this rule listed 'ika' for the Institut für Kraftfahrzeuge, whose buildings really are named 'Werkstattgebäude IKA' and 'Simulatorgebäude IKA' — and 'ika' is a substring of 'physIKAlische', so the acronym would have quietly claimed Physical Chemistry for Mechanical Engineering. The same trap as the LMU AOI's 'HeLMUt-Schmidt-Allee'. Spelled out, the rule is safe. MEASURED: Sammelbau Maschinenwesen (ten storeys), Cluster Produktionstechnik (10 424 m², the biggest thing MB owns), Versuchshalle WZL, Institut für Textiltechnik, Institut für Kunststoffverarbeitung, Institut für Aerodynamik, Institut für Strahlantriebe und Turbomaschinen, Lehrstuhl und Institut für Schienenfahrzeuge, Gießerei-Institut, Institut für Metallkunde und Materialphysik, Bergbaugebäude, Center for Mobile Propulsion, Manfred-Weck-Haus, Walter-Schottky-Haus."
+      }
+    ],
+    "fallback": "other",
+    "$fallbackComment": "⚠️ SCOPE, not just ownership. RWTH has nine faculties and this dataset models two, so the majority of the 423 buildings the twin renders — Bauingenieurwesen, Architektur, Elektrotechnik, Georessourcen, Medizin, Wirtschaftswissenschaften, Philosophie — come back as `other`: REAL, rendered, and excluded from the teaching stock entirely. We cannot schedule their rooms and we cannot observe them, so counting them as free capacity would be the same error as painting a room with no calendar 0% instead of grey."
+  },
+
+  "teachingShare": {
+    "$comment": "Fraction of a building's USABLE floor that becomes schedulable teaching space. Bands are tested in order against the building name, first match wins; a building owned by an unmodelled faculty gets 0 regardless. ⚠️ THESE WERE CUT after the first generated run, exactly as OTH's and LMU's were, and the first draft (0.55/0.20/0.09) is recorded here because the failure is instructive rather than embarrassing: it produced 411 teaching rooms for 987 sessions and an 8% utilisation, which the validator refused. Eight per cent is arithmetically correct and is a picture of a university with no room problem at all — which is not a university anyone needs a scheduler for. The error was not the utilisation; it was believing that a fifth of a Sammelbau is bookable teaching space.",
+    "byNameWords": [
+      { "share": 0.4, "words": ["audimax", "auditorium", "hörsaalzentrum", "seminargebäude"] },
+      { "share": 0.08, "words": ["informatik", "mathematik", "physik", "chemie", "biologie", "sammelbau"] }
+    ],
+    "default": 0.035,
+    "$defaultComment": "⚠️ THE LOWEST DEFAULT OF ANY SITE HERE — below LMU's 0.05 and a quarter of OTH's 0.18 — because of what it applies to. At OTH the default catches faculty buildings with some seminar rooms in them. At Melaten it catches research halls: the Versuchshalle WZL, the Stoßwellenlabor, the Technikum ITMC, the Center for Mobile Propulsion. The honest teaching fraction of a building built around a machine floor is a briefing room beside it."
+  },
+
+  "lectureHalls": {
+    "$comment": "⚠️ LECTURE HALLS ARE DELIBERATELY SCARCE, and the thresholds are this site's rather than inherited. Copying LMU's 4500/7000 m² would have found ONE hall on the whole estate, because Aachen's teaching buildings are smaller than Maxvorstadt city blocks; copying OTH's ['hörsaal'] name list would have found the Hörsaalzentrum and missed the Audimax, the Kármán-Auditorium and C.A.R.L. ⚠️ AND THE FIRST NUMBERS HERE WERE 1300/3000, WHICH PRODUCED 44 HALLS FOR 176 HALL SESSIONS — 13% occupancy even if perfectly packed, i.e. two faculties would never want the same hall and the central conflict of the product could not occur in its own demo data. The validator's 35% gate caught it. 3300 m² is roughly 'a building the size of the Kármán-Auditorium or larger', which is what a lecture-hall building in Aachen actually is.",
+    "nameWords": ["audimax", "auditorium", "hörsaalzentrum"],
+    "minFootprintM2": 4100,
+    "secondHallMinFootprintM2": 8000
+  },
+
+  "cipPoolFaculties": ["MI", "shared"],
+  "$cipPoolComment": "Which owners' buildings get computer rooms in the mix. Mathematik/Informatik and the shared halls; a Maschinenwesen workshop building does not need a CIP-Pool."
+}

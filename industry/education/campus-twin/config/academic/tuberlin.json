@@ -1,0 +1,185 @@
+{
+  "$comment": "TU Berlin academic profile — the INVENTED half of the dataset. The buildings, their outlines, footprints, storey counts and published codes are all measured (config/buildings-tuberlin.json, config/tuberlin-building-letters.json). Everything in this file — which faculties are modelled, who owns which building, what is taught and by how many people — is constructed so that the scheduling problem is a real one. It is not a claim about TU Berlin's organisation.",
+  "$provenance": "Faculty names and numbering are real (TU Berlin has seven faculties, I to VII). Teacher counts, programme lists, subject lists and all building ownership are ours.",
+  "id": "tuberlin",
+  "blockScheme": {
+    "$comment": "SIX blocks at 90 minutes, cum tempore — a lecture announced for 8 Uhr starts at 08:15. ⚠️ THIS IS THE WEAKEST MEASUREMENT IN THE FILE, exactly as it is in the RWTH profile: nothing TU Berlin publishes has been read here. It is the ordinary German university scheme applied to a German university, which is a defensible default and still a default. OTH is the only site in this repository whose block scheme comes from the university's own documents.",
+    "days": ["Mo", "Di", "Mi", "Do", "Fr"],
+    "blocks": [
+      ["08:15", "09:45"],
+      ["10:15", "11:45"],
+      ["12:15", "13:45"],
+      ["14:15", "15:45"],
+      ["16:15", "17:45"],
+      ["18:15", "19:45"]
+    ],
+    "desirability": [0.6, 1.0, 0.85, 1.0, 0.8, 0.4],
+    "$desirabilityComment": "OURS, and an assumption. Early and late blocks are the ones everybody avoids and the solver's soft objective leans on that; the shape matches the other generated sites so the quality lens is comparable across the portfolio."
+  },
+  "faculties": [
+    { "id": "EI", "name": "Fakultät IV — Elektrotechnik und Informatik", "teachers": 48 },
+    { "id": "VM", "name": "Fakultät V — Verkehrs- und Maschinensysteme", "teachers": 40 }
+  ],
+  "$facultiesComment": "TWO of seven, as at RWTH and LMU, and these two were not chosen at random. ⚠️ THE CHOICE IS WHAT MAKES THE 5 km CORRIDOR REAL. OSM records Fachgebiet Kraftfahrzeuge (node/4007032901), Forschungszentrum Strangpressen (node/13928987501) and the Institut für Bauingenieurwesen (node/4007032904) at the TIB on Gustav-Meyer-Allee — engineering institutes, 5 km from the Hauptgebäude. Modelling Verkehrs- und Maschinensysteme therefore puts a modelled faculty on BOTH sites, which is what turns the corridor from scenery into a constraint. Two faculties whose buildings all stood in Charlottenburg would have produced a twin with a second campus nobody ever needs to travel to. Teacher counts are ours.",
+  "programmes": {
+    "EI": [
+      "Informatik",
+      "Technische Informatik",
+      "Elektrotechnik",
+      "Computer Engineering",
+      "Medieninformatik",
+      "Automotive Systems",
+      "Kommunikationstechnik"
+    ],
+    "VM": [
+      "Maschinenbau",
+      "Verkehrswesen",
+      "Fahrzeugtechnik",
+      "Luft- und Raumfahrttechnik",
+      "Produktionstechnik",
+      "Physikalische Ingenieurwissenschaft",
+      "Naval Architecture and Ocean Engineering"
+    ]
+  },
+  "$programmesComment": "Seven per faculty rather than five, and the reason is scale rather than variety. TU Berlin has roughly 34 000 students across seven faculties; two faculties modelled at five programmes each produced 30 cohorts and 3 433 students, which is about a third of what these two faculties really carry. Under-modelling the demand is not the neutral choice it looks like — it is half of why the first generated run showed a teaching-room utilisation of 9%.",
+  "cohortSemesters": [1, 3, 5],
+  "$cohortComment": "Three cohorts per programme, the same shape as the other generated sites. Odd semesters only, because the reference semester is a Wintersemester.",
+  "subjects": {
+    "EI": [
+      "Analysis für Ingenieure",
+      "Lineare Algebra für Ingenieure",
+      "Algorithmen und Datenstrukturen",
+      "Rechnerorganisation",
+      "Softwaretechnik",
+      "Betriebssysteme",
+      "Datenbanksysteme",
+      "Rechnernetze",
+      "Theoretische Informatik",
+      "Signale und Systeme",
+      "Elektrische Netzwerke",
+      "Halbleiterbauelemente",
+      "Regelungstechnik",
+      "Hochfrequenztechnik",
+      "Nachrichtenübertragung",
+      "Maschinelles Lernen",
+      "Computergrafik",
+      "Digitale Signalverarbeitung",
+      "Energieversorgungsnetze",
+      "Eingebettete Systeme"
+    ],
+    "VM": [
+      "Technische Mechanik",
+      "Thermodynamik",
+      "Strömungsmechanik",
+      "Werkstoffkunde",
+      "Maschinenelemente",
+      "Konstruktionslehre",
+      "Fertigungstechnik",
+      "Fahrzeugantriebe",
+      "Kraftfahrzeugtechnik",
+      "Schienenfahrzeugtechnik",
+      "Luftfahrtantriebe",
+      "Flugmechanik",
+      "Verkehrsplanung",
+      "Verkehrssystemtechnik",
+      "Umformtechnik",
+      "Mechatronik",
+      "Messtechnik",
+      "Qualitätssicherung",
+      "Leichtbau",
+      "Logistik und Materialfluss"
+    ]
+  },
+  "surnames": [
+    "Abel", "Ackermann", "Albrecht", "Arndt", "Bachmann", "Bader", "Barth", "Bauer",
+    "Baumann", "Becker", "Behrens", "Benda", "Bergmann", "Beyer", "Bittner", "Blum",
+    "Bock", "Böhm", "Brandt", "Braun", "Breuer", "Brinkmann", "Bruns", "Buchholz",
+    "Busch", "Claussen", "Conrad", "Cramer", "Dahlke", "Decker", "Dietrich", "Dorn",
+    "Drews", "Eberhardt", "Eckert", "Ehlers", "Engel", "Ernst", "Fabian", "Fiedler",
+    "Fischer", "Frank", "Franke", "Freitag", "Friedrich", "Fritsch", "Fuchs", "Gebhardt",
+    "Geiger", "Gerlach", "Giese", "Görlitz", "Graf", "Grimm", "Gross", "Günther",
+    "Haase", "Hahn", "Hamann", "Hartmann", "Heinrich", "Hellwig", "Henkel", "Herold",
+    "Hertz", "Hesse", "Hildebrandt", "Hoffmann", "Hofmann", "Holz", "Horn", "Huber",
+    "Jahn", "Jansen", "Jung", "Kaiser", "Kallweit", "Kaufmann", "Keller", "Kern",
+    "Kilian", "Klein", "Kluge", "Knapp", "Koch", "Köhler", "König", "Krause",
+    "Krebs", "Kröger", "Kruse", "Kühn", "Lang", "Lehmann", "Lentz", "Lindner",
+    "Löffler", "Ludwig", "Mahler", "Maier", "Marquardt", "Mertens", "Meyer", "Möller"
+  ],
+  "$surnamesComment": "A pool of ordinary German surnames for the generated instructors. No real person is named here, and the generator draws from this list rather than from anything scraped.",
+  "nonTeachingNameWords": [
+    "mensa",
+    "bibliothek",
+    "universitätsbibliothek",
+    "parkhaus",
+    "kindertagesstätte",
+    "kita",
+    "sportzentrum",
+    "sporthalle",
+    "heizkraftwerk",
+    "umspannwerk",
+    "wirtschaftshof",
+    "abfallplatz",
+    "gästehaus",
+    "versuchsanstalt",
+    "fraunhofer",
+    "hertie",
+    "telekom",
+    "innovation laboratories",
+    "kirche",
+    "kantine"
+  ],
+  "$nonTeachingComment": "⚠️ EVERY WORD HERE WAS CHECKED AGAINST config/buildings-tuberlin.json. 'umspannwerk' catches Umspannwerk TU Nord and TU Süd, 'abfallplatz' the Zentraler Abfallplatz, 'versuchsanstalt' the Versuchsanstalt für Wasser- und Schiffbau (8 632 m², the second largest building on the estate and a laboratory, not a teaching block), 'sportzentrum' the TU-Sportzentrum Dovestraße. Leaving the Versuchsanstalt in would have added an eighth of the modelled teaching stock as rooms nobody teaches in.",
+  "buildingOwnership": {
+    "$comment": "OWNERSHIP IS SYNTHETIC, and it is the single most load-bearing invention in the dataset: the shared lecture halls are what make two faculties compete for the same room, and the faculty with buildings at the far campus is what makes a cohort cross the city between blocks. ⚠️ EVERY NAME TESTED BELOW EXISTS IN config/buildings-tuberlin.json, checked 2026-08-26. The LMU config records what happens otherwise: a first version of its shared-building rule looked for sensible words that appear nowhere in the data, matched nothing, and the generator reported success while putting every session on one campus. ⚠️ AND THE LETTER CODES USE `nameIs`, NOT `nameContains`, WHICH IS NOT A STYLE CHOICE. TU Berlin names buildings 'E', 'F', 'W', 'A' — a substring rule for 'e' matches almost every building on the estate.",
+    "rules": [
+      {
+        "owner": "shared",
+        "nameContains": ["hauptgebäude", "erweiterungsbau"],
+        "$comment": "H (14 958 m², the largest building on the estate) and EB (4 495 m²) are TU Berlin's central teaching buildings and really do hold the big halls, including the Audimax. Shared, so both modelled faculties compete for them — which is the conflict the product exists to resolve."
+      },
+      {
+        "owner": "shared",
+        "nameContains": ["mathematikgebäude"],
+        "$comment": "MA, 6 732 m² over eight storeys. Mathematics is a service subject taught to both engineering faculties, so its halls are contested rather than owned."
+      },
+      {
+        "owner": "VM",
+        "campusId": "wedding-tib",
+        "$comment": "⚠️ THE RULE THAT MAKES THE CORRIDOR MATTER, and the one piece of ownership here with outside evidence. OSM puts Fachgebiet Kraftfahrzeuge, Forschungszentrum Strangpressen and the Institut für Bauingenieurwesen at the TIB — engineering, 5.00 km from the Hauptgebäude. Giving the whole Wedding site to Verkehrs- und Maschinensysteme means that faculty's practicals sit across the city from its lectures, so a cohort's day can be made impossible by a room move. Seven buildings."
+      },
+      {
+        "owner": "EI",
+        "nameIs": ["EW", "MAR", "E", "E-N", "EMH", "HFT-FT", "HFT-TA", "TEL", "HF"],
+        "$comment": "The electrical-engineering and informatics cluster along Einsteinufer and Marchstraße. EW is 7 447 m² over eight storeys, MAR 2 844 m² over seven."
+      },
+      {
+        "owner": "VM",
+        "nameIs": ["W", "TK", "HL", "F", "TC", "B", "BA", "A", "A-F"],
+        "$comment": "The mechanical-engineering cluster in Charlottenburg, so that Verkehrs- und Maschinensysteme has lecture-side buildings on the main campus as well as its practicals at the TIB. Without these its cohorts would never have a reason to be in Charlottenburg at all and the 5 km transfer would be a one-way trip."
+      },
+      {
+        "owner": "other",
+        "$comment": "⚠️ SCOPE, NOT DISMISSAL. Everything else belongs to the five faculties this dataset does not model. These buildings are REAL and they render in the twin; they are excluded from the teaching stock because we cannot schedule their rooms and cannot observe them. Counting them as free capacity would produce the arithmetically-correct-and-misleading utilisation figure the other profiles warn about."
+      }
+    ],
+    "fallback": "other"
+  },
+  "teachingShare": {
+    "$comment": "Fraction of a building's usable floor that becomes schedulable teaching space. Bands are tested in order against the building name, first match wins; a building owned by an unmodelled faculty gets 0 regardless. ⚠️ THESE WERE CUT AFTER THE FIRST GENERATED RUN, exactly as OTH's, LMU's and RWTH's were, and the first draft (0.34 / 0.20 / 0.07) is recorded here because the failure is instructive: it produced 350 teaching rooms for 950 sessions and a 9% utilisation, which `validate_dataset.py` refused with 'outside anything a Hochschule would recognise'. Nine per cent is arithmetically correct and is a picture of a university with no room problem at all — which is not a university anyone needs a scheduler for. The error was not the utilisation; it was believing that a third of the Hauptgebäude and a fourteenth of every laboratory block is bookable teaching space.",
+    "byNameWords": [
+      { "share": 0.11, "words": ["hauptgebäude", "erweiterungsbau"] },
+      { "share": 0.065, "words": ["mathematikgebäude", "chemiegebäude"] }
+    ],
+    "default": 0.022,
+    "$defaultComment": "Faculty buildings on a technical campus are overwhelmingly laboratories, workshops and offices. Two per cent of the usable floor as bookable teaching space is a deliberately severe reading of a building like EW or MAR, and it is the reading that makes the modelled stock match the modelled demand."
+  },
+  "lectureHalls": {
+    "$comment": "⚠️ LECTURE HALLS ARE DELIBERATELY SCARCE, and TU Berlin's are not where a name search would look. There is no building called 'Audimax' on this estate: TU Berlin's Audimax is a ROOM inside the Hauptgebäude (H 0105), and the other large halls are in H, MA and EB. So the rule names those three buildings rather than searching for hall words that do not appear. A copied RWTH rule looking for 'audimax' or 'auditorium' would have found nothing at all and left the site with no halls.",
+    "nameWords": ["hauptgebäude", "mathematikgebäude", "erweiterungsbau"],
+    "minFootprintM2": 4000,
+    "secondHallMinFootprintM2": 9000,
+    "$thresholdComment": "12 of the 128 university buildings are at or above 4 000 m² and only one (the Hauptgebäude, 14 958 m²) is above 9 000, so the second-hall threshold gives H two halls and MA and EB one each."
+  },
+  "cipPoolFaculties": ["EI", "shared"],
+  "$cipPoolComment": "Computer pools belong to Elektrotechnik und Informatik and to the shared stock. Verkehrs- und Maschinensysteme teaches its practicals in laboratories and workshops, which this dataset does not model as bookable pools."
+}

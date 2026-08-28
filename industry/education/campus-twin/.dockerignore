@@ -1,0 +1,59 @@
+# Allowlist, not a blocklist.
+#
+# The image needs exactly two things: the FastAPI/CP-SAT service and the generated dataset it
+# answers from. Everything else in this repo is frontend, geodata or tooling — `public/` alone
+# carries ~20 MB of terrain, orthophoto and LoD2 assets, and node_modules is tens of thousands
+# of files. Uploading those as build context made `az acr build` look hung for minutes before
+# the build even started.
+#
+# Excluding everything first means a new top-level folder is silently ignored rather than
+# silently shipped, which is the safer default for a container that talks to a model endpoint.
+*
+
+!server/
+!data/synthetic/
+# ⚠️ BOTH universities, because `SCHEDULER_SITE` picks the dataset AT RUN TIME from a path inside
+# the image (`schedule_store.py`). One image serves either; a container started with
+# `SCHEDULER_SITE=lmu` against an image built without this line fails at import with a missing
+# directory, which reads as a broken deployment rather than a missing file.
+!data/synthetic-lmu/
+# ⚠️ AND TUM, WHICH IS NOT SYNTHETIC AT ALL. `data/tum/` is the real TUMonline timetable reshaped
+# by `build_tum_dataset.py`, and it ships in the same image for the same reason: one image, three
+# universities, `SCHEDULER_SITE` chooses at run time. It is included BEFORE the TUM container app
+# exists, deliberately — the alternative is discovering the omission at the moment you first start
+# that container, which is exactly how the LMU line came to be written.
+!data/tum/
+# ⚠️ AND OTH'S REAL TIMETABLE. `data/oth-real/` is the university's own Untis export read by
+# `read_untis_gpu.py` (PLAN §25). It sits beside the generated `data/synthetic/` rather than
+# replacing it, so a container can serve either and the two can be compared side by side.
+!data/oth-real/
+# ⚠️ AND THE FIVE TWINS THAT GAINED A SCHEDULER. Same rule as every line above and the same
+# consequence for forgetting one: `schedule_store.py` registers all nine sites, so a container
+# built without these directories starts perfectly, answers for OTH, and fails the moment anybody
+# asks it about Aachen — which is the failure the LMU and TUM lines were each written after.
+#
+# ⚠️ THIS FILE IS NOW THE ONLY LIST, which is why it can be got right. The Dockerfile used to
+# carry a matching `COPY data/<site>/` per site and the two drifted; it is a single `COPY data/`
+# and this allowlist decides. Adding a site means editing HERE and nowhere else.
+!data/synthetic-rwth/
+!data/synthetic-koeln/
+!data/synthetic-muenster/
+!data/synthetic-fau/
+!data/synthetic-tuebingen/
+# ⚠️ AND TU BERLIN AND THE GENERIC DEMO, ADDED AFTER THIS EXACT OMISSION SHIPPED. The container
+# was rolled without these two lines and the frontend was told, correctly, that the backend had
+# never heard of `tuberlin`: `/api/health?site=tuberlin` answered 400 and the planner panel showed
+# "Der Planer antwortet nicht" over a twin whose data was complete on disk the whole time.
+#
+# ⚠️ AND THE PROBE THAT LOOKS OBVIOUS DOES NOT FIND IT. `/api/health?site=<new>` from a plain
+# client returns 200, because health answers `{status, appKeyRequired}` to anyone and only touches
+# the store once a valid `X-App-Key` is presented. So the endpoint reports healthy for a site the
+# container cannot serve, and only the app — which holds the key — sees the 400.
+!data/synthetic-tuberlin/
+!data/synthetic-demo/
+
+# Re-exclude noise that can appear inside the allowed folders.
+**/__pycache__/
+**/*.pyc
+**/.pytest_cache/
+**/.venv/

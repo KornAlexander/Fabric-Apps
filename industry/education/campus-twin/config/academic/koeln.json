@@ -1,0 +1,129 @@
+{
+  "$comment": "The INVENTED half of the Universität zu Köln dataset. Same structure as config/academic/oth.json, and deliberately not the same content. Everything here is synthetic; the buildings it hangs off are not — they were fetched from OpenStreetMap on 2026-08-21 and every name a rule below matches was measured in config/buildings-koeln.json.",
+  "$provenance": "synthetic — see data/synthetic-koeln/provenance.json. Nothing here is a claim about the University of Cologne's real faculties, staff, curriculum or room allocation.",
+  "id": "koeln",
+
+  "blockScheme": {
+    "$comment": "SIX blocks at 90 minutes, cum tempore — the ordinary German university scheme, the same shape as LMU's measured one. ⚠️ NOT MEASURED FOR THIS UNIVERSITY. Nothing Köln publishes has been read here; this is a defensible default applied to a German Volluniversität, and it is a default. If a real block scheme ever arrives it changes weekly capacity and the dataset must be regenerated with it.",
+    "days": ["Mo", "Di", "Mi", "Do", "Fr"],
+    "blocks": [
+      ["08:15", "09:45"],
+      ["10:15", "11:45"],
+      ["12:15", "13:45"],
+      ["14:15", "15:45"],
+      ["16:15", "17:45"],
+      ["18:15", "19:45"]
+    ],
+    "desirability": [0.55, 1.0, 0.9, 1.0, 0.85, 0.5],
+    "$desirabilityComment": "OURS, and an assumption. The 18:15 weight is the highest of the seven generated sites (0.5 against RWTH's 0.4): Köln's two modelled faculties are lecture-based rather than laboratory-based, so an evening slot competes with nothing but the students' patience."
+  },
+
+  "faculties": [
+    { "id": "WISO", "name": "Wirtschafts- und Sozialwissenschaftliche Fakultät", "teachers": 48 },
+    { "id": "HF", "name": "Humanwissenschaftliche Fakultät", "teachers": 40 }
+  ],
+  "$facultiesComment": "TWO faculties, for the reason the OTH profile locks down. The PAIR was chosen from this AOI's measured geography and not by size: Köln's Mathematisch-Naturwissenschaftliche Fakultät is the biggest thing on the map (the Physikalische Institute alone are 12 456 m²), and it would have been the obvious choice and the wrong one — every one of its buildings is on the Hauptcampus, so a cohort would never have to leave it and the cross-campus constraint would be decorative. WISO sits on the Hauptcampus and HF sits 1.05 km north at Gronewaldstraße, which is the only split this AOI actually has. ⚠️ Köln has SIX faculties. The other four are real, they render, and they carry no teaching rooms — see `buildingOwnership.fallback`.",
+
+  "programmes": {
+    "WISO": ["Betriebswirtschaftslehre", "Volkswirtschaftslehre", "Wirtschaftsinformatik", "Sozialwissenschaften", "Gesundheitsökonomie"],
+    "HF": ["Erziehungswissenschaft", "Sonderpädagogik", "Rehabilitationswissenschaften", "Bildungswissenschaften", "Medienpädagogik"]
+  },
+  "cohortSemesters": [1, 3, 5],
+  "$cohortComment": "2 faculties x 5 programmes x 3 semesters = 30 cohorts, the same shape as every other generated site so they stay comparable. Cohort SIZES are not matched: Köln is the third largest university in Germany at ~47 000 students, and WISO is the largest faculty of its kind in the country, which is what makes the shared halls scarce here.",
+
+  "subjects": {
+    "WISO": [
+      "Grundzüge der BWL", "Mikroökonomik", "Makroökonomik", "Buchhaltung und Jahresabschluss",
+      "Investition und Finanzierung", "Kostenrechnung", "Marketing", "Organisation und Personal",
+      "Wirtschaftsinformatik", "Datenanalyse", "Statistik für Ökonomen", "Ökonometrie",
+      "Supply Chain Management", "Unternehmensbesteuerung", "Wirtschaftspolitik",
+      "Sozialstrukturanalyse", "Methoden der empirischen Sozialforschung",
+      "Gesundheitsökonomie", "Öffentliche Finanzen", "Wirtschaftsrecht"
+    ],
+    "HF": [
+      "Allgemeine Erziehungswissenschaft", "Entwicklungspsychologie", "Pädagogische Psychologie",
+      "Bildungssoziologie", "Diagnostik und Förderung", "Inklusive Bildung",
+      "Sprachheilpädagogik", "Lernbehindertenpädagogik", "Emotionale und soziale Entwicklung",
+      "Rehabilitationswissenschaften", "Gebärdensprache und Audiopädagogik",
+      "Motorik und Bewegung", "Medienpädagogik", "Didaktik der Grundschule",
+      "Erziehungswissenschaftliche Forschungsmethoden", "Beratung und Intervention",
+      "Berufliche Rehabilitation", "Bildungsrecht", "Interkulturelle Pädagogik",
+      "Empirische Bildungsforschung"
+    ]
+  },
+
+  "surnames": [
+    "Bättenhausen", "Wahlen", "Zündorf", "Rodenkirchen", "Bickendorf", "Klettenberg", "Sülz",
+    "Ehrenfeld", "Nippes", "Poll", "Rath", "Kalk", "Vingst", "Ostheim", "Buchforst",
+    "Merheim", "Dellbrück", "Höhenberg", "Weidenpesch", "Riehl", "Longerich", "Esch",
+    "Volkhoven", "Chorweiler", "Fühlingen", "Roggendorf", "Worringen", "Blumenberg",
+    "Seeberg", "Heimersdorf", "Lindweiler", "Bocklemünd", "Mengenich", "Vogelsang",
+    "Widdersdorf", "Junkersdorf", "Weiden", "Efferen", "Brauweiler", "Marsdorf",
+    "Hahnwald", "Immendorf", "Meschenich", "Rondorf", "Zollstock", "Raderberg",
+    "Bayenthal", "Marienburg", "Godorf", "Berrenrath", "Weiß", "Hahnenklee", "Elsdorf",
+    "Bergerhausen", "Türnich", "Kierdorf", "Balkhausen", "Manstedten", "Bottenbroich",
+    "Grefrath", "Habbelrath", "Sindorf", "Buir", "Blatzheim", "Manheim", "Berrendorf",
+    "Oberaußem", "Niederaußem", "Fortuna", "Auenheim", "Kenten", "Gustorf", "Frimmersdorf",
+    "Neurath", "Wanlo", "Wickrath", "Rheindahlen", "Hardterbroich", "Windberg",
+    "Mülfort", "Giesenkirchen", "Schelsen", "Beckrath", "Herrath", "Genhülsen",
+    "Kaarster", "Vorst", "Holzbüttgen", "Driesch", "Uedesheim", "Grimlinghausen",
+    "Hoisten", "Speck", "Wehl", "Helpenstein"
+  ],
+  "$surnamesComment": "96 names for 88 teaching posts. ⚠️ THESE ARE COLOGNE AND LOWER-RHINE PLACE NAMES USED AS SURNAMES, which is exactly how the LMU pool is built (Sendlinger, Pasinger, Nymphenburger) and for the same reason: it produces a pool that is recognisably local, obviously ours, and — this is the load-bearing part — DISJOINT from every other site's, which `src/config/__tests__/surnames.test.ts` asserts.\n\n⚠️ COLOGNE AND AACHEN ARE 70 KM APART AND SHARE A NAMING REGION, AND THE HAND CHECK MISSED IT. This list was compared against the RWTH one by eye before either shipped, and the test then found `Lövenich` and `Sürth` in both — both are places that exist in both cities' orbit, which is precisely why a person reading two lists of ninety-six names does not notice. They are now in the Aachen pool only, and Köln has `Efferen` and `Berrenrath` instead. The test checks all 21 PAIRS rather than the one pair a reviewer would think to check. ⚠️ This dataset must never read as a roster of real Cologne staff; provenance.json says so and the UI badges it.",
+
+  "nonTeachingNameWords": [
+    "mensa", "parkhaus", "bibliothek", "gewächshaus", "wirtschaftshof", "serverhalle",
+    "unisportzentrum", "unifit", "kita", "kindertagesstätte", "knusperhäuschen",
+    "chemikalienausgabe", "studierenden-service", "interimscontainer", "gartenhaus",
+    "küpperstift", "p+r"
+  ],
+  "$nonTeachingComment": "Buildings the ownership test correctly accepts and no timetable ever books. A JUDGEMENT, written down rather than applied silently. `serverhalle` and `wirtschaftshof` are plant; `unisportzentrum`/`unifit` is the sports centre; `küpperstift` is a hall of residence; `interimscontainer` is temporary office space beside the Philosophikum. ⚠️ `studierenden-service` removes 2810 m² over six storeys that the footprint rule would otherwise have made HF's second-largest teaching building — it is the enrolment office, and a timetable that puts a lecture in the queue hall loses the room on the first slide.",
+
+  "buildingOwnership": {
+    "$comment": "OWNERSHIP IS SYNTHETIC, and it is the single most load-bearing invention in the dataset: the shared halls are what make two faculties compete for the same room, and HF's home 1.05 km north is what makes a cohort cross Lindenthal between blocks. Rules are evaluated IN ORDER and the first match wins. ⚠️ EVERY NAME TESTED BELOW WAS MEASURED in config/buildings-koeln.json on 2026-08-21.",
+    "rules": [
+      {
+        "owner": "shared",
+        "nameContains": ["hörsaalgebäude", "seminargebäude", "philosophikum"],
+        "$comment": "The central teaching stock. MEASURED: 'Hörsaalgebäude' (3089 m², four storeys), 'Seminargebäude' (1171 m²), 'Philosophikum' (9142 m², five storeys). ⚠️ THE PHILOSOPHIKUM IS SHARED RATHER THAN `other`, AND THAT IS A DECISION. It is the Philosophische Fakultät's building and that faculty is not modelled — but it is also the largest general teaching building on the campus, and excluding it would leave the two modelled faculties with three shared halls between 88 lecturers. Calling it shared says 'this is where everybody lectures', which is true of the building and is not a claim about who owns it."
+      },
+      {
+        "owner": "shared",
+        "nameContains": ["hauptgebäude"],
+        "$comment": "'Hauptgebäude Universität zu Köln' — 11 486 m² over five storeys, the second-largest building on the site and the one with the Aula. Substring rather than exact here, unlike the RWTH profile, because Köln's is named with the university attached and there is no second 'Hauptgebäude' in this AOI's building list to collide with."
+      },
+      {
+        "owner": "HF",
+        "campusId": "nord",
+        "minFootprintM2": 700,
+        "$comment": "⚠️ A CAMPUS RULE RATHER THAN A NAME RULE, because this campus does not name itself consistently: the measured buildings are 'Humanwissenschaftliche Fakultät', 'Humanwissenschaften', 'IBW-Gebäude', 'Petrarca-Institut', 'Mensa/Aula' and two unnamed blocks. A keyword rule would have caught the first two — 3 400 m² of the 10 500 m² up there — and silently left the rest to `other`, which would have made HF too small to need the Hauptcampus and dissolved the cross-campus constraint this pairing exists for. Everything the ownership test already accepted in the northern box is HF's."
+      },
+      {
+        "owner": "WISO",
+        "nameContains": ["wiso"],
+        "$comment": "'WiSo-Gebäude', 9793 m² over eight storeys — the tallest building on the campus and the whole of WISO's home. A single keyword, because the university uses exactly one word for it."
+      }
+    ],
+    "fallback": "other",
+    "$fallbackComment": "⚠️ SCOPE, not just ownership. Köln has six faculties and this dataset models two, so most of the 126 buildings the twin renders — the Physikalische Institute, the Biozentrum, the Geowissenschaften, the Medizin buildings, the Rechtswissenschaftliche Fakultät — come back as `other`: REAL, rendered, and excluded from the teaching stock entirely. Counting them as free capacity would be the same error as painting a room with no calendar 0% instead of grey."
+  },
+
+  "teachingShare": {
+    "$comment": "Fraction of a building's USABLE floor that becomes schedulable teaching space. Bands are tested in order against the building name, first match wins; a building owned by an unmodelled faculty gets 0 regardless. Higher than RWTH's throughout, and that difference is real rather than sloppy: Köln's two modelled faculties teach economics and education in lecture and seminar rooms, where RWTH's teach engineering in buildings that are mostly machine floor.",
+    "byNameWords": [
+      { "share": 0.5, "words": ["hörsaalgebäude", "seminargebäude"] },
+      { "share": 0.28, "words": ["philosophikum", "hauptgebäude", "wiso"] }
+    ],
+    "default": 0.13
+  },
+
+  "lectureHalls": {
+    "$comment": "⚠️ LECTURE HALLS ARE DELIBERATELY SCARCE, and the threshold is this site's. Köln has the most CONCENTRATED estate of the seven — one campus 1132 x 800 m holding buildings of 9 000 to 12 000 m² — so a threshold tuned in Regensburg or Aachen picks almost nothing here and the demo has no hall to fight over. ⚠️ 1100/5000 WAS THE FIRST TRY AND THE VALIDATOR REFUSED IT: 14 halls for 140 hall sessions is 33% occupancy, just under the 35% gate, i.e. the two faculties would essentially never have to want the same room. 1500 m² is roughly 'a building with a real lecture theatre in it' on this campus and leaves eleven of them.",
+    "nameWords": ["hörsaalgebäude", "aula"],
+    "minFootprintM2": 1500,
+    "secondHallMinFootprintM2": 6000
+  },
+
+  "cipPoolFaculties": ["WISO", "shared"],
+  "$cipPoolComment": "Which owners' buildings get computer rooms in the mix. WISO — its Wirtschaftsinformatik and Ökonometrie courses need them — and the shared halls."
+}

@@ -1,0 +1,323 @@
+{
+  "$comment": "The INVENTED half of the Universität Regensburg dataset. Everything here is synthetic; the buildings it hangs off are not, the eighteen named UR buildings every rule below matches were fetched from OpenStreetMap on 2026-08-22, each one carrying operator='Universität Regensburg', and each one was sampled onto real LDBV terrain by the registration check in tools/geodata/verify_registration.py.",
+  "$provenance": "synthetic, see data/synthetic-ur/provenance.json. Nothing here is a claim about UR's real faculties, staff, curriculum or room allocation. ⚠️ UR IS A REAL, NAMED, NEARBY INSTITUTION AND THIS FILE INVENTS ITS TEACHING. The surnames are villages, the subjects are plausible rather than published, and the staff counts are chosen to make a scheduling problem, not to describe a payroll.",
+  "id": "ur",
+  "$measurementCaveat": "⚠️ READ THIS BEFORE TRUSTING THE OWNERSHIP RULES BELOW. Every other academic profile in this directory says its name rules were 'MEASURED in config/buildings-<site>.json'. THIS ONE CANNOT SAY THAT YET. config/buildings-ur.json does not exist, because generating it requires `python tools/data/fetch_buildings.py --site ur`, which resolves `ur` through the SITES registry in tools/data/sites.py, and that file was held by other in-flight work when this profile was written. So the names below were measured in the OVERPASS PROBE (temp/ur-probe-ur-buildings.json, 18 distinct named buildings with operator='Universität Regensburg') rather than in the fetched buildings file. Those two sources should agree, and the whole point of saying so is that nobody has checked. FIRST TASK AFTER REGISTRATION: run fetch_buildings.py, then re-verify every `nameContains` token below actually matches something, and every `minFootprintM2` threshold below against real measured footprints.",
+  "blockScheme": {
+    "$comment": "SIX blocks at 90 minutes, cum tempore. ⚠️ NOT MEASURED FOR THIS UNIVERSITY, it is the German default, and UR's real Vorlesungsverzeichnis has not been read.",
+    "days": [
+      "Mo",
+      "Di",
+      "Mi",
+      "Do",
+      "Fr"
+    ],
+    "blocks": [
+      [
+        "08:15",
+        "09:45"
+      ],
+      [
+        "10:15",
+        "11:45"
+      ],
+      [
+        "12:15",
+        "13:45"
+      ],
+      [
+        "14:15",
+        "15:45"
+      ],
+      [
+        "16:15",
+        "17:45"
+      ],
+      [
+        "18:15",
+        "19:45"
+      ]
+    ],
+    "desirability": [
+      0.7,
+      1.0,
+      0.9,
+      1.0,
+      0.85,
+      0.5
+    ],
+    "$desirabilityComment": "⚠️ THE MILDEST EARLY PENALTY OF ANY SITE IN THIS REPOSITORY (0.7, against Tübingen's 0.65 and FAU's 0.5), and it is a claim about this campus rather than a softer opinion. UR was built in the 1960s as ONE contiguous estate on the Galgenberg, and its buildings are threaded together by covered walkways, so an 08:15 costs a student a bus to the campus and then nothing at all, no city crossing and, unusually, not even a walk in the rain. Tübingen's 0.65 already reflected a single campus; the difference here is that Tübingen's single campus is fifteen minutes uphill through a medieval town and this one is a five-minute covered walk end to end. The measured spread of ground heights across the eighteen named buildings is 11.6 m (369.0 m at Verfügungsgebäude PT5 to 380.6 m at Verwaltung), which is the whole vertical range a cohort crosses in a day."
+  },
+  "faculties": [
+    {
+      "id": "RW",
+      "name": "Fakultät für Rechtswissenschaft und Wirtschaftswissenschaften",
+      "teachers": 46
+    },
+    {
+      "id": "PKGG",
+      "name": "Fakultät für Philosophie, Kunst-, Geschichts- und Gesellschaftswissenschaften",
+      "teachers": 44
+    }
+  ],
+  "$facultiesComment": "TWO faculties, for the reason the OTH profile locks down, AND THEY WERE CHOSEN BY THE BUILDINGS RATHER THAN THE OTHER WAY ROUND. UR's estate names its own structure: of the eighteen buildings the probe found, three are the 'Recht und Wirtschaft' complex (Hörsaal-, Lehrstuhl- and Seminargebäude) and four are 'Philosophie / Theologie Bauteil 1-4'. Modelling those two complexes is therefore modelling real, adjacent, competing occupants instead of imposing a faculty split on an estate that does not have one. ⚠️ 'RW' MERGES TWO REAL FACULTIES. At UR, Rechtswissenschaft and Wirtschaftswissenschaften are separate faculties that share one building complex; this dataset treats them as a single scheduling owner because the rooms are shared, which is a simplification and is flagged as one. ⚠️ AND UR HAS ELEVEN FACULTIES. The other nine: Katholische Theologie, Medizin, Biologie und Vorklinische Medizin, Chemie und Pharmazie, Physik, Mathematik und Informatik, Sprach-, Literatur- und Kulturwissenschaften, Humanwissenschaften, and the Fakultät für Informatik und Data Science, are real, they render, and they carry no teaching rooms in this dataset. Notably that includes Mathematik, whose building the probe DID find: it comes back as `other`.",
+  "programmes": {
+    "RW": [
+      "Rechtswissenschaft",
+      "Betriebswirtschaftslehre",
+      "Volkswirtschaftslehre",
+      "Wirtschaftsinformatik",
+      "Immobilienwirtschaft"
+    ],
+    "PKGG": [
+      "Philosophie",
+      "Geschichte",
+      "Kunstgeschichte",
+      "Politikwissenschaft",
+      "Soziologie"
+    ]
+  },
+  "cohortSemesters": [
+    1,
+    3,
+    5
+  ],
+  "$cohortComment": "2 faculties x 5 programmes x 3 semesters = 30 cohorts, the same shape as every other generated site so the solver's behaviour is comparable across them.",
+  "subjects": {
+    "RW": [
+      "Bürgerliches Recht",
+      "Strafrecht",
+      "Öffentliches Recht",
+      "Handels- und Gesellschaftsrecht",
+      "Arbeitsrecht",
+      "Europarecht",
+      "Rechtsgeschichte",
+      "Zivilprozessrecht",
+      "Grundlagen der Betriebswirtschaftslehre",
+      "Externes Rechnungswesen",
+      "Internes Rechnungswesen",
+      "Finanzierung und Investition",
+      "Marketing",
+      "Organisation und Personal",
+      "Mikroökonomik",
+      "Makroökonomik",
+      "Ökonometrie",
+      "Statistik für Wirtschaftswissenschaftler",
+      "Wirtschaftsinformatik und Datenbanken",
+      "Immobilienökonomie"
+    ],
+    "PKGG": [
+      "Einführung in die Philosophie",
+      "Theoretische Philosophie",
+      "Praktische Philosophie",
+      "Logik und Argumentationstheorie",
+      "Philosophie der Neuzeit",
+      "Alte Geschichte",
+      "Mittelalterliche Geschichte",
+      "Neuere und Neueste Geschichte",
+      "Bayerische Landesgeschichte",
+      "Historische Hilfswissenschaften",
+      "Kunstgeschichte der Frühen Neuzeit",
+      "Architekturgeschichte",
+      "Bildwissenschaft",
+      "Denkmalpflege",
+      "Museologie",
+      "Politische Theorie",
+      "Vergleichende Politikwissenschaft",
+      "Internationale Beziehungen",
+      "Soziologische Theorie",
+      "Methoden der empirischen Sozialforschung"
+    ]
+  },
+  "surnames": [
+    "Abbachhof",
+    "Adlersberg",
+    "Aichahof",
+    "Aignhof",
+    "Alling",
+    "Altenried",
+    "Artmannhof",
+    "Aschach",
+    "Baiern",
+    "Barbing",
+    "Benhof",
+    "Bergmatting",
+    "Bruckdorf",
+    "Dettenhofen",
+    "Ebenwies",
+    "Egglfing",
+    "Eibrunn",
+    "Eichenbrunn",
+    "Einhausen",
+    "Einthal",
+    "Embach",
+    "Fußenberg",
+    "Gebelkofen",
+    "Geiersberg",
+    "Gemling",
+    "Gewald",
+    "Gonnersdorf",
+    "Grafenhof",
+    "Grafenhofen",
+    "Graßlfing",
+    "Großberg",
+    "Grünthal",
+    "Gundelshausen",
+    "Günzenried",
+    "Hainsacker",
+    "Harreshof",
+    "Harting",
+    "Haselhof",
+    "Hinterberg",
+    "Hochstetten",
+    "Hohengebraching",
+    "Hohenwarth",
+    "Holz",
+    "Hummelberg",
+    "Hänghof",
+    "Höhenhof",
+    "Hölkering",
+    "Hölzlhof",
+    "Hönighausen",
+    "Irlbach",
+    "Jägerberg",
+    "Kager",
+    "Kapfelberg",
+    "Kareth",
+    "Kaulhausen",
+    "Kleinprüfening",
+    "Kneiting",
+    "Kumpfmühle",
+    "Königshäusl",
+    "Landlhof",
+    "Lappersdorf",
+    "Laub",
+    "Lettenthal",
+    "Lohstadt",
+    "Lorenzen",
+    "Mariaort",
+    "Marienhöhe",
+    "Matting",
+    "Minoritenhof",
+    "Moorackerhof",
+    "Mühlhof",
+    "Neudorf",
+    "Neuhof",
+    "Neutraubling",
+    "Niedergebraching",
+    "Niedertraubling",
+    "Niederwinzer",
+    "Nußhof",
+    "Oberackerhof",
+    "Oberirading",
+    "Obertraubling",
+    "Oberwinzer",
+    "Oppersdorf",
+    "Pentling",
+    "Pettendorf",
+    "Pielmühle",
+    "Piesenkofen",
+    "Posthof",
+    "Regendorf",
+    "Rehtal",
+    "Reifenthal",
+    "Reinhardshofen",
+    "Ried",
+    "Riegling",
+    "Rodau",
+    "Rohrdorf"
+  ],
+  "$surnamesComment": "96 names for 90 teaching posts, and unlike most of the pools in this directory these were not assembled by hand, they are MEASURED settlement names, taken from the 135 `place` nodes tools/geodata/resolve_places.py probed inside this AOI's own shell box (48.93-49.10 N, 11.98-12.20 E) and filtered to single-token names. They are the villages, hamlets and farmsteads of the Regensburg basin, the Oberpfalz and the lower Naab: Kumpfmühl, Kneiting, Tremmelhausen, Hohengebraching, Scharmassing. ⚠️ TWO CANDIDATES WERE DROPPED AUTOMATICALLY BECAUSE THEY ALREADY BELONG TO OTHER SITES, 'Oberndorf' and 'Vogelsang', which is `src/config/__tests__/surnames.test.ts` being enforced before the file was written rather than after it failed. 'Regensburg' itself was also removed: it is the city, not a surname, and it names the university. ⚠️ This dataset must never read as a roster of real UR staff.",
+  "nonTeachingNameWords": [
+    "mensa",
+    "bibliothek",
+    "rechenzentrum",
+    "verwaltung",
+    "parkhaus",
+    "parkplatz",
+    "sportzentrum",
+    "botanisch",
+    "klinik",
+    "heizkraftwerk"
+  ],
+  "$nonTeachingComment": "⚠️ `bibliothek` REMOVES TWO OF THE EIGHTEEN NAMED BUILDINGS AT ONCE, the 'Zentralbibliothek Universität Regensburg' and the 'Sammelgebäude - Bibliotheksgebäude', and that is correct rather than costly, for the reason the Tübingen profile gives: a university library is where students work, not where a timetable is booked. `rechenzentrum` removes the third: UR's Rechenzentrum is the university's data centre and central IT building. ⚠️ THAT ONE IS THE ARGUABLE EXCLUSION and it is recorded as arguable, a Rechenzentrum commonly also holds CIP pools, which ARE teaching rooms, so if a future room list shows bookable pools in it this word should be dropped and the building given to `shared` instead. `verwaltung` removes the administration block. `botanisch` and `sportzentrum` guard the southern strip of the AOI, which is UR's Botanischer Garten and sports ground: university land, never teaching space (see $botanicalGardenNote in the AOI). `klinik` guards the Universitätsklinikum, which is east of this core and outside the modelled faculties entirely.",
+  "buildingOwnership": {
+    "$comment": "OWNERSHIP IS SYNTHETIC. Rules are evaluated IN ORDER and the first match wins. ⚠️ THE NAMES TESTED BELOW WERE MEASURED IN THE OVERPASS PROBE, NOT IN A FETCHED BUILDINGS FILE, see $measurementCaveat at the top of this file, which is the single most important caveat in it.",
+    "rules": [
+      {
+        "owner": "shared",
+        "nameContains": [
+          "audimax",
+          "vielberth",
+          "sammelgebäude hörsaal"
+        ],
+        "$comment": "The contested general teaching stock. 'Audimax' is UR's largest single auditorium; the 'Vielberth-Gebäude' is its central lecture-hall building, donated and named after Johann Vielberth, and is the building a UR student means by 'the H lecture halls'; 'Sammelgebäude Hörsaalgebäude' is the third. ⚠️ NOTE THE SPACE-SEPARATED TOKEN 'sammelgebäude hörsaal' RATHER THAN JUST 'sammelgebäude', the probe found THREE buildings beginning 'Sammelgebäude', and the other two are the Bibliotheksgebäude (excluded above) and the SGLG Lehrstuhlgebäude (which falls through to `other`). A shorter token would have quietly handed a library and a chair building to the shared teaching pool."
+      },
+      {
+        "owner": "RW",
+        "nameContains": [
+          "recht und wirtschaft",
+          "wirtschaftsinformatik"
+        ],
+        "$comment": "MEASURED: 'Recht und Wirtschaft - Hörsaalgebäude' (2 storeys), 'Recht und Wirtschaft - Lehrstuhlgebäude' (7 storeys, the tallest building the probe found at UR), 'Recht und Wirtschaft - Seminargebäude' (4 storeys), and 'Wirtschaftsinformatik' (1 storey). Four buildings, and the complex is self-describing: a university that labels one building 'Hörsaalgebäude' and its neighbour 'Seminargebäude' has already told the scheduler which rooms are which."
+      },
+      {
+        "owner": "PKGG",
+        "nameContains": [
+          "philosophie",
+          "theologie",
+          "verfügungsgebäude"
+        ],
+        "$comment": "MEASURED: 'Philosophie / Theologie Bauteil 1' (5 storeys), 'Bauteil 2' (3), 'Bauteil 3' (4), 'Bauteil 4' (4), and 'Verfügungsgebäude PT5' (2). ⚠️ `verfügungsgebäude` IS DELIBERATELY INCLUDED HERE AND IS DELIBERATELY EXCLUDED IN THE TÜBINGEN PROFILE, which is the kind of contradiction that deserves a sentence rather than a shrug. At Tübingen the Verfügungsgebäude is an office block. At UR, PT5 is the fifth part of the Philosophie/Theologie complex, its name says so, it sits 60 m from Bauteil 4, and 'Verfügungsgebäude' here means flexible teaching space held centrally rather than 'miscellaneous offices'. ⚠️ ALSO NOTE: the token `theologie` is matched only as part of the 'Philosophie / Theologie' complex name. UR has a real, separate Fakultät für Katholische Theologie which shares that building and is NOT one of the two modelled faculties; giving the whole complex to PKGG is a simplification in the same family as merging Recht with Wirtschaft."
+      }
+    ],
+    "fallback": "other",
+    "$fallbackComment": "⚠️ SCOPE, not just ownership. UR has eleven faculties and this dataset models two, so the remaining nine come back as `other`, including 'Mathematik', which the probe found and measured at 3 storeys and which a reader could easily expect to be modelled given that OTH's twin next door models Informatik und Mathematik. It is not. 'SGLG - Sammelgebäude - Lehrstuhlgebäude' (7 storeys) also lands here: it is a chair building shared across faculties, and no rule should claim it for one of them."
+  },
+  "teachingShare": {
+    "$comment": "Fraction of a building's USABLE floor that becomes schedulable teaching space. The shape follows the Tübingen profile: a high band for buildings that exist to hold lectures, a middle band for faculty buildings that mix seminar rooms with chairs and offices, and a low default for everything else. ⚠️ NO CLINICAL BAND HERE, because no clinical building is in scope, `klinik` is excluded outright in nonTeachingNameWords.",
+    "byNameWords": [
+      {
+        "share": 0.5,
+        "words": [
+          "audimax",
+          "vielberth",
+          "sammelgebäude hörsaal",
+          "recht und wirtschaft - hörsaal"
+        ]
+      },
+      {
+        "share": 0.26,
+        "words": [
+          "philosophie",
+          "theologie",
+          "verfügungsgebäude",
+          "recht und wirtschaft - seminar"
+        ]
+      },
+      {
+        "share": 0.12,
+        "words": [
+          "recht und wirtschaft - lehrstuhl",
+          "wirtschaftsinformatik"
+        ]
+      }
+    ],
+    "default": 0.14,
+    "$bandComment": "⚠️ THE 0.12 BAND IS LOWER THAN THE DEFAULT AND THAT IS INTENTIONAL, not a transcription slip. A 'Lehrstuhlgebäude' is by name a building of chairs: offices, libraries and a seminar room or two. Seven storeys of it (the RW Lehrstuhlgebäude is the tallest building on campus) would, at the 0.14 default, invent more bookable teaching space than the Audimax and the Vielberth-Gebäude have together. The name is the evidence and the low share is the honest reading of it."
+  },
+  "lectureHalls": {
+    "$comment": "⚠️ EVERY NUMBER IN THIS BLOCK IS UNVALIDATED AND MUST BE CHECKED AFTER REGISTRATION. Thresholds are expressed in square metres of measured footprint, and config/buildings-ur.json, the only place a real UR footprint exists, cannot be generated until the site is in tools/data/sites.py (see $measurementCaveat). The values below are carried over from the OTH profile next door, which is a starting point and not a measurement: UR's estate is 1960s system-built and its footprints are likely LARGER than OTH's, so if these thresholds go unchecked the likely failure is too many buildings qualifying as lecture halls rather than too few.",
+    "minFootprintM2": 900,
+    "secondHallMinFootprintM2": 1800,
+    "nameWords": [
+      "audimax",
+      "hörsaal",
+      "vielberth"
+    ]
+  },
+  "cipPoolFaculties": [
+    "RW"
+  ],
+  "$cipPoolComment": "Which owners' buildings get computer rooms in the mix. RW only, and specifically because 'Wirtschaftsinformatik' is one of its five programmes and one of its four buildings, a computer room in that complex is the one CIP pool this dataset can justify from a measured building name. PKGG is philosophy, history, art history, politics and sociology; giving it pools would be inventing infrastructure to fill a template."
+}

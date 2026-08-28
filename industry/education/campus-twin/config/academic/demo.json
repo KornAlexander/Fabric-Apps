@@ -1,0 +1,365 @@
+{
+  "$comment": "Beispiel-Universität academic profile — wholly invented, for a wholly invented institution. The buildings, outlines, footprints, storey counts and building codes underneath are real (they are the reference build's, shared through `assetsFrom`); everything in THIS file is constructed so the scheduling problem is a real one. Unlike the other profiles in this folder, there is no university here whose organisation could be misrepresented.",
+  "$provenance": "Nothing here is measured. Faculty names are deliberately plain and unnumbered so they cannot be read as any particular university's, and the teacher counts, programmes and subjects are ours.",
+  "id": "demo",
+  "seed": 31415926,
+  "$seedComment": "⚠️ ITS OWN SEED, AND THE REASON IS NOT VARIETY. This site shares the reference build's building stock and has the same faculty/programme/semester shape, so on the shared default seed (20260730) it generated a dataset with EXACTLY the same row counts — 1 325 sessions, 334 courses, 42 cohorts, 88 teachers. The two datasets were genuinely different (zero shared ids in any table), but identical figures in a demo deck and in the reference site's deck would read as one being a relabelled copy of the other, which is precisely the impression this site must not give. `test_multi_site.py` fired on the coincidence and was right to. The seed lives here rather than in a command line because a flag nobody remembers to pass is not a property of the site.",
+  "blockScheme": {
+    "$comment": "SIX blocks at 90 minutes, cum tempore — a lecture announced for 8 Uhr starts at 08:15. The ordinary German university scheme, which for an invented institution is not an approximation of anything: there is no published timetable this could be wrong about.",
+    "days": [
+      "Mo",
+      "Di",
+      "Mi",
+      "Do",
+      "Fr"
+    ],
+    "blocks": [
+      [
+        "08:15",
+        "09:45"
+      ],
+      [
+        "10:15",
+        "11:45"
+      ],
+      [
+        "12:15",
+        "13:45"
+      ],
+      [
+        "14:15",
+        "15:45"
+      ],
+      [
+        "16:15",
+        "17:45"
+      ],
+      [
+        "18:15",
+        "19:45"
+      ]
+    ],
+    "desirability": [
+      0.6,
+      1.0,
+      0.85,
+      1.0,
+      0.8,
+      0.4
+    ],
+    "$desirabilityComment": "OURS, and an assumption. Early and late blocks are the ones everybody avoids and the solver's soft objective leans on that; the shape matches the other generated sites so the quality lens is comparable across the portfolio."
+  },
+  "faculties": [
+    {
+      "id": "IE",
+      "name": "Fakultät Informatik und Elektrotechnik",
+      "teachers": 48
+    },
+    {
+      "id": "MB",
+      "name": "Fakultät Maschinenbau und Verkehr",
+      "teachers": 40
+    }
+  ],
+  "$facultiesComment": "TWO faculties, as at every generated site, and the split is what makes the demo work rather than what describes anyone. ⚠️ ONE OF THEM MUST SIT ON BOTH CAMPUSES or the 5 km corridor is scenery: Maschinenbau und Verkehr owns the whole of Campus Nord AND lecture buildings on Campus Mitte, so its cohorts have a reason to cross the city and a reason to mind when a room move sends them across it between two adjacent blocks.",
+  "programmes": {
+    "IE": [
+      "Informatik",
+      "Technische Informatik",
+      "Elektrotechnik",
+      "Softwaretechnik",
+      "Medieninformatik",
+      "Automatisierungstechnik",
+      "Kommunikationstechnik"
+    ],
+    "MB": [
+      "Maschinenbau",
+      "Verkehrstechnik",
+      "Fahrzeugtechnik",
+      "Luft- und Raumfahrttechnik",
+      "Produktionstechnik",
+      "Werkstofftechnik",
+      "Energietechnik"
+    ]
+  },
+  "$programmesComment": "Seven per faculty. ⚠️ The count is a demand lever, not a flourish: five per faculty produced 30 cohorts in the reference build and a teaching-room utilisation the validator refused as 'outside anything a Hochschule would recognise'. ⚠️ AND THE FIRST FOUR LETTERS MUST BE UNIQUE WITHIN A FACULTY — cohort ids are `{faculty}-{programme[:4]}-{semester}`, so 'Informatik' and 'Informationstechnik' would collide and the generator refuses outright.",
+  "cohortSemesters": [
+    1,
+    3,
+    5
+  ],
+  "$cohortComment": "Three cohorts per programme, the same shape as the other generated sites. Odd semesters only, because the reference semester is a Wintersemester.",
+  "subjects": {
+    "IE": [
+      "Analysis für Ingenieure",
+      "Lineare Algebra für Ingenieure",
+      "Algorithmen und Datenstrukturen",
+      "Rechnerorganisation",
+      "Softwaretechnik",
+      "Betriebssysteme",
+      "Datenbanksysteme",
+      "Rechnernetze",
+      "Theoretische Informatik",
+      "Signale und Systeme",
+      "Elektrische Netzwerke",
+      "Halbleiterbauelemente",
+      "Regelungstechnik",
+      "Hochfrequenztechnik",
+      "Nachrichtenübertragung",
+      "Maschinelles Lernen",
+      "Computergrafik",
+      "Digitale Signalverarbeitung",
+      "Energieversorgungsnetze",
+      "Eingebettete Systeme"
+    ],
+    "MB": [
+      "Technische Mechanik",
+      "Thermodynamik",
+      "Strömungsmechanik",
+      "Werkstoffkunde",
+      "Maschinenelemente",
+      "Konstruktionslehre",
+      "Fertigungstechnik",
+      "Fahrzeugantriebe",
+      "Kraftfahrzeugtechnik",
+      "Schienenfahrzeugtechnik",
+      "Luftfahrtantriebe",
+      "Flugmechanik",
+      "Verkehrsplanung",
+      "Verkehrssystemtechnik",
+      "Umformtechnik",
+      "Mechatronik",
+      "Messtechnik",
+      "Qualitätssicherung",
+      "Leichtbau",
+      "Logistik und Materialfluss"
+    ]
+  },
+  "surnames": [
+    "Abel",
+    "Ackermann",
+    "Albrecht",
+    "Arndt",
+    "Bachmann",
+    "Bader",
+    "Barth",
+    "Bauer",
+    "Baumann",
+    "Becker",
+    "Behrens",
+    "Benda",
+    "Bergmann",
+    "Beyer",
+    "Bittner",
+    "Blum",
+    "Bock",
+    "Böhm",
+    "Brandt",
+    "Braun",
+    "Breuer",
+    "Brinkmann",
+    "Bruns",
+    "Buchholz",
+    "Busch",
+    "Claussen",
+    "Conrad",
+    "Cramer",
+    "Dahlke",
+    "Decker",
+    "Dietrich",
+    "Dorn",
+    "Drews",
+    "Eberhardt",
+    "Eckert",
+    "Ehlers",
+    "Engel",
+    "Ernst",
+    "Fabian",
+    "Fiedler",
+    "Fischer",
+    "Frank",
+    "Franke",
+    "Freitag",
+    "Friedrich",
+    "Fritsch",
+    "Fuchs",
+    "Gebhardt",
+    "Geiger",
+    "Gerlach",
+    "Giese",
+    "Görlitz",
+    "Graf",
+    "Grimm",
+    "Gross",
+    "Günther",
+    "Haase",
+    "Hahn",
+    "Hamann",
+    "Hartmann",
+    "Heinrich",
+    "Hellwig",
+    "Henkel",
+    "Herold",
+    "Hertz",
+    "Hesse",
+    "Hildebrandt",
+    "Hoffmann",
+    "Hofmann",
+    "Holz",
+    "Horn",
+    "Huber",
+    "Jahn",
+    "Jansen",
+    "Jung",
+    "Kaiser",
+    "Kallweit",
+    "Kaufmann",
+    "Keller",
+    "Kern",
+    "Kilian",
+    "Klein",
+    "Kluge",
+    "Knapp",
+    "Koch",
+    "Köhler",
+    "König",
+    "Krause",
+    "Krebs",
+    "Kröger",
+    "Kruse",
+    "Kühn",
+    "Lang",
+    "Lehmann",
+    "Lentz",
+    "Lindner",
+    "Löffler",
+    "Ludwig",
+    "Mahler",
+    "Maier",
+    "Marquardt",
+    "Mertens",
+    "Meyer",
+    "Möller"
+  ],
+  "$surnamesComment": "A pool of ordinary German surnames for the generated instructors. No real person is named here, and the generator draws from this list rather than from anything scraped.",
+  "nonTeachingNameWords": [
+    "mensa",
+    "bibliothek",
+    "universitätsbibliothek",
+    "parkhaus",
+    "kindertagesstätte",
+    "kita",
+    "sportzentrum",
+    "sporthalle",
+    "heizkraftwerk",
+    "umspannwerk",
+    "wirtschaftshof",
+    "abfallplatz",
+    "gästehaus",
+    "versuchsanstalt",
+    "fraunhofer",
+    "hertie",
+    "telekom",
+    "innovation laboratories",
+    "kirche",
+    "kantine"
+  ],
+  "$nonTeachingComment": "⚠️ EVERY WORD HERE WAS CHECKED AGAINST config/buildings-tuberlin.json. 'umspannwerk' catches Umspannwerk TU Nord and TU Süd, 'abfallplatz' the Zentraler Abfallplatz, 'versuchsanstalt' the Versuchsanstalt für Wasser- und Schiffbau (8 632 m², the second largest building on the estate and a laboratory, not a teaching block), 'sportzentrum' the TU-Sportzentrum Dovestraße. Leaving the Versuchsanstalt in would have added an eighth of the modelled teaching stock as rooms nobody teaches in.",
+  "buildingOwnership": {
+    "$comment": "OWNERSHIP IS INVENTED, and it is the single most load-bearing invention in the dataset: the shared lecture halls are what make two faculties compete for the same room, and the faculty with buildings at the far campus is what makes a cohort cross the city between blocks. ⚠️ EVERY NAME TESTED BELOW IS A REAL BUILDING NAME from the shared buildings file and must stay that way — neutralising them would leave every rule matching nothing, which the generator reports as success while putting the whole week on one campus. ⚠️ THE LETTER CODES USE `nameIs`, NOT `nameContains`: there are buildings called 'E', 'F', 'W' and 'A', and a substring rule for 'e' matches almost the entire estate.",
+    "rules": [
+      {
+        "owner": "shared",
+        "nameContains": [
+          "hauptgebäude",
+          "erweiterungsbau"
+        ],
+        "$comment": "H (14 958 m², the largest building on the estate) and EB (4 495 m²) are TU Berlin's central teaching buildings and really do hold the big halls, including the Audimax. Shared, so both modelled faculties compete for them — which is the conflict the product exists to resolve."
+      },
+      {
+        "owner": "shared",
+        "nameContains": [
+          "mathematikgebäude"
+        ],
+        "$comment": "MA, 6 732 m² over eight storeys. Mathematics is a service subject taught to both engineering faculties, so its halls are contested rather than owned."
+      },
+      {
+        "owner": "MB",
+        "campusId": "campus-nord",
+        "$comment": "⚠️ THE RULE THAT MAKES THE CORRIDOR MATTER, and the id here is the one stamped on the polygons in the shared buildings file, NOT the display name. It read `campus-nord` once and matched nothing: 0 of 1367 sessions landed at the second campus and the generator called that a success. The whole of Campus Nord belongs to Maschinenbau und Verkehr, so that faculty's practicals sit 5.0 km from its lectures."
+      },
+      {
+        "owner": "IE",
+        "nameIs": [
+          "EW",
+          "Informatikgebäude",
+          "E",
+          "E-N",
+          "EMH",
+          "HFT-FT",
+          "HFT-TA",
+          "TEL",
+          "HF"
+        ],
+        "$comment": "The electrical-engineering and informatics cluster along Einsteinufer and Marchstraße. EW is 7 447 m² over eight storeys, MAR 2 844 m² over seven."
+      },
+      {
+        "owner": "MB",
+        "nameIs": [
+          "W",
+          "TK",
+          "HL",
+          "F",
+          "TC",
+          "B",
+          "BA",
+          "A",
+          "A-F"
+        ],
+        "$comment": "The mechanical-engineering cluster in Charlottenburg, so that Verkehrs- und Maschinensysteme has lecture-side buildings on the main campus as well as its practicals at the TIB. Without these its cohorts would never have a reason to be in Charlottenburg at all and the 5 km transfer would be a one-way trip."
+      },
+      {
+        "owner": "other",
+        "$comment": "⚠️ SCOPE, NOT DISMISSAL. Everything else belongs to the five faculties this dataset does not model. These buildings are REAL and they render in the twin; they are excluded from the teaching stock because we cannot schedule their rooms and cannot observe them. Counting them as free capacity would produce the arithmetically-correct-and-misleading utilisation figure the other profiles warn about."
+      }
+    ],
+    "fallback": "other"
+  },
+  "teachingShare": {
+    "$comment": "Fraction of a building's usable floor that becomes schedulable teaching space. Bands are tested in order against the building name, first match wins; a building owned by an unmodelled faculty gets 0 regardless. ⚠️ THESE WERE CUT AFTER THE FIRST GENERATED RUN, exactly as OTH's, LMU's and RWTH's were, and the first draft (0.34 / 0.20 / 0.07) is recorded here because the failure is instructive: it produced 350 teaching rooms for 950 sessions and a 9% utilisation, which `validate_dataset.py` refused with 'outside anything a Hochschule would recognise'. Nine per cent is arithmetically correct and is a picture of a university with no room problem at all — which is not a university anyone needs a scheduler for. The error was not the utilisation; it was believing that a third of the Hauptgebäude and a fourteenth of every laboratory block is bookable teaching space.",
+    "byNameWords": [
+      {
+        "share": 0.11,
+        "words": [
+          "hauptgebäude",
+          "erweiterungsbau"
+        ]
+      },
+      {
+        "share": 0.065,
+        "words": [
+          "mathematikgebäude",
+          "chemiegebäude"
+        ]
+      }
+    ],
+    "default": 0.022,
+    "$defaultComment": "Faculty buildings on a technical campus are overwhelmingly laboratories, workshops and offices. Two per cent of the usable floor as bookable teaching space is a deliberately severe reading of a building like EW or MAR, and it is the reading that makes the modelled stock match the modelled demand."
+  },
+  "lectureHalls": {
+    "$comment": "⚠️ LECTURE HALLS ARE DELIBERATELY SCARCE, and TU Berlin's are not where a name search would look. There is no building called 'Audimax' on this estate: TU Berlin's Audimax is a ROOM inside the Hauptgebäude (H 0105), and the other large halls are in H, MA and EB. So the rule names those three buildings rather than searching for hall words that do not appear. A copied RWTH rule looking for 'audimax' or 'auditorium' would have found nothing at all and left the site with no halls.",
+    "nameWords": [
+      "hauptgebäude",
+      "mathematikgebäude",
+      "erweiterungsbau"
+    ],
+    "minFootprintM2": 3900,
+    "secondHallMinFootprintM2": 9000,
+    "$thresholdComment": "⚠️ 4 000 m² gave SEVEN halls and a 98% hall pressure — 206 sessions for 210 hall-slots — which left 52 sessions unplaceable. A demo whose baseline cannot even be built is not a demo of a scheduler. 3 900 m² admits one more building and brings the pressure back to roughly the reference build's, which places 99%."
+  },
+  "cipPoolFaculties": [
+    "IE",
+    "shared"
+  ],
+  "$cipPoolComment": "Computer pools belong to Informatik und Elektrotechnik and to the shared stock. Maschinenbau und Verkehr teaches its practicals in laboratories and workshops, which this dataset does not model as bookable pools."
+}

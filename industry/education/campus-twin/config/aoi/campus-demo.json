@@ -1,0 +1,390 @@
+{
+  "$comment": "Beispiel-Universität — the GENERIC site, and the only AOI here that is not a real institution. It exists so the product can be shown to a university that is not one of the nine modelled ones, without putting another university's name on the screen. ⚠️ THE GROUND IS TU BERLIN'S AND IS NOT DISGUISED. Same box, same terrain, same 20 cm orthophoto, same LoD2 buildings, same trees — served from `public/terrain/tu-berlin/` via `assetsFrom` rather than copied, so the deployed app carries 48 MB once instead of twice. Anyone who knows Berlin will recognise the Straße des 17. Juni, the Spree and the Tiergarten, and that is accepted rather than concealed: the basemap is real open geodata and saying otherwise would be the dishonest option. What is anonymous is the INSTITUTION — its name, its campuses, its faculties and its week.",
+  "id": "campus-demo",
+  "probedOn": "2026-08-26",
+  "site": {
+    "name": {
+      "de": "Beispiel-Universität",
+      "en": "Beispiel-Universität"
+    },
+    "region": {
+      "de": "Beispielstadt",
+      "en": "Example city"
+    },
+    "timezone": "Europe/Berlin"
+  },
+  "campuses": [
+    {
+      "id": "campus-mitte",
+      "name": {
+        "de": "Campus Mitte",
+        "en": "Central campus"
+      },
+      "anchor": {
+        "lat": 52.51416,
+        "lon": 13.32535
+      },
+      "anchorSource": "Same anchor as the reference build; the institution is illustrative, the ground is not.",
+      "bbox": {
+        "west": 13.3162,
+        "east": 13.3391,
+        "south": 52.5053,
+        "north": 52.5266
+      },
+      "$bboxComment": "~1609 x 2405 m. Identical to the reference build's main campus box. The larger of the two sites and where most of the teaching happens.",
+      "$idComment": "Neutral by way of `campusIdMap`. The shared buildings file stamps the REFERENCE site's campusId on every polygon; `Site.buildings_payload()` translates it on load, so this id can be the demo's own without the ownership rules losing their join."
+    },
+    {
+      "id": "campus-nord",
+      "name": {
+        "de": "Campus Nord",
+        "en": "North campus"
+      },
+      "anchor": {
+        "lat": 52.54098,
+        "lon": 13.38447
+      },
+      "anchorSource": "Same anchor as the reference build's second site.",
+      "bbox": {
+        "west": 13.3798,
+        "east": 13.39,
+        "south": 52.5363,
+        "north": 52.5446
+      },
+      "$bboxComment": "~712 x 939 m. The smaller, workshop-side location, 5.0 km from Campus Mitte. That distance is the whole reason this site is a two-campus demo rather than a one-box one."
+    }
+  ],
+  "campusSeparation": {
+    "straightLineKm": 5.0,
+    "$comment": "MEASURED between the two anchors in EPSG:25833: 4999 m; haversine cross-check 4989 m. The distance is real because the ground is real. It is the longest separation in this repository and it is what makes the demo's central question — 'can this session move to the other campus?' — cost something.",
+    "pairsM": {
+      "campus-mitte-campus-nord": 4999
+    }
+  },
+  "ownership": {
+    "$comment": "⚠️ VESTIGIAL, AND KEPT ONLY SO THE SHAPE MATCHES THE OTHER AOIs. This block tells `fetch_buildings.py` how to recognise a university's buildings in OpenStreetMap — and this site never runs it: it reads the reference build's finished `config/buildings-*.json` through `assetsFrom`. The operator pattern below therefore names the real university, which is correct as a record of whose outlines these are and is never used to fetch anything. Nothing here reaches a screen.",
+    "outlineIds": [
+      "relation/2138962",
+      "relation/1273140"
+    ],
+    "$outlineComment": "relation/2138962 is the Charlottenburg campus polygon. relation/1273140 is the university-wide relation, whose centroid (52.48873) lands outside BOTH campuses because it spans sites across the city — so it is useful as an ownership test and useless as an anchor, which is why the anchors above come from the campus polygon and a named building instead.",
+    "operatorPattern": "technische universität berlin",
+    "extraIds": [
+      "way/633752404",
+      "way/26410648",
+      "way/122508764",
+      "way/122508765",
+      "way/122508766"
+    ],
+    "$extraComment": "The TIB buildings, claimed by hand. ⚠️ TIB 16, TIB17 and TIB17a are tagged `building=industrial` and operated by the technology park rather than by the university — TU Berlin is one tenant among several, the same tenancy situation TechBase creates at OTH. What justifies the entries is TU Berlin's own statement of presence: OSM node/4007032904 'TU Berlin Institut für Bauingenieurwesen', node/4007032901 'TU Berlin Fachgebiet Kraftfahrzeuge' and node/13928987501 'Forschungszentrum Strangpressen der TU Berlin' all sit inside these footprints. An allow-list is the right instrument precisely because a rule general enough to catch them would also catch the neighbours."
+  },
+  "bbox": {
+    "crs": "EPSG:4326",
+    "west": 13.3162,
+    "east": 13.39,
+    "south": 52.5053,
+    "north": 52.5446,
+    "$comment": "PHOTOREAL CORE, 5.11 x 4.49 km in EPSG:25833 (E 385716..390823, N 5818460..5822945), covering BOTH campuses AND the corridor between them. The corridor is not padding: the whole point of the twin is to make the inter-campus transition visible, so the ground between the two sites has to be rendered rather than implied. 2553 x 2243 samples at the 2 m grid below = 11.5 MB uint16, comfortably inside the 32 MB budget the config test enforces."
+  },
+  "shell": {
+    "crs": "EPSG:4326",
+    "west": 13.15,
+    "east": 13.56,
+    "south": 52.42,
+    "north": 52.64,
+    "$comment": "COARSE TERRAIN SHELL, ~27.8 x 24.5 km. ⚠️ AND IT HAS ALMOST NOTHING TO SHOW, which is worth saying plainly rather than discovering in the render. Regensburg's shell carries the Danube valley and the Bayerischer-Wald foothills; Berlin's carries the Teltow and Barnim plateaux either side of the Urstromtal, which is tens of metres of relief across tens of kilometres. The shell here is doing the job it does at Garching — closing the horizon so the core does not end in mid-air — not providing scenery. Fits entirely inside the single Copernicus tile N52_E013."
+  },
+  "workingCrs": "EPSG:25833",
+  "$workingCrsComment": "⚠️ THE ONLY NON-25832 AOI IN THIS REPOSITORY, and the reason `load_aoi` cross-checks this field against the box's own geometry. Berlin publishes DGM1, DOP20 and LoD2 exclusively in EPSG:25833. Left on EPSG:25832 by a copy-paste, this AOI would not merely be imprecise — the terrain and building fetchers build their download URLs from zone kilometres and would ask for tiles that do not exist, while the drape WMS would happily return a photograph of somewhere near Kassel.",
+  "verticalDatum": "DHHN2016",
+  "elevationRangeM": {
+    "min": 12,
+    "max": 75,
+    "$measured": true,
+    "$comment": "MEASURED 2026-08-26 by build_terrain.py over the core: 15.99 .. 69.46 m, from 12 Berlin DGM1 tiles at 100% coverage. The declared bracket is left deliberately loose around the measurement so a re-run after a data update does not trip the plausibility gate over a decimetre. ⚠️ THE 16 m MINIMUM WAS CHECKED RATHER THAN ACCEPTED, because a first draft declared 25 m and the gate rejected the build. It is 304 cells — 0.12 ha — in one patch at 52.5358/13.3742, the Berlin-Spandauer Schifffahrtskanal basin at Nordhafen, i.e. a lock or dock structure the bare-earth model reads down into. Only 3.3 ha of the whole 22 km² core lies below 30 m. The maximum lands at 52.5442/13.3872, which is the Gustav-Meyer-Höhe in Volkspark Humboldthain and agrees with that summit's published 68 m to 0.32 m. CONSEQUENCE: this is the FLATTEST site in the portfolio — about 35 m of relief across 5 km against OTH's 78 m across 3 km — so essentially none of the realism here comes from the landform. It has to come from the 20 cm orthophoto, the LoD2 roofs and the trees, and per the standing rule the terrain is NOT to be vertically exaggerated to compensate."
+  },
+  "verification": {
+    "$comment": "Registration gate. ⚠️ THE CONTROL POINTS WERE TRIAGED, NOT COLLECTED. An Overpass sweep found 35 `ele`-tagged nodes inside the core, and most are unusable: six `man_made=surveillance` cameras all carry ele=39.0 (one nearby reads 2.5 m, which gives the game away — these are MOUNTING heights, not ground elevations), and the cluster of bare `ele` nodes along the Ringbahn between 13.383 and 13.389 are railway survey heights on embankments and bridges. What is left, and what is listed below, are the `natural`-tagged ground features. The 'GPS-Referenzpunkt BerlinMitte' (node/1786272742, ele=79.8, ele:nhn) was deliberately EXCLUDED for the same reason as the cameras: it is a reference mark whose published height need not be the ground under it.",
+    "minCoveragePct": 99.5,
+    "toleranceM": 3.0,
+    "shellToleranceM": 12.0,
+    "maxSeamOffsetM": 3.0,
+    "controlPoints": [
+      {
+        "name": "Gustav-Meyer-Höhe",
+        "lat": 52.544289,
+        "lon": 13.387165,
+        "publishedM": 68.0,
+        "tier": "core",
+        "source": "OSM node/11831664671 natural + name + source, Volkspark Humboldthain"
+      },
+      {
+        "name": "Humboldthain Nordhang",
+        "lat": 52.529717,
+        "lon": 13.356115,
+        "publishedM": 53.1,
+        "tier": "core",
+        "source": "OSM node/1355615399 natural=peak, ele=53.1"
+      },
+      {
+        "name": "Südplateau",
+        "lat": 52.527671,
+        "lon": 13.35784,
+        "publishedM": 49.6,
+        "tier": "core",
+        "source": "OSM node/1355615398 natural=peak + name, ele=49.6"
+      },
+      {
+        "name": "Teufelsberg",
+        "lat": 52.497718,
+        "lon": 13.242954,
+        "publishedM": 120.0,
+        "tier": "shell",
+        "source": "OSM node/156850034 natural=peak + wikidata, ele=120"
+      },
+      {
+        "name": "Drachenberg",
+        "lat": 52.502369,
+        "lon": 13.248242,
+        "publishedM": 99.0,
+        "tier": "shell",
+        "source": "OSM node/353075536 natural=peak + wikidata, ele=99"
+      },
+      {
+        "name": "Großer Bunkerberg",
+        "lat": 52.526367,
+        "lon": 13.432154,
+        "publishedM": 78.0,
+        "tier": "shell",
+        "source": "OSM node/1586382882 natural=peak + wikidata, Volkspark Friedrichshain, ele=78"
+      },
+      {
+        "name": "Insulaner",
+        "lat": 52.457417,
+        "lon": 13.351548,
+        "publishedM": 78.0,
+        "tier": "shell",
+        "source": "OSM node/4449294532 natural=peak + wikidata, ele=78"
+      },
+      {
+        "name": "Fichtenberg",
+        "lat": 52.458228,
+        "lon": 13.31007,
+        "publishedM": 68.0,
+        "tier": "shell",
+        "source": "OSM node/354006455 natural=peak + wikidata + wikipedia, ele=68"
+      }
+    ],
+    "$controlPointsComment": "THREE in the core and five in the shell. ⚠️ A FOURTH CORE POINT WAS REMOVED AFTER IT FAILED, and the reason it failed is the reason it should never have been trusted: OSM node/1333652275 carries natural=peak and ele=46 at 52.5115/13.3393, but its only documentation is `wikipedia=de:Berliner Flaktürme` and `wikimedia_commons=Category:Flak towers in Berlin` — a Berlin-wide article about DEMOLISHED structures, not a survey of this mound. The model reads 42.88 m against that quoted 46, a 3.12 m miss on a 3.0 m tolerance. A round number sourced to a general article is a quotation, not a measurement, and the three core points that remain all agree to better than 1.5 m. ⚠️ ARKENBERGE WAS ALSO REMOVED, AND THAT ONE IS NOT A DATA-QUALITY PROBLEM AT ALL. At 121.9 m it is the highest point in Berlin and properly documented, but it is a LANDFILL THAT IS STILL BEING RAISED: the Copernicus GLO-30 radar (TanDEM-X, acquired 2010–2015) measured it at 105.9 m and it has grown some 16 m since. The gate reported -15.96 m against a 12 m tolerance and was right to — a control point has to be a fixed thing, and this one is a construction site. ⚠️ NEARLY EVERY REMAINING POINT IS A TRÜMMERBERG: Teufelsberg, Drachenberg, the Bunkerberge, the Insulaner and the Gustav-Meyer-Höhe are all war rubble. That is not a caveat about their accuracy, they are properly surveyed; it is why a city on an outwash plain has any relief to register against at all. The two wooded ones (Großer Bunkerberg +6.99 m, Fichtenberg +6.38 m) sit high because the shell is a SURFACE model and reads their canopy, exactly as the seam-offset note describes."
+  },
+  "drape": {
+    "maxPx": 4096,
+    "$comment": "Long side of the DOP20 mosaic. At the 5.11 km core this is 1.25 m per pixel — the COARSEST drape in the portfolio (Garching 0.61, Tübingen 0.63, OTH 0.78, LMU 0.96), and a direct consequence of holding two campuses 5 km apart in one box. It is still far finer than the 2 m terrain grid beneath it. NOT larger: at 8192 px the mipmap chain is ~300 MB, which Chromium accepts and then silently samples BLACK. This box is not square, so 4096 x 3598 px lands near 78 MB — about where OTH sits, i.e. the size known to upload reliably."
+  },
+  "grids": {
+    "sourceResolutionM": 1,
+    "renderResolutionM": 2,
+    "renderDecimation": 2,
+    "$comment": "Berlin ATKIS DGM1 (1 m XYZ) resampled to a 2 m heightmap, mesh decimated 2x -> 4 m posting. The core is the largest in the repository, so this is also the largest vertex budget; the site being almost flat is what makes that affordable, since a decimated mesh loses nothing where there is no relief to lose."
+  },
+  "shellGrids": {
+    "sourceResolutionM": 30,
+    "renderResolutionM": 30,
+    "renderDecimation": 3,
+    "transitionBandM": 250,
+    "$comment": "Copernicus GLO-30 -> ~90 m posting. transitionBandM is expressed in metres for readability but MUST be applied as a fraction of the core (CORE_FADE_FRACTION ~0.08), never absolute."
+  },
+  "focusPlaces": [
+    {
+      "id": "campus-mitte",
+      "name": "Campus Mitte",
+      "lat": 52.51416,
+      "lon": 13.32535,
+      "source": "OSM relation/2138962"
+    },
+    {
+      "id": "hauptgebaeude",
+      "name": "Hauptgebäude",
+      "lat": 52.51213,
+      "lon": 13.32702,
+      "source": "OSM relation/3348239"
+    },
+    {
+      "id": "bibliothek",
+      "name": "Universitätsbibliothek",
+      "lat": 52.51043,
+      "lon": 13.33071,
+      "source": "OSM way/28492570"
+    },
+    {
+      "id": "mathematik",
+      "name": "Mathematikgebäude",
+      "lat": 52.51385,
+      "lon": 13.32577,
+      "source": "OSM way/40451892"
+    },
+    {
+      "id": "chemie",
+      "name": "Chemiegebäude",
+      "lat": 52.51228,
+      "lon": 13.32979,
+      "source": "OSM relation/1479889"
+    },
+    {
+      "id": "erweiterungsbau",
+      "name": "Erweiterungsbau",
+      "lat": 52.51203,
+      "lon": 13.32444,
+      "source": "OSM relation/18104"
+    },
+    {
+      "id": "institut-mitte",
+      "name": "Institutsgebäude Mitte",
+      "lat": 52.51662,
+      "lon": 13.32345,
+      "source": "OSM way/151860279"
+    },
+    {
+      "id": "hochhaus",
+      "name": "Institutshochhaus",
+      "lat": 52.51295,
+      "lon": 13.32002,
+      "source": "OSM way/40452037"
+    },
+    {
+      "id": "versuchshalle",
+      "name": "Versuchshalle",
+      "lat": 52.51207,
+      "lon": 13.33444,
+      "source": "OSM relation/3609115"
+    },
+    {
+      "id": "sport",
+      "name": "Sportzentrum",
+      "lat": 52.52045,
+      "lon": 13.32217,
+      "source": "OSM way/48506230"
+    },
+    {
+      "id": "campus-nord",
+      "name": "Campus Nord",
+      "lat": 52.54098,
+      "lon": 13.38447,
+      "source": "OSM way/26410648"
+    },
+    {
+      "id": "werkstatt",
+      "name": "Werkstattgebäude",
+      "lat": 52.53871,
+      "lon": 13.38504,
+      "source": "OSM way/633752404"
+    }
+  ],
+  "$focusPlacesComment": "⚠️ THE LABELS ARE NEUTRAL AND THE COORDINATES ARE NOT. Every position here is measured, and `source` records the OSM feature it was measured from — that is provenance, and this file is not shipped to a screen. The NAMES are another matter: these strings are drawn onto the twin in 3 D, and the reference build's list put 'TU Berlin', 'MAR Marchstraße', 'Telefunken-Hochhaus', 'Sportzentrum Dovestraße', 'TIB Gustav-Meyer-Allee' and 'Standort Ackerstraße' across the demo's own campus. A render check caught it; nothing else would have, because every test in this repository was green at the time. Hauptgebäude, Universitätsbibliothek, Mathematikgebäude, Chemiegebäude and Erweiterungsbau are kept as they are: those are what any German university calls those buildings.",
+  "lenses": [
+    "occupancy",
+    "staffing",
+    "quality"
+  ],
+  "$lensesComment": "The OTH/LMU set. `flow` needs real consecutive bookings, which no generated site has. `condition` is withheld for the same reason as in the reference build: a fabricated maintenance backlog is a different kind of claim from a fabricated timetable.",
+  "schedulerSite": "demo",
+  "planQuality": {
+    "source": "tools/data/build_plan_quality.py — whole-cohort lecture days + slot desirability",
+    "studentGroupMappingModelled": false
+  },
+  "staffing": {
+    "source": "tools/data/build_staffing.py — course.sws joined to teacher.contractSws",
+    "lecturerTypesModelled": false
+  },
+  "indoorProbe": {
+    "$comment": "⚠️ 235 `indoor=room` FEATURES IN THE CHARLOTTENBURG BOX, AND ESSENTIALLY NONE OF THEM ARE TU BERLIN'S. The probe of 2026-08-26 returned 1 726 indoor/level features and 235 rooms; reading their names shows what they actually are — 'DB Reisezentrum', 'BVG', 'Ditsch', 'M-Markt', 'China Box', 'Bistro Avci', 'Skyline' — the retail units inside Bahnhof Zoologischer Garten, which sits just outside the campus and well inside the box. NOT ONE of the 235 carries a `ref` tag. This is exactly the trap the OTH entry warns about in the other direction: a healthy-looking count that means nothing once you ask whose rooms they are.",
+    "osmIndoorRooms": {
+      "charlottenburg": 235,
+      "charlottenburgWithRef": 0,
+      "charlottenburgTuBerlin": 0
+    },
+    "$conclusion": "No usable surveyed interiors. TU Berlin publishes no open floor plans and there is no NavigaTUM equivalent, so every room is generated inside the real footprint at the real storey count and badged as such — the RWTH Aachen situation, not the OTH or LMU one."
+  },
+  "rooms": {
+    "$comment": "⚠️ EVERY ROOM INTERIOR IS GENERATED — plates laid out inside the REAL footprint at the REAL storey count, badged `generated` on every record. The building codes and street addresses are the real ones from OpenStreetMap and are kept on purpose: they match the buildings visible in the orthophoto, and inventing codes for real buildings would make the twin harder to read without making it more anonymous.",
+    "codePattern": "^[A-Z]{1,3}(?:-[A-Z])? ?\\d{3,4}[A-Za-z]?$",
+    "$codePatternComment": "⚠️ UPPER CASE, AND THE CASE IS DELIBERATE — the opposite call from RWTH Aachen. There a lower-case building letter is the provenance signal, because RWTH publishes no letters and the identifiers are ours. TU Berlin DOES publish its letters and OSM has surveyed them, so writing them lower case would disown a real identifier. The room NUMBER after the letter is still generated; the letter is not. The pattern allows the hyphenated forms OSM actually carries (BH-A, BH-N, A-F, E-N) and both 3- and 4-digit room numbers, since TU Berlin uses 'MA 041' and 'H 1012' alike.",
+    "heroBuilding": "H",
+    "$heroBuildingComment": "The Hauptgebäude on Straße des 17. Juni (OSM relation/3348239). Chosen because it is the building a visitor to TU Berlin actually pictures, it carries the big lecture halls, and it sits at the centre of the Charlottenburg cluster — so the demo opens on the densest, most recognisable part of the twin rather than on a shed.",
+    "storeyHeightM": 3.5,
+    "referenceSemester": {
+      "id": "synthetic",
+      "startDate": "2026-10-01",
+      "endDate": "2027-02-05"
+    }
+  },
+  "geobasis": {
+    "authority": "Geoportal Berlin / Land Berlin",
+    "licence": "Datenlizenz Deutschland – Zero – Version 2.0",
+    "licenceUrl": "https://www.govdata.de/dl-de/zero-2-0",
+    "attribution": "Datenquelle: Geoportal Berlin, Land Berlin, dl-de/zero-2-0",
+    "downloadBase": "https://gdi.berlin.de/data",
+    "wmsBase": "https://gdi.berlin.de/services/wms",
+    "catalogue": "https://datenregister.berlin.de/api/3/action/package_search",
+    "$comment": "⚠️ dl-de/zero-2-0 REQUIRES NO ATTRIBUTION AT ALL — the most permissive of the five authorities in this pipeline, against CC BY 4.0 in Bayern and dl-de/by-2-0 in Baden-Württemberg, NRW and Hamburg. It is given anyway, because this app tells the user where every layer it draws came from, and 'we were not obliged to say' is a poor answer to 'whose photograph is this'. ⚠️ THE CATALOGUE LIVES AT datenregister.berlin.de, NOT daten.berlin.de — the latter's /api/3/action/ path 404s, which is the kind of dead end that reads as 'Berlin has no open data API'.",
+    "products": {
+      "dgm1": "ATOM, DGM1_<E>_<N>.zip on a 2 km EVEN-parity grid; the member is ASCII XYZ (dgm1_33_<E>_<N>_2_be.xyz) despite the catalogue calling it CSV",
+      "lod2": "ATOM, LoD2_<E>_<N>.zip on a 1 km grid; the member is CityGML with an .xml suffix, rewritten to .gml on extraction because build_lod2_mesh.py globs for *.gml",
+      "dop20": "WMS only — layer `dop_2025` on services/wms/dop_2025_fruehjahr. ⚠️ NEVER the ATOM download: it is partitioned by district and Mitte.zip alone is 3.2 GB."
+    }
+  },
+  "shellGeobasis": {
+    "authority": "ESA / DLR / Airbus Defence and Space — Copernicus DEM GLO-30",
+    "licence": "Copernicus DEM free licence (worldwide, free reuse with the prescribed notice)",
+    "licenceUrl": "https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM",
+    "attribution": "produced using Copernicus WorldDEM-30 © DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA; all rights reserved",
+    "$attributionComment": "The ADAPTED-DATA form of the notice, which is prescribed rather than stylistic: the pipeline resamples the tile onto a UTM grid and shifts it onto the core's vertical datum, so it is unambiguously modified.",
+    "cogUrlTemplate": "https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com/Copernicus_DSM_COG_10_{NS}{lat:02d}_00_{EW}{lon:03d}_00_DEM/Copernicus_DSM_COG_10_{NS}{lat:02d}_00_{EW}{lon:03d}_00_DEM.tif",
+    "tiles": [
+      "N52_E013"
+    ],
+    "$tilesComment": "ONE tile, unlike OTH's four: the shell spans 52.42–52.64 N and 13.15–13.56 E, crossing neither the 53 N parallel nor the 14 E meridian."
+  },
+  "tour": [
+    {
+      "placeId": "campus-mitte",
+      "captionKey": "tour.demo.campus",
+      "rangeM": 1400,
+      "holdMs": 6500
+    },
+    {
+      "placeId": "hauptgebaeude",
+      "captionKey": "tour.demo.hauptgebaeude",
+      "rangeM": 450,
+      "holdMs": 6000
+    },
+    {
+      "placeId": "mathematik",
+      "captionKey": "tour.demo.mathematik",
+      "rangeM": 500,
+      "holdMs": 6000
+    },
+    {
+      "placeId": "campus-nord",
+      "captionKey": "tour.demo.nord",
+      "rangeM": 900,
+      "holdMs": 7000
+    }
+  ],
+  "$tourComment": "Four stops, ending at Campus Nord so the 5 km transfer is watched rather than described. ⚠️ The `placeId`s are the reference build's, because the focus places come with the shared terrain metadata (`heightmap.json` carries them) and renaming them here would break the lookup. Only the CAPTIONS are this site's.",
+  "assetsFrom": "tu-berlin",
+  "$assetsFromComment": "Terrain, drape, buildings and vegetation are served from the TU Berlin folder. Only `scene.ts` reads this, at the single `loadTerrain` call site. It deliberately does NOT redirect the scheduler dataset — `schedulerSite` below is this site's own.",
+  "campusIdMap": {
+    "charlottenburg": "campus-mitte",
+    "wedding-tib": "campus-nord"
+  },
+  "$campusIdMapComment": "⚠️ THE DEMO BORROWS ANOTHER SITE'S BUILDINGS FILE AND MUST NOT INHERIT ITS VOCABULARY. `assetsFrom` makes this site render a real place, so it also reads that place's `config/buildings-*.json` — and every building in it carries the reference site's campus id. The display names here were already neutral, but ids are not private: they appear in the generated `building.json`, in every API response that groups by campus, and in the validator's own 'sessions per campus' line. A demo whose data says `wedding-tib` is not a generic demo. `Site.buildings_payload()` applies this map on load; every other site has no `campusIdMap` and is untouched.",
+  "buildingNameMap": {
+    "MAR": "Informatikgebäude",
+    "Telefunken-Hochhaus": "Institutshochhaus",
+    "TIB 15": "Technologiepark 15",
+    "TIB 16": "Technologiepark 16"
+  },
+  "$buildingNameMapComment": "⚠️ FOUR NAMES OF SEVENTY-THREE, AND THEY ARE THE ONES THAT GIVE THE SITE AWAY. Building names reach the screen — they are in the room list and in the building drawer — and the shared buildings file carries them as OpenStreetMap recorded them. 'MAR' is Marchstraße, 'TIB' is the Technologie- und Innovationspark Berlin, and 'Telefunken-Hochhaus' is a listed landmark. Everything else in that file is already generic: Hauptgebäude, Mathematikgebäude, Chemiegebäude, Erweiterungsbau and a long tail of bare letter codes. Applied by `Site.buildings_payload()`, next to `campusIdMap`, so a site that borrows another's geometry borrows none of its vocabulary.",
+  "$geobasisNote": "⚠️ THE ATTRIBUTION NAMES A REAL CITY AND MUST. The institution is invented; the GROUND is not. This twin draws Berlin's DGM1, DOP20 and LoD2 under dl-de/zero-2-0, and the app renders `geobasis.attribution` verbatim. A demo that hid where its terrain came from would be a licensing problem dressed up as discretion. The agreed position is that the basemap is visibly a real city and the UNIVERSITY on it is fictional."
+}

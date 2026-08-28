@@ -161,6 +161,38 @@ ALLOWLIST: dict[str, tuple[set[str], str]] = {
         'the literal placeholder "11111111-1111-1111-1111-111111111111" shown as the '
         'shape of the value a user must supply'),
 
+    # --- campus-twin. ⚠️ THIS APP'S OWN GATE MISSED THINGS THIS ONE CAUGHT, which is the
+    # argument for keeping two checks with different shapes. Found and FIXED, not excused:
+    # a deployed host in rayfin.yml (`epic-lava-…-swedencentral.webapp.fabricapps.net`),
+    # and `tools/fabric/seed_teacher_availability.py`, whose ID_ORACLE spelled out real
+    # lecturer short codes ("IM-T007", "M-T029") - deleted, along with the test importing it.
+    "industry/education/campus-twin/tools/verify_publishable.py":
+        ({"disclosure", "internal", "tenant_guid"},
+        'that app\'s own gate, which has to spell its patterns out: EXPLICIT contains '
+        '"\\bsent us\\b|...|\\bunder (?:an )?NDA\\b" and it documents the failure it was '
+        'written for - "a named university had sent us their timetable privately for an '
+        'evaluation"'),
+    "industry/education/campus-twin/README.md": ({"german"},
+        'place names only, in the sites table and its captions: "University of Münster", '
+        '"University of Tübingen - Old Town, Neckar, castle", "FAU Erlangen-Nürnberg" and '
+        'the survey authority "LGL Baden-Württemberg". No German prose'),
+    "industry/education/campus-twin/src/__tests__/deployGuard.test.ts": ({"tenant_guid"},
+        'two RootActivityIds quoted inside a simulated CLI failure line, '
+        '"RootActivityId: 045cd29c-db09-4300-bf1e-64f299d5f82e... FAILED (15.6s)" - a '
+        'request correlation id from a deploy that failed, which addresses nothing'),
+    "industry/education/campus-twin/src/api/__tests__/assignmentId.test.ts": ({"tenant_guid"},
+        'deterministic uuid5 test vectors, keyed by GENERATED module codes rather than any '
+        'timetable: "\'oth:IM-DATA-1-C1-ALL-S1\': \'ac548a6f-d190-4b2c-8acc-8d5d703f6162\'". '
+        'The ids are outputs of the algorithm under test, not addresses'),
+    "industry/education/campus-twin/tools/fabric/build_semantic_model.py": ({"tenant_guid"},
+        'a uuid5 NAMESPACE constant, not an address: "#: Deterministic lineage tags, so '
+        'republishing does not churn the definition. NAMESPACE = '
+        'uuid.UUID(\'6f1d1c4e-9f1a-4b7c-9c0e-2f7a5a1b8d33\')"'),
+    "industry/education/campus-twin/tools/tests/test_intake_http.py": ({"tenant_guid"},
+        'a deliberately fake tenant id, and the file says why: "A real identifier bought '
+        'the test nothing and put a live tenant id in a repository that ships as a '
+        'template. env[\'ENTRA_TENANT_IDS\'] = \'11111111-2222-3333-4444-555555555555\'"'),
+
     # --- german: proper nouns only. Each reason quotes the surviving text so the next
     # reader can judge it without re-opening the file. Prose was translated, not excused.
     # ⚠️ These entries excuse the WHOLE class for the file, which is how a German

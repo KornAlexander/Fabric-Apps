@@ -1,0 +1,127 @@
+{
+  "$comment": "The INVENTED half of the Universität Tübingen dataset. Everything here is synthetic; the buildings it hangs off are not — they were fetched from OpenStreetMap on 2026-08-21 and every name a rule below matches was measured in config/buildings-tuebingen.json.",
+  "$provenance": "synthetic — see data/synthetic-tuebingen/provenance.json. Nothing here is a claim about Tübingen's real faculties, staff, curriculum or room allocation.",
+  "id": "tuebingen",
+
+  "blockScheme": {
+    "$comment": "SIX blocks at 90 minutes, cum tempore. ⚠️ NOT MEASURED FOR THIS UNIVERSITY.",
+    "days": ["Mo", "Di", "Mi", "Do", "Fr"],
+    "blocks": [
+      ["08:15", "09:45"],
+      ["10:15", "11:45"],
+      ["12:15", "13:45"],
+      ["14:15", "15:45"],
+      ["16:15", "17:45"],
+      ["18:15", "19:45"]
+    ],
+    "desirability": [0.65, 1.0, 0.9, 1.0, 0.85, 0.5],
+    "$desirabilityComment": "⚠️ THE MILDEST EARLY PENALTY OF THE SEVEN GENERATED SITES (0.65 against FAU's 0.5), and it follows from this AOI having ONE campus. Nobody has to cross a city to reach an 08:15 here — the walk from the Neckar to the Wilhelmstraße is fifteen minutes uphill — so the early block is unpopular rather than expensive."
+  },
+
+  "faculties": [
+    { "id": "PHIL", "name": "Philosophische Fakultät", "teachers": 42 },
+    { "id": "MED", "name": "Medizinische Fakultät", "teachers": 44 }
+  ],
+  "$facultiesComment": "TWO faculties, for the reason the OTH profile locks down. ⚠️ AND THEY ARE BOTH ON THE SAME CAMPUS, WHICH IS THE POINT OF THIS SITE. Every other twin in this repository has at least two campuses and the demo's headline constraint is a cohort crossing between them; Tübingen has one, because the university is threaded through a medieval town rather than laid out on an estate (see `$campusesComment` in the AOI). So the scarcity story here is NOT distance. It is that both faculties compete for a handful of large rooms inside protected historic fabric — the Neue Aula and the Kupferbau — which cannot be extended, and the validator's cross-campus checks correctly do not apply. A site where the usual story does not work is worth having: it is the case that proves the constraint model is not hard-wired to one shape of university. ⚠️ Tübingen has SEVEN faculties. The other five are real, they render, and they carry no teaching rooms.",
+
+  "programmes": {
+    "PHIL": ["Germanistik", "Geschichte", "Philosophie", "Empirische Kulturwissenschaft", "Rhetorik"],
+    "MED": ["Humanmedizin", "Zahnmedizin", "Molekulare Medizin", "Medizintechnik", "Public Health"]
+  },
+  "cohortSemesters": [1, 3, 5],
+
+  "subjects": {
+    "PHIL": [
+      "Einführung in die Literaturwissenschaft", "Neuere deutsche Literatur", "Mediävistik",
+      "Deutsche Sprachwissenschaft", "Alte Geschichte", "Mittelalterliche Geschichte",
+      "Neuere und Neueste Geschichte", "Landesgeschichte", "Theoretische Philosophie",
+      "Praktische Philosophie", "Logik", "Wissenschaftsgeschichte",
+      "Empirische Kulturwissenschaft", "Museologie", "Allgemeine Rhetorik",
+      "Argumentationstheorie", "Editionsphilologie", "Kulturtheorie",
+      "Qualitative Methoden", "Fachdidaktik"
+    ],
+    "MED": [
+      "Makroskopische Anatomie", "Mikroskopische Anatomie", "Physiologie", "Biochemie",
+      "Medizinische Terminologie", "Medizinische Psychologie", "Medizinische Soziologie",
+      "Allgemeine Pathologie", "Pharmakologie", "Mikrobiologie", "Innere Medizin",
+      "Chirurgie", "Neurologie", "Psychiatrie", "Radiologie", "Zahnerhaltungskunde",
+      "Molekulare Medizin", "Bildgebende Verfahren", "Epidemiologie", "Klinische Untersuchung"
+    ]
+  },
+
+  "surnames": [
+    "Ammerbuch", "Bebenhausen", "Derendingen", "Dettenhausen", "Dußlingen", "Entringen",
+    "Gomaringen", "Hagelloch", "Hirschau", "Kilchberg", "Kusterdingen", "Lustnau",
+    "Mähringen", "Nehren", "Ofterdingen", "Pfrondorf", "Unterjesingen", "Wankheim",
+    "Weilheim", "Wurmlingen", "Altingen", "Bodelshausen", "Breitenholz", "Bühl",
+    "Dörnach", "Ergenzingen", "Felldorf", "Frommenhausen", "Hailfingen", "Hemmendorf",
+    "Immenhausen", "Jettenburg", "Kayh", "Kressbach", "Mössingen", "Nellingsheim",
+    "Obernau", "Oberndorf", "Poltringen", "Reusten", "Rübgarten", "Schwärzloch",
+    "Seebronn", "Sülchen", "Talheim", "Öschingen", "Belsen", "Bierlingen",
+    "Bühlertal", "Dettingen", "Eckenweiler", "Ergenzinger", "Frommern", "Genkingen",
+    "Gniebel", "Hausen ob Verena", "Hechingen", "Hirrlingen", "Höfendorf", "Jungingen",
+    "Killer", "Krebsstein", "Lindenhof", "Melchingen", "Mühlheim", "Neustetten",
+    "Oberjesingen", "Owingen", "Rangendingen", "Remmingsheim", "Rottenburg",
+    "Salmendingen", "Schlatt", "Stetten", "Streichen", "Sulzau", "Thanheim",
+    "Trillfingen", "Undingen", "Wachendorf", "Walddorf", "Weiler", "Wendelsheim",
+    "Wilflingen", "Wolfenhausen", "Zimmern", "Baisingen", "Bittelbronn", "Bronnweiler",
+    "Dießen", "Erpfingen", "Gruol", "Hart", "Nusplingen", "Pfäffingen"
+  ],
+  "$surnamesComment": "96 names for 86 teaching posts, built from villages of the Ammertal, the Steinlach and the Alb foreland around Tübingen — the same construction as the LMU, Köln, FAU and Münster pools. Swabian rather than Bavarian, Rhenish, Franconian or Westphalian, so the pool is recognisably this region's and disjoint from every other site's, which `src/config/__tests__/surnames.test.ts` asserts. ⚠️ This dataset must never read as a roster of real Tübingen staff.",
+
+  "nonTeachingNameWords": [
+    "mensa", "bibliothek", "parkhaus", "parkplatz", "waschhalle", "wertstoffhof",
+    "klimagarten", "osa-", "botanik", "verfügungsgebäude"
+  ],
+  "$nonTeachingComment": "⚠️ `bibliothek` REMOVES THE THREE LARGEST NON-AULA BUILDINGS ON THE SITE — the Universitätsbibliothek (6568 m²), its Ammerbau (2648 m²) and its Hauptgebäude (2113 m²), 11 329 m² in total — and that is correct rather than costly. A university library is where students work, not where a timetable is booked, and at a site with only 102 attributed buildings the temptation to keep the big ones is exactly the pressure this list exists to resist. `waschhalle` is the Alte Waschhalle, which is a library annex; `osa-` is the Keplerstraße office block; `botanik` is the Alte Botanik glasshouse; `wertstoffhof` is the clinic's recycling yard.",
+
+  "buildingOwnership": {
+    "$comment": "OWNERSHIP IS SYNTHETIC. Rules are evaluated IN ORDER and the first match wins. ⚠️ EVERY NAME TESTED BELOW WAS MEASURED in config/buildings-tuebingen.json on 2026-08-21 — and only after `buildingTags: ['university']` was added to the AOI's ownership block, without which the fetch returned nineteen buildings and none of the three named here.",
+    "rules": [
+      {
+        "owner": "shared",
+        "nameContains": ["neue aula", "kupferbau"],
+        "$comment": "The whole of the contested teaching stock, and there are two of them. 'Neue Aula' (6588 m², four storeys) is the largest building the university has here; the 'Kupferbau' (2158 m²) is its 1970s lecture-hall block. ⚠️ AT EVERY OTHER SITE THE SHARED LIST IS A CONVENIENCE; HERE IT IS THE ENTIRE STORY. Two rooms of any size, inside listed fabric that cannot be extended, for two faculties and thirty cohorts — that is what a scheduler is for at a historic university, and it is why this AOI also carries the `condition` lens."
+      },
+      {
+        "owner": "MED",
+        "nameContains": [
+          "anatom", "physiolog", "klinik", "medizinische fakultät", "imaging center",
+          "psychiatr", "radiolog", "hygiene"
+        ],
+        "$comment": "MEASURED: 'Anatomisches Institut' (2146 m²), 'Physiologisches Institut' (1380 m²), 'Psychiatrische Klinik' (2890 m²), 'Psychiatrie Neubau' (2658 m²), 'Alte Frauenklinik' (2700 m²), 'Alte Kinderklinik' (1119 m²), 'Medizinische Fakultät', 'Werner Siemens Imaging Center'. ⚠️ `klinik` IS DELIBERATELY INCLUDED, exactly as in the LMU profile and for the same reason: clinical teaching genuinely happens in these buildings, and excluding them would delete the Medizin half of the dataset. Their low teaching share is expressed in `teachingShare` instead, which is the honest instrument for 'mostly not a classroom'. Compare the RWTH profile, where `uniklinik` IS excluded — because there Medizin is not one of the modelled faculties."
+      },
+      {
+        "owner": "PHIL",
+        "nameContains": [
+          "brechtbau", "hegelbau", "bonatzbau", "philosoph", "wirtschaftswissenschaftlich",
+          "psychologie", "islamische theologie", "asien-orient", "archäolog",
+          "politikwissenschaft", "erziehungswissenschaft", "japanolog", "ethnolog",
+          "theologicum", "alte burse", "lothar-meyer", "alte physik"
+        ],
+        "$comment": "MEASURED: 'Brechtbau' (4383 m², seven storeys — the faculty's main teaching building), 'Hegelbau' (1798 m²), 'Bonatzbau' (2112 m²), 'Theologicum' (1626 m²), 'Alte Burse / Institut für Philosophie und Kunstgeschichte', 'Wirtschaftswissenschaftliches Seminar', 'Fachbereich Psychologie', 'Zentrum für Islamische Theologie', 'Institut für Politikwissenschaft', 'Institut für Erziehungswissenschaften', 'Lothar-Meyer-Bau', 'Alte Physik'. ⚠️ THE LAST TWO ARE HISTORICALLY SCIENCE BUILDINGS AND ARE GIVEN TO THE HUMANITIES HERE, which is an invention and is flagged as one: the Alte Physik and the Lothar-Meyer-Bau are in the Altstadt, the natural sciences moved to Morgenstelle decades ago — 1.5 km north and outside this AOI's core box — and the buildings they left behind are in general teaching use. Assigning them to the faculty that is still in the town is the smallest claim that keeps them schedulable."
+      }
+    ],
+    "fallback": "other",
+    "$fallbackComment": "⚠️ SCOPE, not just ownership. Tübingen has seven faculties and this dataset models two, so the Juristische, the Wirtschafts- und Sozialwissenschaftliche, the Evangelisch- and Katholisch-Theologische and the whole Mathematisch-Naturwissenschaftliche Fakultät — which is at Morgenstelle, outside this core entirely — come back as `other`."
+  },
+
+  "teachingShare": {
+    "$comment": "Fraction of a building's USABLE floor that becomes schedulable teaching space. ⚠️ THE CLINICAL BAND IS THE LOWEST NUMBER IN THIS FILE and it is the load-bearing one: a Psychiatrische Klinik is wards and consulting rooms with a lecture theatre somewhere in it, and treating a fifth of it as bookable seminar space would invent more teaching capacity than the Neue Aula and the Kupferbau have between them.",
+    "byNameWords": [
+      { "share": 0.5, "words": ["neue aula", "kupferbau"] },
+      { "share": 0.26, "words": ["brechtbau", "hegelbau", "bonatzbau", "theologicum", "alte burse", "alte physik", "lothar-meyer"] },
+      { "share": 0.07, "words": ["klinik", "anatom", "physiolog", "psychiatr", "imaging"] }
+    ],
+    "default": 0.14
+  },
+
+  "lectureHalls": {
+    "$comment": "⚠️ LECTURE HALLS ARE DELIBERATELY SCARCE, and at this site they barely need to be made so — the estate is small, old and mostly under 2500 m². The threshold is set where the Kupferbau sits rather than above it.",
+    "nameWords": ["aula", "kupferbau"],
+    "minFootprintM2": 2100,
+    "secondHallMinFootprintM2": 6000
+  },
+
+  "cipPoolFaculties": ["PHIL", "shared"]
+}

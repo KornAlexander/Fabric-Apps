@@ -1,0 +1,140 @@
+{
+  "$comment": "The INVENTED half of the FAU Erlangen-Nürnberg dataset. Everything here is synthetic; the buildings it hangs off are not — they were fetched from OpenStreetMap on 2026-08-21 and every name a rule below matches was measured in config/buildings-fau.json.",
+  "$provenance": "synthetic — see data/synthetic-fau/provenance.json. Nothing here is a claim about FAU's real faculties, staff, curriculum or room allocation.",
+  "id": "fau",
+
+  "blockScheme": {
+    "$comment": "SIX blocks at 90 minutes, cum tempore — the ordinary German university scheme and the one LMU's measured profile also uses. ⚠️ NOT MEASURED FOR THIS UNIVERSITY.",
+    "days": ["Mo", "Di", "Mi", "Do", "Fr"],
+    "blocks": [
+      ["08:15", "09:45"],
+      ["10:15", "11:45"],
+      ["12:15", "13:45"],
+      ["14:15", "15:45"],
+      ["16:15", "17:45"],
+      ["18:15", "19:45"]
+    ],
+    "desirability": [0.5, 1.0, 0.85, 1.0, 0.75, 0.35],
+    "$desirabilityComment": "⚠️ THE HARSHEST EARLY AND LATE WEIGHTS OF THE SEVEN GENERATED SITES, and that is this AOI's geography rather than a mood. FAU's two modelled faculties are 2.88 km apart — the widest separation in the repository — so a cohort with an 08:15 on one campus and an 18:15 on the other spends its first and last hour of the day travelling. Making the edge blocks cheap to avoid is what lets the solver express that."
+  },
+
+  "faculties": [
+    { "id": "TF", "name": "Technische Fakultät", "teachers": 46 },
+    { "id": "PHIL", "name": "Philosophische Fakultät und Fachbereich Theologie", "teachers": 40 }
+  ],
+  "$facultiesComment": "TWO faculties, chosen from the measured geography: the Technische Fakultät is the whole of the Südgelände and the Philosophische Fakultät is the whole of the Innenstadt around the Schlossgarten, 2.88 km apart. ⚠️ THIS IS THE WIDEST SEPARATION IN THE REPOSITORY — against OTH's 2.48 km and LMU's 2.44 km — and it is the reason this site is the most interesting of the seven for the constraint, because Erlangen has a THIRD campus in between. Röthelheim sits 1.24 km from the Innenstadt and 2.15 km from the Südgelände, so 'move the lecture to the other campus' is no longer a binary: the solver can move it half way, and whether that helps depends on which two blocks are adjacent. ⚠️ FAU has FIVE faculties. The other three are real, they render, and they carry no teaching rooms.",
+
+  "programmes": {
+    "TF": ["Maschinenbau", "Elektrotechnik", "Informatik", "Werkstoffwissenschaften", "Chemie- und Bioingenieurwesen"],
+    "PHIL": ["Germanistik", "Geschichte", "Theologie", "Sinologie", "Pädagogik"]
+  },
+  "cohortSemesters": [1, 3, 5],
+
+  "subjects": {
+    "TF": [
+      "Technische Mechanik", "Konstruktionstechnik", "Fertigungstechnologie",
+      "Werkstoffkunde", "Elektrische Energiesysteme", "Elektronische Bauelemente",
+      "Signale und Systeme", "Regelungstechnik", "Algorithmen und Datenstrukturen",
+      "Rechnerarchitektur", "Software Engineering", "Maschinelles Lernen",
+      "Verfahrenstechnik", "Reaktionstechnik", "Thermodynamik", "Strömungsmechanik",
+      "Nanostrukturierte Materialien", "Kristallographie", "Laserphysik",
+      "Technische Dynamik"
+    ],
+    "PHIL": [
+      "Einführung in die Literaturwissenschaft", "Deutsche Sprachgeschichte",
+      "Neuere deutsche Literatur", "Alte Geschichte", "Mittelalterliche Geschichte",
+      "Neuere und Neueste Geschichte", "Historische Quellenkunde", "Altes Testament",
+      "Neues Testament", "Kirchengeschichte", "Systematische Theologie",
+      "Religionspädagogik", "Klassisches Chinesisch", "Moderne Sinologie",
+      "China-Studien", "Allgemeine Pädagogik", "Schulpädagogik", "Bildungsphilosophie",
+      "Empirische Erziehungswissenschaft", "Fachdidaktik"
+    ]
+  },
+
+  "surnames": [
+    "Aurach", "Baiersdorf", "Bubenreuth", "Buckenhof", "Dechsendorf", "Eltersdorf",
+    "Frauenaurach", "Hüttendorf", "Kalchreuth", "Kosbach", "Kriegenbrunn", "Marloffstein",
+    "Möhrendorf", "Spardorf", "Tennenlohe", "Uttenreuth", "Weisendorf", "Adelsdorf",
+    "Bruck", "Büchenbach", "Dormitz", "Effeltrich", "Forchheim", "Gremsdorf", "Hannberg",
+    "Hemhofen", "Herzogenaurach", "Höchstadt", "Igensdorf", "Kleinseebach", "Langensendelbach",
+    "Neunkirchen", "Niederlindach", "Oberreichenbach", "Poxdorf", "Pinzberg", "Rathsberg",
+    "Röttenbach", "Sieglitzhof", "Steudach", "Tuchenbach", "Vach", "Wachenroth", "Weilersbach",
+    "Zeckern", "Alterlangen", "Bammersdorf", "Beutelsdorf", "Boxdorf", "Brand",
+    "Burgstall", "Dietersdorf", "Ebersbach", "Eggolsheim", "Ermreuth", "Ezelsdorf",
+    "Falkendorf", "Gaiganz", "Gosberg", "Hagenau", "Hausen", "Heroldsberg", "Hetzles",
+    "Hüttenbach", "Kersbach", "Kirchehrenbach", "Kleinsendelbach", "Kunreuth", "Leutenbach",
+    "Lonnerstadt", "Mausdorf", "Möhrenbach", "Neuses", "Nürnberger", "Oberlindach",
+    "Pautzfeld", "Pretzfeld", "Rüsselbach", "Reuth", "Sassanfahrt", "Schlaifhausen",
+    "Serlbach", "Stiebarlimbach", "Thurn", "Trailsdorf", "Untermembach", "Utzenhofen",
+    "Vestenbergsgreuth", "Walkersbrunn", "Wellerstadt", "Wimmelbach", "Zentbechhofen",
+    "Ziegelsdorf", "Dachsbach", "Etzelskirchen"
+  ],
+  "$surnamesComment": "96 names for 86 teaching posts, built from Middle-Franconian and Upper-Franconian place names around Erlangen — the same construction as the LMU and Köln pools. ⚠️ FRANCONIA AND THE OBERPFALZ ARE BOTH BAVARIAN AND THE OTH POOL IS OBERPFALZ-FLAVOURED, so this list was checked against it by hand rather than assumed to differ; place names rather than family names is what makes that check cheap and the result certain. `src/config/__tests__/surnames.test.ts` asserts both the length and the disjointness. ⚠️ This dataset must never read as a roster of real FAU staff.",
+
+  "nonTeachingNameWords": [
+    "universitätsbibliothek", "zweigbibliothek", "stadtmensa", "studentenhaus",
+    "personalrestaurant", "parkhaus", "faubox", "reinraum", "allg. tech.dienst",
+    "fraunhofer", "helmholtz-institut", "bayerisches zentrum", "aromagarten",
+    "botanischer garten", "betriebsärztlicher", "verwaltungsgebäude", "sportwissenschaft",
+    "tumorzentrum", "stuve-haus"
+  ],
+  "$nonTeachingComment": "⚠️ READ THE FIRST TWO ENTRIES BEFORE EDITING THIS LIST. Every other profile in this repository writes a bare `mensa` and a bare `bibliothek` here, and BOTH would be wrong at FAU, because the largest teaching building on the Südgelände is measured as `MHB-Mensagebäude/Hörsaal/Bibliothek/Tiefgarage` — 8083 m² over three storeys, and the second-biggest thing the Technische Fakultät has. A substring `mensa` deletes it. A substring `bibliothek` deletes it. Either one silently removes the campus's main lecture building while looking like ordinary housekeeping, and the fetch would still return 156 buildings and appear complete. So the words are spelled out: `stadtmensa` is the Innenstadt canteen, `universitätsbibliothek` and `zweigbibliothek` are the two libraries, and the combined building survives. This is the same class of failure as the LMU shared-wing rule that matched nothing.\n\n`fraunhofer`, `helmholtz-institut` and `bayerisches zentrum` remove three research institutes that stand on FAU land and are not FAU's — the IISB alone is 4429 m². `verwaltungsgebäude` removes the 9981 m² 'FAU Verwaltungsgebäude', which is the largest building attributed to this site and is administration, not teaching: leaving it in would have handed the Technische Fakultät seven storeys of offices as lecture capacity, which is the TechBase error from the OTH profile.",
+
+  "buildingOwnership": {
+    "$comment": "OWNERSHIP IS SYNTHETIC. Rules are evaluated IN ORDER and the first match wins. ⚠️ EVERY NAME TESTED BELOW WAS MEASURED in config/buildings-fau.json on 2026-08-21.",
+    "rules": [
+      {
+        "owner": "shared",
+        "nameContains": ["hörsaal", "hörsäle", "audimax"],
+        "$comment": "⚠️ THIS RULE DELIBERATELY TAKES PHIL'S OWN MAIN BUILDING. The measured name is 'Philosophie Seminargebäude - Hauptgebäude + Hörsaal Audimax' (relation/15575802, 3800 m²) — it is the Philosophische Fakultät's home AND it contains the university's Audimax, and the ordering here means the second fact wins. That is the point: if the Audimax belongs to one faculty it is not contested, and the conflict the product exists for cannot occur. The rest of the shared stock: 'Hörsaalgebäude Biologikum / Physikum' (4003 m²), 'MHB-Mensagebäude/Hörsaal/Bibliothek/Tiefgarage' (8083 m²), 'Hörsäle' (1345 m²), 'Hörsäle Medizin' (1514 m²), 'Hörsaal C', 'Hörsaal Östliche Stadtmauerstraße 11'. ⚠️ Note that four of those seven are on the Südgelände and three in the Innenstadt, 2.88 km apart — which is what puts the crossing into the plan rather than into the prose."
+      },
+      {
+        "owner": "PHIL",
+        "nameContains": [
+          "philosophie", "philosophisches", "theologisch", "kollegienhaus", "schloss erlangen",
+          "fremdsprachen", "sinologie", "cas-e", "himbeerpalast"
+        ],
+        "$comment": "MEASURED: 'Philosophie Seminargebäude II' and 'III', 'Theologisches Seminargebäude', 'Kollegienhaus' (way/27883773, 1636 m²), 'Schloss Erlangen', 'Institut für Fremdsprachen und Auslandskunde bei der FAU Erlangen-Nürnberg', 'FAU Sinologie (Gebäude D3)', 'FAU CAS-E (Gebäude D1)', 'Himbeerpalast'. ⚠️ The last three are on the RÖTHELHEIM campus, not in the Innenstadt, which is exactly why this faculty's cohorts have a middle option: Sinologie and CAS-E are 1.24 km from the Kollegienhaus and 2.15 km from the Technische Fakultät."
+      },
+      {
+        "owner": "TF",
+        "nameContains": [
+          "elektrotechnik", "werkstoffwissenschaften", "bioingenieurwesen", "cbi",
+          "technische mechanik", "technische dynamik", "felix-klein", "informatik", "rrze",
+          "chemikum", "physikum", "biologikum", "anorganische chemie", "physikalische chemie",
+          "nanostrukturierte", "kristallographie", "laserphysik", "fertigungs",
+          "konstruktionstechnik", "maschinenbau", "hochdrucklabor", "physikalisches institut",
+          "astroparticle", "advanced materials", "elektrowerkstatt", "biotechnologisches"
+        ],
+        "$comment": "MEASURED: Department Chemie- und Bioingenieurwesen (6160 m²), Biologikum (6034), Werkstoffwissenschaften (5897), Chemikum (5686), Felix-Klein-Gebäude (5339), Physikum (5297), Elektrotechnik (4115), Informatik und Regionales Rechenzentrum (RRZE) (3390), Interdisziplinäres Zentrum für Nanostrukturierte Filme, Physikalisches Institut ECAP, Erlangen Centre for Astroparticle Physics, Anorganische Chemie, Physikalische Chemie I + II, Lehrstuhl für Laserphysik, Technische Mechanik, CBI Technische Halle, Zentrales Hochdrucklabor."
+      },
+      {
+        "owner": "TF",
+        "campusId": "suedgelaende",
+        "minFootprintM2": 2000,
+        "$comment": "⚠️ THE UNNAMED HALF OF THE SÜDGELÄNDE, and without this rule it is lost. Nine of the campus's largest measured buildings carry NO name in OSM at all — 7982, 5836, 5333, 5011, 4692, 2876, 2381 m² and more — and they are unmistakably university buildings: they are inside FAU's own 'Südgelände' outline (way/35046209), most carry building=university, and several carry the FAU operator tag. A name rule cannot reach them and `other` would throw away more floor area than every named TF building put together. Below 2000 m² they fall through deliberately: a small unnamed structure on a science campus is a gas store or a substation more often than a seminar room."
+      }
+    ],
+    "fallback": "other",
+    "$fallbackComment": "⚠️ SCOPE, not just ownership. FAU has five faculties and this dataset models two, so the Medizinische, the Rechts- und Wirtschaftswissenschaftliche and most of the Naturwissenschaftliche Fakultät's buildings come back as `other`: REAL, rendered, and excluded from the teaching stock entirely."
+  },
+
+  "teachingShare": {
+    "$comment": "Fraction of a building's USABLE floor that becomes schedulable teaching space. Low throughout, because the Südgelände dominates the estate and a Technische-Fakultät building is mostly laboratory and workshop.",
+    "byNameWords": [
+      { "share": 0.4, "words": ["hörsaal", "hörsäle", "audimax"] },
+      { "share": 0.15, "words": ["philosophie", "philosophisches", "theologisch", "kollegienhaus", "sinologie", "fremdsprachen"] },
+      { "share": 0.065, "words": ["chemikum", "physikum", "biologikum", "felix-klein", "informatik", "elektrotechnik", "werkstoffwissenschaften"] }
+    ],
+    "default": 0.032
+  },
+
+  "lectureHalls": {
+    "$comment": "⚠️ LECTURE HALLS ARE DELIBERATELY SCARCE. FAU names its lecture buildings explicitly, so the name list does most of the work here and the footprint threshold only has to stop a large laboratory building from acquiring one by accident. ⚠️ 5200/9000 WAS THE FIRST TRY AND THE VALIDATOR REFUSED IT: sixteen halls for 148 hall sessions is 31% occupancy, under the 35% gate, so the two faculties would essentially never have to want the same room — on the site whose whole point is that they are 2.88 km apart. 7500 m² is 'as big as the MHB lecture-and-library block', which is what a building with a real lecture theatre looks like on the Südgelände.",
+    "nameWords": ["hörsaal", "hörsäle", "audimax"],
+    "minFootprintM2": 7500,
+    "secondHallMinFootprintM2": 11000
+  },
+
+  "cipPoolFaculties": ["TF", "shared"]
+}
