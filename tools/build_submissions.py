@@ -96,7 +96,13 @@ def to_html(md: str, slug: str) -> str:
         # Missing this shipped the licence block of flood-insights with literal asterisks
         # around every attribution line: "*(c) GeoBasis-DE / LVermGeoRP ...*".
         s = re.sub(r"(?<!\*)\*([^*\n]+)\*(?!\*)", r"<em>\1</em>", s)
-        s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
+        # ⚠⚠ Backticks lose their tag entirely. <code> is NOT on the gallery's server-side
+        # allowlist: publishing fabric-empires failed with "contains invalid HTML ... a,
+        # code, li-image", and the only construct that draft had which none of the five
+        # already-published posts have is inline <code>. Confirmed by reading the live
+        # posts back: a=29, pre=1, img=5, code=0. Fenced blocks are unaffected because
+        # they emit <pre> with escaped text and no inner <code>.
+        s = re.sub(r"`([^`]+)`", r"\1", s)
         # ⚠⚠ NO target or rel. The gallery editor rejected the post outright with "contains
         # invalid HTML ... a", and the tag itself cannot be banned - its own Insert Link
         # button produces one. It is the extra attributes the sanitiser refuses. Stripped
@@ -210,6 +216,9 @@ def to_html(md: str, slug: str) -> str:
         raise SystemExit(f"{slug}: markdown link survived to_html: {leftovers}")
     if stray := re.findall(r"(?<!\w)\*[^*\n]+\*(?!\w)", prose):
         raise SystemExit(f"{slug}: markdown emphasis survived to_html: {stray}")
+    # ⚠ The gallery server refuses <code> outright and names it in the publish error.
+    if re.search(r"<code[\s>]", html):
+        raise SystemExit(f"{slug}: <code> is rejected by the gallery, emit plain text instead")
     return html
 
 
