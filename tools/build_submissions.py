@@ -77,6 +77,8 @@ def to_html(md: str, slug: str) -> str:
     in_list = False
     in_code = False
     code: list[str] = []
+    para: list[str] = []
+    li: list[str] = []
 
     # ⚠️ Strip HTML comments FIRST, across lines. Skipping only lines that start with
     # "<!--" left the continuation of a multi-line drafting note in the output, so every
@@ -115,9 +117,25 @@ def to_html(md: str, slug: str) -> str:
 
     def close_list():
         nonlocal in_list
+        flush_li()
         if in_list:
             out.append("</ul>")
             in_list = False
+
+    # ⚠ Markdown joins wrapped lines; this converter used to emit one block PER SOURCE
+    # LINE. Every earlier draft happened to keep each paragraph on a single long line so
+    # nothing showed it, until a draft written with 88-column wrapping produced a <p> per
+    # line and, worse, pushed the continuation of each wrapped bullet OUT of the <ul> as a
+    # stray paragraph. Text is buffered and flushed at real block boundaries instead.
+    def flush_para():
+        if para:
+            out.append(f"<p>{inline(' '.join(para))}</p>")
+            para.clear()
+
+    def flush_li():
+        if li:
+            out.append(f"<li>{inline(' '.join(li))}</li>")
+            li.clear()
 
     for raw in md.splitlines():
         line = raw.rstrip()
@@ -126,6 +144,9 @@ def to_html(md: str, slug: str) -> str:
             if in_code:
                 out.append("<pre>" + esc("\n".join(code)) + "</pre>")
                 code = []
+            else:
+                close_list()
+                flush_para()
             in_code = not in_code
             continue
         if in_code:
@@ -134,12 +155,14 @@ def to_html(md: str, slug: str) -> str:
 
         if re.match(r"^<!--", line) or line.strip() in {"", "---"}:
             close_list()
+            flush_para()
             continue
 
         # the demo embed, pointed at raw GitHub so it plays inside the post
-        m = re.match(r"^!\[[^\]]*\]\((?:demo\.gif|thumbnail\.\w+)\)$", line.strip())
+        m = re.match(r"^!\[[^\]]*\]\((?:docs/media/[^)]*demo\.gif|demo\.gif|thumbnail\.\w+)\)$", line.strip())
         if m:
             close_list()
+            flush_para()
             src = f"{RAW}/docs/media/{slug}-demo.gif" if "demo.gif" in line \
                 else f"{RAW}/docs/previews/{slug}.webp"
             out.append(f'<p><img src="{src}" alt="{slug} demo" width="900" /></p>')
@@ -148,6 +171,7 @@ def to_html(md: str, slug: str) -> str:
         h = re.match(r"^(#{1,6})\s+(.*)$", line)
         if h:
             close_list()
+            flush_para()
             # the post title lives in the form's subject field, so h1 is dropped
             if len(h.group(1)) > 1:
                 out.append(f"<h3>{inline(h.group(2))}</h3>")
@@ -155,16 +179,24 @@ def to_html(md: str, slug: str) -> str:
 
         b = re.match(r"^\s*[-*]\s+(.*)$", line)
         if b:
+            flush_para()
+            flush_li()
             if not in_list:
                 out.append("<ul>")
                 in_list = True
-            out.append(f"<li>{inline(b.group(1))}</li>")
+            li.append(b.group(1))
+            continue
+
+        # an indented continuation of the bullet above, not a new block
+        if in_list and li and raw.startswith(("  ", "\t")):
+            li.append(line.strip())
             continue
 
         close_list()
-        out.append(f"<p>{inline(line)}</p>")
+        para.append(line.strip())
 
     close_list()
+    flush_para()
     if in_code and code:
         out.append("<pre>" + esc("\n".join(code)) + "</pre>")
     html = "\n".join(out) + "\n"
