@@ -3,13 +3,23 @@ app: fabric-admin/governance-hub
 slug: governance-hub
 title: "Governance Hub: who may create what, where, and why"
 galleryUrl:            # filled in by Phase 5a once the post is live
-status: draft
+status: hold
+hold: true             # DO NOT SUBMIT. Alexander's call, 2026-08-28.
 assetsReady: true
 assets:
   - docs/previews/governance-hub.webp
   - docs/media/governance-hub-demo.gif
   - docs/media/governance-hub-demo.mp4
 ---
+
+<!-- ON HOLD, deliberately. Everything here is finished and was staged in the gallery
+     form once; it was pulled before publishing, on request, not because anything is
+     wrong with it. Leave it out of any "submit the rest" run.
+
+     To stage it later, it is about two minutes of work:
+       python tools/build_submissions.py          -> submissions/governance-hub/
+       then the fill sequence in /memories/fabric_apps_gallery_submission.md
+     Title, body, demo.gif and thumbnail.jpg are all generated from this file. -->
 
 # Governance Hub: who may create what, where, and why
 
