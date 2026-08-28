@@ -30,21 +30,12 @@ Explore a procedurally generated hex map, found cities, work tiles for four reso
 ## What it deploys into your workspace
 
 - Entra sign-in (Fabric identity)
-- Fabric SQL database
-- App backend, the data API the game writes through
-- Direct Lake semantic model over that database
-- Power BI report on top of it
 - Static web app
 
 ## Data
 
-The exam skills outlines are public.
-
-The two builds differ, and the difference matters. The **public playable build** has no
-backend and nobody signed in, so nothing leaves your browser. The **workspace deployment**
-does record play: a row per finished game and a row per question attempt, including whether
-the answer was correct, written to the Fabric SQL database it provisions. That is what feeds
-the Power BI report, and it is your own workspace, but it is stored rather than discarded.
+The exam skills outlines are public. This copy deploys without a data service, so no
+score and no attempt is stored anywhere: nothing you do leaves your browser.
 
 ## Try it
 
