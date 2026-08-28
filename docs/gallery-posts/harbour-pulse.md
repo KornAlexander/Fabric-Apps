@@ -20,9 +20,43 @@ A photorealistic 3D map of Sydney Harbour rendering live ferry positions out of 
 ## What it does
 
 - Live positions polled from Real-Time Intelligence every few seconds
-- Google Photorealistic 3D Tiles and Cesium OSM buildings
+- Three ways to draw the world: Google Photorealistic 3D Tiles via Cesium ion, NSW Government aerial photography, or plain OpenStreetMap
+- A free-flight drone camera over the harbour
 - Click a ferry for a full-screen voxel twin with decks
 - Pre-departure operator checklists in Fabric SQL
+
+## What I added, and how this differs from the original
+
+The app is Fran Genoa's. I forked it and added two things, both of which are in this
+copy. **Neither has been merged upstream**: I offered them for his consideration and
+opened no pull request, because it is his project to shape.
+
+**A drone camera.** The three.js free-flight control model used across the other twins
+in this gallery, rewritten against the Cesium camera API rather than copied. It latches
+rather than toggles: press W A S D Q E to fly and it hands the camera back after about a
+second of idle, so there is no mode button to find. Speed scales with height above
+ground, and a heads-up display shows altitude, height above ground, speed and heading.
+The fiddly part was a zenith guard: Cesium has no `maxPolarAngle`, so a long drag sails
+over the top and leaves the camera silently inverted. A pre-render guard holds the last
+legal pose.
+
+**It works without an API key.** Originally the photoreal view needed a Cesium ion token,
+and without one you landed on a flat OSM photograph. Sydney publishes no open
+photogrammetric mesh, so instead of a mesh the keyless modes get a world baked at build
+time: a terrain height grid from AWS Open Data Terrain Tiles behind a custom terrain
+provider, **12,529 OpenStreetMap building footprints** with roof colour measured from the
+NSW aerial imagery, and **8,795 real mapped street trees** seated on that terrain. It now
+defaults to ion when a token exists and to the NSW imagery when it does not.
+
+Two details that took the longest and are invisible when right. Heights are stored above
+sea level and offset by the local geoid, roughly 23 m, which is what keeps the ferries
+floating on the water rather than 23 m under it. And the buildings and trees render as
+batched primitives rather than one entity each, which is fine at 1,700 and hopeless at
+12,500.
+
+Nothing is fetched from a third party at run time any more. The Overpass API had failed
+this app four separate times, twice mid-demo, each time leaving the city as a flat
+photograph, so the runtime lookup is gone and the data is committed to the repository.
 
 ## What it deploys into your workspace
 
@@ -36,10 +70,11 @@ Transport for NSW open real-time feed.
 
 ## Credits
 
-- **Harbour Pulse is Fran Genoa's project.** The upstream repository is [FranGenoa/fabric-harbour-pulse](https://github.com/FranGenoa/fabric-harbour-pulse) and the design, the voxel vessel twins and the Real-Time Intelligence architecture are his work. This entry exists with his name on it, not instead of it.
+- **Harbour Pulse is Fran Genoa's project.** The upstream repository is [FranGenoa/fabric-harbour-pulse](https://github.com/FranGenoa/fabric-harbour-pulse) and the design, the voxel vessel twins and the Real-Time Intelligence architecture are his work. This entry exists with his name on it, not instead of it. My additions are described above and are not merged upstream.
 - **Ferry photographs** come from Wikimedia Commons and remain under their original licences. Every image is credited individually, author, licence and source page, in [ATTRIBUTION.md](../../industry/harbour-pulse/ATTRIBUTION.md), because those licences require it.
 - **Live vessel positions**: Transport for NSW open real-time feed.
 - **Base map**: Google Photorealistic 3D Tiles and Cesium OSM Buildings.
+- **Keyless modes**: NSW Government aerial photography (CC BY), terrain from AWS Open Data Terrain Tiles, buildings and trees from OpenStreetMap (ODbL). Attribution for these is always visible in the app.
 - Licence: MIT. Copyright (c) 2026 HarbourPulse contributors.
 
 ## Try it
