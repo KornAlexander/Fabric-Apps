@@ -27,10 +27,11 @@ Every tram, bus and metro in Helsinki, moving on a 3D map, fed by a Fabric Real-
 
 ## What I changed, and how this differs from the original
 
-This is a **rebuild of Kevin Thomas's Helsinki real-time transit solution**, not a fork of it.
-The idea, the Real-Time Intelligence architecture and the Fabric portal host bridge are his.
-So is the vehicle detail panel's layout and focus behaviour, and the per-vehicle operator
-notes: I adopted both from his app rather than inventing worse versions.
+This is a rebuild of **Kevin Thomas's Helsinki real-time transit solution**, and the ideas
+that make it work are his: the Real-Time Intelligence architecture, and the Fabric portal
+host bridge that queries the semantic model as the signed-in user so nobody is asked to
+sign in twice. His vehicle detail panel and his per-vehicle operator notes were better
+than what I had, so I use them here too.
 
 What is different here:
 
@@ -64,7 +65,7 @@ Helsinki Regional Transport Authority (HSL) high-frequency positioning feed, pub
 
 ## Credits
 
-- **Kevin Thomas**: the original Helsinki real-time transit solution. This app is a rebuild of that idea, using the same Real-Time Intelligence architecture and the same Fabric portal host bridge for querying the semantic model. The vehicle panel layout and the per-vehicle operator notes are adopted from his app too. What I changed is described above.
+- **Kevin Thomas**: the original Helsinki real-time transit solution, and the source of the ideas this one is built on. The Real-Time Intelligence architecture and the Fabric portal host bridge for querying the semantic model are his, as are the vehicle panel layout and the per-vehicle operator notes, which I use here because they were better than what I had. What I added on top is described above.
 - **Vehicle positions**: Helsingin seudun liikenne / Helsinki Region Transport (HSL), GTFS Realtime, CC BY 4.0. Required attribution, verbatim: *"Contains data from HSL, licensed under CC BY 4.0."*
 - **3D city model, terrain and orthophoto**: Helsingin kaupunki / City of Helsinki, CC BY 4.0. Required attribution, verbatim: *"Imagery & 3D models (c) City of Helsinki (CC BY 4.0)."*, shown in the app whenever the 3D view is active.
 - Nothing is redistributed here: every tile and every feed is streamed from the publisher at run time, with no API key and no copy stored in the repository.

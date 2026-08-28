@@ -27,9 +27,10 @@ A photorealistic 3D map of Sydney Harbour rendering live ferry positions out of 
 
 ## What I added, and how this differs from the original
 
-The app is Fran Genoa's. I forked it and added two things, both of which are in this
-copy. **Neither has been merged upstream**: I offered them for his consideration and
-opened no pull request, because it is his project to shape.
+Harbour Pulse is Fran Genoa's, and it is a lovely piece of work: the design, the voxel
+vessel twins and the Real-Time Intelligence architecture are all his. I forked it because
+I liked it enough to want to fly around inside it, and added two things, both of which are
+in this copy.
 
 **A drone camera.** The three.js free-flight control model used across the other twins
 in this gallery, rewritten against the Cesium camera API rather than copied. It latches
@@ -70,7 +71,7 @@ Transport for NSW open real-time feed.
 
 ## Credits
 
-- **Harbour Pulse is Fran Genoa's project.** The upstream repository is [FranGenoa/fabric-harbour-pulse](https://github.com/FranGenoa/fabric-harbour-pulse) and the design, the voxel vessel twins and the Real-Time Intelligence architecture are his work. This entry exists with his name on it, not instead of it. My additions are described above and are not merged upstream.
+- **Harbour Pulse is Fran Genoa's project.** The upstream repository is [FranGenoa/fabric-harbour-pulse](https://github.com/FranGenoa/fabric-harbour-pulse) and the design, the voxel vessel twins and the Real-Time Intelligence architecture are his work. This entry exists with his name on it, not instead of it. What I added on top is described above.
 - **Ferry photographs** come from Wikimedia Commons and remain under their original licences. Every image is credited individually, author, licence and source page, in [ATTRIBUTION.md](../../industry/harbour-pulse/ATTRIBUTION.md), because those licences require it.
 - **Live vessel positions**: Transport for NSW open real-time feed.
 - **Base map**: Google Photorealistic 3D Tiles and Cesium OSM Buildings.
