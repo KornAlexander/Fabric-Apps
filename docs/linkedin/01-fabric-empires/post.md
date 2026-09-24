@@ -9,7 +9,6 @@ language: en
 assetsReady: true
 assets:
   - docs/previews/fabric-empires.webp
-  - C:\Users\alkorn\repos\fabric-empires\media\linkedin\PROMO.mp4
 ---
 
 # 01: fabric-empires
@@ -52,7 +51,7 @@ Gallery entry: https://community.fabric.microsoft.com/discussions/pbi_fabricapps
 
 ## Notes for the composer
 
-- Attach: `fabric-empires-teaser.mp4`, sitting beside this file. Local copy of `C:\Users\alkorn\repos\fabric-empires\media\linkedin\PROMO.mp4`, gitignored; the source is not duplicated in git.
+- Attach: `fabric-empires-teaser.mp4`, sitting beside this file. Local copy of the promo film from the app's own media folder, gitignored; the source is not duplicated in git.
 - Paste as plain text; LinkedIn strips markdown. The blank lines are the formatting.
 - Mentions are added by hand in the composer, not here.
 - The app page link is mandatory and always the app's own subpage, never the front page: https://kornalexander.github.io/Fabric-Apps/apps/fabric-empires/

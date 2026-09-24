@@ -1,0 +1,24 @@
+{
+  "aoi": "flughafen",
+  "file": "shell-drape.jpg",
+  "width": 1247,
+  "height": 1600,
+  "resolutionM": 29.2542,
+  "crs": "EPSG:25832",
+  "origin": {
+    "easting": 681120.0,
+    "northing": 5324760.0
+  },
+  "spanM": {
+    "east": 36480.0,
+    "north": 46800.0
+  },
+  "encoding": "JPEG, row 0 = north — same orientation as the heightmap",
+  "source": "Digitale Orthophotos DOP20, Bayerische Vermessungsverwaltung (LDBV)",
+  "service": "https://geoservices.bayern.de/od/wms/dop/v1/dop20",
+  "layer": "by_dop20c",
+  "licence": "CC BY 4.0",
+  "attribution": "Datenquelle: Bayerische Vermessungsverwaltung – www.geodaten.bayern.de [Daten bearbeitet]",
+  "resolutionNote": "The source is 20 cm. This drape is resampled by the WMS to about 29.3 m per pixel, because the terrain mesh beneath it is at 16 m posting and a 2-gigapixel texture is neither loadable nor useful. It is a photograph of the ground, not a measurement, and nothing is derived from it.",
+  "acquisition": "LDBV Bayernbefliegung; the flight date varies by tile and is not per-pixel"
+}

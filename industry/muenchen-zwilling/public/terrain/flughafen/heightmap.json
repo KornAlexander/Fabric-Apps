@@ -1,0 +1,89 @@
+{
+  "width": 2144,
+  "height": 1453,
+  "resolutionM": 4,
+  "crs": "EPSG:25832",
+  "verticalDatum": "DHHN2016",
+  "origin": {
+    "easting": 702096,
+    "northing": 5356632
+  },
+  "heightMinM": 433.608,
+  "heightMaxM": 473.28,
+  "heightScale": 0.0006053558719815747,
+  "encoding": "uint16-le, row-major, row 0 = north",
+  "boundsWgs84": {
+    "west": 11.726806,
+    "south": 48.330531,
+    "east": 11.845283,
+    "north": 48.379955
+  },
+  "coveragePct": 100.0,
+  "focusPlaces": [
+    {
+      "id": "mac",
+      "name": "Munich Airport Center",
+      "u": 0.50181,
+      "v": 0.52804,
+      "groundM": 452.3
+    },
+    {
+      "id": "terminal2",
+      "name": "Terminal 2",
+      "u": 0.54651,
+      "v": 0.5175,
+      "groundM": 448.35
+    },
+    {
+      "id": "terminalf",
+      "name": "Terminal F",
+      "u": 0.53861,
+      "v": 0.44882,
+      "groundM": 446.34
+    },
+    {
+      "id": "gat",
+      "name": "General Aviation Terminal",
+      "u": 0.63451,
+      "v": 0.44429,
+      "groundM": 445.9
+    },
+    {
+      "id": "bahnhof",
+      "name": "S-Bahnhof M\u00fcnchen Flughafen Terminal",
+      "u": 0.50165,
+      "v": 0.52842,
+      "groundM": 452.3
+    },
+    {
+      "id": "besucherpark",
+      "name": "S-Bahnhof Besucherpark",
+      "u": 0.30906,
+      "v": 0.57076,
+      "groundM": 449.09
+    },
+    {
+      "id": "nordbahn_west",
+      "name": "Schwelle 08L",
+      "u": 0.33719,
+      "v": 0.36502,
+      "groundM": 447.2
+    },
+    {
+      "id": "suedbahn_west",
+      "name": "Schwelle 08R",
+      "u": 0.20528,
+      "v": 0.7946,
+      "groundM": 452.68
+    }
+  ],
+  "flyingSites": [],
+  "nodataFill": "nearest",
+  "nodataNote": "Cells without DGM1 data \u2014 a survey authority's tiles stop at its own state boundary, and the UTM envelope of a geographic bbox bows outside the bbox at its corners \u2014 are filled from the nearest measured cell for appearance, and flagged in the nodata mask. See PLAN.md \u00a74.1.",
+  "source": "DGM1, Bayerische Vermessungsverwaltung (LDBV)",
+  "sourceAcquisition": "open geodata, retrieved 2026",
+  "attribution": "Datenquelle: Bayerische Vermessungsverwaltung \u2013 www.geodaten.bayern.de [Daten bearbeitet]",
+  "licence": "CC BY 4.0",
+  "file": "heightmap.u16",
+  "nodataFile": "heightmap_nodata.u8"
+}

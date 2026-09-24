@@ -9,7 +9,6 @@ language: en
 assetsReady: true
 assets:
   - docs/previews/campus-scheduler.webp
-  - C:\Users\alkorn\repos\Marketing\Campus-Twin-LinkedIn\campus-twin-promo-sprecher-48k.mp4
 ---
 
 # 02: campus-scheduler
@@ -50,7 +49,7 @@ Gallery entry: https://community.fabric.microsoft.com/discussions/pbi_fabricapps
 
 ## Notes for the composer
 
-- Attach: `campus-scheduler-teaser.mp4`, sitting beside this file. Local copy of `C:\Users\alkorn\repos\Marketing\Campus-Twin-LinkedIn\campus-twin-promo-sprecher-48k.mp4`, gitignored; the source is not duplicated in git.
+- Attach: `campus-scheduler-teaser.mp4`, sitting beside this file. Local copy of the narrated promo film (48 kHz master), gitignored; the source is not duplicated in git.
 - Paste as plain text; LinkedIn strips markdown. The blank lines are the formatting.
 - Mentions are added by hand in the composer, not here.
 - The app page link is mandatory and always the app's own subpage, never the front page: https://kornalexander.github.io/Fabric-Apps/apps/campus-scheduler/

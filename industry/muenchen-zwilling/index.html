@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="München Zwilling: ein 3D-Zwilling der Stadt München und des Flughafens München." />
+    <title>München Zwilling</title>
+    <link rel="icon" href="data:," />
+    <script>
+      (() => {
+        const param = new URLSearchParams(window.location.search).get('clawpilotTheme');
+        document.documentElement.setAttribute('data-theme', param === 'dark' ? 'dark' : 'light');
+      })();
+    </script>
+  </head>
+  <body>
+    <main id="map" aria-label="München Zwilling">
+      <canvas id="city-map" tabindex="0" aria-label="Interaktive 3D-Karte von München und dem Flughafen München" aria-describedby="navigation-hint"></canvas>
+
+      <div id="loading" role="status" aria-live="polite">
+        <strong>München Zwilling wird geladen</strong>
+        <span id="loading-detail">Die Ansicht wird vorbereitet…</span>
+        <progress id="progress" aria-label="Ladefortschritt der Karte"></progress>
+        <small id="loading-note">Zwei hochaufgelöste Bereiche. Der erste Aufbau dauert einen Moment.</small>
+      </div>
+
+      <div id="error" role="alert" hidden>
+        <strong>Karte nicht verfügbar</strong>
+        <p>Die Karte konnte nicht geladen werden. Bitte Verbindung prüfen und neu laden.</p>
+        <button id="retry" type="button">Neu laden</button>
+      </div>
+
+      <div id="site-switch" role="group" aria-label="Ort wählen" hidden>
+        <button type="button" data-site="munich" aria-pressed="true">
+          <strong>München Zentrum</strong>
+          <small>Maxvorstadt und Altstadtrand</small>
+        </button>
+        <button type="button" data-site="flughafen" aria-pressed="false">
+          <strong>Flughafen München</strong>
+          <small>Nord- und Südbahn, Terminal 1 und 2</small>
+        </button>
+      </div>
+
+      <aside id="layers" aria-label="Datenebenen" hidden>
+        <h2>Datenebenen</h2>
+        <p class="layers-note">Jede Ebene stammt aus einer offenen Quelle, die meisten live abgefragt. Es werden keine erfundenen Daten dargestellt; wo etwas berechnet statt gemessen ist, steht es an der Ebene.</p>
+        <ul>
+          <li>
+            <label>
+              <input type="checkbox" data-layer="flugverkehr" />
+              <span class="layer-name">Flugverkehr</span>
+              <span class="layer-source">ADS-B, adsb.lol</span>
+            </label>
+            <span class="layer-state" data-state-for="flugverkehr">aus</span>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox" data-layer="baustellen" />
+              <span class="layer-name">Baustellen und Halteverbote</span>
+              <span class="layer-source">Landeshauptstadt München, WFS</span>
+            </label>
+            <span class="layer-state" data-state-for="baustellen">aus</span>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox" data-layer="mvg" />
+              <span class="layer-name">MVG Echtzeit</span>
+              <span class="layer-source">MVG Abfahrten, live</span>
+            </label>
+            <span class="layer-state" data-state-for="mvg">aus</span>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox" data-layer="fahrzeuge" />
+              <span class="layer-name">Fahrzeuge auf der Strecke</span>
+              <span class="layer-source">MVV Soll-Fahrplan (GTFS), Fahrplanstand 09/2026 · Positionen aus den Soll-Abfahrtszeiten berechnet, keine Fahrzeugortung · Fahrweg als gerade Linie zwischen den Haltestellen, kein Gleisverlauf · U-Bahn und S-Bahn fahren hier im Tunnel und werden transparent an der Oberfläche gezeigt</span>
+            </label>
+            <span class="layer-state" data-state-for="fahrzeuge">aus</span>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox" data-layer="luft-amtlich" />
+              <span class="layer-name">Luftqualität amtlich</span>
+              <span class="layer-source">Umweltbundesamt, stündlich · Säulenhöhe und Farbe nach veröffentlichtem Index (0 = niedrigste gemessene Stufe)</span>
+            </label>
+            <span class="layer-state" data-state-for="luft-amtlich">aus</span>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox" data-layer="luft-buerger" />
+              <span class="layer-name">Luftqualität Bürgermessnetz</span>
+              <span class="layer-source">Sensor.Community, nicht amtlich kalibriert · Farbe = PM₂,₅ in µg/m³ (≤5 / 10 / 20 / 40 / darüber) · Kugeln sind Symbole</span>
+            </label>
+            <span class="layer-state" data-state-for="luft-buerger">aus</span>
+          </li>
+          <li>
+            <label>
+              <input type="checkbox" data-layer="koordination" />
+              <span class="layer-name">Koordinationsnotizen</span>
+              <span class="layer-source">Diese Anwendung, nicht amtlich · Anmerkungen zu Baustellen</span>
+            </label>
+            <span class="layer-state" data-state-for="koordination">aus</span>
+            <!-- Notes written by someone else only appear after a reload, so the layer offers
+                 one explicitly rather than pretending it updates by itself. -->
+            <button id="koordination-refresh" type="button" class="layer-refresh"
+                    title="Koordinationsnotizen neu laden" hidden>Neu laden</button>
+          </li>
+        </ul>
+        <!-- Filled from src/live/wfsCatalogue.ts. Kept empty here on purpose: hand-written
+             markup for a catalogue of open datasets drifts out of step with the catalogue. -->
+        <div id="layer-groups"></div>
+      </aside>
+
+      <aside id="detail" aria-label="Details zum ausgewählten Objekt" aria-live="polite" hidden>
+        <button id="detail-close" type="button" aria-label="Details schließen" title="Schließen">✕</button>
+        <p id="detail-kind"></p>
+        <h2 id="detail-title"></h2>
+        <dl id="detail-fields"></dl>
+        <p id="detail-source"></p>
+        <div id="detail-actions" hidden>
+          <button id="detail-note" type="button">Koordinationsnotiz hinzufügen</button>
+        </div>
+        <form id="note-form" hidden>
+          <label for="note-kategorie">Kategorie</label>
+          <select id="note-kategorie">
+            <option>Hinweis</option>
+            <option>Konflikt vermutet</option>
+            <option>Eigene Maßnahme geplant</option>
+            <option>Abstimmung erfolgt</option>
+          </select>
+          <label for="note-text">Notiz</label>
+          <textarea id="note-text" rows="3" maxlength="2000" placeholder="Was sollen die anderen Beteiligten wissen?"></textarea>
+          <p class="note-hint">Diese Notiz gehört zu dieser Anwendung. Sie ändert nichts an den offenen Daten der Landeshauptstadt und ist kein amtlicher Vermerk.</p>
+          <div class="note-actions">
+            <button id="note-save" type="submit">Speichern</button>
+            <button id="note-cancel" type="button">Abbrechen</button>
+          </div>
+          <p id="note-status" aria-live="polite"></p>
+        </form>
+      </aside>
+
+      <button id="assistant-toggle" type="button" aria-expanded="false" aria-controls="assistant" hidden>
+        Assistent
+      </button>
+
+      <aside id="assistant" aria-label="Koordinationsassistent" hidden>
+        <button id="assistant-close" type="button" aria-label="Assistent schließen" title="Schließen">✕</button>
+        <h2>Koordinationsassistent</h2>
+        <p class="assistant-note">
+          Der Assistent ist angewiesen, nur die angebundenen Live-Quellen zu nutzen, und zeigt
+          jedes benutzte Werkzeug an. Er kann keine Koordinationsnotiz veröffentlichen. Sprach­­modelle
+          können sich dennoch irren: prüfen Sie wichtige Aussagen anhand der angezeigten Werkzeuge.
+        </p>
+        <p id="assistant-author" class="assistant-author" hidden></p>
+        <button id="assistant-signin" type="button" class="assistant-signin" hidden>
+          Anmelden, um Notizen zuzuordnen
+        </button>
+        <div id="assistant-log" role="log" aria-live="polite"></div>
+        <div class="assistant-examples">
+          <button type="button" class="assistant-example" data-prompt="Welche Baustellen überschneiden sich in der Maxvorstadt räumlich und zeitlich?">Überschneidungen in der Maxvorstadt</button>
+          <button type="button" class="assistant-example" data-prompt="Vergleiche die Luftqualität an der Landshuter Allee mit der Lothstraße.">Luft: Landshuter Allee vs. Lothstraße</button>
+          <button type="button" class="assistant-example" data-prompt="Welche Baustellen gibt es in der Lothstraße und welche MVG-Haltestellen liegen in der Nähe?">Lothstraße und Haltestellen</button>
+        </div>
+        <form id="assistant-form">
+          <input id="assistant-input" type="text" autocomplete="off" maxlength="400"
+                 placeholder="Frage zu Baustellen, Luft oder Flugverkehr…" />
+          <button id="assistant-send" type="submit">Fragen</button>
+        </form>
+      </aside>
+
+      <nav id="map-controls" aria-label="Kartennavigation" hidden>
+        <button id="north" type="button" aria-label="Nach Norden ausrichten" title="Nach Norden ausrichten">N ↑</button>
+        <button id="home" type="button" aria-label="Ansicht zurücksetzen" title="Ansicht zurücksetzen">⌂</button>
+      </nav>
+
+      <div id="drone-hud" data-testid="drone-hud" hidden></div>
+      <p id="navigation-hint">Ziehen zum Drehen · Umschalt + Ziehen zum Verschieben · Scrollen zum Zoomen · Klick für Details · WASD zum Fliegen · Esc zum Loslassen</p>
+
+      <details id="attribution">
+        <summary>Kartendaten © LDBV · Copernicus · OpenStreetMap · adsb.lol · LHM · MVG · UBA · Sensor.Community</summary>
+        <div>
+          <p>Datenquelle: Bayerische Vermessungsverwaltung – www.geodaten.bayern.de [Daten bearbeitet]</p>
+          <p><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>. Gelände, Luftbild, Gebäudegeometrie und Baumstandorte. Kronenradien sind geschätzt, Baumarten sind nicht erfasst. Der Flughafenbereich enthält bewusst keine Baumdaten.</p>
+          <p><strong>Hinweis zum Luftbild:</strong> Die im Luftbild sichtbaren Flugzeuge stammen aus dem Befliegungstag und sind Teil der Fotografie. Sie sind keine Echtzeitdaten. Live-Flugzeuge werden als 3D-Modelle darüber dargestellt.</p>
+          <p>produced using Copernicus WorldDEM-30 © DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA; all rights reserved</p>
+          <p><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a> (ODbL). Landbedeckung.</p>
+          <p>Flugverkehr: Live-ADS-B von <a href="https://adsb.lol/" target="_blank" rel="noopener noreferrer">adsb.lol</a>, einer ehrenamtlichen Empfängergemeinschaft, als offene Daten unter ODbL. Abdeckung und Verfügbarkeit sind nicht zugesichert; nicht jedes Luftfahrzeug sendet ADS-B. Verkehrsflugzeuge und Regionalturboprops, für die eine veröffentlichte Länge hinterlegt ist, werden als maßstabsgetreues Modell dargestellt. Für alle übrigen Luftfahrzeuge, etwa Hubschrauber und Kleinflugzeuge, liegt in dieser Anwendung keine passende Silhouette vor. Sie werden an ihrer gemessenen Position als <strong>neutrales Positionssymbol</strong> gezeichnet und im Ebenenfenster entsprechend gezählt. Das Symbol ist bewusst kein Flugzeugumriss und sagt nichts über Muster oder Größe aus; die Quelle meldet für viele dieser Luftfahrzeuge durchaus ein Muster. Die angezeigte Höhe ist eine Druckhöhe (1013,25 hPa), keine Höhe über Grund.</p>
+          <p>Baustellen und Halteverbote: Landeshauptstadt München, offene Daten über WFS.</p>
+          <p>MVG Echtzeit: Münchner Verkehrsgesellschaft, öffentliche Abfahrtsschnittstelle.</p>
+          <p><strong>Luftqualität amtlich:</strong> Umweltbundesamt, Air Data, stündliche Werte der Messstationen des bayerischen Messnetzes. Dargestellt werden die aktiven Münchner Stationen. Die Säulen sind Symbole, keine Bauwerke: Höhe und Farbe geben den veröffentlichten Gesamtindex wieder, die gemessenen Konzentrationen stehen im Detailfenster. Das Umweltbundesamt veröffentlicht über diese Schnittstelle <strong>keine Definition der Indexskala</strong> und keine Benennung der Stufen. Die Anwendung zeigt deshalb nur die Zahl und die Messwerte, nennt keinen Maximalwert und verwendet keine Einstufung wie „gut“ oder „mäßig“. Die Farbskala ist eine Darstellung dieser Anwendung, nicht die amtliche Farbgebung. Kennzeichnet die Quelle eine Stunde als unvollständig, wird das im Detailfenster angezeigt; das betrifft unter anderem Stationen, an denen nicht alle Komponenten gemessen werden. Ein Messwert gilt für den Standort der Station und für die angegebene Stunde. Die Zeitangabe „Abruf“ im Ebenenfenster ist der Zeitpunkt der Abfrage, nicht der Messzeitpunkt; der Messzeitraum steht im Detailfenster.</p>
+          <p><strong>Luftqualität Bürgermessnetz:</strong> <a href="https://sensor.community/" target="_blank" rel="noopener noreferrer">Sensor.Community</a>, offene Daten unter ODbL. Es handelt sich um ehrenamtlich betriebene, <strong>nicht amtlich kalibrierte</strong> Sensoren. Optische Feinstaubsensoren messen bei hoher Luftfeuchte tendenziell zu hoch; die Werte sind mit den amtlichen Stationen nicht direkt vergleichbar. Die Standorte werden von der Quelle aus Datenschutzgründen gerundet veröffentlicht und sind keine Adressangaben. Sensoren, die als Innenraumsensoren gekennzeichnet sind, werden nicht dargestellt. Die Kugeln sind Symbole: ihre Größe und ihre Höhe über dem Gelände sagen nichts über die Bauform oder den Montageort eines Sensors aus. Die Zeitangabe „Abruf“ ist der Zeitpunkt der Abfrage; der Messzeitpunkt jedes Sensors steht im Detailfenster.</p>
+          <p><strong>Koordinationsnotizen und Assistent:</strong> Die Notizen entstehen in dieser Anwendung und werden in einer eigenen Fabric SQL-Datenbank gespeichert. Sie sind <strong>kein amtlicher Datensatz</strong> und verändern die offenen Daten der Landeshauptstadt nicht. Der Assistent nutzt ein Sprachmodell in Azure AI Foundry. Er ist angewiesen, ausschließlich die angebundenen Live-Quellen zu verwenden, und zeigt jedes benutzte Werkzeug an; eine technische Garantie dafür gibt es nicht, und Sprachmodelle können sich irren. Der Assistent kann eine Notiz nur vorbereiten und nicht veröffentlichen; das Veröffentlichen geschieht über eine gesonderte Bestätigung. Die Angabe zur verfassenden Person stammt aus der angemeldeten Fabric-Sitzung, wird vom Browser übermittelt und ist deshalb als <em>gemeldet</em> gekennzeichnet, nicht als geprüft. <strong>Dieser Dienst ist eine Demo-Umgebung und nicht zugriffsgeschützt im Sinne einer Fachanwendung</strong>: Notizen sollten keine vertraulichen Inhalte enthalten. Ein Verweis auf eine Baustelle nutzt die Kennung des veröffentlichten Datensatzes; diese Kennung kann bei einer Neuveröffentlichung der Stadt einer anderen Maßnahme zugeordnet werden, weshalb jede Notiz Ort, Koordinaten und Zeitpunkt zusätzlich selbst speichert. Die offenen Baustellendaten nennen keine ausführende Organisation; Angaben dazu stammen allein aus den Notizen der Beteiligten.</p>
+        </div>
+      </details>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

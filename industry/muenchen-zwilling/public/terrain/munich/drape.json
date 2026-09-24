@@ -1,0 +1,22 @@
+{
+  "file": "drape.jpg",
+  "width": 3381,
+  "height": 4096,
+  "resolutionM": 0.9624,
+  "crs": "EPSG:25832",
+  "origin": {
+    "easting": 689916,
+    "northing": 5333514
+  },
+  "spanM": {
+    "east": 3254,
+    "north": 3942
+  },
+  "source": "Digitale Orthophotos DOP20, Bayerische Vermessungsverwaltung (LDBV)",
+  "service": "https://geoservices.bayern.de/od/wms/dop/v1/dop20",
+  "layer": "by_dop20c",
+  "licence": "CC BY 4.0",
+  "attribution": "Datenquelle: Bayerische Vermessungsverwaltung – www.geodaten.bayern.de [Daten bearbeitet]",
+  "acquisition": "LDBV Bayernbefliegung; the flight date varies by tile and is not per-pixel",
+  "resolutionNote": "Source DOP20 imagery resampled to 0.9624 metres per pixel. Photograph only, not a geometry measurement."
+}

@@ -1,0 +1,65 @@
+{
+  "aoi": "flughafen",
+  "file": "drape.jpg",
+  "width": 8192,
+  "height": 5552,
+  "resolutionM": 1.0469,
+  "crs": "EPSG:25832",
+  "origin": {
+    "easting": 702096.0,
+    "northing": 5356632.0
+  },
+  "spanM": {
+    "east": 8576.0,
+    "north": 5812.0
+  },
+  "encoding": "JPEG, row 0 = north — same orientation as the heightmap",
+  "source": "Digitale Orthophotos DOP20, Bayerische Vermessungsverwaltung (LDBV)",
+  "service": "https://geoservices.bayern.de/od/wms/dop/v1/dop20",
+  "layer": "by_dop20c",
+  "licence": "CC BY 4.0",
+  "attribution": "Datenquelle: Bayerische Vermessungsverwaltung – www.geodaten.bayern.de [Daten bearbeitet]",
+  "resolutionNote": "The source is 20 cm. This drape is resampled by the WMS to about 1.0 m per pixel, because the terrain mesh beneath it is at 16 m posting and a 2-gigapixel texture is neither loadable nor useful. It is a photograph of the ground, not a measurement, and nothing is derived from it.",
+  "acquisition": "LDBV Bayernbefliegung; the flight date varies by tile and is not per-pixel",
+  "tiles": {
+    "cols": 2,
+    "rows": 2,
+    "tileWidth": 4096,
+    "tileHeight": 2776,
+    "items": [
+      {
+        "file": "drape_0_0.jpg",
+        "row": 0,
+        "col": 0,
+        "width": 4096,
+        "height": 2776,
+        "bytes": 1862984
+      },
+      {
+        "file": "drape_0_1.jpg",
+        "row": 0,
+        "col": 1,
+        "width": 4096,
+        "height": 2776,
+        "bytes": 1620934
+      },
+      {
+        "file": "drape_1_0.jpg",
+        "row": 1,
+        "col": 0,
+        "width": 4096,
+        "height": 2776,
+        "bytes": 1791101
+      },
+      {
+        "file": "drape_1_1.jpg",
+        "row": 1,
+        "col": 1,
+        "width": 4096,
+        "height": 2776,
+        "bytes": 1845024
+      }
+    ],
+    "note": "Row 0 is north, column 0 is west. The full mosaic stays in drape.jpg for reference and is NOT loaded by the app when this block is present."
+  }
+}

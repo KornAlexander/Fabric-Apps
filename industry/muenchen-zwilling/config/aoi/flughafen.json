@@ -1,0 +1,188 @@
+{
+  "$comment": "Gebiet (AOI) des München Zwillings. Werte gemessen, Quellen siehe NOTICE.md.",
+  "id": "flughafen",
+  "probedOn": "2026-09-21",
+  "site": {
+    "name": {
+      "de": "Flughafen München",
+      "en": "Munich Airport"
+    },
+    "region": {
+      "de": "Erdinger Moos, Bayern",
+      "en": "Erdinger Moos, Bavaria"
+    },
+    "timezone": "Europe/Berlin"
+  },
+  "bbox": {
+    "crs": "EPSG:4326",
+    "west": 11.7295,
+    "east": 11.8425,
+    "south": 48.3305,
+    "north": 48.38
+  },
+  "shell": {
+    "crs": "EPSG:4326",
+    "west": 11.45,
+    "east": 11.92,
+    "south": 48.05,
+    "north": 48.46
+  },
+  "workingCrs": "EPSG:25832",
+  "verticalDatum": "DHHN2016",
+  "elevationRangeM": {
+    "min": 430,
+    "max": 490
+  },
+  "verification": {
+    "minCoveragePct": 99.5,
+    "toleranceM": 3.0,
+    "shellToleranceM": 12.0,
+    "maxSeamOffsetM": 3.0,
+    "controlPoints": [
+      {
+        "name": "Perlacher Mugl",
+        "lat": 48.069204,
+        "lon": 11.576829,
+        "publishedM": 587,
+        "tier": "shell",
+        "source": "OSM node/27236490 natural=peak ele=587 wikidata"
+      },
+      {
+        "name": "Olympiaberg",
+        "lat": 48.169852,
+        "lon": 11.551629,
+        "publishedM": 564,
+        "tier": "shell",
+        "source": "OSM node/158712415 natural=peak ele=564 wikidata"
+      },
+      {
+        "name": "Fröttmaninger Berg",
+        "lat": 48.21418,
+        "lon": 11.630448,
+        "publishedM": 562,
+        "tier": "shell",
+        "source": "OSM node/263833045 natural=peak ele=562 wikidata"
+      },
+      {
+        "name": "Luitpoldhügel",
+        "lat": 48.172422,
+        "lon": 11.570897,
+        "publishedM": 539,
+        "tier": "shell",
+        "source": "OSM node/666304999 natural=peak ele=539 wikidata"
+      },
+      {
+        "name": "Hypoberg",
+        "lat": 48.204514,
+        "lon": 11.645326,
+        "publishedM": 534,
+        "tier": "shell",
+        "source": "de.wikipedia.org/wiki/Hypoberg, 534 m ü. NHN, citing the Bayerische Vermessungsverwaltung geoportal. ⚠️ NOT OSM's ele=517, which is 17 m too low — see the Munich AOI's $hypobergCorrection."
+      }
+    ]
+  },
+  "drape": {
+    "maxPx": 8192,
+    "tiles": {
+      "cols": 2,
+      "rows": 2
+    }
+  },
+  "grids": {
+    "sourceResolutionM": 1,
+    "renderResolutionM": 4,
+    "renderDecimation": 2
+  },
+  "shellGrids": {
+    "sourceResolutionM": 30,
+    "renderResolutionM": 30,
+    "renderDecimation": 3,
+    "transitionBandM": 250
+  },
+  "geobasis": {
+    "authority": "Bayerische Vermessungsverwaltung (LDBV)",
+    "licence": "CC BY 4.0",
+    "licenceUrl": "https://creativecommons.org/licenses/by/4.0/deed.de",
+    "attribution": "Datenquelle: Bayerische Vermessungsverwaltung – www.geodaten.bayern.de [Daten bearbeitet]",
+    "downloadBase": "https://download1.bayernwolke.de",
+    "downloadMirror": "https://download2.bayernwolke.de",
+    "metalinkBase": "https://geodaten.bayern.de/odd",
+    "ags": null
+  },
+  "shellGeobasis": {
+    "authority": "ESA / DLR / Airbus Defence and Space — Copernicus DEM GLO-30",
+    "licence": "Copernicus DEM free licence (worldwide, free reuse with the prescribed notice)",
+    "licenceUrl": "https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM",
+    "attribution": "produced using Copernicus WorldDEM-30 © DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA; all rights reserved",
+    "cogUrlTemplate": "https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com/Copernicus_DSM_COG_10_{NS}{lat:02d}_00_{EW}{lon:03d}_00_DEM/Copernicus_DSM_COG_10_{NS}{lat:02d}_00_{EW}{lon:03d}_00_DEM.tif",
+    "tiles": [
+      "N48_E011"
+    ]
+  },
+  "buildings": {
+    "lodPolicy": {
+      "decision": "full LoD2 everywhere in the core"
+    }
+  },
+  "vegetation": {
+    "skip": true
+  },
+  "focusPlaces": [
+    {
+      "id": "mac",
+      "name": "Munich Airport Center",
+      "lat": 48.353789,
+      "lon": 11.786145,
+      "source": "OSM way/4446890 aeroway=terminal"
+    },
+    {
+      "id": "terminal2",
+      "name": "Terminal 2",
+      "lat": 48.354214,
+      "lon": 11.791344,
+      "source": "OSM way/360544293 aeroway=terminal"
+    },
+    {
+      "id": "terminalf",
+      "name": "Terminal F",
+      "lat": 48.357823,
+      "lon": 11.790627,
+      "source": "OSM way/4447199 aeroway=terminal"
+    },
+    {
+      "id": "gat",
+      "name": "General Aviation Terminal",
+      "lat": 48.35779,
+      "lon": 11.801729,
+      "source": "OSM way/158982502 aeroway=terminal"
+    },
+    {
+      "id": "bahnhof",
+      "name": "S-Bahnhof München Flughafen Terminal",
+      "lat": 48.3537694,
+      "lon": 11.7861263,
+      "source": "OSM node/2499357757 railway=station"
+    },
+    {
+      "id": "besucherpark",
+      "name": "S-Bahnhof Besucherpark",
+      "lat": 48.3520957,
+      "lon": 11.7637381,
+      "source": "OSM node/2499384741 railway=station"
+    },
+    {
+      "id": "nordbahn_west",
+      "name": "Schwelle 08L",
+      "lat": 48.362763,
+      "lon": 11.767573,
+      "source": "OSM way/161719294 first node"
+    },
+    {
+      "id": "suedbahn_west",
+      "name": "Schwelle 08R",
+      "lat": 48.340693,
+      "lon": 11.751109,
+      "source": "OSM way/161718288 first node"
+    }
+  ]
+}

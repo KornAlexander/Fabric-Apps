@@ -1,0 +1,194 @@
+:root {
+  color-scheme: light;
+  --cp-bg: #f7f4ef;
+  --cp-bg-elevated: #fcfbf8;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede;
+  --cp-border-strong: #919191;
+  --cp-text: #242424;
+  --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f;
+  --cp-accent: #FF0000;
+  --cp-accent-hover: #FF0000;
+  --cp-accent-soft: rgba(255, 0, 0, 0.08);
+  --cp-accent-fg: #000000;
+  --cp-success: #16a34a;
+  --cp-danger: #FF0000;
+  --cp-warning: #f59e0b;
+  --cp-link: #0078d4;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-highlight: rgba(255, 0, 0, 0.12);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #3d3b3a;
+  --cp-bg-elevated: #343231;
+  --cp-surface: #292929;
+  --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747;
+  --cp-border-strong: #5f5f5f;
+  --cp-text: #dedede;
+  --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0;
+  --cp-accent: #FF0000;
+  --cp-accent-hover: #FF0000;
+  --cp-accent-soft: rgba(255, 0, 0, 0.14);
+  --cp-accent-fg: #000000;
+  --cp-success: #4ade80;
+  --cp-danger: #FF0000;
+  --cp-warning: #fbbf24;
+  --cp-link: #4da6ff;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --cp-overlay: rgba(41, 41, 41, 0.88);
+  --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: rgba(255, 0, 0, 0.12);
+}
+* { box-sizing: border-box; }
+html, body, #map { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body { background: var(--cp-bg); color: var(--cp-text); font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif; }
+#map { position: relative; }
+#city-map { display: block; width: 100%; height: 100%; touch-action: none; }
+[hidden] { display: none !important; }
+button, summary { cursor: pointer; }
+button { font: inherit; color: var(--cp-text); background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 0.625rem; min-width: 44px; min-height: 44px; }
+button:hover { background: var(--cp-surface-soft); border-color: var(--cp-border-strong); }
+:focus-visible { outline: 2px solid var(--cp-link); outline-offset: 3px; }
+#city-map:focus-visible { outline-offset: -4px; }
+#map-controls { position: absolute; top: 16px; right: 16px; display: flex; gap: 8px; }
+#loading, #error { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(340px, calc(100% - 40px)); padding: 24px; background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px; }
+#loading-detail { display: block; margin: 12px 0; color: var(--cp-text-muted); font-size: 13px; }
+progress { width: 100%; height: 8px; accent-color: var(--cp-accent); }
+#error { border-left: 4px solid var(--cp-danger); }
+#error p { font-size: 14px; line-height: 1.5; }
+#retry { padding: 8px 16px; }
+#navigation-hint, #drone-hud { position: absolute; bottom: 36px; left: 12px; max-width: calc(100% - 24px); margin: 0; padding: 6px 10px; color: var(--cp-text-muted); background: var(--cp-panel-strong); border-radius: 0.625rem; font-size: 12px; pointer-events: none; }
+#drone-hud { font-family: Consolas, "Courier New", Courier, monospace; color: var(--cp-text); }
+#attribution { position: absolute; bottom: 8px; right: 12px; max-width: min(560px, calc(100% - 24px)); color: var(--cp-text-muted); background: var(--cp-panel-strong); border-radius: 0.625rem; font-size: 11px; }
+#attribution summary { padding: 5px 8px; }
+#attribution > div { max-height: 40vh; overflow: auto; padding: 0 12px 8px; line-height: 1.5; }
+#attribution a { color: var(--cp-link); }
+
+/* ------------------------------------------------------------------ site switch */
+#site-switch { position: absolute; top: 16px; left: 16px; display: flex; gap: 8px; }
+#site-switch button { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 0; min-height: 0; padding: 8px 14px; text-align: left; background: var(--cp-panel-strong); }
+#site-switch strong { font-size: 13px; font-weight: 600; }
+#site-switch small { color: var(--cp-text-muted); font-size: 11px; }
+/* The active core is marked with the accent on its leading edge rather than by a fill, so the
+   photograph behind the panel stays readable. */
+#site-switch button[aria-pressed="true"] { border-color: var(--cp-border-strong); box-shadow: inset 3px 0 0 0 var(--cp-accent); }
+
+/* ------------------------------------------------------------------ layer panel */
+#layers { position: absolute; top: 84px; left: 16px; width: min(330px, calc(100% - 32px)); padding: 12px 14px; background: var(--cp-panel-strong); border: 1px solid var(--cp-border); border-radius: 0.75rem; box-shadow: var(--cp-shadow); }
+#layers h2 { margin: 0 0 2px; font-size: 13px; font-weight: 600; }
+#layers .layers-note { margin: 0 0 10px; color: var(--cp-text-muted); font-size: 11px; line-height: 1.45; }
+#layers ul { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; list-style: none; }
+#layers label { display: grid; grid-template-columns: auto 1fr; align-items: baseline; column-gap: 8px; cursor: pointer; }
+#layers input { grid-row: span 2; align-self: center; width: 16px; height: 16px; accent-color: var(--cp-accent); cursor: pointer; }
+#layers input:disabled { cursor: not-allowed; }
+#layers .layer-name { font-size: 13px; }
+#layers .layer-source { grid-column: 2; color: var(--cp-text-soft); font-size: 10px; }
+/* The freshness line. It carries the capture time, which is what turns "live" from a claim into
+   something the viewer can check against the clock on the wall. */
+#layers .layer-state { display: block; margin: 2px 0 0 24px; color: var(--cp-text-muted); font-size: 11px; line-height: 1.35; }
+#layers .layer-state[data-state="live"] { color: var(--cp-success); }
+#layers .layer-state[data-state="error"] { color: var(--cp-danger); }
+#layers .layer-state[data-state="loading"] { font-style: italic; }
+/* Explicit reload for the notes layer: a note published by somebody else is not pushed here. */
+#layers .layer-refresh {
+  display: block; margin: 4px 0 0 24px; padding: 2px 8px;
+  font: inherit; font-size: 11px; line-height: 1.5;
+  color: var(--cp-text); background: var(--cp-surface);
+  border: 1px solid var(--cp-border-strong); border-radius: 4px; cursor: pointer;
+}
+#layers .layer-refresh:hover:not(:disabled) { background: var(--cp-surface-soft); }
+#layers .layer-refresh:disabled { color: var(--cp-text-soft); cursor: default; }
+
+/* Open-data catalogue groups.
+   ⚠️ The panel scrolls rather than growing. With the catalogue collapsed it is short, but every
+   group a presenter opens adds rows, and an overlay that grows past the viewport pushes its own
+   bottom entries off screen with no way to reach them. */
+#layers { max-height: calc(100vh - 140px); overflow-y: auto; overscroll-behavior: contain; }
+#layers .layer-group { margin-top: 10px; border-top: 1px solid var(--cp-border); padding-top: 8px; }
+#layers .layer-group > summary {
+  cursor: pointer; font-size: 12px; font-weight: 600; color: var(--cp-text-muted);
+  list-style: none; padding: 2px 0;
+}
+#layers .layer-group > summary::-webkit-details-marker { display: none; }
+#layers .layer-group > summary::before { content: "▸ "; color: var(--cp-text-soft); }
+#layers .layer-group[open] > summary::before { content: "▾ "; }
+#layers .layer-group > summary:hover { color: var(--cp-text); }
+#layers .layer-group > ul { margin-top: 8px; }
+#loading-note { display: block; margin-top: 10px; color: var(--cp-text-soft); font-size: 11px; line-height: 1.4; }
+
+/* ------------------------------------------------------------------ detail panel */
+/* Right-hand side, so it never covers the layer panel or the site switcher on the left. */
+#detail { position: absolute; top: 72px; right: 16px; width: min(380px, calc(100% - 32px)); max-height: calc(100% - 140px); overflow: auto; padding: 14px 16px 12px; background: var(--cp-panel-strong); border: 1px solid var(--cp-border); border-left: 3px solid var(--cp-accent); border-radius: 0.75rem; box-shadow: var(--cp-shadow); }
+#detail-close { position: absolute; top: 8px; right: 8px; min-width: 28px; min-height: 28px; padding: 0; font-size: 13px; line-height: 1; border-radius: 0.5rem; }
+#detail-kind { margin: 0 0 2px; color: var(--cp-text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+#detail h2 { margin: 0 24px 10px 0; font-size: 15px; font-weight: 600; line-height: 1.3; }
+#detail dl { display: grid; grid-template-columns: 1fr; gap: 8px; margin: 0; }
+#detail dt { color: var(--cp-text-muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; }
+/* The city's own wording, unedited — including where it runs words together. */
+#detail dd { margin: 2px 0 0; font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
+#detail-source { margin: 12px 0 0; padding-top: 8px; border-top: 1px solid var(--cp-border); color: var(--cp-text-soft); font-size: 10px; line-height: 1.4; }
+
+/* --- Koordinationsnotiz: das Formular im Detailfenster ------------------------------------- */
+#detail-actions { margin-top: 12px; }
+#detail-actions button, #note-form button { font-size: 12px; padding: 6px 10px; border-radius: 0.5rem; }
+#note-form { display: grid; gap: 6px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--cp-border); }
+#note-form label { color: var(--cp-text-muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; }
+#note-form select, #note-form textarea { width: 100%; font: inherit; font-size: 12px; padding: 6px 8px; border-radius: 0.5rem; border: 1px solid var(--cp-border); background: var(--cp-panel); color: inherit; }
+#note-form textarea { resize: vertical; }
+/* The disclaimer is part of the form, not fine print somewhere else. */
+.note-hint { margin: 2px 0 0; color: var(--cp-text-soft); font-size: 10px; line-height: 1.4; }
+.note-actions { display: flex; gap: 8px; margin-top: 4px; }
+#note-status { margin: 4px 0 0; font-size: 11px; line-height: 1.4; }
+
+/* --- Assistent ----------------------------------------------------------------------------- */
+#assistant-toggle { position: absolute; bottom: 64px; right: 16px; font-size: 12px; padding: 8px 14px; border-radius: 999px; box-shadow: var(--cp-shadow); }
+#assistant { position: absolute; bottom: 16px; right: 16px; width: min(420px, calc(100% - 32px)); max-height: calc(100% - 120px); display: flex; flex-direction: column; padding: 14px 16px 12px; background: var(--cp-panel-strong); border: 1px solid var(--cp-border); border-left: 3px solid var(--cp-accent); border-radius: 0.75rem; box-shadow: var(--cp-shadow); }
+#assistant-close { position: absolute; top: 8px; right: 8px; min-width: 28px; min-height: 28px; padding: 0; font-size: 13px; line-height: 1; border-radius: 0.5rem; }
+#assistant h2 { margin: 0 24px 4px 0; font-size: 15px; font-weight: 600; }
+.assistant-note { margin: 0 0 8px; color: var(--cp-text-soft); font-size: 10px; line-height: 1.4; }
+.assistant-author { margin: 0 0 8px; color: var(--cp-text-muted); font-size: 10px; }
+.assistant-signin { margin: 0 0 8px; font-size: 11px; padding: 5px 10px; border-radius: 0.5rem; }
+#assistant-log { flex: 1 1 auto; min-height: 120px; max-height: 40vh; overflow-y: auto; display: grid; gap: 6px; align-content: start; padding: 8px; border: 1px solid var(--cp-border); border-radius: 0.5rem; background: var(--cp-panel); }
+.chat-line { margin: 0; font-size: 12px; line-height: 1.45; overflow-wrap: anywhere; }
+.chat-you { font-weight: 600; }
+.chat-status, .chat-meta { color: var(--cp-text-soft); font-size: 10px; }
+/* ⚠️ Werkzeugaufrufe werden absichtlich angezeigt: eine Behauptung ohne nachprüfbare Quelle ist
+   in diesem Kreis wertlos. */
+.chat-tool { color: var(--cp-text-muted); font-size: 11px; }
+.chat-tool-result { color: var(--cp-text-muted); font-size: 11px; padding-left: 8px; }
+.chat-error { color: #ff0000; font-size: 11px; }
+.chat-draft { display: grid; gap: 4px; padding: 8px; border: 1px dashed var(--cp-border); border-radius: 0.5rem; }
+.chat-draft-head { margin: 0; font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--cp-text-muted); }
+.chat-draft-where { margin: 0; font-size: 11px; color: var(--cp-text-muted); }
+.chat-draft-text { margin: 0; font-size: 12px; line-height: 1.45; }
+.chat-draft-warn { margin: 0; font-size: 10px; line-height: 1.4; color: #b25c00; }
+.chat-draft-ok { margin: 0; font-size: 10px; line-height: 1.4; color: var(--cp-text-muted); }
+.chat-draft-actions { display: flex; gap: 8px; margin-top: 2px; }
+.chat-draft-actions button { font-size: 11px; padding: 5px 9px; border-radius: 0.5rem; }
+.assistant-examples { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 6px; }
+.assistant-example { font-size: 10px; padding: 4px 8px; border-radius: 999px; }
+#assistant-form { display: flex; gap: 6px; }
+#assistant-input { flex: 1 1 auto; min-width: 0; font: inherit; font-size: 12px; padding: 7px 10px; border-radius: 0.5rem; border: 1px solid var(--cp-border); background: var(--cp-panel); color: inherit; }
+#assistant-send { font-size: 12px; padding: 7px 12px; border-radius: 0.5rem; }
+
+@media (max-width: 600px) {
+  #map-controls { top: 12px; right: 12px; }
+  #site-switch { top: 12px; left: 12px; flex-direction: column; }
+  #layers { top: auto; bottom: 72px; left: 12px; right: 12px; width: auto; }
+  #detail { top: auto; bottom: 12px; left: 12px; right: 12px; width: auto; max-height: 45%; }
+  #assistant { left: 12px; right: 12px; width: auto; max-height: 70%; }
+  #assistant-toggle { bottom: 12px; right: 12px; }
+  #navigation-hint { font-size: 10px; bottom: 44px; }
+  #attribution { right: 8px; left: 8px; font-size: 10px; }
+}

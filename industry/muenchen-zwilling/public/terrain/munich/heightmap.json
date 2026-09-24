@@ -1,0 +1,29 @@
+{
+  "width": 1627,
+  "height": 1971,
+  "resolutionM": 2,
+  "crs": "EPSG:25832",
+  "verticalDatum": "DHHN2016",
+  "origin": {
+    "easting": 689916,
+    "northing": 5333514
+  },
+  "heightMinM": 500.589,
+  "heightMaxM": 532.784,
+  "heightScale": 0.0004912638560561627,
+  "encoding": "uint16-le, row-major, row 0 = north",
+  "boundsWgs84": {
+    "west": 11.552282,
+    "south": 48.126527,
+    "east": 11.597755,
+    "north": 48.160977
+  },
+  "coveragePct": 100,
+  "source": "DGM1, Bayerische Vermessungsverwaltung (LDBV)",
+  "sourceAcquisition": "LDBV open data, retrieved 2026-07",
+  "attribution": "Datenquelle: Bayerische Vermessungsverwaltung – www.geodaten.bayern.de [Daten bearbeitet]",
+  "licence": "CC BY 4.0",
+  "file": "heightmap.u16",
+  "nodataFile": "heightmap_nodata.u8",
+  "focusPlaces": []
+}

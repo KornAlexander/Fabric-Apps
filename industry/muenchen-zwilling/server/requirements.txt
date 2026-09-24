@@ -1,0 +1,17 @@
+# Backend for the München Zwilling agent and the coordination notes.
+#
+# ⚠️ DELIBERATELY SMALL. This service exists to do three things a browser cannot: call the Foundry
+# Responses API with a managed identity, reach open-data endpoints that send no CORS headers, and
+# write to a Fabric SQL Database. Everything else stays in the app.
+#
+# ⚠️ NOT MERGED INTO relay/. The ADS-B relay is a fixed-destination proxy whose whole security
+# argument is that no caller input can influence the upstream host, path or query. Adding an agent
+# and database writes to it would destroy exactly that property.
+fastapi>=0.115
+uvicorn[standard]>=0.32
+httpx>=0.27
+azure-identity>=1.19
+pyodbc>=5.1
+# Verifies Entra access tokens for coordination-note writes. The [crypto] extra pulls
+# `cryptography`, which RS256 signature checking needs; plain pyjwt cannot verify RS256.
+pyjwt[crypto]>=2.9

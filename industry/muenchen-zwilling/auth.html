@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Anmeldung wird abgeschlossen…</title>
+    <style>
+      body {
+        margin: 0; min-height: 100vh; display: grid; place-items: center;
+        font: 15px/1.5 "Segoe UI", system-ui, sans-serif;
+        color: #242424; background: #f7f4ef;
+      }
+      p { margin: 0; }
+    </style>
+  </head>
+  <body>
+    <!--
+      MSAL redirect bridge.
+
+      ⚠️ THIS MUST NOT BOOT THE APPLICATION. MSAL 5 completes a popup sign-in by having the
+      redirect page broadcast the raw auth response over a same-origin BroadcastChannel. The
+      redirect URI previously pointed at the app root, so the popup loaded the entire 3D map
+      instead of broadcasting, the opener waited out its 60 second timeout, and signIn()
+      resolved null. That is why no session ever appeared.
+
+      Keep this page tiny and side-effect free apart from the broadcast.
+    -->
+    <p>Anmeldung wird abgeschlossen…</p>
+    <script type="module" src="/src/auth-callback.ts"></script>
+  </body>
+</html>

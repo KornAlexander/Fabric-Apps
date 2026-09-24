@@ -146,10 +146,11 @@ WINDOW = 120
 # file excused for one class must still be scanned for the other four.
 # A reason must QUOTE the offending text. If you cannot quote it, you have not read it.
 ALLOWLIST: dict[str, tuple[set[str], str]] = {
-    "tools/verify_publishable.py": ({"disclosure", "internal", "tenant_guid"},
+    "tools/verify_publishable.py": ({"disclosure", "internal", "tenant_guid", "upn"},
         'the check quotes its own patterns, controls and allowlist examples: '
         'control_dirty = "The university sent its timetable export privately for an '
-        'evaluation." and "pageId": "52351348-e3fe-4e25-a4c7-20102b0f1ba6"'),
+        'evaluation." and "pageId": "52351348-e3fe-4e25-a4c7-20102b0f1ba6", and the '
+        'allowlist reason quoting the fake test address "nutzer@example.onmicrosoft.com"'),
     "CONTRIBUTING.md": ({"disclosure"},
         'explains the class by example: "The university sent its export privately for an '
         'evaluation" leaks the engagement while leaking zero rows'),
@@ -218,6 +219,31 @@ ALLOWLIST: dict[str, tuple[set[str], str]] = {
         '`kieler-foerde`)"'),
     "industry/maritime-insights/server/assistant/README.md": ({"german"},
         'the same bay name plus "Förde" in an example question the assistant answers'),
+
+    # --- muenchen-zwilling (added 2026-09-24). Prose is English; the app UI and its
+    # implementation guide UMSETZUNG.md are German on purpose (German customers).
+    "README.md": ({"german"},
+        'the generated gallery row carries one proper noun: "Munich Twin (München Zwilling)"'),
+    "industry/muenchen-zwilling/README.md": ({"german"},
+        'the app\'s own name in the title and alt text: "# Munich Twin (München Zwilling)"'),
+    "industry/muenchen-zwilling/server/test_entra.py": ({"tenant_guid", "upn"},
+        'fake token claims for the Entra check: "99999999-8888-7777-6666-555555555555", '
+        '"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "11111111-2222-3333-4444-555555555555" '
+        'and "nutzer@example.onmicrosoft.com"'),
+    "industry/muenchen-zwilling/tests/map.test.mjs": ({"tenant_guid", "internal"},
+        'guard controls: "11111111-2222-3333-4444-555555555555" must be flagged, and '
+        '"https://test-map-swedencentral.webapp.fabricapps.net" is a made-up redirect host'),
+    "industry/muenchen-zwilling/tools/verify-local-hosts.mjs": ({"tenant_guid"},
+        'a guard control: "11111111-2222-3333-4444-555555555555"'),
+    "industry/muenchen-zwilling/tools/map-assets.mjs": ({"tenant_guid"},
+        'two public Microsoft constants also in the MSAL sources: '
+        '"9188040d-6c67-4c5b-b112-36a304b66dad" (consumer-account tenant) and '
+        '"53ee284d-920a-4b59-9d30-a60315b26836"'),
+    "industry/muenchen-zwilling/tools/deploy-agent.ps1": ({"internal"},
+        'a documentation placeholder, not a host: "registry.azurecr.io"; the real registry '
+        'comes from $env:ACR_NAME'),
+    "industry/muenchen-zwilling/tools/deploy-relay.ps1": ({"internal"},
+        'the same placeholder: "registry.azurecr.io"'),
 }
 
 # Whole-directory allowances need a shape-level justification, not a purpose.
