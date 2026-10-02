@@ -40,7 +40,13 @@ describe('every ready scene has the assets it will ask for', () => {
     // driven by the config numbers this test defends.
     if (!aoi) continue;
 
-    it(`${scene.id}: heightmap and flow field named by its config exist`, () => {
+    // public/terrain is generated and gitignored, so a clean clone has none of it. Skip only when
+    // the scene was never built; a built folder with a missing file is the bug and still fails.
+    const built = existsSync(resolve(TERRAIN_ROOT, scene.id));
+    const title = `${scene.id}: heightmap and flow field named by its config exist`;
+    const skipped = ` [skipped: public/terrain/${scene.id} is not built; run \`npm run data:build\`]`;
+
+    it.skipIf(!built)(built ? title : `${title}${skipped}`, () => {
       const t = aoi.grids.terrainResolutionM;
       const f = aoi.grids.flowResolutionM;
       for (const file of [

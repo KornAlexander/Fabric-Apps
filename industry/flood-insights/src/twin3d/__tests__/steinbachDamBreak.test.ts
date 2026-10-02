@@ -1,6 +1,8 @@
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+
 import { describe, expect, it } from 'vitest';
 
-import flow from '../../../public/terrain/steinbach-2021/flowfield_16m.json';
 import { DAM_BREAK_SCENARIO, DAM_BREAK_VOLUME_M3 } from '@/data/steinbach';
 import {
   BREACH_PEAK_M3S,
@@ -21,9 +23,31 @@ import {
  * real cross-sections on its own, which is what makes it a check instead of a knob.
  */
 
-const bed = flow.bedProfileM as number[];
-const releaseIndex = flow.release!.chainageIndex;
-const step = flow.chainageStepM;
+/**
+ * The flow field is a generated, gitignored asset, so a clean clone does not have it. Tests that
+ * read it skip, with the reason in their title, instead of failing or passing on nothing.
+ */
+const FLOW_PATH = resolve(__dirname, '../../../public/terrain/steinbach-2021/flowfield_16m.json');
+const FLOW_BUILT = existsSync(FLOW_PATH);
+const NEEDS_FLOW = ' [skipped: public/terrain/steinbach-2021/flowfield_16m.json is not built; run `npm run data:build`]';
+const withFlow = (name: string) => (FLOW_BUILT ? name : `${name}${NEEDS_FLOW}`);
+const itWithFlow = it.skipIf(!FLOW_BUILT);
+
+interface FlowField {
+  bedProfileM: number[];
+  chainageStepM: number;
+  release: { chainageIndex: number };
+  ratingDischargeM3s: number[];
+  ratingStageM: number[][];
+}
+
+const flow: FlowField | undefined = FLOW_BUILT
+  ? (JSON.parse(readFileSync(FLOW_PATH, 'utf8')) as FlowField)
+  : undefined;
+
+const bed = flow?.bedProfileM ?? [];
+const releaseIndex = flow?.release.chainageIndex ?? 0;
+const step = flow?.chainageStepM ?? 0;
 
 /** Schweinheim's chainage index, measured off the flow field by tools/geodata (index 243). */
 const SCHWEINHEIM_INDEX = 243;
@@ -32,8 +56,8 @@ function profileAt(minutes: number): Float64Array {
   return buildDamBreakWseProfile({
     minutes,
     bedProfileM: bed,
-    ratingDischargeM3s: flow.ratingDischargeM3s as number[],
-    ratingStageM: flow.ratingStageM as number[][],
+    ratingDischargeM3s: flow!.ratingDischargeM3s,
+    ratingStageM: flow!.ratingStageM,
     releaseIndex,
     chainageStepM: step,
   });
@@ -74,14 +98,14 @@ describe('the front', () => {
     expect(FRONT_CELERITY_MS).toBeGreaterThan(flowVelocity);
   });
 
-  it('reaches Schweinheim when the study says it does', () => {
+  itWithFlow(withFlow('reaches Schweinheim when the study says it does'), () => {
     const published = DAM_BREAK_SCENARIO.find((p) => p.id === 'schweinheim')!.travelMinutes!;
     const path = (SCHWEINHEIM_INDEX - releaseIndex) * step;
     const modelled = path / FRONT_CELERITY_MS / 60;
     expect(modelled).toBeCloseTo(published, 0);
   });
 
-  it('starts at the dam, not at the top of the line', () => {
+  itWithFlow(withFlow('starts at the dam, not at the top of the line'), () => {
     // ⚠️ Chainage 0 is 1.8 km ABOVE the wall, in the stream feeding the reservoir. A break
     // released at 0 would run the flood down through the reservoir it came out of.
     expect(releaseIndex).toBeGreaterThan(0);
@@ -91,13 +115,13 @@ describe('the front', () => {
     }
   });
 
-  it('has not reached the far end of the reach in the first minutes', () => {
+  itWithFlow(withFlow('has not reached the far end of the reach in the first minutes'), () => {
     expect(frontDistanceM(1)).toBeLessThan((bed.length - releaseIndex) * step);
     expect(frontDistanceM(1)).toBeGreaterThan(0);
   });
 });
 
-describe('the water surface', () => {
+describe.skipIf(!FLOW_BUILT)(withFlow('the water surface'), () => {
   it('is the bare bed before the failure', () => {
     const dry = profileAt(-5);
     for (let i = 0; i < bed.length; i++) expect(dry[i]).toBe(bed[i]);
