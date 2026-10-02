@@ -63,6 +63,8 @@ docker run -p 8080:8080 --env-file .env airport-iq-chat-backend
 ## Frontend wiring
 
 The frontend widget (`views/assistant/`) reads the backend base URL from
-`window.AIRPORT_IQ_API_BASE` (set in `views/assistant/config.js`). Update that to
-the deployed Container App URL and rebuild/redeploy the Rayfin app. Locally,
-`?api=http://localhost:8080` overrides it (where the app doesn't rewrite the URL).
+`window.AIRPORT_IQ_API_BASE`, which `views/assistant/config.js` takes from a build-time
+placeholder. Set `AIRPORT_IQ_API_BASE` to the deployed Container App origin before
+`npm run build:fabric`; the address is written into `fabric-dist/` only, never into the
+repository. Locally, `?api=http://localhost:8080` overrides it (where the app doesn't
+rewrite the URL).
