@@ -40,9 +40,9 @@ try{
     releaseDirectory:join(output,'host-context/releases',release.releaseId),purpose:'local-test'},null,2));
   const log=[];
   for(const name of ['local','external']){
-    const env={...process.env,SWM_BUILD_OUT:join(output,name)};
-    delete env.SWM_ASSET_CONFIG;delete env.SWM_ALLOW_LOCAL_TEST;
-    if(name==='external'){env.SWM_ASSET_CONFIG=configPath;env.SWM_ALLOW_LOCAL_TEST='1';}
+    const env={...process.env,TWIN_BUILD_OUT:join(output,name)};
+    delete env.TWIN_ASSET_CONFIG;delete env.TWIN_ALLOW_LOCAL_TEST;
+    if(name==='external'){env.TWIN_ASSET_CONFIG=configPath;env.TWIN_ALLOW_LOCAL_TEST='1';}
     for(const args of [['tools/check-assets.mjs'],['node_modules/vite/bin/vite.js','build'],['tools/check-assets.mjs','--bundle']]){
       const result=await exec(process.execPath,args,{cwd:PROJECT,env,maxBuffer:1024*1024});log.push(result.stdout,result.stderr);
     }

@@ -25,7 +25,9 @@ Usage
 from __future__ import annotations
 
 import argparse
+import gzip
 import hashlib
+import io
 import os
 import re
 import subprocess
@@ -65,6 +67,10 @@ INTERNAL = re.compile(
     rb"|[A-Za-z0-9-]+\.azurecr\.io"
     rb"|[A-Za-z0-9-]+\.servicebus\.windows\.net"
     rb"|[A-Za-z0-9-]+\.blob\.core\.windows\.net"
+    # Container Apps hosts (<app>.<env>.<region>.azurecontainerapps.io). Added 2026-10-02
+    # after a plan review found a relay origin hard-coded in a private source repo that
+    # was about to be ported: the shape list above had no line for it.
+    rb"|[A-Za-z0-9.-]+\.azurecontainerapps\.io"
 )
 
 # Endpoints that are the SAME STRING in every tenant. They match the shape above because
@@ -102,12 +108,42 @@ GERMAN_WORDS = re.compile(
 # Salted digests. A literal blocklist would make this file the one place in the repo
 # that spells the names out.
 NAME_SALT = "fabric-apps-publication-gate"
-BLOCKED_NAME_DIGESTS: set[str] = set()   # add with --hash "Surname"
-WORD = re.compile(r"[A-Za-z\u00c0-\u024f]{4,}")
+# Organisations and people whose relationship must not surface. Single words AND two-word
+# names: an organisation is often two ordinary words that are only a name together.
+# Three-letter acronyms count too - the first tokenizer ({4,}) could never match one.
+BLOCKED_NAME_DIGESTS: set[str] = {   # add with --hash "Name" or --hash "Two Words"
+    "d4523fe3e3d7056b", "2c225e010f8f1af9", "e6ebf78c90b7c14c", "97dd62571e531251",
+    "5e38d0addcc047e2", "a2a0278cae4ffe64", "7b06918ff5b7fb82", "9e27566bcc238e5a",
+    "63c9627c2ca9ebb9", "dc94109b9de0bc16",
+}
+WORD = re.compile(r"[A-Za-z\u00c0-\u024f]{3,}")
+# Base64 (lockfile integrity hashes, inline PNGs) contains random letter runs; a 3-letter
+# run there is noise, not a name. Measured: two lockfiles and a notebook PNG fired on a
+# 3-letter acronym before this. Runs touching a digit or + / = are skipped.
+B64_NEIGHBOUR = re.compile(r"[0-9+/=]")
 
 
 def digest(name: str) -> str:
-    return hashlib.sha256(f"{NAME_SALT}:{name.lower()}".encode()).hexdigest()[:16]
+    return hashlib.sha256(f"{NAME_SALT}:{' '.join(name.lower().split())}".encode()).hexdigest()[:16]
+
+
+def _words(text: str) -> list[str]:
+    out = []
+    for m in WORD.finditer(text):
+        before = text[m.start() - 1] if m.start() else " "
+        after = text[m.end()] if m.end() < len(text) else " "
+        if B64_NEIGHBOUR.match(before) or B64_NEIGHBOUR.match(after):
+            continue
+        out.append(m.group().lower())
+    return out
+
+
+def scan_names(text: str) -> bool:
+    """True if any word or adjacent word pair matches a blocked digest."""
+    words = _words(text)
+    if any(digest(w) in BLOCKED_NAME_DIGESTS for w in set(words)):
+        return True
+    return any(digest(f"{a} {b}") in BLOCKED_NAME_DIGESTS for a, b in set(zip(words, words[1:])))
 
 
 # ---------------------------------------------------------------- disclosure
@@ -233,8 +269,10 @@ ALLOWLIST: dict[str, tuple[set[str], str]] = {
     "industry/muenchen-zwilling/tests/map.test.mjs": ({"tenant_guid", "internal"},
         'guard controls: "11111111-2222-3333-4444-555555555555" must be flagged, and '
         '"https://test-map-swedencentral.webapp.fabricapps.net" is a made-up redirect host'),
-    "industry/muenchen-zwilling/tools/verify-local-hosts.mjs": ({"tenant_guid"},
-        'a guard control: "11111111-2222-3333-4444-555555555555"'),
+    "industry/muenchen-zwilling/tools/verify-local-hosts.mjs": ({"tenant_guid", "internal"},
+        'a guard control: "11111111-2222-3333-4444-555555555555", and two made-up hosts the '
+        'guard must tell apart: "twin-sample.northeurope.azurecontainerapps.io" and '
+        '"other.northeurope.azurecontainerapps.io"'),
     "industry/muenchen-zwilling/tools/map-assets.mjs": ({"tenant_guid"},
         'two public Microsoft constants also in the MSAL sources: '
         '"9188040d-6c67-4c5b-b112-36a304b66dad" (consumer-account tenant) and '
@@ -244,6 +282,36 @@ ALLOWLIST: dict[str, tuple[set[str], str]] = {
         'comes from $env:ACR_NAME'),
     "industry/muenchen-zwilling/tools/deploy-relay.ps1": ({"internal"},
         'the same placeholder: "registry.azurecr.io"'),
+
+    # --- city-utility-twin (added 2026-10-02). Ported from the folder above, so the same
+    # fixtures under a new path. Same quotes, re-read in the copies.
+    "industry/city-utility-twin/server/test_entra.py": ({"tenant_guid", "upn"},
+        'fake token claims for the Entra check: "99999999-8888-7777-6666-555555555555", '
+        '"aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "11111111-2222-3333-4444-555555555555" '
+        'and "nutzer@example.onmicrosoft.com"'),
+    "industry/city-utility-twin/tests/map.test.mjs": ({"tenant_guid", "internal"},
+        'guard controls: "11111111-2222-3333-4444-555555555555" must be flagged, '
+        '"https://test-map-swedencentral.webapp.fabricapps.net" is a made-up redirect host and '
+        '"ca-something-else.example-env.northeurope.azurecontainerapps.io" a made-up foreign origin'),
+    "industry/city-utility-twin/tools/verify-local-hosts.mjs": ({"tenant_guid", "internal"},
+        'a guard control: "11111111-2222-3333-4444-555555555555", and two made-up hosts the '
+        'guard must tell apart: "twin-sample.northeurope.azurecontainerapps.io" and '
+        '"other.northeurope.azurecontainerapps.io"'),
+    "industry/city-utility-twin/tools/map-assets.mjs": ({"tenant_guid"},
+        'two public Microsoft constants also in the MSAL sources: '
+        '"9188040d-6c67-4c5b-b112-36a304b66dad" (consumer-account tenant) and '
+        '"53ee284d-920a-4b59-9d30-a60315b26836"'),
+    "industry/city-utility-twin/tools/deploy-agent.ps1": ({"internal"},
+        'a documentation placeholder, not a host: "registry.azurecr.io"; the real registry '
+        'comes from $env:ACR_NAME'),
+    "industry/city-utility-twin/tools/deploy-relay.ps1": ({"internal"},
+        'the same placeholder: "registry.azurecr.io"'),
+
+    # OpenStreetMap building tags, not a relationship: the "operator" key on six campus-area
+    # buildings names the municipal utility that runs them (public OSM data, ODbL).
+    "industry/education/campus-twin/config/buildings-lmu.json": ({"customer_people"},
+        'OSM tag values of the form "operator": "<utility name>" on six buildings, copied '
+        'verbatim from OpenStreetMap'),
 }
 
 # Whole-directory allowances need a shape-level justification, not a purpose.
@@ -275,7 +343,11 @@ ALLOWLIST_DIRS: list[tuple[re.Pattern, set[str], str]] = [
 
 TEXT_EXT = {".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs", ".json", ".md", ".yml", ".yaml",
             ".py", ".html", ".css", ".txt", ".ps1", ".sh", ".sql", ".tmdl", ".pbir",
-            ".env", ".ipynb", ".xml", ".svg"}
+            ".env", ".ipynb", ".xml", ".svg", ".csv", ".tsv", ".geojson", ".toml",
+            ".ini", ".cfg", ".kql", ".gz"}
+# Same cap as check_media_budget.py's per-file limit. The old 4 MB cap silently skipped
+# large generated JSON/CSV, which is exactly where generator prose leaks.
+MAX_SCAN_BYTES = 25_000_000
 SKIP_DIRS = {"node_modules", ".git", "dist", "build", ".venv", "__pycache__",
              "coverage", ".vite", ".turbo"}
 
@@ -364,10 +436,19 @@ def main() -> int:
         if fp.suffix.lower() not in TEXT_EXT:
             continue
         try:
-            if fp.stat().st_size > 4_000_000:
+            if fp.stat().st_size > MAX_SCAN_BYTES:
+                findings.append(("unscanned", rel, f"over {MAX_SCAN_BYTES // 1_000_000} MB, not scanned"))
                 continue
             raw = fp.read_bytes()
-        except OSError:
+            if fp.suffix.lower() == ".gz":
+                # Compressed JSON/CSV is still text that ships. Binary payloads (terrain
+                # heights) decode to noise and match nothing, which is fine.
+                with gzip.GzipFile(fileobj=io.BytesIO(raw)) as gz:
+                    raw = gz.read(MAX_SCAN_BYTES + 1)
+                if len(raw) > MAX_SCAN_BYTES:
+                    findings.append(("unscanned", rel, "decompresses past the scan cap"))
+                    continue
+        except (OSError, EOFError, gzip.BadGzipFile):
             continue
         scanned += 1
 
@@ -393,10 +474,8 @@ def main() -> int:
                 if m.lower() != "00000000-0000-0000-0000-000000000000":
                     findings.append(("tenant_guid", rel, m))
 
-        if BLOCKED_NAME_DIGESTS:
-            for w in {w.lower() for w in WORD.findall(raw.decode("utf-8", "replace"))}:
-                if digest(w) in BLOCKED_NAME_DIGESTS:
-                    findings.append(("customer_people", rel, "a blocked surname (digest match)"))
+        if "customer_people" not in excused and scan_names(raw.decode("utf-8", "replace")):
+            findings.append(("customer_people", rel, "a blocked name (digest match)"))
 
         text = raw.decode("utf-8", "replace")
         if "disclosure" not in excused:
@@ -430,13 +509,24 @@ def main() -> int:
     if not scan_disclosure(control_dirty):
         print("GATE BROKEN: the disclosure check no longer fires on its positive control.")
         return 2
+    # Name digests, both directions. The planted name is assembled from fragments so this
+    # file never spells it; the innocent line uses the same two words apart.
+    name_dirty = "Planning with " + "Ham" + "burg Was" + "ser in the pilot."
+    name_clean = "Hamburg publishes water levels; Wasser means water."
+    if not scan_names(name_dirty):
+        print("GATE BROKEN: the name digests no longer catch the planted two-word name.")
+        return 2
+    if scan_names(name_clean):
+        print("GATE BROKEN: the name digests fire on an innocent line.")
+        return 2
 
     by_class: dict[str, list] = {}
     for cls, rel, detail in findings:
         by_class.setdefault(cls, []).append((rel, detail))
 
     print(f"verify_publishable: {scanned} files scanned under {args.path}")
-    print(f"controls ok - {len(controls_clean)} innocent lines quiet, planted line caught\n")
+    print(f"controls ok - {len(controls_clean)} innocent lines quiet, planted line caught, "
+          f"name digests discriminate\n")
 
     if not findings:
         print(f"CLEAN. {len(allowed_used)} files covered by an allowlist reason.")

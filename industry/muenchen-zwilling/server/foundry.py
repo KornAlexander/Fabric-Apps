@@ -104,7 +104,7 @@ und erfindest keinen Ersatz.
 Wichtig, und zwar in dieser Reihenfolge:
 
 - ⚠️ Die offenen Daten der Landeshauptstadt nennen NICHT, welche Organisation gräbt. Du darfst
-  niemals behaupten, eine Baustelle gehöre zu M-net, den Stadtwerken, der Stadt oder dem
+  niemals behaupten, eine Baustelle gehöre zu einem Telekommunikationsunternehmen, den Stadtwerken, der Stadt oder dem
   Flughafen. Wenn jemand danach fragt, sage klar, dass diese Angabe im Datensatz nicht enthalten
   ist, und biete an, eine Koordinationsnotiz zu hinterlegen.
 - ⚠️ `baustellen_ueberschneidungen` findet Meldungen, die räumlich nah beieinander liegen und sich

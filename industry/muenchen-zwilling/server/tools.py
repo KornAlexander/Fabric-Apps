@@ -7,7 +7,7 @@ the chat can press a button and get the same numbers.
 
 ⚠️ THE CITY'S OPEN DATA DOES NOT SAY WHO IS DIGGING. `mor_wfs:baustellen_opendata` publishes what
 the restriction is, where it is and when it runs. It carries no owning organisation. So no tool
-here may answer "is this M-net or SWM" — and `baustellen_ueberschneidungen` reports that two
+here may answer "is this the telecom operator or the utility" — and `baustellen_ueberschneidungen` reports that two
 notified restrictions coincide, never that two companies are in conflict. That gap is exactly what
 the coordination notes exist to fill, and pretending the gap is not there would be the single
 most misleading thing this service could do in front of the organisations concerned.

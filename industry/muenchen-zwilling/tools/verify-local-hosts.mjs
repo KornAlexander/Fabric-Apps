@@ -13,18 +13,18 @@ const temp=await realpath(join(PROJECT,'../temp'));const parent=await realpath(r
 if(rel==='..'||rel.startsWith(`..${sep}`)||isAbsolute(rel))throw new Error('Evidence belongs in repos/temp.');
 await mkdir(output);
 const release=await prepareContext(join(output,'host-context'));
-const configPath=join(output,'release.production-shape.json');const origin='https://swm-sample.northeurope.azurecontainerapps.io';
+const configPath=join(output,'release.production-shape.json');const origin='https://twin-sample.northeurope.azurecontainerapps.io';
 await writeFile(configPath,JSON.stringify({mode:'external',origin,releaseId:release.releaseId,
   releaseDirectory:join(output,'host-context/releases',release.releaseId),purpose:'production'},null,2));
 const log=[];
 for(const name of ['local','external']){
-  const env={...process.env,SWM_BUILD_OUT:join(output,name)};delete env.SWM_ASSET_CONFIG;delete env.SWM_ALLOW_LOCAL_TEST;
-  if(name==='external')env.SWM_ASSET_CONFIG=configPath;
+  const env={...process.env,TWIN_BUILD_OUT:join(output,name)};delete env.TWIN_ASSET_CONFIG;delete env.TWIN_ALLOW_LOCAL_TEST;
+  if(name==='external')env.TWIN_ASSET_CONFIG=configPath;
   for(const args of [['tools/check-assets.mjs'],['node_modules/vite/bin/vite.js','build'],['tools/check-assets.mjs','--bundle']]){
     const result=await exec(process.execPath,args,{cwd:PROJECT,env,maxBuffer:1024*1024});log.push(result.stdout,result.stderr);
   }
 }
-const externalEnv={...process.env,SWM_BUILD_OUT:join(output,'external'),SWM_ASSET_CONFIG:configPath};delete externalEnv.SWM_ALLOW_LOCAL_TEST;
+const externalEnv={...process.env,TWIN_BUILD_OUT:join(output,'external'),TWIN_ASSET_CONFIG:configPath};delete externalEnv.TWIN_ALLOW_LOCAL_TEST;
 // Prove the complete bundle scanner inspects extra chunks, not just hand-written URL strings.
 const injection=join(output,'external/assets/guard-negative.js');
 for(const text of [`const allowed="${origin}",privateId="11111111-2222-3333-4444-555555555555";`,
@@ -36,7 +36,7 @@ for(const text of [`const allowed="${origin}",privateId="11111111-2222-3333-4444
 }
 await rm(injection);await writeFile(join(output,'build.log'),log.join('\n'));
 let dev,viewer,browser,context;
-const saved={};for(const key of ['SWM_ASSET_CONFIG','SWM_ALLOW_LOCAL_TEST','SWM_BUILD_OUT']){saved[key]=process.env[key];delete process.env[key];}
+const saved={};for(const key of ['TWIN_ASSET_CONFIG','TWIN_ALLOW_LOCAL_TEST','TWIN_BUILD_OUT']){saved[key]=process.env[key];delete process.env[key];}
 try{
   dev=await createServer({root:PROJECT,server:{host:'127.0.0.1',port:0,strictPort:true}});await dev.listen();
   viewer=await preview({root:PROJECT,configFile:false,base:'./',build:{outDir:join(output,'local')},preview:{host:'127.0.0.1',port:0,strictPort:true}});

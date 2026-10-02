@@ -6,7 +6,7 @@ import {inheritedName,privateCoordinate,withoutApprovedOrigin,withoutApprovedRel
 const bundle=process.argv.includes('--bundle');
 if(process.argv.slice(2).some(v=>v!=='--bundle'))throw new Error('Unknown asset check argument.');
 const config=await buildAssetConfig();
-const out=resolve(process.env.SWM_BUILD_OUT??join(PROJECT,'dist'));
+const out=resolve(process.env.TWIN_BUILD_OUT??join(PROJECT,'dist'));
 const secrets=await privateValues();
 if(config.mode==='local'){
   const root=join(bundle?out:join(PROJECT,'public'),'terrain');

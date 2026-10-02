@@ -1,2 +1,2 @@
-declare const __SWM_ASSETS__: { mode: 'local' | 'external'; releaseId: string; origin?: string; base?: string; manifest?: unknown };
-export const ASSET_BINDING = __SWM_ASSETS__;
+declare const __TWIN_ASSETS__: { mode: 'local' | 'external'; releaseId: string; origin?: string; base?: string; manifest?: unknown };
+export const ASSET_BINDING = __TWIN_ASSETS__;

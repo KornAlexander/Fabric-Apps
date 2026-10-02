@@ -52,7 +52,7 @@ export default defineConfig(async () => {
   return {
   base: './',
   publicDir: config.mode === 'external' ? false : 'public',
-  define: { __SWM_ASSETS__: JSON.stringify(config.binding) },
+  define: { __TWIN_ASSETS__: JSON.stringify(config.binding) },
   resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
   server: { proxy: liveProxy },
   preview: { proxy: liveProxy },
