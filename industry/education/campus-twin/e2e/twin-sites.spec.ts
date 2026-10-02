@@ -80,7 +80,7 @@ async function canvasColours(page: Page) {
   });
 }
 
-for (const site of [
+for (const site of ([
   {
     aoi: 'garching',
     heading: 'TUM Garching Forschungszentrum',
