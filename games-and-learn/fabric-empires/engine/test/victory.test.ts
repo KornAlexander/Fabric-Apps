@@ -33,7 +33,7 @@ const allTopicsKnown = (state: GameState): GameState => ({
 /**
  * Wipe a faction's settlements.
  *
- * ⚠ Needed because every antagonist now holds a village. Killing their units
+ * ⚠ Needed because every antagonist now holds a village. Killing their units
  * no longer removes them from the map, which is the entire point: Conquest
  * used to be won by hunting fourteen wandering raiders, and is now won by
  * taking or burning seven places.

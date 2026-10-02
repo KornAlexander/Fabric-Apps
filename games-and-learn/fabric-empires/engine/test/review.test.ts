@@ -200,7 +200,7 @@ describe('unrest', () => {
   });
 
   it('reports which cities were unsettled, rather than changing them silently', () => {
-    let state = bindMany(withCapital(), ['a']);
+    const state = bindMany(withCapital(), ['a']);
     let result = reviewPhase(state, ['a']);
     for (let i = 0; i < IGNORES_BEFORE_UNREST; i++) {
       result = reviewPhase(result.state, ['a']);

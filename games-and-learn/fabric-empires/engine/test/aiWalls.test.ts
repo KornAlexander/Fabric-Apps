@@ -125,10 +125,11 @@ describe('an antagonist at full strength digs in', () => {
   });
 
   it('gets there in the end, and stops at the wall it has', () => {
-    let { state, factionId, cityId } = stage(MAX_GARRISON_PER_FACTION, {
+    const { state: start, factionId, cityId } = stage(MAX_GARRISON_PER_FACTION, {
       wallLevel: 2,
       wallHp: 3,
     });
+    let state = start;
     for (let i = 0; i < GARRISON_INTERVAL_TURNS * 12; i += 1) {
       state = garrisonPhase(state, factionId).state;
     }
@@ -153,8 +154,8 @@ describe('⚠️ troops come first', () => {
 
   it('goes back to raising troops after losing one', () => {
     // Wall up at the cap...
-    let { state, factionId, cityId } = stage(MAX_GARRISON_PER_FACTION);
-    state = garrisonPhase(state, factionId).state;
+    const { state: start, factionId, cityId } = stage(MAX_GARRISON_PER_FACTION);
+    let state = garrisonPhase(start, factionId).state;
     expect(state.cities.get(cityId)!.wallLevel).toBe(1);
 
     // ...then lose a unit, and the next ready cycle should replace it.
