@@ -15,12 +15,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 
 import { CORES } from '../tools/asset-build-config.mjs';
 import { inspectCore } from '../tools/asset-release.mjs';
 import { DRAPE_TILES } from '../src/assets/contract.mjs';
 
 const projectUrl = (path) => new URL(`../${path}`, import.meta.url);
+// fileURLToPath, not `.pathname.slice(1)`: slicing only strips the slash before a Windows drive
+// letter and turns a Linux path into a relative one, which failed every core lookup in CI.
+const projectPath = (path) => fileURLToPath(projectUrl(path));
 
 test('the build core list matches the app site list', async () => {
   const source = await readFile(projectUrl('src/config/world.ts'), 'utf8');
@@ -40,14 +44,14 @@ test('the world shell comes from a core that actually has one', async () => {
   const shellSite = match[1];
   assert.ok(CORES.includes(shellSite), `${shellSite} is not one of the shipped cores`);
 
-  const manifest = await inspectCore(projectUrl(`public/terrain/${shellSite}`).pathname.slice(1));
+  const manifest = await inspectCore(projectPath(`public/terrain/${shellSite}`));
   assert.equal(manifest.files['shell.u16'].state, 'present');
   assert.equal(manifest.files['shell-drape.jpg'].state, 'present');
 });
 
 test('each core ships exactly one form of imagery', async () => {
   for (const id of CORES) {
-    const manifest = await inspectCore(projectUrl(`public/terrain/${id}`).pathname.slice(1));
+    const manifest = await inspectCore(projectPath(`public/terrain/${id}`));
     const single = manifest.files['drape.jpg'].state === 'present';
     const tiles = DRAPE_TILES.filter((name) => manifest.files[name].state === 'present').length;
     assert.ok(
@@ -60,7 +64,7 @@ test('each core ships exactly one form of imagery', async () => {
 test('the airfield core declares no vegetation rather than shipping empty vegetation', async () => {
   // Not a style point: an empty vegetation payload would load, draw nothing and report a tree
   // count of zero, which is indistinguishable from a broken tree layer. Absence is declared.
-  const manifest = await inspectCore(projectUrl('public/terrain/flughafen').pathname.slice(1));
+  const manifest = await inspectCore(projectPath('public/terrain/flughafen'));
   assert.equal(manifest.files['vegetation.json'].state, 'absent');
   assert.equal(manifest.files['vegetation.bin'].state, 'absent');
 });
