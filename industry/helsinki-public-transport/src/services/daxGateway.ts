@@ -1,4 +1,5 @@
 import type { DaxRow } from '@/data/model';
+import { requireEnv } from '@/services/env';
 import { getRayfinClient } from '@/services/rayfinClient';
 import {
   acquirePowerBiToken,

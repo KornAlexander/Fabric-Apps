@@ -33,7 +33,7 @@ connectors:
     auth:
       type: delegated
     config:
-      workspaceId: ${FABRIC_WORKSPACE_ID}
+      workspaceId: ${FABRIC_WORKSPACE_ID:-<your-workspace-id>}
       itemId: <your-dataset-id>
     operations:
       - name: executeQuery

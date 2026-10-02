@@ -5,6 +5,8 @@ import {
   type IPublicClientApplication,
 } from '@azure/msal-browser';
 
+import { requireEnv } from '@/services/env';
+
 /**
  * Direct Power BI `executeQueries` access.
  *
