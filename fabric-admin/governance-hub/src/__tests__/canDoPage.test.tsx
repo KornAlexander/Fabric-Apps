@@ -7,6 +7,9 @@ import { I18nProvider } from '@/i18n';
 
 const loadSnapshot = vi.fn();
 const getModelTarget = vi.fn();
+// Module-level, so every render sees the same array, as the real context's state does. A fresh
+// array per render re-creates the page's `load` callback and re-fetches after every update.
+const enabledModules = ['fabric', 'pp', 'agent', 'entra'];
 
 vi.mock('@/services/effectiveData', () => ({
   loadSnapshot: (...args: unknown[]) => loadSnapshot(...args),
@@ -17,7 +20,7 @@ vi.mock('@/services/govModel', () => ({
 }));
 
 vi.mock('@/hooks/GovernanceContext', () => ({
-  useGovernance: () => ({ config: { modulesEnabled: ['fabric', 'pp', 'agent', 'entra'] } }),
+  useGovernance: () => ({ config: { modulesEnabled: enabledModules } }),
 }));
 
 const { CanDoPage } = await import('@/pages/CanDoPage');
@@ -180,6 +183,8 @@ describe('Can-Do Explorer', () => {
     await waitFor(() =>
       expect(screen.getByText(/under-reports access/i)).toBeInTheDocument()
     );
+    // One load per mount. A reload on every render keeps fetching after the test ends.
+    expect(loadSnapshot).toHaveBeenCalledTimes(1);
   });
 
   it('says the model is not provisioned rather than showing an empty answer', async () => {
