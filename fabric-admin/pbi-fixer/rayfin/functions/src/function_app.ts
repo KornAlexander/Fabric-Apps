@@ -98,7 +98,7 @@ const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 async function fabricFetch(
   path: string,
   init: { method?: string; body?: unknown } = {},
-): Promise<{ status: number; headers: Headers; json: any }> {
+): Promise<{ status: number; headers: Headers; json: unknown }> {
   const token = await getFabricToken();
   const res = await fetch(`${FABRIC_BASE}${path}`, {
     method: init.method ?? 'GET',
@@ -109,7 +109,7 @@ async function fabricFetch(
     body: init.body !== undefined ? JSON.stringify(init.body) : undefined,
   });
   const text = await res.text();
-  let json: any = undefined;
+  let json: unknown = undefined;
   if (text) {
     try {
       json = JSON.parse(text);
@@ -125,8 +125,8 @@ async function fabricFetch(
 
 /** Resolve a Fabric long-running operation, returning the final result body. */
 async function resolveLro(
-  first: { status: number; headers: Headers; json: any },
-): Promise<any> {
+  first: { status: number; headers: Headers; json: unknown },
+): Promise<unknown> {
   if (first.status !== 202) return first.json;
 
   const token = await getFabricToken();
@@ -173,7 +173,7 @@ function fixPageSize(def: Definition, scanOnly: boolean): FixerResult {
   let changed = 0;
   for (const part of def.parts) {
     if (!isPagePart(part)) continue;
-    let doc: any;
+    let doc: Record<string, unknown>;
     try {
       doc = JSON.parse(b64decode(part.payload));
     } catch {
@@ -210,17 +210,18 @@ function fixPieChart(def: Definition, scanOnly: boolean): FixerResult {
   let changed = 0;
   for (const part of def.parts) {
     if (!isVisualPart(part)) continue;
-    let doc: any;
+    let doc: { visual?: { visualType?: unknown } } | null;
     try {
       doc = JSON.parse(b64decode(part.payload));
     } catch {
       continue;
     }
-    const vt = doc?.visual?.visualType;
-    if (typeof vt !== 'string' || !PIE_TYPES.has(vt)) continue;
+    const visual = doc?.visual;
+    const vt = visual?.visualType;
+    if (!visual || typeof vt !== 'string' || !PIE_TYPES.has(vt)) continue;
     findings.push({ path: part.path, detail: `${vt} -> barChart` });
     if (!scanOnly) {
-      doc.visual.visualType = 'barChart';
+      visual.visualType = 'barChart';
       part.payload = b64encode(JSON.stringify(doc));
       changed++;
     }
@@ -245,14 +246,14 @@ const FIXERS: Record<string, (def: Definition, scanOnly: boolean) => FixerResult
 /** List workspaces visible to the app identity. */
 udf.func('listWorkspaces', async (): Promise<{ id: string; displayName: string }[]> => {
   const res = await fabricFetch('/workspaces');
-  const value = (res.json?.value ?? []) as { id: string; displayName: string }[];
+  const value = ((res.json as { value?: unknown } | undefined)?.value ?? []) as { id: string; displayName: string }[];
   return value.map((w) => ({ id: w.id, displayName: w.displayName }));
 }, []);
 
 /** List Power BI reports in a workspace. */
 udf.func('listReports', async (workspaceId: string): Promise<{ id: string; displayName: string }[]> => {
   const res = await fabricFetch(`/workspaces/${workspaceId}/reports`);
-  const value = (res.json?.value ?? []) as { id: string; displayName: string }[];
+  const value = ((res.json as { value?: unknown } | undefined)?.value ?? []) as { id: string; displayName: string }[];
   return value.map((r) => ({ id: r.id, displayName: r.displayName }));
 }, []);
 
@@ -282,7 +283,7 @@ udf.func('applyReportFixer', async (
     `/workspaces/${workspaceId}/reports/${reportId}/getDefinition?format=PBIR`,
     { method: 'POST' },
   );
-  const defEnvelope = await resolveLro(getRes);
+  const defEnvelope = (await resolveLro(getRes)) as { definition?: Definition } & Definition;
   const definition: Definition = defEnvelope.definition ?? defEnvelope;
   if (!definition?.parts) throw new Error('No PBIR definition parts returned');
 
