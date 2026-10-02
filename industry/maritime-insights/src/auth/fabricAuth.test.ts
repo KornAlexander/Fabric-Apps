@@ -31,7 +31,8 @@ describe("authRequired", () => {
   });
 
   it("is on for the deployed host", () => {
-    setHost("<your-app-host>.webapp.fabricapps.net/");
+    // A made-up host in the deployed shape; no real deployment uses it.
+    setHost("https://example-app-host-swedencentral.webapp.fabricapps.net/");
     expect(authRequired()).toBe(true);
   });
 

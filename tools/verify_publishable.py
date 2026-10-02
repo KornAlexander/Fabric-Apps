@@ -312,6 +312,9 @@ ALLOWLIST: dict[str, tuple[set[str], str]] = {
     "industry/education/campus-twin/config/buildings-lmu.json": ({"customer_people"},
         'OSM tag values of the form "operator": "<utility name>" on six buildings, copied '
         'verbatim from OpenStreetMap'),
+    "industry/maritime-insights/src/auth/fabricAuth.test.ts": ({"internal"},
+        'a made-up host in the deployed shape for the fail-closed test: '
+        '"https://example-app-host-swedencentral.webapp.fabricapps.net/" - no real deployment uses it'),
 }
 
 # Whole-directory allowances need a shape-level justification, not a purpose.
