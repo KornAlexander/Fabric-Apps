@@ -1,0 +1,38 @@
+{
+  "id": "generic",
+  "brand": {
+    "name": { "de": "City Utility Twin", "en": "City Utility Twin" },
+    "logo": null,
+    "colors": { "accent": "#0F6CBD", "alert": "#FF0000" }
+  },
+  "defaultCity": "munich",
+  "cities": [
+    { "id": "munich", "aois": ["munich", "flughafen"], "status": "ready" },
+    { "id": "hamburg", "aois": ["hamburg-centre"], "status": "planned" },
+    { "id": "stuttgart", "aois": ["stuttgart-centre"], "status": "planned" }
+  ],
+  "divisions": {
+    "transit": true,
+    "construction": true,
+    "water": true,
+    "power": true,
+    "heat": true,
+    "emobility": true,
+    "fibre": true,
+    "aviation": true
+  },
+  "texts": {
+    "tagline": {
+      "de": "Der digitale Zwilling deiner Stadt auf einer Karte: Strom, Wasser, Wärme, Verkehr, Glasfaser. Live.",
+      "en": "Your city's digital twin on one map: power, water, heat, transit, fibre. Live."
+    }
+  },
+  "kpiTargets": {
+    "transitPunctualityPct": 90,
+    "meterDeliveryPct": 98
+  },
+  "agent": {
+    "persona": "neutral",
+    "language": "de"
+  }
+}

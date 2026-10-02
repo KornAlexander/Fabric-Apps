@@ -1,0 +1,37 @@
+{
+  "width": 1216,
+  "height": 1560,
+  "resolutionM": 30,
+  "crs": "EPSG:25832",
+  "origin": {
+    "easting": 681120,
+    "northing": 5324760
+  },
+  "heightMinM": 413.53,
+  "heightMaxM": 647.961,
+  "heightScale": 0.003577184033191949,
+  "encoding": "uint16-le, row-major, row 0 = north",
+  "boundsWgs84": {
+    "west": 11.430473,
+    "south": 48.050401,
+    "east": 11.943453,
+    "north": 48.459508
+  },
+  "core": {
+    "easting": 702096.0,
+    "northing": 5356632.0,
+    "widthM": 8576.0,
+    "heightM": 5812.0
+  },
+  "transitionBandM": 250,
+  "seamOffsetM": 0.268,
+  "seamOffsetAllCellsM": 0.571,
+  "seamOffsetNote": "Median of (shell - core) over open ground in a 900 m ring inside the core boundary (19717 of 24914 ring cells). Open ground is isolated because the shell is a SURFACE model and the core is bare earth: over all cells the median is +0.57 m, but that figure is canopy height, which is a genuine difference in what the two datasets measure rather than an error. What remains on open ground is the systematic part - the EGM2008 vs DHHN2016 datum difference - and only that is removed globally. It is a seam alignment, not a geodetic datum determination, and must not be cited as one.",
+  "verticalDatum": "shifted onto the core's DHHN2016 by the measured seam offset",
+  "source": "ESA / DLR / Airbus Defence and Space \u2014 Copernicus DEM GLO-30",
+  "licence": "Copernicus DEM free licence (worldwide, free reuse with the prescribed notice)",
+  "attribution": "produced using Copernicus WorldDEM-30 \u00a9 DLR e.V. 2010\u20132014 and \u00a9 Airbus Defence and Space GmbH 2014\u20132018 provided under COPERNICUS by the European Union and ESA; all rights reserved",
+  "surface": "DSM (canopy and buildings included)",
+  "sourceAcquisition": "Copernicus DEM GLO-30, retrieved 2026-07",
+  "file": "shell.u16"
+}

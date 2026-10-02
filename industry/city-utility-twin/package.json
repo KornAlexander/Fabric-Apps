@@ -1,0 +1,39 @@
+{
+  "name": "city-utility-twin",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Your city's digital twin on one map: power, water, heat, transit, fibre. Live.",
+  "template": {
+    "name": "city-utility-twin",
+    "displayName": "City Utility Twin",
+    "description": "Your city's digital twin on one map: power, water, heat, transit, fibre. Live. A config-driven 1:1 3D twin for municipal multi-utilities.",
+    "category": "digital-twins"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5190 --strictPort",
+    "build": "tsc --noEmit && node tools/check-assets.mjs && vite build && node tools/check-assets.mjs --bundle",
+    "build:fabric": "npm run build",
+    "preview": "vite preview --host 127.0.0.1 --port 4190 --strictPort",
+    "test": "node --test tests/map.test.mjs tests/geo.test.mjs tests/world.test.mjs tests/relay.test.mjs tests/luft.test.mjs tests/fahrplan.test.mjs tests/pack.test.mjs",
+    "check:bundle": "node tools/check-assets.mjs --bundle",
+    "data:flughafen": "pwsh -NoProfile -File tools/build-flughafen.ps1",
+    "package:check": "pwsh -NoProfile -File tools/package-check.ps1"
+  },
+  "dependencies": {
+    "@azure/msal-browser": "^5.22.0",
+    "@microsoft/rayfin-auth-provider-fabric": "^1.35.1",
+    "@microsoft/rayfin-client": "^1.35.1",
+    "three": "0.170.0"
+  },
+  "devDependencies": {
+    "@microsoft/rayfin-cli": "1.33.0",
+    "@playwright/test": "1.60.0",
+    "@types/three": "0.170.0",
+    "typescript": "~5.8.3",
+    "vite": "~7.3.2"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

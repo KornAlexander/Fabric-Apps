@@ -1,0 +1,13 @@
+{
+  "count": 29580,
+  "stride": 9,
+  "encoding": "int16 x (m), int16 z (m), uint16 ground (0.1 m), uint8 height (0.2 m), uint8 crown radius (0.1 m), uint8 crown form",
+  "minHeightM": 3,
+  "spacingM": 9,
+  "formKnown": false,
+  "crownRadiusMeasured": false,
+  "crownRatio": 0.2,
+  "source": "Einzelbaumstandorte (einzelbaeume), Bayerische Vermessungsverwaltung (LDBV)",
+  "licence": "CC BY 4.0",
+  "attribution": "Datenquelle: Bayerische Vermessungsverwaltung – www.geodaten.bayern.de [Daten bearbeitet]"
+}

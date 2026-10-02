@@ -1,0 +1,23 @@
+node_modules/
+dist/
+# public/terrain/ is committed on purpose: prebuilt open-data terrain, imagery and buildings
+# (CC BY 4.0, see NOTICE.md), so the app runs without the geodata pipeline.
+# Downloaded survey tiles, the Copernicus window and the archived drape mosaic. Large, and all
+# reproducible with `npm run data:flughafen`. Anchored: public/data/ ships with the app.
+/data/
+.env*
+!.env.example
+rayfin/.env
+rayfin/.deployments.json
+rayfin/.deploy-in-progress.json
+rayfin/.temp/
+rayfin/data/
+# ⚠️ `rayfin up --json` prints the deployment record, which contains a publishableKey.
+tools/deploy.log
+tools/flughafen-build.log
+*.tsbuildinfo
+test-results/
+playwright-report/
+# Python bytecode from the agent service under server/.
+__pycache__/
+*.pyc

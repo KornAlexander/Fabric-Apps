@@ -1,0 +1,49 @@
+{
+  "file": "landuse_2m.u8z",
+  "compression": "gzip",
+  "bytes": 3206817,
+  "compressedBytes": 208235,
+  "width": 1627,
+  "height": 1971,
+  "resolutionM": 2,
+  "origin": {
+    "easting": 689916,
+    "northing": 5333514
+  },
+  "classes": {
+    "0": "not mapped",
+    "1": "vineyard",
+    "2": "orchard",
+    "3": "forest",
+    "4": "farmland",
+    "5": "meadow and grass",
+    "6": "park and garden",
+    "7": "allotments",
+    "8": "residential",
+    "9": "commercial and industrial",
+    "10": "scrub and heath",
+    "11": "water",
+    "12": "wetland",
+    "13": "rock and quarry",
+    "20": "paved road, major",
+    "21": "paved road, minor",
+    "22": "unpaved track",
+    "23": "railway"
+  },
+  "coveragePct": 85.21,
+  "sharePct": {
+    "not mapped": 14.79,
+    "forest": 6.9,
+    "meadow and grass": 4.7,
+    "park and garden": 4.52,
+    "residential": 46.32,
+    "commercial and industrial": 7.45,
+    "scrub and heath": 0.16,
+    "water": 2.73,
+    "paved road, major": 3.9,
+    "paved road, minor": 7.77,
+    "unpaved track": 0.02,
+    "railway": 0.73
+  },
+  "attribution": "© OpenStreetMap contributors (ODbL)"
+}
