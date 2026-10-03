@@ -32,6 +32,7 @@ import os
 import re
 import subprocess
 import sys
+import zlib
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
@@ -54,9 +55,9 @@ INTERNAL = re.compile(
     rb"[A-Za-z0-9-]+\.webapp(?:\.msit)?\.fabricapps\.net"
     rb"|[0-9a-fA-F]{32}\.pbidedicated\.windows\.net"
     rb"|[A-Za-z0-9-]+\.database\.fabric\.microsoft\.com"
-    # Eventhouse / KQL clusters and Warehouse endpoints. Added after a real cluster URI,
-    # "trd-1u2v2sxv19k32hbdcc.z4.kusto.fabric.microsoft.com", sat in harbour-pulse's
-    # parameter.yml through a green run - its host was in no line of the list above.
+    # Eventhouse / KQL clusters and Warehouse endpoints. Added after a real cluster URI of the
+    # shape "trd-<random>.<zone>.kusto.fabric.microsoft.com" sat in an app's parameter.yml
+    # through a green run - its host was in no line of the list above.
     # The lesson repeats every time: match the SHAPE, not the hosts you happened to see.
     rb"|[A-Za-z0-9.-]+\.dfs\.fabric\.microsoft\.com"
     rb"|[A-Za-z0-9.-]+\.kusto\.windows\.net"
@@ -119,8 +120,19 @@ BLOCKED_NAME_DIGESTS: set[str] = {   # add with --hash "Name" or --hash "Two Wor
 WORD = re.compile(r"[A-Za-z\u00c0-\u024f]{3,}")
 # Base64 (lockfile integrity hashes, inline PNGs) contains random letter runs; a 3-letter
 # run there is noise, not a name. Measured: two lockfiles and a notebook PNG fired on a
-# 3-letter acronym before this. Runs touching a digit or + / = are skipped.
-B64_NEIGHBOUR = re.compile(r"[0-9+/=]")
+# 3-letter acronym. Only words INSIDE an encoded-looking run are skipped: >= 32 base64-alphabet
+# characters with a digit AND both letter cases well represented (random base64 is about half
+# upper case; paths and identifiers are not). An earlier rule skipped any word touching a digit
+# or + / =, and a length-only rule swallowed long ordinary paths (both caught in review).
+B64_RUN = re.compile(r"[A-Za-z0-9+/=]{32,}")
+
+
+def _looks_encoded(run: str) -> bool:
+    letters = [c for c in run if c.isalpha()]
+    if not letters or not any(c.isdigit() for c in run):
+        return False
+    upper = sum(c.isupper() for c in letters) / len(letters)
+    return 0.2 <= upper <= 0.8
 
 
 def digest(name: str) -> str:
@@ -128,11 +140,10 @@ def digest(name: str) -> str:
 
 
 def _words(text: str) -> list[str]:
+    encoded = [m.span() for m in B64_RUN.finditer(text) if _looks_encoded(m.group())]
     out = []
     for m in WORD.finditer(text):
-        before = text[m.start() - 1] if m.start() else " "
-        after = text[m.end()] if m.end() < len(text) else " "
-        if B64_NEIGHBOUR.match(before) or B64_NEIGHBOUR.match(after):
+        if any(lo <= m.start() and m.end() <= hi for lo, hi in encoded):
             continue
         out.append(m.group().lower())
     return out
@@ -455,7 +466,8 @@ def main() -> int:
                 if len(raw) > MAX_SCAN_BYTES:
                     findings.append(("unscanned", rel, "decompresses past the scan cap"))
                     continue
-        except (OSError, EOFError, gzip.BadGzipFile):
+        except (OSError, EOFError, gzip.BadGzipFile, zlib.error):
+            findings.append(("unscanned", rel, "unreadable or corrupt, not scanned"))
             continue
         scanned += 1
 
@@ -523,6 +535,12 @@ def main() -> int:
     if not scan_names(name_dirty):
         print("GATE BROKEN: the name digests no longer catch the planted two-word name.")
         return 2
+    # A name in a path segment or after "=" must still be caught (the base64 skip once hid both).
+    for planted in ("tiles/" + "Pat" + "ris/data.json", "owner=" + "Pat" + "ris",
+                    "a" * 32 + "/2024/" + "Pat" + "ris/terrain/data"):
+        if not scan_names(planted):
+            print(f"GATE BROKEN: the name digests miss a planted name in: {planted[:6]}...")
+            return 2
     if scan_names(name_clean):
         print("GATE BROKEN: the name digests fire on an innocent line.")
         return 2
