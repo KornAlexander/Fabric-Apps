@@ -28,7 +28,10 @@ import {
  * read it skip, with the reason in their title, instead of failing or passing on nothing.
  */
 const FLOW_PATH = resolve(__dirname, '../../../public/terrain/steinbach-2021/flowfield_16m.json');
-const FLOW_BUILT = existsSync(FLOW_PATH);
+// Skip only when the whole scene is unbuilt (a clean clone). A built scene that lacks its flow
+// field is a broken build and must fail, not skip.
+const SCENE_BUILT = existsSync(resolve(FLOW_PATH, '..'));
+const FLOW_BUILT = SCENE_BUILT;
 const NEEDS_FLOW = ' [skipped: public/terrain/steinbach-2021/flowfield_16m.json is not built; run `npm run data:build`]';
 const withFlow = (name: string) => (FLOW_BUILT ? name : `${name}${NEEDS_FLOW}`);
 const itWithFlow = it.skipIf(!FLOW_BUILT);
