@@ -31,9 +31,9 @@ import { executeDaxViaHost, hasFabricHost } from '@/services/fabricHostBridge';
 export type DaxTransport = 'connector' | 'host' | 'powerbi';
 
 const WORKSPACE_ID = import.meta.env.VITE_FABRIC_WORKSPACE_ID as string;
-const DATASET_ID =
-  (import.meta.env.VITE_PBI_DATASET_ID as string | undefined) ??
-  requireEnv('VITE_PBI_DATASET_ID');
+// Resolved when the host transport runs, not at module load: connector-only setups keep the
+// dataset id server-side and must still start without it.
+const datasetId = () => requireEnv('VITE_PBI_DATASET_ID');
 
 /** Thrown when the Power BI fallback needs an interactive sign-in that only a click may trigger. */
 export class NeedsPowerBiSignIn extends Error {
@@ -83,7 +83,7 @@ async function runViaConnector(query: string): Promise<DaxRow[]> {
 }
 
 async function runViaHost(query: string): Promise<DaxRow[]> {
-  return executeDaxViaHost(WORKSPACE_ID, DATASET_ID, query);
+  return executeDaxViaHost(WORKSPACE_ID, datasetId(), query);
 }
 
 async function runViaPowerBi(query: string): Promise<DaxRow[]> {
