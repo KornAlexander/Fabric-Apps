@@ -18,11 +18,12 @@ import { requireEnv } from '@/services/env';
  * returns ~1000 rows every couple of seconds.
  */
 
-const CLIENT_ID = requireEnv('VITE_PBI_CLIENT_ID');
-const TENANT_ID =
-  import.meta.env.VITE_PBI_TENANT_ID ?? '${FABRIC_TENANT_ID}';
-const DATASET_ID =
-  requireEnv('VITE_PBI_DATASET_ID');
+// Read on use, not at module load: only the standalone (MSAL) path needs these, and the app must
+// still start inside the Fabric portal, where they are not set. A missing value fails with an error
+// naming the variable when that path is actually taken.
+const clientId = () => requireEnv('VITE_PBI_CLIENT_ID');
+const tenantId = () => requireEnv('VITE_PBI_TENANT_ID');
+const datasetId = () => requireEnv('VITE_PBI_DATASET_ID');
 
 const SCOPES = ['https://analysis.windows.net/powerbi/api/.default'];
 
@@ -57,8 +58,8 @@ function getMsal(): Promise<IPublicClientApplication> {
   msalPromise ??= (async () => {
     const app = new PublicClientApplication({
       auth: {
-        clientId: CLIENT_ID,
-        authority: `https://login.microsoftonline.com/${TENANT_ID}`,
+        clientId: clientId(),
+        authority: `https://login.microsoftonline.com/${tenantId()}`,
         redirectUri: window.location.origin,
       },
       cache: { cacheLocation: 'sessionStorage' },
@@ -109,7 +110,8 @@ export function initPowerBiAuth(): void {
  */
 function pickAccount(app: IPublicClientApplication): AccountInfo | null {
   const accounts = app.getAllAccounts();
-  return accounts.find((a) => a.tenantId === TENANT_ID) ?? accounts[0] ?? null;
+  const tenant = tenantId();
+  return accounts.find((a) => a.tenantId === tenant) ?? accounts[0] ?? null;
 }
 
 /**
@@ -194,7 +196,7 @@ export interface DaxResponse {
 /** Run a DAX query against the semantic model with a delegated user token. */
 export async function executeQueriesDirect(query: string, token: string): Promise<DaxResponse> {
   const response = await fetch(
-    `https://api.powerbi.com/v1.0/myorg/datasets/${DATASET_ID}/executeQueries`,
+    `https://api.powerbi.com/v1.0/myorg/datasets/${datasetId()}/executeQueries`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
