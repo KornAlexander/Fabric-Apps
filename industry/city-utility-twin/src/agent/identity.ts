@@ -14,13 +14,9 @@
  * the application down with it.
  */
 
-const env = (...names: string[]): string => {
-  for (const name of names) {
-    const value = (import.meta.env as Record<string, string | undefined>)[name];
-    if (value) return value;
-  }
-  return '';
-};
+// Explicit property reads only: indexing import.meta.env by a variable makes Vite inline the
+// WHOLE env object into the bundle.
+const first = (...values: Array<string | undefined>): string => values.find((v) => v) ?? '';
 
 /**
  * ⚠️ THE FABRIC IDENTIFIERS USE A DIFFERENT PREFIX FROM THE REST. `rayfin env` writes
@@ -30,12 +26,12 @@ const env = (...names: string[]): string => {
  * either way, so searching the artefact for the value proves nothing about the key it was read
  * under.
  */
-const API_URL = env('VITE_RAYFIN_API_URL', 'VITE_API_URL');
-const PUBLISHABLE_KEY = env('VITE_RAYFIN_PUBLISHABLE_KEY', 'VITE_PUBLISHABLE_KEY');
-const WORKSPACE_ID = env('VITE_FABRIC_WORKSPACE_ID');
-const ITEM_ID = env('VITE_FABRIC_ITEM_ID');
-const TENANT_ID = env('VITE_FABRIC_TENANT_ID');
-const PORTAL_URL = env('VITE_FABRIC_PORTAL_URL');
+const API_URL = first(import.meta.env.VITE_RAYFIN_API_URL, import.meta.env.VITE_API_URL);
+const PUBLISHABLE_KEY = first(import.meta.env.VITE_RAYFIN_PUBLISHABLE_KEY, import.meta.env.VITE_PUBLISHABLE_KEY);
+const WORKSPACE_ID = first(import.meta.env.VITE_FABRIC_WORKSPACE_ID);
+const ITEM_ID = first(import.meta.env.VITE_FABRIC_ITEM_ID);
+const TENANT_ID = first(import.meta.env.VITE_FABRIC_TENANT_ID);
+const PORTAL_URL = first(import.meta.env.VITE_FABRIC_PORTAL_URL);
 
 export function identityConfigured(): boolean {
   return Boolean(API_URL && PUBLISHABLE_KEY);

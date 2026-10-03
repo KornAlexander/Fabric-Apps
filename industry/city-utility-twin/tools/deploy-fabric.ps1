@@ -18,29 +18,27 @@ $repo = Split-Path -Parent $PSScriptRoot
 Set-Location $repo
 
 
-# Konfiguration kommt aus Umgebungsvariablen, siehe UMSETZUNG.md. Es gibt bewusst KEINE
-# Vorgabewerte: ein Wert, der "meistens passt", schreibt sonst in einen fremden Mandanten.
+# Configuration comes from environment variables, see UMSETZUNG.md. There are deliberately NO
+# defaults: a value that "usually fits" ends up writing into somebody else's tenant.
 function Need([string]$Name) {
   $v = [Environment]::GetEnvironmentVariable($Name)
-  if (-not $v) { throw "Umgebungsvariable $Name fehlt (siehe UMSETZUNG.md)." }
+  if (-not $v) { throw "Environment variable $Name is missing (see UMSETZUNG.md)." }
   return $v
 }
 $tenant = Need 'FABRIC_TENANT_ID'
 $subscription = Need 'AZURE_SUBSCRIPTION_ID'
 $workspace = Need 'FABRIC_WORKSPACE_ID'
-$customerFolder = [Environment]::GetEnvironmentVariable('FABRIC_FOLDER_ID')   # optional
-$folderName = 'München Ökosystem'
+$customerFolder = [Environment]::GetEnvironmentVariable('FABRIC_FOLDER_ID')   # optional parent folder
+$folderName = 'City Utility Twin'
 $displayName = 'City Utility Twin'
 
-# --- guard -------------------------------------------------------------------------------------
+# --- guard (part 1: local registry) --------------------------------------------------------------
 $registry = Join-Path $repo 'rayfin\.deployments.json'
+$boundItemId = $null
 if (Test-Path $registry) {
     $existing = Get-Content $registry -Raw | ConvertFrom-Json
-    $inherited = $existing.deployments.PSObject.Properties |
-        Where-Object { $_.Value.fabricItemId -eq '00000000-0000-0000-0000-000000000000' }
-    if ($inherited) {
-        throw 'rayfin/.deployments.json points at a foreign item. Refusing to deploy over it.'
-    }
+    $boundItemId = $existing.deployments.($existing.active).fabricItemId
+    if (-not $boundItemId) { throw 'rayfin/.deployments.json has no active item. Remove it or repair it by hand.' }
 }
 
 $account = az account show --subscription $subscription --query '{tenantId:tenantId}' -o json | ConvertFrom-Json
@@ -52,6 +50,37 @@ if (-not $token) { throw 'No Fabric token returned.' }
 $headers = @{ Authorization = "Bearer $token"; 'Content-Type' = 'application/json' }
 
 try {
+    # --- guard (part 2: the workspace) ---------------------------------------------------------
+    # rayfin up reuses an item it finds in its registry, else one whose display name matches the
+    # slug (case-insensitive), and --yes accepts that. So: a redeploy must point at OUR renamed
+    # item, and a first deploy must find no item carrying either name.
+    $slug = 'city-utility-twin'
+    # Every page: the CLI searches all of them, so a clash on page two must stop us too.
+    $apps = @()
+    $uri = "https://api.fabric.microsoft.com/v1/workspaces/$workspace/items?type=AppBackend"
+    while ($uri) {
+        $page = Invoke-RestMethod -Uri $uri -Headers $headers -TimeoutSec 60
+        $apps += @($page.value)
+        $uri = $page.continuationUri
+    }
+    $before = @($apps | ForEach-Object { $_.id })
+    if ($boundItemId) {
+        # The CLI picks the first registry record for this workspace, not necessarily 'active'.
+        $records = @($existing.deployments.PSObject.Properties | Where-Object { $_.Value.fabricWorkspaceId -eq $workspace })
+        if ($records.Count -ne 1 -or $records[0].Value.fabricItemId -ne $boundItemId) {
+            throw 'rayfin/.deployments.json does not hold exactly one record for this workspace, bound to the active item.'
+        }
+        $bound = $apps | Where-Object { $_.id -eq $boundItemId }
+        if (-not $bound -or $bound.displayName -ne $displayName) {
+            throw "rayfin/.deployments.json is bound to an item that is not '$displayName' in this workspace. Refusing to deploy over it."
+        }
+        "redeploy of the existing '$displayName' item"
+    } else {
+        $clash = $apps | Where-Object { $_.displayName -ieq $slug -or $_.displayName -ieq $displayName }
+        if ($clash) { throw "An app item named '$($clash[0].displayName)' already exists. Refusing a first deploy that could adopt it." }
+        'first deploy: no item with this name exists'
+    }
+
     # --- folder --------------------------------------------------------------------------------
     $folders = Invoke-RestMethod -Uri "https://api.fabric.microsoft.com/v1/workspaces/$workspace/folders" -Headers $headers -TimeoutSec 60
     $folder = $folders.value | Where-Object { $_.displayName -eq $folderName -and $_.parentFolderId -eq $customerFolder }
@@ -80,10 +109,12 @@ try {
     $active = $registryAfter.deployments.($registryAfter.active)
     "`nitem:    $($active.fabricItemId)"
     "hosting: $($active.hostingUrl)"
+    if ($boundItemId -and $active.fabricItemId -ne $boundItemId) { throw 'rayfin up deployed to a different item than the bound one. Stopping before rename/move.' }
+    if (-not $boundItemId -and $before -contains $active.fabricItemId) { throw 'rayfin up adopted an item that existed before this first deploy. Stopping before rename/move.' }
 
     # --- rename and file it --------------------------------------------------------------------
     # The CLI names the item from the slug in rayfin.yml. The readable name is set afterwards,
-    # for the same reason the app's UI is German: the audience reads it.
+    # because the audience reads it.
     $patch = @{ displayName = $displayName } | ConvertTo-Json
     Invoke-RestMethod -Method Patch -Uri "https://api.fabric.microsoft.com/v1/workspaces/$workspace/items/$($active.fabricItemId)" `
         -Headers $headers -Body ([System.Text.Encoding]::UTF8.GetBytes($patch)) -TimeoutSec 60 | Out-Null

@@ -19,13 +19,12 @@
 
 import type { IPublicClientApplication, AccountInfo } from '@azure/msal-browser';
 
-const env = (name: string, fallback: string): string => {
-  const value = (import.meta.env as Record<string, string | undefined>)[name];
-  return (value && value.trim()) || fallback;
-};
+// Explicit property reads only. Indexing import.meta.env by a variable makes Vite inline the WHOLE
+// env object into the bundle, including every deployment identifier.
+const envOr = (value: string | undefined, fallback: string): string => (value && value.trim()) || fallback;
 
-export const CLIENT_ID = env('VITE_ENTRA_CLIENT_ID', '');
-export const TENANT_ID = env('VITE_ENTRA_TENANT_ID', '');
+export const CLIENT_ID = envOr(import.meta.env.VITE_ENTRA_CLIENT_ID, '');
+export const TENANT_ID = envOr(import.meta.env.VITE_ENTRA_TENANT_ID, '');
 const SCOPE = `api://${CLIENT_ID}/Notizen.Write`;
 
 let appPromise: Promise<IPublicClientApplication | null> | null = null;

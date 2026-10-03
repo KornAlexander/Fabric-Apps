@@ -28,7 +28,10 @@ export async function verifiedFetch(url,entry,options={}){
   // Generous whole-operation bound, growing with declared payload rather than a short fixed download limit.
   const deadline=setTimeout(()=>controller.abort(new AssetError('deadline','asset')),Math.max(120000,entry.bytes/16384*1000));
   try{
-    const response=await fetchImpl(url,{signal:controller.signal,credentials:'omit',mode:'cors',redirect:'error'});
+    // Same-origin requests carry the session cookie: protected Fabric hosting authenticates map
+    // payloads like any other asset. External asset hosts stay credential-free.
+    const sameOrigin=typeof location!=='undefined'&&new URL(url,location.href).origin===location.origin;
+    const response=await fetchImpl(url,{signal:controller.signal,credentials:sameOrigin?'same-origin':'omit',mode:'cors',redirect:'error'});
     clearTimeout(header);
     if(!response.ok)throw new AssetError('http','asset',String(response.status));
     const type=(response.headers.get('content-type')??'').split(';')[0].trim().toLowerCase();

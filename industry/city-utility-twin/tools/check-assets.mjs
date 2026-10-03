@@ -50,11 +50,26 @@ if(config.mode==='local'){
     ||!Object.values(config.binding.bases).every(base=>combined.includes(base)))throw new Error('Compiled external binding absent.');
 }
 let checked=0;
+// `rayfin up` (CLI >= 1.36) writes rayfin.config.json into public/ before it builds, so the deployed
+// bundle legitimately carries the target's own workspace/item/tenant ids. Approved only when it is
+// exactly that file, holds only the CLI's six fields, and names the tenant and workspace this
+// deployment was configured for (FABRIC_TENANT_ID / FABRIC_WORKSPACE_ID, set by deploy-fabric.ps1).
+const RUNTIME_FIELDS=new Set(['apiUrl','publishableKey','workspaceId','itemId','portalUrl','tenantId']);
+function approvedRuntimeConfig(path,raw){
+  if(!bundle||resolve(path)!==resolve(join(out,'rayfin.config.json')))return false;
+  const tenant=process.env.FABRIC_TENANT_ID,workspace=process.env.FABRIC_WORKSPACE_ID;
+  if(!tenant||!workspace)throw new Error('rayfin.config.json in the bundle, but no FABRIC_TENANT_ID/FABRIC_WORKSPACE_ID to bind it to.');
+  let cfg;try{cfg=JSON.parse(raw);}catch{throw new Error('rayfin.config.json is not JSON.');}
+  if(!cfg||typeof cfg!=='object'||Object.keys(cfg).some(k=>!RUNTIME_FIELDS.has(k)||typeof cfg[k]!=='string'))throw new Error('rayfin.config.json has unexpected fields.');
+  if(cfg.tenantId!==tenant||cfg.workspaceId!==workspace)throw new Error('rayfin.config.json names a different tenant or workspace than this deployment.');
+  return true;
+}
 async function scan(path){
   const info=await lstat(path);if(info.isSymbolicLink())throw new Error('Linked build content rejected.');
   if(info.isDirectory()){for(const name of await readdir(path))await scan(join(path,name));return;}
   if(!/\.(?:html|css|ts|mjs|js|json|yml)$/.test(path))return;
   const raw=await readFile(path,'utf8');
+  if(approvedRuntimeConfig(path,raw)){checked++;return;}
   // The ADS-B relay is a deliberately public endpoint the browser must know about; see
   // APPROVED_RELAY_ORIGIN. Every other deployment coordinate still fails.
   const text=withoutApprovedPlaceNames(withoutApprovedFabricIds(withoutVendorSymbols(withoutApprovedRelay(withoutApprovedOrigin(path.endsWith('rayfin.yml')?configWithoutHostingRedirect(raw):raw,config.origin,config.binding.releaseId)))),path);

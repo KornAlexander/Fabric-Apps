@@ -22,12 +22,12 @@
   },
   "dependencies": {
     "@azure/msal-browser": "^5.22.0",
-    "@microsoft/rayfin-auth-provider-fabric": "^1.35.1",
-    "@microsoft/rayfin-client": "^1.35.1",
+    "@microsoft/rayfin-auth-provider-fabric": "1.36.2",
+    "@microsoft/rayfin-client": "1.36.2",
     "three": "0.170.0"
   },
   "devDependencies": {
-    "@microsoft/rayfin-cli": "1.33.0",
+    "@microsoft/rayfin-cli": "1.36.2",
     "@playwright/test": "1.60.0",
     "@types/three": "0.170.0",
     "typescript": "~5.8.3",
