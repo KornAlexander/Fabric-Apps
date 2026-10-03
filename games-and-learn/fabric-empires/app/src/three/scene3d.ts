@@ -486,9 +486,27 @@ export function createScene3D(
   const controls = new OrbitControls(camera, canvas);
   controls.enableDamping = true;
   controls.dampingFactor = 0.08;
-  // Left drag pans, right drag orbits. A click is detected separately, so
-  // selection and panning can share the left button without fighting.
-  controls.mouseButtons = { LEFT: MOUSE.PAN, MIDDLE: MOUSE.DOLLY, RIGHT: MOUSE.ROTATE };
+  /*
+   * The standard orbit scheme: left drag orbits, **Shift+left drag pans**, right drag pans.
+   *
+   * ⚠️ **This is a return, not a new idea.** It was briefly LEFT: PAN / RIGHT: ROTATE, on the
+   * reasoning that a map is a thing you slide around. That is true of a 2D map and wrong here:
+   * the world is a 3D scene with hills that occlude, and the move people reach for first is
+   * turning it, not sliding it. Rebinding cost the muscle memory every other 3D tool builds,
+   * and Shift+drag — the one gesture that means "pan" almost everywhere — meant nothing at all,
+   * because the left button was already panning.
+   *
+   * ⚠️ Shift+drag needs no code. OrbitControls switches a ROTATE-bound button to pan whenever
+   * ctrl, meta or shift is held, which is exactly the binding `flyControls.ts` documents when it
+   * lists Shift as contested between the two camera models. Setting LEFT back to ROTATE is what
+   * hands that gesture back.
+   *
+   * ⚠️ Selection is unaffected, and does not rely on this. Clicking a hex is detected in
+   * `main.ts` from a pointerdown/up pair with a 5 px slop, entirely independently of what
+   * OrbitControls does with the same button, so the left button can rotate and select without
+   * the two fighting.
+   */
+  controls.mouseButtons = { LEFT: MOUSE.ROTATE, MIDDLE: MOUSE.DOLLY, RIGHT: MOUSE.PAN };
   controls.screenSpacePanning = false;
   controls.minDistance = 6;
   /*

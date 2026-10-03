@@ -45,6 +45,41 @@ const DE: Readonly<Record<string, string>> = Object.freeze({
   Library: 'Bibliothek',
   'New game': 'Neues Spiel',
   Skip: 'Überspringen',
+
+  /*
+   * Tooltips on the shell's own buttons.
+   *
+   * ⚠️ These sat in `index.html` as bare `title=` attributes for the life of
+   * the project, so nine of them were English in a German game and no test
+   * could see it: `applyStaticTranslations` only translates a `title` that is
+   * declared as `data-i18n-title`, and the check for untranslated prose reads
+   * the DOM rather than the markup a tooltip lives in until you hover it.
+   *
+   * The letter in brackets is the keyboard shortcut and stays as it is: it
+   * names a physical key, not a word.
+   */
+  'The Great Library: what you actually know (l)':
+    'Die Große Bibliothek: was du wirklich weißt (l)',
+  'Share of the exam, by published weight, at familiar or better':
+    'Anteil der Prüfung nach veröffentlichter Gewichtung, auf vertraut oder besser',
+  'Sit the exam: 40 questions in the published proportions':
+    'Die Prüfung ablegen: 40 Fragen in den veröffentlichten Anteilen',
+  'Found a city here (b)': 'Hier eine Stadt gründen (b)',
+  'Plunder the neighbouring village (p). R flies the camera, so this is not on r':
+    'Das Nachbardorf plündern (p). R steuert die Kamera, deshalb liegt das nicht auf r',
+  'Skip this unit (x). W A S D fly the camera, so this is not on s':
+    'Diese Einheit überspringen (x). W A S D steuern die Kamera, deshalb liegt das nicht auf s',
+  'Hold a council review (c)': 'Eine Ratssitzung abhalten (c)',
+  /*
+   * ⚠️ Two of these nine were ALREADY in the catalogue further down, waiting
+   * for a call that never came, exactly as `'Player 1'` was: the seats tooltip
+   * and the cancel-march tooltip. Repeating them here would have shadowed the
+   * originals, and one of the two pairs disagreed ("auf dem Feld" against "auf
+   * dem Brett"), so the duplicate would have silently changed a word that the
+   * neighbouring "Die Reiche auf diesem Feld" is written to match. They are
+   * deliberately NOT restated here.
+   */
+
   // City health. "TP" (Trefferpunkte) is what the unit panel already uses for
   // HP, so the two read the same way.
   '{hp}/{full} HP': '{hp}/{full} TP',
@@ -111,6 +146,103 @@ const DE: Readonly<Record<string, string>> = Object.freeze({
   'Okay. The answer picked itself.': 'Okay. Die Antwort hat sich selbst gewählt.',
   '{n} turn': '{n} Runde',
   '{n} turns': '{n} Runden',
+
+  /*
+   * Founding a city, which now asks three questions first.
+   *
+   * "Gründung" is the noun a player would use for the founding of a town, and
+   * it reads as the occasion rather than the act, which is what the header of
+   * the question modal wants.
+   */
+  Founding: 'Gründung',
+
+  /*
+   * Marching orders.
+   *
+   * ⚠️ "Bricht auf" rather than "geht": a unit setting out on a journey of
+   * several turns is doing something more deliberate than walking, and the
+   * halt message has to sound like a warning rather than a failure, because
+   * stopping to look at what you just found is the correct behaviour.
+   */
+  '{unit} sets out. {n} turns away.': '{unit} bricht auf. {n} Runden entfernt.',
+  '{unit} arrives.': '{unit} ist angekommen.',
+  '{unit} halts: something is out there.': '{unit} hält an: da draußen ist etwas.',
+  '{unit} cannot get through and stops.': '{unit} kommt nicht durch und bleibt stehen.',
+  'a unit': 'eine Einheit',
+
+  /*
+   * The map's own offers, which the player may refuse.
+   *
+   * ⚠️ The wording has to make the refusal sound free, because it is. A line
+   * that reads like a warning would teach players to decline, which is the
+   * opposite of what these exist for. "Kostet nichts" is doing the work.
+   */
+  '{unit} finds something in the ground.': '{unit} findet etwas im Boden.',
+  '{unit} is bogged down.': '{unit} bleibt im Schlamm stecken.',
+  'Answer one question and it is yours. Walk on and it stays buried. Getting it wrong costs nothing.':
+    'Beantworte eine Frage, dann gehört es dir. Geh weiter, dann bleibt es liegen. Falsch zu liegen kostet nichts.',
+  'Answer one question and it walks out today. Decline and it goes nowhere this turn. Getting it wrong costs nothing extra.':
+    'Beantworte eine Frage, dann kommt sie heute noch frei. Lehnst du ab, bewegt sie sich diese Runde nicht. Falsch zu liegen kostet nichts extra.',
+  'Dig for {amount} {resource}': 'Nach {amount} {resource} graben',
+  'Work it free': 'Freischaufeln',
+  'One question. There is no penalty for missing it.':
+    'Eine Frage. Danebenzuliegen wird nicht bestraft.',
+  'Walk on': 'Weitergehen',
+  'Lose nothing but the chance.': 'Du verlierst nichts außer der Gelegenheit.',
+  '{amount} {resource} out of the dirt.': '{amount} {resource} aus dem Dreck.',
+  'Whatever was down there stays down there.': 'Was da unten lag, bleibt da unten.',
+  '{unit} finds firm ground and marches on.': '{unit} findet festen Boden und zieht weiter.',
+  '{unit} spends the day in the mud.': '{unit} verbringt den Tag im Schlamm.',
+  'Site surveyed. Answer three, and build well.':
+    'Der Platz ist vermessen. Beantworte drei Fragen und bau gut.',
+  'The Architect puts the plans away. Nothing is built.':
+    'Der Architekt legt die Pläne weg. Es wird nichts gebaut.',
+  'Your judgement holds. The weather turns fair and {city} is already growing.':
+    'Dein Urteil hält stand. Das Wetter wird freundlich, und {city} wächst schon.',
+  'Sound ground, sound plans. {city} starts with a second household.':
+    'Guter Boden, gute Pläne. {city} beginnt mit einem zweiten Haushalt.',
+  'The plans were guesswork. {city} starts from nothing, as most towns do.':
+    'Die Pläne waren geraten. {city} beginnt bei null, wie die meisten Städte.',
+
+  /*
+   * The empire table.
+   *
+   * ⚠️ Called "Empires" and not "Seats", even though the engine calls them
+   * seats, because the setup screen already uses "Seats" ("Plätze") for how
+   * many PEOPLE are playing. Two things called the same word one screen apart
+   * is how a player ends up looking for the co-op switch in here.
+   *
+   * The bands are deliberately plain words somebody would use about a game,
+   * not military register.
+   */
+  Empires: 'Reiche',
+  'The empires on the board, and which of them you may take (o)':
+    'Die Reiche auf dem Feld, und welche davon du übernehmen kannst (o)',
+  'The empires on this board': 'Die Reiche auf diesem Feld',
+  'Every empire is being played': 'Jedes Reich wird gespielt',
+  'Every empire on the board is being played.': 'Jedes Reich auf dem Feld wird gespielt.',
+  'Stay where you are': 'Bleib, wo du bist',
+  'Keep the empire you are playing.': 'Behalte das Reich, das du spielst.',
+  commanding: 'überlegen',
+  holding: 'behauptet sich',
+  struggling: 'in Bedrängnis',
+  'You are playing {empire}: {band}, {share} of the board. Taking another seat hands it back to the machine, and you start the new one blind.':
+    'Du spielst {empire}: {band}, {share} des Feldes. Nimmst du einen anderen Sitz, fällt dieses Reich zurück an die Maschine, und im neuen beginnst du blind.',
+  'You are not playing anybody yet.': 'Du spielst noch niemanden.',
+  '{n} town': '{n} Stadt',
+  '{n} towns': '{n} Städte',
+  '{n} unit': '{n} Einheit',
+  '{n} units': '{n} Einheiten',
+  '{n} citizen': '{n} Einwohner',
+  '{n} citizens': '{n} Einwohner',
+  '{holdings}. {share} of the board, and nobody holds more.':
+    '{holdings}. {share} des Feldes, und niemand hält mehr.',
+  '{holdings}. {share} of the board, against {best} for {leader}.':
+    '{holdings}. {share} des Feldes, gegen {best} für {leader}.',
+  'You leave {left} to the machine and take {joined}.':
+    'Du überlässt {left} der Maschine und übernimmst {joined}.',
+  'You know nothing of this map. Scout it.':
+    'Du kennst diese Karte nicht. Erkunde sie.',
   'reachable this turn': 'diese Runde erreichbar',
   'Show this site': 'Diesen Platz zeigen',
   'Nothing was being studied, so the council began {topic}. Choose another if you like.':
@@ -424,6 +556,45 @@ const DE: Readonly<Record<string, string>> = Object.freeze({
     'Der DP-600-Lehrplan ist der Technologiebaum. Jede gegnerische Fraktion hält einen Zweig davon: besiege sie und nimm dir ihr Wissen, oder brenne es nieder und bleibe unwissend.',
   // The first five minutes, for somebody who has only opened the link.
   'If you only have five minutes': 'Wenn du nur fünf Minuten hast',
+  // The way straight past the setup form, at the top of it.
+  'Skip the questions and start': 'Fragen überspringen und starten',
+  'Every choice below already has a sensible default.':
+    'Alle Optionen unten haben bereits sinnvolle Vorgaben.',
+  // Carrying on with the saved game, offered on the same screen.
+  // ⚠️ `Continue` is NOT added here: it already exists above as 'Weiter'.
+  // A second entry compiles as a duplicate object key and TypeScript rejects
+  // it, which is the good outcome; the bad one would have been two spellings
+  // of the same button in one UI.
+  'Seed {seed} · turn {turn} · {cities} cities':
+    'Startwert {seed} · Runde {turn} · {cities} Städte',
+  'Starting a new empire below replaces this saved game.':
+    'Ein neues Reich unten ersetzt diesen Spielstand.',
+  // Calling off a multi-turn march.
+  'Cancel march': 'Marsch abbrechen',
+  'Call off the march and decide again next turn (Esc)':
+    'Den Marsch abbrechen und nächste Runde neu entscheiden (Esc)',
+  '{unit} stands and awaits orders.': '{unit} hält an und wartet auf Befehle.',
+  // Folding panels, and the key list they sit next to.
+  Tile: 'Feld',
+  Log: 'Verlauf',
+  Keys: 'Tasten',
+  'drag to orbit, shift-drag to pan, wheel to zoom':
+    'ziehen dreht · Umschalt+ziehen verschiebt · Rad zoomt',
+  'enter is the next action, space follows the button':
+    'Enter nächste Aktion · Leertaste folgt dem Knopf · Strg+Leertaste beendet den Zug',
+  // The turn button, which is now two buttons wearing one coat.
+  'Next unit ({n})': 'Nächste Einheit ({n})',
+  'Choose research': 'Forschung wählen',
+  'Nothing left to do. Space ends the turn.':
+    'Nichts mehr zu tun. Leertaste beendet den Zug.',
+  '{n} units still have something to do. Ctrl+Space ends the turn anyway.':
+    '{n} Einheiten haben noch etwas zu tun. Strg+Leertaste beendet den Zug trotzdem.',
+  'Compute is being earned against nothing. Ctrl+Space ends the turn anyway.':
+    'Compute wird ohne Ziel erwirtschaftet. Strg+Leertaste beendet den Zug trotzdem.',
+  'A review has fallen due. Ctrl+Space ends the turn anyway.':
+    'Eine Wiederholung ist fällig. Strg+Leertaste beendet den Zug trotzdem.',
+  'Nothing is being researched. Pick a topic.':
+    'Es wird nichts erforscht. Wähle ein Thema.',
   'Every advance is a question. Pick a topic, answer it, and the next units unlock.':
     'Jeder Fortschritt ist eine Frage. Wähle ein Thema, beantworte es, und die nächsten Einheiten werden frei.',
   'Attack a walled city. You choose how to go in, and the defender chooses how to meet you.':

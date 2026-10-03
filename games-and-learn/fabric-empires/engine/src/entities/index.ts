@@ -97,6 +97,16 @@ export interface Unit {
   readonly hp: number;
   readonly movesLeft: number;
   readonly fortified: boolean;
+  /**
+   * Somewhere this unit is trying to get to, over as many turns as it takes.
+   *
+   * ⚠️ Optional, and therefore needs no save migration: JSON omits it, an
+   * older save loads with no order, and a unit with nothing to do is exactly
+   * what that means. Declared as a bare hex rather than a cached route because
+   * a stored path goes stale the moment anything else moves, and recomputing
+   * one costs a few hundred microseconds on a map this size.
+   */
+  readonly order?: { readonly target: Hex };
 }
 
 /**

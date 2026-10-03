@@ -29,9 +29,31 @@ export interface SetupResult extends WorldChoice {
   readonly seed: string;
 }
 
+/**
+ * A saved game the player could carry on with instead of starting a new one.
+ *
+ * ⚠️ Purely descriptive. The setup screen never loads a save and never looks
+ * in storage: it is handed the few facts worth showing on a card and reports
+ * back that the button was pressed. Whoever owns the save does the resuming,
+ * which keeps this module ignorant of the save format it would otherwise have
+ * to be kept in step with.
+ */
+export interface ResumeOffer {
+  readonly seed: string;
+  readonly turn: number;
+  readonly cities: number;
+}
+
+/** What the player chose. `'resume'` means carry on with the saved game. */
+export type SetupChoice = SetupResult | 'resume';
+
 export interface SetupScreen {
-  /** Show the screen and resolve when the player commits. */
-  ask(defaults: SetupResult): Promise<SetupResult>;
+  /**
+   * Show the screen and resolve when the player commits.
+   *
+   * `resume`, when given, adds a Continue card at the top.
+   */
+  ask(defaults: SetupResult, resume?: ResumeOffer): Promise<SetupChoice>;
   hide(): void;
   readonly isOpen: () => boolean;
 }
@@ -97,7 +119,7 @@ export function createSetupScreen(): SetupScreen {
     return wrap;
   }
 
-  const ask = (defaults: SetupResult): Promise<SetupResult> =>
+  const ask = (defaults: SetupResult, resume?: ResumeOffer): Promise<SetupChoice> =>
     new Promise((resolve) => {
       showing = true;
       root.innerHTML = '';
@@ -126,6 +148,101 @@ export function createSetupScreen(): SetupScreen {
         'The DP-600 outline is the tech tree. Rival factions each hold one branch of it: beat them and take what they know, or burn it and stay ignorant.',
       );
       card.append(blurb);
+
+      /*
+       * Carry on with the game already in progress.
+       *
+       * ⚠️ **This screen is now the only way in, and that is the point.** Boot
+       * used to resume a save the moment it found one, so a returning player
+       * was dropped into their old empire with no say and no way back to the
+       * options — and the attract screen's own "Skip to setup" button did not
+       * reach the setup screen either, because skipping only skipped the film.
+       * The label was telling the truth about an intention nothing implemented.
+       *
+       * ⚠️ It also fixes a hang that looked unrelated. This screen exists partly
+       * to cover the ~8 s of world generation (§22.2). Resuming straight from
+       * boot skipped the cover but not the work, so the wait happened anyway,
+       * on a frozen page, with nothing on it.
+       *
+       * First, above everything, because somebody with a game in progress is
+       * far more likely to want it than to want a new one.
+       */
+      if (resume) {
+        const cont = document.createElement('div');
+        cont.className = 'fe-setup-continue';
+
+        const contButton = document.createElement('button');
+        contButton.className = 'fe-setup-continue-play';
+        contButton.type = 'button';
+        contButton.textContent = t('Continue');
+        cont.append(contButton);
+
+        const detail = document.createElement('span');
+        detail.className = 'fe-setup-detail';
+        detail.textContent = t('Seed {seed} · turn {turn} · {cities} cities', {
+          seed: resume.seed,
+          turn: String(resume.turn),
+          cities: String(resume.cities),
+        });
+        cont.append(detail);
+
+        contButton.addEventListener('click', () => {
+          if (!showing) return;
+          showing = false;
+          root.style.display = 'none';
+          root.innerHTML = '';
+          resolve('resume');
+        });
+        card.append(cont);
+
+        /*
+         * ⚠️ Starting a new world OVERWRITES the saved one, and the player is
+         * told so here rather than discovering it. There is one save slot, so
+         * "Begin" is a destructive button for anybody with a game in progress.
+         */
+        const warn = document.createElement('p');
+        warn.className = 'fe-setup-detail';
+        warn.style.margin = '0 0 18px';
+        warn.textContent = t('Starting a new empire below replaces this saved game.');
+        card.append(warn);
+      }
+
+      /*
+       * A way straight into the game, at the top.
+       *
+       * ⚠️ **The card is taller than the screen it opens on.** Measured at
+       * 900x700 the setup screen was 1786 px of card, and on a 390x844 phone
+       * the option groups run well past the fold. The only way to start was a
+       * button at the very bottom, so somebody who did not care about world
+       * shape still had to scroll the entire form to get past it.
+       *
+       * ⚠️ **It shares `commit`, it does not reimplement it.** A second copy
+       * of the resolve payload is a second place to forget a field: the day a
+       * tenth setting is added, one of the two buttons starts a game missing
+       * it, and only on the path fewer people take. The handler is attached
+       * further down for the single reason that `commit` does not exist yet
+       * here.
+       *
+       * ⚠️ **Deliberately NOT a second copy of the Begin button either.** It
+       * is outlined rather than filled, so the page has one primary action and
+       * one quiet alternative rather than the same blue bar twice, which reads
+       * as a mistake.
+       */
+      const quickRow = document.createElement('div');
+      quickRow.className = 'fe-setup-quick';
+
+      const quickPlay = document.createElement('button');
+      quickPlay.className = 'fe-setup-quick-play';
+      quickPlay.type = 'button';
+      quickPlay.textContent = t('Skip the questions and start');
+      quickRow.append(quickPlay);
+
+      const quickNote = document.createElement('span');
+      quickNote.className = 'fe-setup-detail';
+      quickNote.textContent = t('Every choice below already has a sensible default.');
+      quickRow.append(quickNote);
+
+      card.append(quickRow);
 
       /*
        * The first five minutes, on the screen everybody passes through.
@@ -361,6 +478,8 @@ export function createSetupScreen(): SetupScreen {
         });
       };
       play.addEventListener('click', commit);
+      // The top button starts the same game as the bottom one, by construction.
+      quickPlay.addEventListener('click', commit);
       seedInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') commit();
       });

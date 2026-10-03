@@ -110,8 +110,62 @@ export function cityKindFor(state: GameState, hex: Hex): CityKind {
   return 'lakehouse';
 }
 
+/**
+ * How many questions founding a city asks.
+ *
+ * ⚠️ Three rather than one, because founding is the decision a player makes
+ * fewest times and lives with longest. One question is a toll; three is long
+ * enough to be a moment, and this is the only action in the game whose reward
+ * lasts for the rest of the match.
+ *
+ * ⚠️ Declared here rather than in `settle.ts`, which is where it reads like it
+ * belongs, because `settle.ts` already imports `cityKindFor` from this module
+ * and importing back would close the cycle.
+ */
+export const SETTLE_QUESTIONS = 3;
+
+/**
+ * The citizens a well-founded city starts with, over the usual one.
+ *
+ * ⚠️ **Bonus only. A bad answer never leaves a city worse than an unasked
+ * one.** Every other challenge in the game swings both ways and this one
+ * deliberately does not, for two reasons that both come back to what the tool
+ * is for.
+ *
+ * Founding is how a game starts and how a losing player climbs back. A rule
+ * that made a wrong answer *worse* than never being asked would punish exactly
+ * the person who most needs to be revising, and the reliable way to dodge that
+ * punishment would be to stop founding cities, which is to say to stop playing.
+ *
+ * And the size of a capital is permanent. A combat modifier is spent on one
+ * blow; a city founded small stays small for thirty turns. Compounding a bad
+ * answer that far forward is not a difficulty setting, it is a grudge.
+ *
+ * The tension lives in what is forgone instead: answer badly and you simply do
+ * not get the head start, which is a real cost without being a trap.
+ */
+export function settlingBonus(score: number): number {
+  // NaN would survive the comparisons below and produce a city of size NaN.
+  if (!Number.isFinite(score)) return 0;
+  if (score >= 0.75) return 2;
+  if (score >= 0.35) return 1;
+  return 0;
+}
+
 export interface FoundCityOptions {
   readonly name?: string;
+  /**
+   * How well the founders answered, in -1..+1.
+   *
+   * ⚠️ Arrives as a number, not a callback, for the same reason every other
+   * challenge does: the engine stays a pure synchronous function and never
+   * learns what a question is (D35). Asking is the app's job.
+   *
+   * Defaults to zero, which founds exactly the city this function has always
+   * founded. A caller that does not ask anything is not penalised, so the
+   * standalone strategy game is unchanged.
+   */
+  readonly challengeScore?: number;
 }
 
 export function foundCity(
@@ -139,6 +193,19 @@ export function foundCity(
   const kind: CityKind = isFirst ? 'workspace' : cityKindFor(state, unit.hex);
 
   const id = `city-${state.nextEntityId}`;
+  /*
+   * A city that was founded well starts bigger.
+   *
+   * ⚠️ Population rather than a stored growth surplus, because population is
+   * the number the player can see. A hidden head start toward the next citizen
+   * would be the same arithmetic and would look identical to no reward at all,
+   * which is the failure mode for anything given out for answering.
+   *
+   * The rank is NOT promoted to match. Rank needs retained knowledge as well
+   * as citizens, and granting it here would hand out on turn three what the
+   * rest of the game asks a player to earn.
+   */
+  const citizens = 1 + settlingBonus(options.challengeScore ?? 0);
   const city: City = {
     id,
     factionId: unit.factionId,
@@ -148,7 +215,7 @@ export function foundCity(
     hp: cityKind(kind).baseHp,
     wallLevel: 0,
     wallHp: 0,
-    population: 1,
+    population: citizens,
     rank: FIRST_RANK,
     growthStore: 0,
     boundSkills: [],

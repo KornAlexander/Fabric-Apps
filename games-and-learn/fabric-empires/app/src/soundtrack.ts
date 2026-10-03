@@ -54,10 +54,18 @@ export interface Track {
  * load, so this list may name more than a given checkout actually has, and
  * that is the intended state of affairs rather than an oversight.
  *
- * Terra Nostra is the live example of that: its slot is real and its file is
- * not, because the regeneration on the Pro plan was interrupted by a human
- * verification challenge that automation must not answer. Generating it fills
- * the gap with no code change at all.
+ * ⚠️ **Terra Nostra was the standing example of that, and the diagnosis here
+ * was wrong for days.** This comment said the file did not exist because the
+ * regeneration on the Pro plan had been interrupted by a human verification
+ * challenge. The generation had in fact finished: two takes were sitting in
+ * the library the whole time, under Suno's auto-title *Pastoral Interlude*,
+ * because the title field was never filled in. The challenge blocked the
+ * **download**, not the generation, and nobody went back to look.
+ *
+ * The lesson is not about music. A failure was recorded at the step where it
+ * was noticed rather than the step where it happened, and the wrong write-up
+ * then made the work look larger than it was: regenerating a track reads as a
+ * job, fetching a file that already exists does not.
  */
 export const SOUNDTRACK: readonly Track[] = [
   { file: 'audio/terra-nostra.mp3', title: 'Terra Nostra', mood: 'calm' },
@@ -75,8 +83,20 @@ const STORE_KEY = 'fabric-empires:music';
  * Quieter than the anthem's 0.55, because this one plays *under* something.
  * The anthem has the screen to itself; the score competes with a question the
  * player is trying to read.
+ *
+ * ⚠️ Lowered from 0.28 when the game gained gameplay stings. The score was
+ * never actually too loud in absolute terms: it was the only thing playing,
+ * because everything a player DID was silent. Now that a blow, a breach and a
+ * founding all make a noise, the bed has to sit under them rather than beside
+ * them.
+ *
+ * ⚠️ Exported so the tests can assert against the real number. It used to be
+ * private, and a test proving the fade-in had finished checked `> 0.2`, which
+ * is this value written down a second time in a second file. Lowering the
+ * music broke that test for a reason that had nothing to do with ducking.
  */
-const VOLUME = 0.28;
+export const MUSIC_VOLUME = 0.15;
+const VOLUME = MUSIC_VOLUME;
 
 /**
  * Silence between tracks.

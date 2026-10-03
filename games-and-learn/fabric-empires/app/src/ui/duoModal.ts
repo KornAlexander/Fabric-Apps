@@ -54,6 +54,9 @@ interface Pane {
   readonly question: Question;
   readonly buttons: HTMLButtonElement[];
   readonly started: number;
+  /** The countdown shown in the head, and the interval painting it. */
+  readonly clock: HTMLElement;
+  ticker?: number | undefined;
   resolve?: ((answer: QuestionAnswer) => void) | undefined;
   answered: boolean;
 }
@@ -65,6 +68,19 @@ export function createDuoModal(): DuoModal {
   document.body.append(root);
 
   const panes = new Map<Seat, Pane>();
+
+  /**
+   * Stop a pane's countdown.
+   *
+   * ⚠️ Every path that ends a question has to call this, or the interval
+   * outlives the pane it was painting and keeps writing to a detached node.
+   */
+  function stopClock(pane: Pane): void {
+    if (pane.ticker !== undefined) {
+      window.clearInterval(pane.ticker);
+      pane.ticker = undefined;
+    }
+  }
 
   function refresh(): void {
     root.hidden = panes.size === 0;
@@ -79,6 +95,7 @@ export function createDuoModal(): DuoModal {
     if (option === undefined) return;
 
     pane.answered = true;
+    stopClock(pane);
     for (const [i, button] of pane.buttons.entries()) {
       button.classList.toggle('picked', i === index);
       button.disabled = true;
@@ -125,11 +142,36 @@ export function createDuoModal(): DuoModal {
     const head = document.createElement('div');
     head.className = 'fe-duo-head';
     const who = document.createElement('b');
-    who.textContent = config.who;
+    /*
+     * ⚠️ Translated HERE rather than at the call site, because the pane is
+     * rebuilt for every question while the `SeatConfig` is built once when the
+     * game starts. Resolving it at the call site would be correct until
+     * somebody switched language mid-game, and then permanently wrong.
+     *
+     * ⚠️ This read "Player 1" in a fully German game for as long as co-op has
+     * existed, with `'Player 1': 'Spieler 1'` sitting unused in the catalogue.
+     * The i18n test that catches untranslated prose looks for STRING LITERALS
+     * assigned to `textContent`; this assigns a variable, so it was invisible
+     * to the one check written to find exactly this mistake.
+     */
+    who.textContent = t(config.who);
     head.append(who);
     const course = document.createElement('span');
+    // NOT translated: a course name is content, and it arrives already written
+    // in the language of its own bank.
     course.textContent = config.course;
     head.append(course);
+    /*
+     * The clock, which this pane did not have.
+     *
+     * ⚠️ A seat that runs out of time is already scored as abandoned, so the
+     * time limit was real and enforced and simply never shown: the pane went
+     * blank on you with no warning that it was going to. A hidden clock that
+     * fails you is worse than no clock at all.
+     */
+    const clock = document.createElement('em');
+    clock.className = 'fe-duo-clock';
+    head.append(clock);
     el.append(head);
 
     const stem = document.createElement('div');
@@ -167,7 +209,7 @@ export function createDuoModal(): DuoModal {
     });
     el.append(list);
 
-    return { root: el, config, question, buttons, started, answered: false };
+    return { root: el, config, question, buttons, started, clock, answered: false };
   }
 
   function ui(config: SeatConfig): QuestionUi {
@@ -180,24 +222,47 @@ export function createDuoModal(): DuoModal {
           refresh();
 
           /*
-           * The clock still runs. A seat that never answers resolves as
-           * abandoned rather than hanging the turn, which is what the
-           * single-player modal does and what the scoring already expects.
+           * The clock still runs, and now it is also visible.
+           *
+           * ⚠️ **One owner for expiry.** The ticker paints the countdown AND
+           * calls time, rather than painting while a separate `setTimeout`
+           * decides: two independent clocks on one deadline drift, and the
+           * pane would go blank a beat before or after the number said zero,
+           * which reads as the game cheating.
+           *
+           * A seat that never answers resolves as abandoned rather than
+           * hanging the turn, which is what the single-player modal does and
+           * what the scoring already expects.
            */
           const limit = prompt.request.timeLimitMs;
-          window.setTimeout(() => {
+
+          const expire = (): void => {
             const current = panes.get(config.seat);
             if (current !== pane || pane.answered) return;
             pane.answered = true;
+            stopClock(pane);
             pane.resolve?.({ answer: undefined, elapsedMs: limit, abandoned: true });
             pane.resolve = undefined;
-          }, limit);
+          };
+
+          const paint = (): void => {
+            const remaining = Math.max(0, limit - (Date.now() - pane.started));
+            pane.clock.textContent = `${Math.ceil(remaining / 1000)}s`;
+            // The same quarter-left threshold the single-player modal uses, so
+            // "running out" looks the same wherever a question is asked.
+            pane.clock.classList.toggle('low', remaining / limit < 0.25);
+            if (remaining <= 0) expire();
+          };
+
+          paint();
+          pane.ticker = window.setInterval(paint, 100);
         });
       },
 
       async reveal(result: QuestionResult): Promise<void> {
         const pane = panes.get(config.seat);
         if (!pane) return;
+        stopClock(pane);
 
         const right = Array.isArray(result.correctAnswer)
           ? result.correctAnswer
@@ -230,6 +295,8 @@ export function createDuoModal(): DuoModal {
     ui,
     isOpen: () => panes.size > 0,
     hide() {
+      // Or a hidden pane's ticker keeps running for the rest of the session.
+      for (const pane of panes.values()) stopClock(pane);
       panes.clear();
       refresh();
     },

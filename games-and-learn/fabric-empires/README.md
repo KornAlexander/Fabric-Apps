@@ -142,6 +142,7 @@ Any workspace or item id this app needs is read from the environment, with no de
 ```
 app/            the application shell
 engine/         game / simulation engine
+fabric/         Fabric item definitions (report, semantic model)
 learn/          learning content
 rayfin/         deployment config - redirect URIs are loopback only
 tools/          data pipeline and build helpers

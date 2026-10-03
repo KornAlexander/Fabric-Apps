@@ -39,7 +39,18 @@ import {
   productionCost,
   isWallTarget,
   maxWallHp,
+  SETTLE_QUESTIONS,
+  settlingBonus,
+  rollFortune,
+  fortuneTaken,
+  applyFortune,
+  advanceMarches,
+  clearMarch,
+  planMarch,
+  setMarch,
   memoryOf,
+  vacateSeat,
+  takeSeat,
   maxCityHp,
   wallWork,
   WALL_TARGET,
@@ -112,7 +123,7 @@ import {
   topicsFor,
   type Campaign,
 } from '@fabric-empires/learn';
-import { createEffects } from './render/effects.js';
+import { createEffects, type MarchOverlay } from './render/effects.js';
 import { createScene3D } from './three/scene3d.js';
 import { playDuel } from './three/duel.js';
 import { playSiege } from './three/siege.js';
@@ -123,9 +134,11 @@ import { createGreatLibrary } from './ui/greatLibrary.js';
 import { createDroneHud } from './ui/droneHud.js';
 import { Vector3 } from 'three';
 import { createEndScreen } from './ui/endScreen.js';
+import { beginRun, flush, recordAttempt, recordRun, statsConfigured } from './stats.js';
 import { createCinematicOverlay } from './ui/cinematicOverlay.js';
 import { createChoiceModal } from './ui/choice.js';
-import { createSetupScreen, type SetupResult } from './ui/setupScreen.js';
+import { createSetupScreen, type ResumeOffer, type SetupResult } from './ui/setupScreen.js';
+import { createPanels } from './ui/panels.js';
 import { createCheatConsole } from './ui/cheatConsole.js';
 import { createRaidAlert } from './ui/raidAlert.js';
 import { createDuoModal } from './ui/duoModal.js';
@@ -134,7 +147,7 @@ import { createTreasureFilm } from './ui/treasureFilm.js';
 import { CHEATS, CHEAT_CODE_WIDTH, OKAY_CHEAT, matchCheat } from './cheats.js';
 import { approachShot, descendShot, orbitShot } from './three/cinematic.js';
 import { introShots } from './intro.js';
-import { createAnthem } from './audio.js';
+import { ANTHEM_FADE_OUT_MS, createAnthem } from './audio.js';
 import { createSoundtrack } from './soundtrack.js';
 import { createCues } from './cues.js';
 import { applyStaticTranslations, lang, onLangChange, plural, t, toggleLang } from './i18n.js';
@@ -176,6 +189,7 @@ function worldCampaign(): Campaign {
   return chosen?.role === 'world' ? chosen : DP600_CAMPAIGN;
 }
 import { loadGame, localSlot, saveGame } from './persist.js';
+import { seatTable, type SeatOffer } from './seats.js';
 import { createBattleBanner, type BattleSide } from './ui/battleBanner.js';
 
 /**
@@ -211,6 +225,9 @@ const mastery = createMasteryTracker({
 const soloPresenter = createQuestionPresenter(modal, {
   asked: askedThisSession,
   retired: retiredThisSession,
+  // Reads `lastSetup` at call time, not at construction: the course is chosen
+  // after this is built.
+  onAttempt: (a) => recordAttempt(a, { seat: 1, courseId: lastSetup.courseP1 }),
 });
 
 /**
@@ -259,7 +276,11 @@ function buildSecondSeat(): void {
   const own = courseById(lastSetup.courseP1);
   seatOnePresenter = createQuestionPresenter(
     duo.ui({ seat: 1, who: 'Player 1', course: own?.course ?? 'Fabric Empires' }),
-    { asked: askedThisSession, retired: retiredThisSession },
+    {
+      asked: askedThisSession,
+      retired: retiredThisSession,
+      onAttempt: (a) => recordAttempt(a, { seat: 1, courseId: lastSetup.courseP1 }),
+    },
   );
 
   /*
@@ -277,6 +298,23 @@ function buildSecondSeat(): void {
       questions: campaign.questions,
       asked: new Set<string>(),
       retired: new Set<string>(),
+      /*
+       * ⚠️ Seat two's attempts ARE recorded, and that does not reopen D205.
+       *
+       * D205 keeps this seat out of the DP-600 study record, because the
+       * readiness figure describes ONE person's progress towards ONE exam and
+       * a six-year-old's Anlaute answers would corrupt the only number this
+       * product really produces. The stats tables are a different thing: they
+       * carry `seat` and `courseId` columns precisely so two learners stay
+       * separable in the data. Recording here adds a second learner; it does
+       * not merge them.
+       *
+       * ⚠️ The guard test for D205 reads this function's SOURCE and forbids
+       * the name of that tracker appearing anywhere in it, which is why this
+       * comment talks around it. That is the test being strict rather than
+       * clumsy, and it caught this comment on the first run.
+       */
+      onAttempt: (a) => recordAttempt(a, { seat: 2, courseId: lastSetup.courseP2 }),
     },
   );
   // The topics this seat can be asked about, which are its own, not the
@@ -425,6 +463,16 @@ function runCheat(raw: string): void {
     seat: mySeat,
     selectedUnitId,
     argument: match.argument,
+    liftFog: () => {
+      fogLifted = !fogLifted;
+      // ⚠️ The signature is what makes `refreshFog` do any work, so it has to
+      // be cleared: a toggle that left it alone would find it unchanged and
+      // return early, and nothing on screen would move.
+      fogSignature = '';
+      refreshFog();
+      dirty = true;
+      return fogLifted;
+    },
     faceProctor: () => {
       cheats.hide();
       void faceTheProctor();
@@ -796,6 +844,16 @@ const seenCinematics = new Set<string>();
 const anthem = createAnthem();
 
 /**
+ * The silence between the anthem ending and the score beginning.
+ *
+ * ⚠️ Not zero, and not the 800 ms it used to be. Zero would overlap two
+ * recordings in different keys; 800 was long enough that a player heard music
+ * stop and, separately, music start. A quarter of a second reads as one breath
+ * inside a single continuous piece of sound.
+ */
+const HANDOVER_BREATH_MS = 250;
+
+/**
  * The optional score for everything after the opening.
  *
  * Same contract as the anthem: silent and harmless when the files are absent.
@@ -980,6 +1038,7 @@ const el = {
   actFound: document.querySelector<HTMLButtonElement>('#act-found')!,
   actRaid: document.querySelector<HTMLButtonElement>('#act-raid')!,
   actFortify: document.querySelector<HTMLButtonElement>('#act-fortify')!,
+  actStand: document.querySelector<HTMLButtonElement>('#act-stand')!,
   actSkip: document.querySelector<HTMLButtonElement>('#act-skip')!,
   actCouncil: document.querySelector<HTMLButtonElement>('#act-council')!,
   log: document.querySelector<HTMLElement>('#log')!,
@@ -1184,7 +1243,31 @@ onLangChange(() => {
 });
 
 applyStaticTranslations();
+/*
+ * ⚠️ The readiness figure is static text in the markup, and static text in the
+ * markup is English. `data-i18n` cannot carry it because the string has a
+ * placeholder, so it is painted here instead, with the zero the markup was
+ * already claiming. Without this a German player reads "0% exam" for the whole
+ * of the setup screen; `onLangChange` repaints it, so only the first render
+ * was ever wrong, which is exactly the render nobody looks at twice.
+ */
+paintReadiness(0);
 paintLangToggle();
+
+/*
+ * Fold the reference panels away.
+ *
+ * ⚠️ After `applyStaticTranslations`, because the module injects a heading for
+ * the panels that have none and reads the existing `<h2>` for its accessible
+ * label. Running first would label them in English on a German HUD and inject
+ * an untranslated heading.
+ *
+ * Closed by default only on the narrow layout: the mobile audit measured the
+ * HUD column at 1542 px of content in a 371 px window, which is four screens
+ * of scrolling to reach a button.
+ */
+const panels = createPanels({ t });
+panels.apply();
 
 let state: GameState = createGameState('FABRIC', { topics: provider.topics() });
 /**
@@ -1229,10 +1312,43 @@ function log(message: string, tone: 'good' | 'bad' | 'plain' = 'plain'): void {
  * "reachable" eventually disagrees with the rules, and the player is the one
  * who finds out.
  */
+/**
+ * The route to draw for the selected unit, if it has one.
+ *
+ * ⚠️ Recomputed from the target every time rather than cached with the order.
+ * A stored path goes stale the moment anything else moves: a rival walks into
+ * the pass, the line still runs through them, and the numbers promise an
+ * arrival the unit will not make. Recomputing is an A* over a few dozen tiles.
+ *
+ * ⚠️ The turn numbers are the leg's INDEX, so a unit that has already spent its
+ * movement this turn is honestly labelled. Its first leg is empty, no marker is
+ * drawn on the tile it is standing on, and the first place it actually reaches
+ * is numbered 2, because that is when it gets there.
+ */
+function marchOverlay(): MarchOverlay | undefined {
+  const unit = selectedUnitId ? state.units.get(selectedUnitId) : undefined;
+  if (!unit?.order || unit.factionId !== mySeat) return undefined;
+  const plan = planMarch(state, unit, unit.order.target);
+  if (!plan) return undefined;
+  return {
+    path: plan.path,
+    stops: plan.legs
+      .map((leg, i) => ({ hex: leg.at, turn: i + 1 }))
+      .filter((s, i) => plan.legs[i]!.hexes.length > 0),
+  };
+}
+
 function refreshSelection(): void {
   reach = undefined;
   attackTargets = undefined;
   settleSuggestions = [];
+
+  /*
+   * The march overlay follows the selection, which is what the player asked
+   * for: a route drawn for every unit at once would be a plate of spaghetti on
+   * a map that is already carrying territory, fog and threat markers.
+   */
+  effects.setMarch(marchOverlay());
 
   /*
    * The stepper is refreshed before the early return, so it stays usable with
@@ -1253,6 +1369,8 @@ function refreshSelection(): void {
     el.actFound.disabled = true;
     el.actRaid.disabled = true;
     el.actFortify.disabled = true;
+    // Nothing selected means no order to call off.
+    el.actStand.hidden = true;
     /*
      * ⚠️ The resting label is rewritten here, not only on the selected path.
      *
@@ -1286,7 +1404,16 @@ function refreshSelection(): void {
    * player who did not already know that Data is what makes a city grow
    * settled where they happened to be standing.
    */
-  settleSuggestions = settleSites(state, unit);
+  /*
+   * ⚠️ **Not while the unit is marching somewhere.** Both overlays write
+   * numbers on hexes, and an Architect is the one unit that gets both: the
+   * settle advice numbers its five best sites, the march numbers its turns.
+   * Seen together, as they were on the first live look, the two sets pile up
+   * around the unit and neither can be read. The march wins because it is an
+   * order the player gave; the sites are advice, and they come back the moment
+   * the order is cancelled or fulfilled.
+   */
+  settleSuggestions = unit.order ? [] : settleSites(state, unit);
   renderSettleList();
 
   // ⚠️ The unit's name is NOT translated: Pipeline Runner and Direct Lake
@@ -1381,7 +1508,21 @@ function refreshSelection(): void {
     ? t('Stand down, and move again this turn (h)')
     : t('Dig in for +40% defence, ending this turn (h)');
   el.actSkip.disabled = unit.movesLeft <= 0;
+  /*
+   * Calling off a march.
+   *
+   * ⚠️ **An order had no off switch.** It could be replaced by giving another
+   * one, and cancelled as a side effect of moving the unit by hand, but there
+   * was no way to simply say "forget it, I will decide next turn" — so a route
+   * drawn by a misclick kept walking, and the dotted line stayed on the map
+   * describing a journey the player no longer wanted.
+   *
+   * Shown only while there is something to cancel; see the note in the markup.
+   */
+  el.actStand.hidden = !unit.order;
   refreshCouncil();
+  // Orders given or withdrawn change what is left to do.
+  refreshTurnButton();
 }
 
 function select(unitId: string | undefined): void {
@@ -1439,9 +1580,7 @@ function doRaid(): void {
 
 /** Jump to the next unit still awaiting orders, the way a 4X should. */
 function selectNextIdle(): void {
-  const idle = unitsOf(state, mySeat).filter(
-    (u) => u.movesLeft > 0 && !u.fortified,
-  );
+  const idle = awaitingOrders();
   if (idle.length === 0) {
     select(undefined);
     return;
@@ -1450,6 +1589,124 @@ function selectNextIdle(): void {
   const next = idle[(currentIndex + 1) % idle.length]!;
   select(next.id);
   scene.focus(next.hex);
+}
+
+/**
+ * Units the player still has to decide something about.
+ *
+ * ⚠️ **A unit with a march order is NOT awaiting orders. It has them.** Without
+ * that exclusion every marching unit would keep the turn looking unfinished for
+ * as long as its journey lasted, so the whole indicator would be at its least
+ * trustworthy exactly when the player is using the feature that needs it most.
+ */
+function awaitingOrders(): readonly Unit[] {
+  return unitsOf(state, mySeat).filter((u) => u.movesLeft > 0 && !u.fortified && !u.order);
+}
+
+/**
+ * What is left to do this turn.
+ *
+ * ⚠️ **Three different kinds of unfinished, deliberately.** A turn is not only
+ * about moving: an empire researching nothing is wasting every point of Compute
+ * it earns, and a due review is the whole learning loop asking to be run. Both
+ * are silent, both are easy to forget, and neither used to be visible anywhere
+ * near the button that ends the turn.
+ */
+interface Pending {
+  readonly units: readonly Unit[];
+  readonly research: boolean;
+  readonly council: boolean;
+  readonly total: number;
+}
+
+function pendingWork(): Pending {
+  const units = awaitingOrders();
+  // Nothing to research is only a fault when there is something to research.
+  const research = state.research.current === undefined && researchable(state).length > 0;
+  const council = pendingReviews().length > 0;
+  return {
+    units,
+    research,
+    council,
+    total: units.length + (research ? 1 : 0) + (council ? 1 : 0),
+  };
+}
+
+/**
+ * Do the next outstanding thing, or say there is nothing left.
+ *
+ * Units first, because they are the many and the other two are the one. The
+ * order after that is research before council: research is a standing waste
+ * while it is unset, a review is merely due.
+ */
+function nextAction(): void {
+  const pending = pendingWork();
+  if (pending.units.length > 0) {
+    selectNextIdle();
+    return;
+  }
+  if (pending.research) {
+    el.resOptions.querySelector<HTMLButtonElement>('button')?.focus();
+    el.resOptions.scrollIntoView({ block: 'nearest' });
+    log(t('Nothing is being researched. Pick a topic.'));
+    return;
+  }
+  if (pending.council) {
+    void doCouncil();
+  }
+}
+
+/**
+ * Keep the turn button honest about what it is for.
+ *
+ * ⚠️ **One button, two jobs, and the label is the whole feature.** It used to
+ * say "End turn" from the first second of a turn to the last, so the fastest
+ * way to play was to press it, and the game never mentioned the four units
+ * standing still or the Compute being earned against no research at all.
+ *
+ * Highlighted only when there is genuinely nothing left, so the highlight
+ * means something. A button that glows all turn is decoration.
+ */
+function refreshTurnButton(): void {
+  const pending = pendingWork();
+  const done = pending.total === 0;
+  el.endTurn.classList.toggle('ready', done);
+  el.endTurn.dataset.mode = done ? 'end' : 'next';
+
+  if (done) {
+    el.endTurn.textContent = t('End turn');
+    el.endTurn.title = t('Nothing left to do. Space ends the turn.');
+    return;
+  }
+  if (pending.units.length > 0) {
+    el.endTurn.textContent = t('Next unit ({n})', { n: pending.units.length });
+    el.endTurn.title = t('{n} units still have something to do. Ctrl+Space ends the turn anyway.', {
+      n: pending.units.length,
+    });
+    return;
+  }
+  if (pending.research) {
+    el.endTurn.textContent = t('Choose research');
+    el.endTurn.title = t('Compute is being earned against nothing. Ctrl+Space ends the turn anyway.');
+    return;
+  }
+  el.endTurn.textContent = t('Council');
+  el.endTurn.title = t('A review has fallen due. Ctrl+Space ends the turn anyway.');
+}
+
+/**
+ * The turn button was pressed, or Space was.
+ *
+ * ⚠️ Reads the CURRENT pending work rather than a flag set when the label was
+ * last painted. A label can be one frame stale; ending a turn by accident
+ * because of it cannot be undone.
+ */
+function turnButtonAction(): void {
+  if (pendingWork().total === 0) {
+    void doEndTurn();
+    return;
+  }
+  nextAction();
 }
 
 /**
@@ -1681,10 +1938,39 @@ async function actOn(target: Hex): Promise<void> {
   const beforeExplored = memoryOf(state, mySeat).explored;
   const moved = moveUnit(state, unit.id, target);
   if (!moved.ok) {
+    /*
+     * Out of range this turn is an ORDER, not an error.
+     *
+     * ⚠️ This is the whole feature, and it hangs off the failure path on
+     * purpose. Clicking a distant hex already meant "go there"; the game just
+     * said no and made the player click again every turn, which is worst for
+     * the Profiler, whose entire job is to be somewhere else. Anything genuinely
+     * impossible, off the map, in the sea, has no path either and still reports
+     * the original reason.
+     */
+    const plan = planMarch(state, unit, target);
+    if (plan) {
+      state = setMarch(state, unit.id, target);
+      const turns = plan.legs.length;
+      log(
+        t('{unit} sets out. {n} turns away.', {
+          unit: t(unitType(unit.typeId).label),
+          n: String(turns),
+        }),
+      );
+      refreshSelection();
+      dirty = true;
+      return;
+    }
     log(moved.reason, 'bad');
     return;
   }
-  state = moved.state;
+  /*
+   * ⚠️ A hand-driven move cancels the standing order. The player has just said
+   * where they want this unit, and quietly resuming a march to somewhere else
+   * next turn would be the game overruling them.
+   */
+  state = clearMarch(moved.state, unit.id);
   const landed = state.units.get(unit.id);
   if (landed && (landed.hex.q !== from.q || landed.hex.r !== from.r)) {
     const route = moved.path ?? [landed.hex];
@@ -1791,6 +2077,13 @@ async function digAlong(unitId: string, route: readonly Hex[]): Promise<void> {
   const chest = found;
   log(t('The Profiler turns up a buried cache.'), 'good');
   scene.focus(chest.hex);
+  /*
+   * ⚠️ The cue is played HERE, not inside the film player, because the film
+   * is optional and the sound is not. 	reasureFilm degrades to nothing when
+   * the clip is missing (a clone with no media, the public build), and that is
+   * exactly the case where the sound is carrying the whole moment.
+   */
+  cues.play('treasure-found');
   await treasureFilm.play('found');
 
   /*
@@ -1826,6 +2119,7 @@ async function digAlong(unitId: string, route: readonly Hex[]): Promise<void> {
       'good',
     );
     effects.floatingText(chest.hex, `+${claim.gained}`, '#ffd166', 1.4);
+    cues.play('treasure-opened');
     await treasureFilm.play('opened');
   } else if (claim.remaining) {
     // Say what it cost, or the shrinking is invisible and reads as a bug.
@@ -1946,6 +2240,18 @@ async function playAttack(
   const onImpact = (): void => {
     state = nextState;
     dirty = true;
+
+    /*
+     * The blow makes a noise.
+     *
+     * ⚠️ Fired on IMPACT rather than when the attack was ordered, so the sound
+     * lands with the animation instead of a second before it. A ranged shot
+     * gets a thinner sting than a melee hit, and a wall coming down gets the
+     * heaviest one in the game, because those are three different events and
+     * the ear can tell them apart faster than the eye can.
+     */
+    if (battle.wallBroken) cues.play('breach');
+    else cues.play(unitType(attacker.typeId).range > 1 ? 'volley' : 'clash');
 
     // Damage numbers stay on the 2D layer: text is crisper drawn flat
     // than projected, and it needs to stay legible at every distance.
@@ -2166,9 +2472,181 @@ function isAdjacent(a: Hex, b: Hex): boolean {
   return (Math.abs(dq) + Math.abs(dr) + Math.abs(dq + dr)) / 2 === 1;
 }
 
-function doFound(): void {
+/**
+ * Pick the topics a founding asks about.
+ *
+ * ⚠️ **Due topics first, and that is the whole point of asking here.** Founding
+ * is a natural pause in a turn, so it is the cheapest moment in the game to
+ * make somebody retrieve something they learned twenty turns ago. Asking about
+ * whatever is currently being researched would be easier and would test the
+ * thing already freshest in mind, which is the one thing spaced repetition says
+ * not to do.
+ *
+ * Falls back to current research and then to the graph, so a brand new empire
+ * with nothing due still gets three questions rather than silently getting a
+ * free city.
+ */
+function settleTopics(count: number): string[] {
+  const picked: string[] = [];
+  const add = (id: string | undefined): void => {
+    if (id && !picked.includes(id) && picked.length < count) picked.push(id);
+  };
+
+  for (const id of provider.dueTopics(Date.now())) add(id);
+  add(state.research.current);
+  for (const node of state.topics.nodes) add(node.id);
+  return picked;
+}
+
+/**
+ * The map offers you something, and you decide whether to bother.
+ *
+ * ⚠️ **The point of this is that it is declinable.** Every other question in
+ * the game happens TO the player: a raid arrives and you are asked, a topic
+ * falls due and you are asked. Those are all good reasons to be asked and none
+ * of them was ever chosen. A fortune is the one that is.
+ *
+ * ⚠️ **Answering can only help, so declining is never the safe play, it is the
+ * quick one.** Walking away and getting it wrong land in exactly the same
+ * place, which is what makes it safe to attempt a question you are unsure of.
+ * The cost of saying yes is attention and nothing else.
+ */
+async function offerFortune(): Promise<void> {
+  if (finished || modal.isOpen() || choice.open()) return;
+
+  const offer = rollFortune(state, createRng(state.seed, `fortune:${state.turn}`), mySeat);
+  if (!offer) return;
+
+  const unit = state.units.get(offer.unitId);
+  if (!unit) return;
+  const who = t(unitType(unit.typeId).label);
+  scene.focus(offer.hex);
+
+  const gold = offer.kind === 'gold';
+  const title = gold
+    ? t('{unit} finds something in the ground.', { unit: who })
+    : t('{unit} is bogged down.', { unit: who });
+  const body = gold
+    ? t('Answer one question and it is yours. Walk on and it stays buried. Getting it wrong costs nothing.')
+    : t('Answer one question and it walks out today. Decline and it goes nowhere this turn. Getting it wrong costs nothing extra.');
+
+  const TRY = 'try';
+  const picked = await choice.ask(title, body, [
+    {
+      id: TRY,
+      label: gold
+        ? t('Dig for {amount} {resource}', {
+            amount: String(offer.amount),
+            resource: t(resourceLabel(offer.resource)),
+          })
+        : t('Work it free'),
+      detail: t('One question. There is no penalty for missing it.'),
+      primary: true,
+    },
+    { id: 'walk', label: t('Walk on'), detail: t('Lose nothing but the chance.') },
+  ]);
+
+  let score: number | undefined;
+  if (picked === TRY) {
+    const topic = settleTopics(1)[0];
+    if (topic) {
+      const outcome = await provider.present({
+        kind: 'settle',
+        topicId: topic,
+        tier: 1,
+        timeLimitMs: timeLimit(RESEARCH_TIME_MS),
+      });
+      // ⚠️ An abandoned modal is a refusal, not a wrong answer. They reach the
+      // same outcome today, and encoding one as the other is how a refusal
+      // eventually starts costing something.
+      if (!outcome.abandoned) score = outcome.score;
+    }
+  }
+
+  const won = score !== undefined && fortuneTaken(score);
+  state = applyFortune(state, offer, score);
+
+  if (gold) {
+    if (won) {
+      log(
+        t('{amount} {resource} out of the dirt.', {
+          amount: String(offer.amount),
+          resource: t(resourceLabel(offer.resource)),
+        }),
+        'good',
+      );
+      effects.floatingText(offer.hex, `+${offer.amount}`, '#ffd479', 1.3);
+      cues.play('windfall');
+    } else {
+      log(t('Whatever was down there stays down there.'));
+    }
+  } else if (won) {
+    log(t('{unit} finds firm ground and marches on.', { unit: who }), 'good');
+  } else {
+    log(t('{unit} spends the day in the mud.', { unit: who }));
+    effects.pulse(offer.hex, '#8a7f6a', 2);
+  }
+
+  refreshHud();
+  refreshCities();
+  dirty = true;
+}
+
+/**
+ * Found a city, which is three questions and then a town.
+ *
+ * ⚠️ **The site is validated BEFORE anything is asked.** Asking three questions
+ * and then saying "too close to another city" would waste the one thing the
+ * game is actually spending: the player's attention.
+ *
+ * ⚠️ **Walking out cancels the founding; getting it wrong does not.** Those are
+ * different failures. Closing the modal is a decision not to do this now, and
+ * the Architect should still be standing there afterwards. Answering badly is a
+ * decision to build anyway, and it costs the head start rather than the town,
+ * because `settlingBonus` never goes below zero.
+ */
+async function doFound(): Promise<void> {
   if (!selectedUnitId) return;
-  const result = foundCity(state, selectedUnitId);
+  if (modal.isOpen()) return;
+
+  /*
+   * A dry run purely to check the site. `foundCity` is pure, so the state it
+   * returns here is discarded and the real call happens below with the score.
+   * Duplicating its checks in the app is the alternative, and a second copy of
+   * "can you settle here" is a second copy that can disagree.
+   */
+  const check = foundCity(state, selectedUnitId);
+  if (!check.ok) {
+    log(check.reason, 'bad');
+    return;
+  }
+
+  const architect = selectedUnitId;
+  const topics = settleTopics(SETTLE_QUESTIONS);
+  log(t('Site surveyed. Answer three, and build well.'));
+
+  let total = 0;
+  for (const topicId of topics) {
+    const outcome = await provider.present({
+      kind: 'settle',
+      topicId,
+      tier: 1,
+      timeLimitMs: timeLimit(RESEARCH_TIME_MS),
+    });
+    if (outcome.abandoned) {
+      log(t('The Architect puts the plans away. Nothing is built.'));
+      return;
+    }
+    total += outcome.score;
+  }
+  const score = topics.length > 0 ? total / topics.length : 0;
+
+  /*
+   * ⚠️ Re-checked, because three questions is long enough for the world to
+   * have moved. The modal blocks the map, but a raid resolving underneath it
+   * could have taken the ground or killed the Architect.
+   */
+  const result = foundCity(state, architect, { challengeScore: score });
   if (!result.ok) {
     log(result.reason, 'bad');
     return;
@@ -2176,9 +2654,40 @@ function doFound(): void {
   state = result.state;
   const city = [...state.cities.values()].at(-1);
   log(t('Founded {city}.', { city: city?.name ?? t('a city') }), 'good');
+
+  const bonus = settlingBonus(score);
   if (city) {
+    if (bonus >= 2) {
+      log(
+        t('Your judgement holds. The weather turns fair and {city} is already growing.', {
+          city: city.name,
+        }),
+        'good',
+      );
+    } else if (bonus === 1) {
+      log(
+        t('Sound ground, sound plans. {city} starts with a second household.', {
+          city: city.name,
+        }),
+        'good',
+      );
+    } else {
+      log(
+        t('The plans were guesswork. {city} starts from nothing, as most towns do.', {
+          city: city.name,
+        }),
+      );
+    }
     effects.pulse(city.hex, '#8fd694', 3);
     effects.floatingText(city.hex, city.name, '#cfe6ff', 1.2);
+    if (bonus > 0) effects.floatingText(city.hex, `+${bonus}`, '#8fd694', 1.3);
+    /*
+     * ⚠️ Only when the `first-city` film is NOT about to play, or the sting and
+     * the cue land on top of each other. `playOnce` fires a cinematic at most
+     * once per game, so without this every founding after the first would be
+     * the silent one.
+     */
+    if (seenCinematics.has('first-city')) cues.play('settle');
     void playOnce(
       orbitShot({
         id: 'first-city',
@@ -2234,6 +2743,28 @@ function doSkip(): void {
   if (!result.ok) return;
   state = result.state;
   selectNextIdle();
+}
+
+/**
+ * Call off a march.
+ *
+ * ⚠️ **Cancelling is NOT the same as skipping, and conflating them would be the
+ * obvious mistake.** The unit keeps whatever movement it has left and can be
+ * sent somewhere else on this turn: the player is withdrawing a standing
+ * instruction, not giving up the turn. Spending the moves would punish somebody
+ * for correcting a misclick.
+ *
+ * The dotted route disappears with the order, because `refreshSelection`
+ * recomputes the overlay from `unit.order` and there is no longer one to draw.
+ */
+function doStand(): void {
+  if (!selectedUnitId) return;
+  const unit = state.units.get(selectedUnitId);
+  if (!unit?.order) return;
+  state = clearMarch(state, selectedUnitId);
+  log(t('{unit} stands and awaits orders.', { unit: t(unitType(unit.typeId).label) }));
+  refreshSelection();
+  dirty = true;
 }
 
 /**
@@ -2622,6 +3153,60 @@ async function doEndTurn(): Promise<void> {
   refreshReadiness();
   refreshThreats();
   dirty = true;
+
+  // The map's own offer, if it made one. Voluntary, so it comes after the turn
+  // has been reported rather than interrupting it.
+  await offerFortune();
+
+  /*
+   * Standing orders, walked one turn's worth.
+   *
+   * ⚠️ After the enemy phase and the fortune, not before. A march that stepped
+   * first would walk into ground a raider is about to take, and a unit that
+   * has just been bogged down by a mire should stay bogged: `advanceMarch`
+   * reads `movesLeft`, so ordering it after the mire is what makes the two
+   * agree instead of the march quietly undoing it.
+   */
+  const marched = advanceMarches(state, mySeat);
+  if (marched.reports.length > 0) {
+    state = marched.state;
+    for (const report of marched.reports) {
+      const unit = state.units.get(report.unitId);
+      const who = unit ? t(unitType(unit.typeId).label) : t('a unit');
+      if (report.stop === 'spotted') {
+        log(t('{unit} halts: something is out there.', { unit: who }), 'bad');
+        if (report.spotted) {
+          effects.pulse(report.spotted, '#ff9b91', 3);
+          scene.focus(report.spotted);
+        }
+      } else if (report.stop === 'arrived') {
+        log(t('{unit} arrives.', { unit: who }), 'good');
+      } else if (report.stop === 'blocked') {
+        log(t('{unit} cannot get through and stops.', { unit: who }), 'bad');
+      }
+    }
+    refreshSelection();
+    dirty = true;
+
+    /*
+     * ⚠️ **A march digs up what it walks over, exactly as a hand-driven move
+     * does.** It did not, and the asymmetry was invisible from the outside:
+     * walking a Profiler onto a chest opened it, ordering the same Profiler to
+     * the same tile marched it over the chest and said nothing. The tile was
+     * crossed, the fog opened, and the cache stayed buried. That reads as the
+     * treasure being broken rather than as the march never having mentioned
+     * the route.
+     *
+     * ⚠️ Sequential, not `Promise.all`. `digAlong` plays a film and opens a
+     * question modal; two of them at once would race for the same modal, and
+     * `digAlong` itself bails when one is already open, so the second chest
+     * would be silently lost rather than queued.
+     */
+    for (const report of marched.reports) {
+      await digAlong(report.unitId, report.walked);
+    }
+  }
+
   /*
    * The autosave point.
    *
@@ -2645,11 +3230,31 @@ async function doEndTurn(): Promise<void> {
   finished = true;
   el.endTurn.disabled = true;
   await presentedEnemyTurn;
+  const myCities = [...state.cities.values()].filter((c) => c.factionId === mySeat).length;
   endScreen.show(report.outcome, {
     turn: report.turn,
     skills: `${state.research.known.length}/${state.topics.nodes.length}`,
-    cities: [...state.cities.values()].filter((c) => c.factionId === mySeat).length,
+    cities: myCities,
     cheats: state.cheatsUsed,
+  });
+
+  /*
+   * The one moment a campaign is worth recording.
+   *
+   * ⚠️ Deliberately AFTER the end screen is shown, and not awaited. The player
+   * has finished; making them wait on a network write to see their own result
+   * would be charging them for the statistics. If it fails, it fails quietly.
+   */
+  void recordRun({
+    seed: state.seed,
+    difficulty: state.difficulty,
+    players: lastSetup.players,
+    outcome: String(report.outcome).toLowerCase().includes('vic') ? 'victory' : 'defeat',
+    turns: report.turn,
+    cities: myCities,
+    readinessPercent: Math.round(libraryModel().examRetained * 100),
+    skillsResearched: state.research.known.length,
+    cheatsUsed: state.cheatsUsed,
   });
 }
 
@@ -2768,6 +3373,11 @@ async function presentEnemyTurn(
     if (from) {
       const onImpact = (): void => {
         adopt?.();
+        // ⚠️ The same sting on a raid as on your own attack. A blow that
+        // sounded different depending on who threw it would read as two
+        // different events rather than one seen from the other side.
+        if (battle.wallBroken) cues.play('breach');
+        else cues.play('clash');
         if (battle.damageToDefender > 0) {
           effects.floatingText(target, `-${battle.damageToDefender}`, '#ff9b91', 1.3);
         }
@@ -3339,6 +3949,20 @@ function libraryModel() {
 }
 
 /**
+ * Write the readiness figure, and nothing else.
+ *
+ * ⚠️ Split out of `refreshReadiness` so it can be painted at startup. The
+ * markup ships `0% exam` as static text, which is English, so a German player
+ * read it in English for the whole of the setup screen and until the first
+ * HUD refresh. `refreshReadiness` itself cannot be called that early: it also
+ * decides whether the Proctor is ready and can write to the log, neither of
+ * which means anything before there is a game.
+ */
+function paintReadiness(percent: number): void {
+  el.readiness.textContent = t('{percent}% exam', { percent });
+}
+
+/**
  * Exam readiness, and the Proctor's interest in it.
  *
  * ⚠️ Readiness is weighted by the published branch percentages, so it moves
@@ -3349,7 +3973,7 @@ function refreshReadiness(): void {
   const model = libraryModel();
   const exam = worldCampaign().exam;
   const percent = Math.round(model.examRetained * 100);
-  el.readiness.textContent = t('{percent}% exam', { percent });
+  paintReadiness(percent);
 
   const ready = proctorReady(model, exam.threshold);
   el.faceProctor.hidden = !ready || finished;
@@ -3615,6 +4239,10 @@ function refreshHud(): void {
   el.compute.textContent = String(resources.compute);
   el.cu.textContent = String(resources.cu);
   el.trust.textContent = String(resources.trust);
+  // What is left to do changes with almost anything, so it is repainted with
+  // the rest of the HUD rather than from each of the dozen places that could
+  // have changed it.
+  refreshTurnButton();
 }
 
 function viewportSize(): { width: number; height: number } {
@@ -3696,8 +4324,31 @@ function newGame(rawSeed: string): void {
  * page. Now it is spent on a menu, and the world appears when the player has
  * finished choosing rather than before they have started.
  */
-async function askAndStart(): Promise<void> {
-  lastSetup = await setup.ask(lastSetup);
+async function askAndStart(resume?: { offer: ResumeOffer; state: GameState }): Promise<void> {
+  const choice = await setup.ask(lastSetup, resume?.offer);
+
+  /*
+   * ⚠️ Resuming happens HERE, not in `boot`, and that is the whole fix.
+   *
+   * `boot` used to adopt a save the instant it loaded one, so a returning
+   * player never saw this screen at all: no options, no seed, no way back.
+   * The attract card's "Skip to setup" button could not help, because skipping
+   * only ever skipped the film. Every route in led to the same place.
+   */
+  if (choice === 'resume' && resume) {
+    adopt(resume.state, t('Resumed on seed {seed}, turn {turn}.', {
+      seed: resume.state.seed,
+      turn: resume.state.turn,
+    }));
+    // A resumed empire plays no opening, so nothing else would start the score.
+    startMusicOnFirstGesture();
+    return;
+  }
+
+  lastSetup = choice as SetupResult;
+  // A new campaign is a new row. Also clears any attempts queued but never
+  // flushed by the game being abandoned.
+  beginRun();
   buildSecondSeat();
   newGame(lastSetup.seed);
   // Build the shaders before the film starts rather than during it. The world
@@ -3817,13 +4468,25 @@ async function playOpening(): Promise<void> {
     /*
      * The handover.
      *
-     * ⚠️ **Delayed past the anthem's fade on purpose.** `fade()` returns
-     * immediately and takes 1.6 seconds to finish, so starting the score here
-     * would put the first background track underneath the last bar of the
-     * anthem. The wait is the fade plus a breath, which also gives the player
-     * a moment of the world in silence before the music comes back.
+     * ⚠️ **Timed off the anthem's fade, not off a number picked by feel.**
+     * `fade()` returns immediately and takes `ANTHEM_FADE_OUT_MS` to finish, so
+     * the score has to wait for it or the first background track plays
+     * underneath the last bar of the anthem.
+     *
+     * ⚠️ **A short gap, deliberately, rather than a true crossfade.** Overlapping
+     * the two would be the smoother edit if they were one piece of music, and
+     * they are not: the anthem and the score are different recordings in
+     * different keys, and the module's own ducking note is about exactly this,
+     * that two pieces at once argue. So the anthem finishes, the world is
+     * silent for a breath, and the score rises into it over its own
+     * `FADE_IN_MS`. Both ends are ramps; only the join is empty.
+     *
+     * It used to be a flat 2,400 ms, which was the fade plus 800 of dead air.
+     * The breath is a quarter of that now, so the sequence reads as one
+     * continuous piece of sound rather than as music stopping and later
+     * starting again.
      */
-    window.setTimeout(() => music.start(), 2_400);
+    window.setTimeout(() => music.start(), ANTHEM_FADE_OUT_MS + HANDOVER_BREATH_MS);
   }
 }
 
@@ -3887,7 +4550,17 @@ function adopt(next: GameState, message: string): void {
 }
 
 /**
- * Resume the stored empire, or start a fresh one.
+ * Always ask, and offer the stored empire as one of the answers.
+ *
+ * ⚠️ **This no longer resumes on its own.** It used to adopt the save the
+ * moment it read one, which meant the setup screen was unreachable for anybody
+ * who had ever played: the options, the seed and the course pickers all existed
+ * and could not be got to. Handing the save to the setup screen as a Continue
+ * card keeps the resume one click away and puts the alternative back on screen.
+ *
+ * ⚠️ It also removes a freeze. The setup screen is what covers the ~8 s of
+ * world generation (§22.2); resuming straight from boot skipped the cover and
+ * not the work, so the page simply stopped responding for several seconds.
  *
  * An unreadable save says so in the log instead of failing silently. The
  * player cannot do anything about it, but "could not be read" and "you never
@@ -3896,16 +4569,16 @@ function adopt(next: GameState, message: string): void {
 function boot(): void {
   const loaded = loadGame(slot, provider.topics());
   if (loaded.ok) {
-    adopt(loaded.state, t('Resumed on seed {seed}, turn {turn}.', {
-      seed: loaded.state.seed,
-      turn: loaded.state.turn,
-    }));
-    // A resumed empire plays no opening, so nothing else would ever start the
-    // score. See the note on the function: this is the one path that needs it.
-    startMusicOnFirstGesture();
+    void askAndStart({
+      state: loaded.state,
+      offer: {
+        seed: loaded.state.seed,
+        turn: loaded.state.turn,
+        cities: [...loaded.state.cities.values()].filter((c) => c.factionId === mySeat).length,
+      },
+    });
     return;
   }
-  // No game to resume, so ask what kind of world this one should be.
   void askAndStart();
   if (loaded.reason === 'unreadable') {
     log(t('A saved game was found but could not be read, so this is a new one.'), 'bad');
@@ -3994,7 +4667,7 @@ async function openSeats(): Promise<void> {
 
   const STAY = 'stay';
   const picked = await choice.ask(table.title, table.body, [
-    ...table.offers.map((offer) => ({
+    ...table.offers.map((offer: SeatOffer) => ({
       id: offer.id,
       label: offer.label,
       detail: offer.detail,
@@ -4029,7 +4702,15 @@ async function openSeats(): Promise<void> {
   log(t('You know nothing of this map. Scout it.'));
   dirty = true;
   refreshHud();
-  save();
+  /*
+   * Saved immediately rather than at the end of the turn.
+   *
+   * ⚠️ Changing seats is not an action inside a turn, it is a change of who
+   * is playing. A reload between here and the next end of turn would otherwise
+   * put the player back in the empire they just walked away from, with the
+   * board already showing the consequences of leaving it.
+   */
+  saveGame(slot, state);
 }
 
 window.addEventListener('keydown', (e) => {
@@ -4086,7 +4767,18 @@ window.addEventListener('keydown', (e) => {
 
   if (e.key === ' ') {
     e.preventDefault();
-    void doEndTurn();
+    /*
+     * ⚠️ Ctrl+Space ends the turn even with work outstanding, and plain Space
+     * does whatever the button currently says. One key, one meaning: "do the
+     * obvious next thing". Space used to end the turn unconditionally, which
+     * made the fastest way to play also the way to abandon four units.
+     */
+    if (e.ctrlKey || e.metaKey) void doEndTurn();
+    else turnButtonAction();
+  } else if (e.key === 'Enter') {
+    // Always steps, never ends. The one key that cannot cost a turn.
+    e.preventDefault();
+    nextAction();
   } else if (e.key === 'n' || e.key === 'Tab') {
     e.preventDefault();
     selectNextIdle();
@@ -4107,7 +4799,7 @@ window.addEventListener('keydown', (e) => {
     e.preventDefault();
     stepUnit(1);
   } else if (e.key === 'b') {
-    doFound();
+    void doFound();
   } else if (e.key === 'p') {
     doRaid();
   } else if (e.key === 'h') {
@@ -4135,13 +4827,43 @@ window.addEventListener('resize', fitCanvas);
 window.addEventListener('orientationchange', () => {
   requestAnimationFrame(() => requestAnimationFrame(fitCanvas));
 });
-el.endTurn.addEventListener('click', doEndTurn);
+
+/*
+ * The shell is not a document and must never sit at a scroll offset.
+ *
+ * ⚠️ `overflow: hidden` is not the guarantee it looks like. It removes the
+ * scrollbar and the wheel, and leaves PROGRAMMATIC scrolling untouched: the
+ * browser scrolls an element into view whenever it takes focus, and the setup
+ * card is taller than a short window, so clicking play scrolled `body` by
+ * 422px on a 1365x768 screen. Nothing then puts it back, because the two
+ * things that normally would - the scrollbar and the wheel - are the two
+ * things `overflow: hidden` took away.
+ *
+ * ⚠️ It is `body` that moves, not `documentElement`, because `html, body`
+ * both carry `height: 100%`. So `window.scrollTo(0, 0)` does NOT fix it: that
+ * addresses the scrolling element, which is the one that did not move.
+ * Measured, and it is why the obvious fix reads as no fix at all.
+ *
+ * The board is `position: fixed` and so cannot be dragged out of view by this
+ * any more. This is the belt to that pair of braces: an offset shell would
+ * still displace anything laid out in normal flow later.
+ */
+const pinShell = (): void => {
+  if (document.body.scrollTop !== 0) document.body.scrollTop = 0;
+  if (document.body.scrollLeft !== 0) document.body.scrollLeft = 0;
+  if (document.documentElement.scrollTop !== 0) document.documentElement.scrollTop = 0;
+  if (document.documentElement.scrollLeft !== 0) document.documentElement.scrollLeft = 0;
+};
+// Capture, because a scroll event does not bubble.
+document.addEventListener('scroll', pinShell, true);
+el.endTurn.addEventListener('click', turnButtonAction);
 el.openLibrary.addEventListener('click', () => library.toggle());
 el.openSeats.addEventListener('click', () => void openSeats());
 el.faceProctor.addEventListener('click', () => void faceTheProctor());
-el.actFound.addEventListener('click', doFound);
+el.actFound.addEventListener('click', () => void doFound());
 el.actRaid.addEventListener('click', doRaid);
 el.actFortify.addEventListener('click', doFortify);
+  el.actStand.addEventListener('click', doStand);
 el.actSkip.addEventListener('click', doSkip);
 el.selPrev.addEventListener('click', () => stepUnit(-1));
 el.selNext.addEventListener('click', () => stepUnit(1));
@@ -4208,6 +4930,24 @@ let fogSignature = '';
 let revealingForOpening = false;
 
 /**
+ * The fog is off entirely, because somebody typed the code for it.
+ *
+ * ⚠️ **Separate from `revealingForOpening`, which lifts LESS than this.** The
+ * opening lights the land and still hides every army on it, because an
+ * establishing shot that showed all seven camps would give away the whole
+ * scouting game before the first turn. This lifts both halves: the ground and
+ * the things standing on it.
+ *
+ * ⚠️ **A view flag, not state.** Fog is the one feature whose entire content is
+ * that something is NOT drawn, and there is nothing in the rules to change: the
+ * engine's memory is untouched, so turning this off puts the player back
+ * exactly where they were rather than having permanently learnt the map. The
+ * code is still recorded in `cheatsUsed` and still lands on the victory screen,
+ * which is the part that has to be permanent.
+ */
+let fogLifted = false;
+
+/**
  * What the player has been shown so far, while a unit is walking.
  *
  * ⚠️ Undefined at every other moment, and that is deliberate: the fog agrees
@@ -4232,6 +4972,19 @@ function refreshFog(): void {
 
   if (revealingForOpening) {
     fogSignature = 'opening';
+    scene.setFog([], []);
+    dirty = true;
+    return;
+  }
+
+  /*
+   * ⚠️ Its own signature, not `revealingForOpening`'s. Sharing one would mean
+   * turning the code off left the signature reading 'opening', the next
+   * `refreshFog` would find it unchanged and return early, and the fog would
+   * stay off until something else happened to move a unit.
+   */
+  if (fogLifted) {
+    fogSignature = 'lifted';
     scene.setFog([], []);
     dirty = true;
     return;
@@ -4383,7 +5136,13 @@ function frame(now: number): void {
       hover,
       unitOffset: unitWorldOffset,
       unitOpacity: (id) => effects.opacityOf(id),
-      visibleHexes: currentSight,
+      /*
+       * ⚠️ `undefined` is how the scene is told there is no fog at all, which
+       * is what the map editor and every scene test pass. Handing it the full
+       * tile set instead would look identical and would cost a six thousand
+       * entry lookup per unit, per town and per overlay, every frame.
+       */
+      visibleHexes: fogLifted ? undefined : currentSight,
       // Whose ghosts to draw. Per seat, so taking a chair does not inherit the
       // towns the previous occupant of this browser had found.
       seenCities: memoryOf(state, mySeat).seenCities,
@@ -4441,6 +5200,13 @@ declare global {
       factionUnits: (
         factionId: string,
       ) => { id: string; typeId: string; q: number; r: number; hp: number }[];
+      seat: () => string;
+      seats: () => {
+        title: string;
+        body: string;
+        offers: { id: string; label: string; detail: string }[];
+      };
+      sitIn: (factionId: string) => { left: string; now: string };
       cityCount: () => number;
       cities: () => {
         id: string;
@@ -4705,6 +5471,37 @@ window.__fabricEmpires = {
       r: u.hex.r,
       hp: u.hp,
     })),
+  /*
+   * The empire table, and the seat this browser is playing.
+   *
+   * ⚠️ Exposed because the alternative is driving a modal to find out whether
+   * the fog actually changed hands, and "the panel said something" is not
+   * evidence that the memory moved. `seat()` plus `vision()` together are.
+   */
+  seat: () => mySeat,
+  seats: () => {
+    const table = seatTable(state, mySeat);
+    return {
+      title: table.title,
+      body: table.body,
+      offers: table.offers.map((o) => ({ id: o.id, label: o.label, detail: o.detail })),
+    };
+  },
+  /** Sit down in a vacant empire, exactly as the panel does. */
+  sitIn: (factionId: string) => {
+    const before = mySeat;
+    state = takeSeat(vacateSeat(state, mySeat), factionId);
+    state = { ...state, activeFactionId: factionId };
+    mySeat = factionId;
+    selectedUnitId = undefined;
+    reach = undefined;
+    attackTargets = undefined;
+    settleSuggestions = [];
+    dirty = true;
+    refreshHud();
+    saveGame(slot, state);
+    return { left: before, now: mySeat };
+  },
   saveNow: () => saveGame(slot, state),
   savedBytes: () => slot.read()?.length ?? 0,
   wipeSave: () => slot.clear(),

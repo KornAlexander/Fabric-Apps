@@ -28,7 +28,30 @@
       * { box-sizing: border-box; }
       html, body { margin: 0; height: 100%; overflow: hidden; background: #070a10; }
       body { font: 13px/1.5 "Segoe UI", system-ui, sans-serif; color: var(--text); }
-      #map { display: block; width: 100vw; height: 100vh; cursor: grab; }
+      /*
+        ⚠️ **`fixed`, not `static`, and that is the whole point.**
+
+        `overflow: hidden` stops a PLAYER scrolling. It does not stop the
+        BROWSER scrolling, and the browser scrolls whenever it moves focus to
+        something below the fold. The setup card is taller than a short window,
+        so clicking its play button scrolled `body` down by 422px on a 1365x768
+        screen, measured. There is no scrollbar to put it back and no gesture
+        that reaches it, so the page stays there for the rest of the session.
+
+        A `static` board scrolls with the document: the top of the world slides
+        off the screen and the bottom of the window becomes a black band, while
+        every panel, being `fixed`, stays pinned to the viewport and lands on
+        top of that band. It reads exactly like a broken renderer and is not
+        one - the canvas is full size and every pixel of it is drawn.
+
+        Pinning the board to the viewport makes the board immune to it. The
+        mobile rule further down already did this; the desktop one did not,
+        which is why only the wide layout could show the fault.
+      */
+      #map {
+        position: fixed; top: 0; left: 0;
+        display: block; width: 100vw; height: 100vh; cursor: grab;
+      }
       #map.dragging { cursor: grabbing; }
       /* Damage numbers and impact rings ride above the 3D view. Drawing them
          in 2D keeps text crisp at any distance, which projected 3D text is
@@ -129,6 +152,46 @@
         color: var(--muted); font-size: 12px; line-height: 1.6; margin-bottom: 4px;
       }
       .fe-setup-try li:last-child { margin-bottom: 0; }
+      /*
+        The way straight into the game, at the top of a card that is taller
+        than the screen.
+
+        ⚠️ Outlined, not filled: the filled accent button at the bottom is the
+        primary action, and repeating it here would give the page two identical
+        blue bars, which reads as a duplicate rather than a choice.
+        ⚠️ min-height 44px because the mobile audit's rule is that every control
+        clears 44px, and a new one must not be the first exception.
+      */
+      .fe-setup-quick {
+        display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+        margin: 0 0 20px;
+      }
+      /*
+        Carrying on with the game in progress. The one FILLED button above the
+        fold, because somebody who already has an empire almost always wants it,
+        and everything below is the alternative rather than the default.
+      */
+      .fe-setup-continue {
+        display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+        margin: 0 0 10px; padding: 12px 14px;
+        border: 1px solid var(--accent); border-radius: 9px;
+        background: rgba(74, 159, 224, 0.10);
+      }
+      .fe-setup-continue-play {
+        padding: 9px 20px; min-height: 44px;
+        font: inherit; font-weight: 600; font-size: 14px; cursor: pointer;
+        color: #06222f; background: var(--accent);
+        border: none; border-radius: 9px;
+      }
+      .fe-setup-continue-play:hover { filter: brightness(1.1); }
+      .fe-setup-quick-play {
+        padding: 9px 18px; min-height: 44px;
+        font: inherit; font-weight: 600; font-size: 13px; cursor: pointer;
+        color: var(--accent); background: transparent;
+        border: 1px solid var(--accent); border-radius: 9px;
+      }
+      .fe-setup-quick-play:hover { background: rgba(74, 159, 224, 0.14); }
+      .fe-setup-quick .fe-setup-detail { flex: 1 1 22ch; }
       .fe-setup-group { margin-bottom: 18px; }
       .fe-setup-section {
         margin: 22px 0 10px; font-size: 13px; font-weight: 600;
@@ -231,6 +294,21 @@
       }
       .fe-duo-head b { color: var(--seat); font-size: 13px; }
       .fe-duo-head span { color: var(--muted); font-size: 11px; }
+      /*
+        The seat's countdown. `margin-left: auto` rather than a third flex
+        column, so the course name keeps sitting under the player's name
+        instead of being pushed into the middle of the row.
+
+        Tabular numerals and the same "low" red as `.fe-timer`, because a
+        player who has learned what running out looks like in one modal should
+        not have to learn it again in the other.
+      */
+      .fe-duo-clock {
+        margin-left: auto; flex: 0 0 auto;
+        font-style: normal; font-size: 12px; font-weight: 600;
+        font-variant-numeric: tabular-nums; color: var(--muted);
+      }
+      .fe-duo-clock.low { color: #ff8b80; }
       .fe-duo-stem { font-size: 16px; line-height: 1.45; margin-bottom: 12px; }
       .fe-duo-pane.seat-2 .fe-duo-stem { font-size: 22px; font-weight: 600; }
       .fe-duo-options { display: flex; flex-direction: column; gap: 7px; }
@@ -280,7 +358,18 @@
       .fe-cheat-line.good { color: #8fd694; }
       .fe-cheat-line.bad { color: #ff9b91; }
 
-      #resources { top: 14px; left: 14px; display: flex; gap: 18px; align-items: center; }
+      /*
+        ⚠️ `flex-wrap` here rather than only in the mobile block.
+
+        The bar is a fixed-position row that grows with its contents, and it
+        gained a button this week. On anything narrower than a laptop the last
+        control simply left the screen: measured on a 768px tablet, the
+        fullscreen toggle ended at x=797 against a 768px viewport, clipped and
+        unreachable. Wrapping costs nothing on a wide screen, where there is
+        room and it never triggers, and it is the difference between a cramped
+        bar and a missing button everywhere else.
+      */
+      #resources { top: 14px; left: 14px; display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
       #resources .res { display: flex; gap: 6px; align-items: baseline; }
       #resources .res b { font-size: 15px; font-weight: 600; }
       #resources .res span {
@@ -333,7 +422,7 @@
       button.primary { background: #2f5d8c; border-color: #3f7cb8; }
       button.primary:hover:not(:disabled) { background: #3a72a8; }
 
-      #controls { top: 14px; right: 14px; display: flex; gap: 8px; align-items: center; }
+      #controls { top: 14px; right: 14px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
       #controls input {
         background: #0b0e14; border: 1px solid var(--border); color: var(--text);
         border-radius: 6px; padding: 6px 8px; width: 110px; font: inherit;
@@ -406,7 +495,15 @@
       #tile { bottom: 14px; left: 50%; transform: translateX(-50%); text-align: center; min-width: 240px; }
       #help { top: 62px; right: 14px; color: var(--muted); text-align: right; font-size: 12px; }
 
-      #threats { top: 124px; right: 14px; width: 272px; max-height: 42vh; overflow-y: auto; }
+      /*
+        ⚠️ Clears `#help`, which shares this edge and is taller than it looks.
+
+        Both hang from the top right. The legend is four lines of hint text, so
+        it runs 62 to 180 measured in German, and this used to start at 124:
+        the threat list was parked across the middle of it and hid two of the
+        four lines. English is shorter, which is why it read as fine.
+      */
+      #threats { top: 194px; right: 14px; width: 272px; max-height: 42vh; overflow-y: auto; }
       #threats h2 { margin: 0 0 4px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
       #threats .foe {
         display: grid; grid-template-columns: 8px minmax(0, 1fr) auto; gap: 8px;
@@ -551,7 +648,25 @@
          ================================================================== */
       #hud { display: contents; }
 
-      @media (max-width: 760px) {
+      /*
+        ⚠️ **Width OR a short landscape screen, not width alone.**
+
+        This was `max-width: 760px` only, which is the condition for a phone
+        held upright and is false for the same phone turned sideways: a 390x844
+        handset becomes 844x390, sails past the 760 test, and gets the desktop
+        HUD. Measured there: twenty controls under 40px and eight panels pinned
+        to the corners of a 390px-tall window.
+
+        Worse, the landscape rule further down set the map to 62vh on exactly
+        those screens, so the board shrank to make room for a column that was
+        never switched on. The two rules disagreed about which layout was
+        running, and the one that shrank the map won.
+
+        The comma is an OR. `max-height: 520px` matches the landscape rule
+        below deliberately, so there is no band where the column is on and the
+        height override is off.
+      */
+      @media (max-width: 760px), (max-height: 520px) and (orientation: landscape) {
         /*
           The wrapper stops being invisible and becomes the column. Because it
           was `display: contents` above, this is the only place the panels'
@@ -590,7 +705,14 @@
 
         /* Undo every corner pin in one place. */
         #hud > .panel {
-          position: static;
+          /*
+            ⚠️ `relative`, not `static`. Both put the panel back into flow,
+            which is the point, but only `relative` is a containing block, and
+            the fold toggle is absolutely positioned inside it. Under `static`
+            the toggle anchors to the viewport instead and lands in the corner
+            of the screen rather than the corner of its panel.
+          */
+          position: relative;
           width: auto;
           min-width: 0;
           max-width: none;
@@ -611,11 +733,34 @@
         */
         #resources, #controls { flex-wrap: wrap; gap: 10px; }
 
-        /* Touch targets. 44px is the smallest a finger reliably hits. */
+        /*
+          Touch targets. 44px is the smallest a finger reliably hits.
+
+          ⚠️ **Both dimensions.** Only the height was set here, which made every
+          icon button the right height and the wrong shape: measured on a 390px
+          screen, the music toggle was 28px wide and the two unit-stepper
+          arrows were 24px, against a 44px thumb. The steppers are the worst of
+          them because cycling the army is something a player does on almost
+          every turn, and a target a third narrower than the finger aiming at it
+          is missed often enough to feel like the game ignoring the tap.
+
+          Harmless on the wide buttons: `min-width` cannot shrink anything, and
+          nothing else in the HUD is under 44px already.
+        */
         #hud button,
         .fe-option,
         .fe-choice-option,
         .fe-setup-option { min-height: 44px; }
+        #hud button { min-width: 44px; }
+
+        /*
+          ⚠️ The course panel is NOT inside `#hud`, so the rule above never
+          reached it. Its two buttons, which download the question template and
+          upload a filled-in one, measured 32px tall on a phone. They are the
+          only route a player has to bring their own course in, and they were
+          the smallest targets left in the app.
+        */
+        .fe-course button { min-height: 44px; min-width: 44px; }
 
         /* Dialogs are already full-screen; just stop them being letterboxed. */
         .fe-setup-card, .fe-choice-card, .fe-modal { max-width: none; }
@@ -629,6 +774,107 @@
       @media (max-width: 900px) and (orientation: landscape) and (max-height: 520px) {
         #hud { top: 62vh; }
         #map, #fx { height: 62vh; }
+      }
+
+      /*
+        Fingers, wherever they are.
+
+        ⚠️ **Width is the wrong question for a tap target; the pointer is.** A
+        tablet in portrait is 768 to 834px wide, so it takes the desktop HUD,
+        which is right: there is room for it and a scrolling column would waste
+        the screen. What is not right is that it also took the desktop's 34px
+        buttons, and the hand holding it has the same thumb as the one holding
+        a phone. Measured at 768x1024: twenty-one controls under 40px.
+
+        `pointer: coarse` asks the only question that matters, and it leaves a
+        small laptop window alone, which a width rule could not.
+
+        ⚠️ Honest limit: the browser used to measure all of the above reports
+        `pointer: fine`, so this rule is the one thing here that was reasoned
+        rather than measured. What it applies is exactly the selector set and
+        the values already proven live at 760px and below, and the wrapping
+        above means a wider button cannot push anything off the edge.
+      */
+      @media (pointer: coarse) {
+        #hud button,
+        .fe-course button,
+        .fe-option,
+        .fe-choice-option,
+        .fe-setup-option { min-height: 44px; }
+        #hud button, .fe-course button { min-width: 44px; }
+      }
+      /*
+        The turn button when there is genuinely nothing left to do.
+
+        ⚠️ A pulse rather than only a colour. The button is already the
+        `primary` accent, so recolouring it says very little, and this is the
+        one moment in a turn worth interrupting somebody for. It settles after
+        three passes: a control that pulses forever is a control people learn
+        to ignore.
+      */
+      #end-turn.ready {
+        box-shadow: 0 0 0 0 rgba(255, 209, 102, 0.75);
+        animation: fe-turn-ready 1.1s ease-out 3;
+      }
+      @keyframes fe-turn-ready {
+        0%   { box-shadow: 0 0 0 0 rgba(255, 209, 102, 0.75); }
+        70%  { box-shadow: 0 0 0 10px rgba(255, 209, 102, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(255, 209, 102, 0); }
+      }
+      /* Somebody who does not want motion still gets the colour. */
+      @media (prefers-reduced-motion: reduce) {
+        #end-turn.ready { animation: none; outline: 2px solid #ffd166; }
+      }
+      /*
+        Folding panels away.
+
+        ⚠️ The rule targets CHILDREN rather than a wrapper element, so a panel
+        that gains a child later still collapses correctly. `#log` appends its
+        entries straight into the panel; a wrapper would have quietly stopped
+        catching them.
+
+        The heading and the toggle survive a fold, so a closed panel still says
+        what it is. A collapsed panel that is only a chevron is a puzzle.
+
+        ⚠️ **No `position` here, and that is deliberate.** This rule used to say
+        `position: relative`, to give the absolutely positioned toggle
+        something to anchor to. `.panel` is already `position: fixed`, which is
+        a containing block in its own right, so the toggle never needed it -
+        and `relative` is not an addition to `fixed`, it REPLACES it.
+
+        The six foldable panels therefore left their pinned corners and fell
+        into normal document flow, one under the next. Measured on 1365x768:
+        help at 62, threats at 242, tile at 426, research at 587, log at 735,
+        with research ending at 811 and log at 802 - both past the bottom of
+        the window, and eight overlapping pairs.
+
+        That also made `body` taller than the viewport, which is what gave the
+        browser something to scroll when it moved focus to the play button:
+        `body` went to 422px and the board, being in flow, went with it. One
+        declaration, two faults that look nothing like each other.
+      */
+      .panel.foldable > h2 { padding-right: 30px; }
+      .panel.collapsed > *:not(h2):not(.panel-toggle) { display: none; }
+      .panel.collapsed { padding-bottom: 8px; }
+      .panel-toggle {
+        position: absolute; top: 4px; right: 4px;
+        width: 26px; height: 26px; padding: 0;
+        display: flex; align-items: center; justify-content: center;
+        font: inherit; font-size: 15px; line-height: 1; cursor: pointer;
+        color: var(--muted); background: transparent;
+        border: 1px solid var(--border); border-radius: 6px;
+      }
+      .panel-toggle:hover { color: var(--text); background: rgba(255, 255, 255, 0.06); }
+      /*
+        ⚠️ 44px of TARGET without 44px of ink. The mobile rule is that every
+        control clears 44 px, and a 44 px box in the corner of every panel would
+        dominate a column of them. The pseudo-element grows the hit area only.
+      */
+      @media (pointer: coarse) {
+        .panel-toggle::after {
+          content: ''; position: absolute; top: 50%; left: 50%;
+          width: 44px; height: 44px; transform: translate(-50%, -50%);
+        }
       }
     </style>
   </head>
@@ -655,7 +901,7 @@
       <div class="res"><b id="res-compute">0</b><span>Compute</span></div>
       <div class="res"><b id="res-cu">0</b><span>CU</span></div>
       <div class="res"><b id="res-trust">0</b><span data-i18n="Trust">Trust</span></div>
-      <button id="open-library" title="The Great Library: what you actually know (l)" data-i18n="Library">Library</button>
+      <button id="open-library" title="The Great Library: what you actually know (l)" data-i18n-title="The Great Library: what you actually know (l)" data-i18n="Library">Library</button>
       <!--
         Exam readiness, weighted by the published branch percentages.
 
@@ -663,7 +909,7 @@
         the number the Proctor watches and a threshold nobody can see is a
         threshold nobody can aim at.
       -->
-      <span id="readiness" title="Share of the exam, by published weight, at familiar or better">0% exam</span>
+      <span id="readiness" title="Share of the exam, by published weight, at familiar or better" data-i18n-title="Share of the exam, by published weight, at familiar or better">0% exam</span>
       <!--
         The seats.
 
@@ -672,8 +918,8 @@
         resource bar rather than in a menu because it is a thing you do while
         looking at the board, not a setup screen.
       -->
-      <button id="open-seats" title="The empires on the board, and which of them you may take (o)" data-i18n="Seats">Seats</button>
-      <button id="face-proctor" hidden title="Sit the exam: 40 questions in the published proportions" data-i18n="Face the Proctor">Face the Proctor</button>
+      <button id="open-seats" title="The empires on the board, and which of them you may take (o)" data-i18n-title="The empires on the board, and which of them you may take (o)" data-i18n="Empires">Empires</button>
+      <button id="face-proctor" hidden title="Sit the exam: 40 questions in the published proportions" data-i18n-title="Sit the exam: 40 questions in the published proportions" data-i18n="Face the Proctor">Face the Proctor</button>
       <button id="end-turn" class="primary" data-i18n="End turn">End turn</button>
       <!--
         The language switch.
@@ -716,7 +962,8 @@
 
     <div class="panel" id="help">
       <span data-i18n="click a unit to select, click to move or attack">click a unit to select &middot; click to move or attack</span><br />
-      <span data-i18n="drag to pan, wheel to zoom, space ends turn">drag to pan &middot; wheel to zoom &middot; space ends turn</span><br />
+      <span data-i18n="drag to orbit, shift-drag to pan, wheel to zoom">drag to orbit &middot; shift+drag to pan &middot; wheel to zoom</span><br />
+      <span data-i18n="enter is the next action, space follows the button">enter next action &middot; space follows the button &middot; ctrl+space ends turn</span><br />
       <span class="muted" data-i18n="` opens the console, type help">` opens the console &middot; type help</span>
     </div>
 
@@ -765,8 +1012,8 @@
       -->
       <div id="settle-sites" hidden></div>
       <div class="actions">
-        <button id="act-found" disabled title="Found a city here (b)" data-i18n="Found city">Found city</button>
-        <button id="act-raid" disabled title="Plunder the neighbouring village (p). R flies the camera, so this is not on r" data-i18n="Raid">Raid</button>
+        <button id="act-found" disabled title="Found a city here (b)" data-i18n-title="Found a city here (b)" data-i18n="Found city">Found city</button>
+        <button id="act-raid" disabled title="Plunder the neighbouring village (p). R flies the camera, so this is not on r" data-i18n-title="Plunder the neighbouring village (p). R flies the camera, so this is not on r" data-i18n="Raid">Raid</button>
         <!--
           Fortify doubles as Wake once the unit is dug in, so the live label
           is written by `refreshSelection`.
@@ -779,8 +1026,18 @@
           path too, or deselecting a dug-in unit would leave "Wake" behind.
         -->
         <button id="act-fortify" disabled title="Fortify (h). W A S D fly the camera, so this is not on f" data-i18n="Fortify">Fortify</button>
-        <button id="act-skip" disabled title="Skip this unit (x). W A S D fly the camera, so this is not on s" data-i18n="Skip">Skip</button>
-        <button id="act-council" disabled title="Hold a council review (c)" data-i18n="Council">Council</button>
+        <!--
+          Call off a multi-turn march.
+
+          ⚠️ Hidden unless the selected unit actually has an order, rather than
+          disabled. Every other button here is a thing a unit can always be
+          asked to do and is greyed out when it cannot; this one is a thing that
+          only exists while an order does, and a permanently greyed control
+          teaches nobody what it is for.
+        -->
+        <button id="act-stand" hidden title="Call off the march and decide again next turn (Esc)" data-i18n-title="Call off the march and decide again next turn (Esc)" data-i18n="Cancel march">Cancel march</button>
+        <button id="act-skip" disabled title="Skip this unit (x). W A S D fly the camera, so this is not on s" data-i18n-title="Skip this unit (x). W A S D fly the camera, so this is not on s" data-i18n="Skip">Skip</button>
+        <button id="act-council" disabled title="Hold a council review (c)" data-i18n-title="Hold a council review (c)" data-i18n="Council">Council</button>
       </div>
     </div>
 

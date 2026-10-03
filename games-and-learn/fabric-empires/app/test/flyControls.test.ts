@@ -371,11 +371,61 @@ describe('fly controls', () => {
       expect(camera.position.distanceTo(parked)).toBe(0);
     });
 
-    it('moves along the view direction', () => {
+    it('moves along the heading', () => {
       press('w');
       fly.update(1);
       expect(camera.position.z).toBeLessThan(0);
       expect(Math.abs(camera.position.x)).toBeLessThan(1e-6);
+    });
+
+    /**
+     * ⚠️ **W and S must not change altitude.**
+     *
+     * Flying the raw view vector is what a plane does and it is wrong for looking at a map: you
+     * are pitched down most of the time, so every attempt to move closer to something is also a
+     * dive towards it, and holding W from a survey height ends in the terrain. These pin the fix
+     * from both directions, because flattening only the down case would still let S climb.
+     */
+    it('holds its height while pitched down, so W is not a dive', () => {
+      camera.lookAt(0, GROUND_M, -100);
+      const y0 = camera.position.y;
+      press('w');
+      fly.update(1);
+      expect(camera.position.y).toBeCloseTo(y0, 6);
+      // ...and it still actually went somewhere.
+      expect(camera.position.z).toBeLessThan(-1);
+    });
+
+    it('holds its height while pitched up, so S is not a climb', () => {
+      camera.lookAt(0, GROUND_M + REFERENCE_AGL_M + 800, -100);
+      const y0 = camera.position.y;
+      press('s');
+      fly.update(1);
+      expect(camera.position.y).toBeCloseTo(y0, 6);
+      expect(camera.position.z).toBeGreaterThan(1);
+    });
+
+    /**
+     * ⚠️ Looking straight down is the case that breaks the obvious implementation: zeroing Y and
+     * normalising divides by ~0, and the position goes to NaN, from which nothing recovers. It is
+     * also a perfectly ordinary thing to do on a map.
+     */
+    it('survives looking straight down, where there is no horizontal look direction', () => {
+      camera.lookAt(camera.position.x, GROUND_M, camera.position.z);
+      const y0 = camera.position.y;
+      press('w');
+      fly.update(1);
+      expect(Number.isFinite(camera.position.x)).toBe(true);
+      expect(Number.isFinite(camera.position.y)).toBe(true);
+      expect(Number.isFinite(camera.position.z)).toBe(true);
+      expect(camera.position.y).toBeCloseTo(y0, 6);
+    });
+
+    it('leaves altitude to Q and E', () => {
+      const y0 = camera.position.y;
+      press('e');
+      fly.update(1);
+      expect(camera.position.y).toBeGreaterThan(y0);
     });
 
     /**

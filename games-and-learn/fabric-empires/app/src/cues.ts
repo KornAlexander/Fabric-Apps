@@ -127,6 +127,108 @@ export const CUES: Readonly<Record<string, readonly CueEvent[]>> = {
   ],
 };
 
+/**
+ * Stings: the sounds the game makes while you are playing it.
+ *
+ * ⚠️ **Separate from `CUES`, and the separation is what keeps both tests
+ * honest.** `CUES` is keyed by cinematic id, and two tests hold that mapping
+ * exactly: every film must have a cue, and every cue must have a film. A combat
+ * sound put in that table would be an orphan by definition, and the obvious fix
+ * of relaxing the orphan test would throw away the thing that catches a renamed
+ * cinematic playing in silence.
+ *
+ * ⚠️ **These are short, and that is a rule rather than a preference.** A
+ * cinematic cue has the screen to itself for four seconds. A sting fires in the
+ * middle of a turn, possibly several times in a row, and anything with a long
+ * tail turns a busy turn into mud. Nothing here rings past about a second.
+ *
+ * They exist because the game had no foreground at all: three cinematic cues,
+ * each once per game, over a continuous orchestral bed. Everything the player
+ * actually did was silent, which is why the music felt too loud. It was not too
+ * loud; it was alone.
+ */
+export const STINGS: Readonly<Record<string, readonly CueEvent[]>> = {
+  /** A blow lands. Short, low, and no pitch worth hearing: it is an impact. */
+  clash: [
+    { at: 0.0, voice: 'drum', hz: 150, seconds: 0.42, gain: 0.85 },
+    { at: 0.02, voice: 'swell', hz: A2, seconds: 0.34, gain: 0.24 },
+  ],
+
+  /** A shot, rather than a hit. Brighter and thinner than a clash. */
+  volley: [
+    { at: 0.0, voice: 'drum', hz: 320, seconds: 0.26, gain: 0.6 },
+    { at: 0.05, voice: 'bell', hz: A5, seconds: 0.5, gain: 0.22 },
+  ],
+
+  /** Masonry gives way. The heaviest thing in the game that is not a film. */
+  breach: [
+    { at: 0.0, voice: 'drum', hz: 80, seconds: 0.9, gain: 0.95 },
+    { at: 0.06, voice: 'swell', hz: G2, seconds: 0.8, gain: 0.4 },
+  ],
+
+  /** A town is founded. Two notes, up. Deliberately small next to `first-city`. */
+  settle: [
+    { at: 0.0, voice: 'bell', hz: D5, seconds: 0.7, gain: 0.4 },
+    { at: 0.12, voice: 'bell', hz: A5, seconds: 0.8, gain: 0.3 },
+  ],
+
+  /** Something was dug out of the ground and it was worth having. */
+  windfall: [
+    { at: 0.0, voice: 'bell', hz: A5, seconds: 0.6, gain: 0.36 },
+    { at: 0.1, voice: 'bell', hz: D6, seconds: 0.7, gain: 0.3 },
+  ],
+};
+
+/**
+ * The video films, which are silent files.
+ *
+ * ⚠️ **A third table, because the other two each have a rule these would
+ * break.** `CUES` is paired to camera cinematics by a test that scans for
+ * `orbitShot`/`descendShot`/`approachShot`, so a treasure entry there is an
+ * orphan by definition and would fail the very test that catches a renamed
+ * film playing in silence. `STINGS` says in writing that nothing in it rings
+ * past about a second, which is right for a sound that fires several times a
+ * turn and wrong for a four second film. Relaxing either rule to fit these in
+ * would cost more than a third table does.
+ *
+ * ⚠️ **The clips carry no audio at all.** Measured: `ffprobe` reports no audio
+ * stream in either, and the element is muted besides (see `treasureFilm.ts`,
+ * which strips it deliberately so Sora's ambient bed cannot fight the score).
+ * So the whole of a treasure, the discovery AND the payoff, played in total
+ * silence, and the only sound anywhere near it was `windfall` — which fires at
+ * the very end, and only when the answer was right and the prize was gold.
+ * Getting it wrong was silent twice over.
+ *
+ * These are long, on purpose: they run under a film that has the screen.
+ */
+export const FILMS: Readonly<Record<string, readonly CueEvent[]>> = {
+  /*
+   * Something is down there. Curiosity, not reward: the question has not been
+   * asked yet and the player may still lose it.
+   *
+   * A low drone under two rising bells, the second unresolved, so it sounds
+   * like an opening rather than an answer.
+   */
+  'treasure-found': [
+    { at: 0.0, voice: 'drone', hz: D3, seconds: 3.4, gain: 0.34 },
+    { at: 0.18, voice: 'bell', hz: D5, seconds: 2.2, gain: 0.42 },
+    { at: 0.9, voice: 'swell', hz: G3, seconds: 1.8, gain: 0.3 },
+    { at: 1.5, voice: 'bell', hz: A5, seconds: 2.4, gain: 0.34 },
+  ],
+
+  /*
+   * The lid comes off. The same shape as `found`, resolved and brighter: it is
+   * deliberately the answer to that phrase rather than a different idea.
+   */
+  'treasure-opened': [
+    { at: 0.0, voice: 'drum', hz: 110, seconds: 0.5, gain: 0.5 },
+    { at: 0.05, voice: 'swell', hz: G3, seconds: 2.4, gain: 0.38 },
+    { at: 0.2, voice: 'bell', hz: D5, seconds: 2.6, gain: 0.5 },
+    { at: 0.75, voice: 'bell', hz: A5, seconds: 2.6, gain: 0.46 },
+    { at: 1.4, voice: 'bell', hz: D6, seconds: 2.8, gain: 0.4 },
+  ],
+};
+
 export interface Cues {
   /** Sound the cue for a cinematic. Unknown ids are silence, not an error. */
   play(id: string): void;
@@ -214,7 +316,19 @@ export function createCues(makeContext?: ContextFactory): Cues {
       return undefined;
     }
     const master = ctx.createGain();
-    master.gain.value = 0.5;
+    /*
+     * ⚠️ Raised from 0.5 when the game got gameplay stings.
+     *
+     * The complaint that produced this was "the music is too loud". It was
+     * not: it was the only thing playing. Three cinematic cues fired once each
+     * per game, so a whole turn of moving, fighting and building made no sound
+     * at all, and a bed with nothing on top of it is a bed you notice.
+     *
+     * Both halves of the fix are needed. Lifting this alone would make the
+     * films shout; dropping the score alone would leave the game quiet rather
+     * than balanced.
+     */
+    master.gain.value = 0.8;
     master.connect(ctx.destination);
 
     dry = ctx.createGain();
@@ -361,7 +475,9 @@ export function createCues(makeContext?: ContextFactory): Cues {
 
     play(id) {
       if (muted) return;
-      const events = CUES[id];
+      // Films first, then the gameplay stings. Two tables, one entry point, so
+      // a caller never has to know which kind of sound it is asking for.
+      const events = CUES[id] ?? FILMS[id] ?? STINGS[id];
       if (!events || events.length === 0) return;
       const parts = audio();
       if (!parts) return;

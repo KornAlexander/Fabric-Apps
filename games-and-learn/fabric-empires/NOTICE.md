@@ -155,6 +155,18 @@ Dependencies and their licences are declared in `package.json` and the lockfile.
 The notable one is [three.js](https://threejs.org) (MIT), which does all of the
 rendering.
 
+## Fonts
+
+The teaser captions are set in **Cinzel**, by Natanael Gama, under the
+[SIL Open Font Licence 1.1](tools/media/fonts/OFL.txt). The font and its licence
+sit together in `tools/media/fonts/`, because the OFL requires the licence to
+travel with the font.
+
+⚠️ **It is committed rather than fetched at build time.** `/media/` is ignored,
+so a font cached next to the clips would be missing on a fresh clone, and
+fontconfig would quietly substitute some other serif. The teaser would rebuild
+without an error and simply be a different film.
+
 ## The exam
 
 "DP-600" and "Microsoft Fabric" are Microsoft names. This project is an

@@ -1,0 +1,7 @@
+relationship 4310081e-7cea-5316-a8fb-d9486bb7043c
+	fromColumn: Attempt.'Topic Id'
+	toColumn: Skill.'Topic Id'
+
+relationship 1427cef1-8638-5cd3-a29c-b26c030ccfb5
+	fromColumn: Attempt.'Game Id'
+	toColumn: Game.'Game Id'

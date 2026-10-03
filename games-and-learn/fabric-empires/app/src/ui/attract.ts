@@ -28,6 +28,38 @@ import { t } from '../i18n.js';
 
 const TEASER_URL = 'teaser.mp4';
 
+/**
+ * How long the teaser's sound takes to leave when the film is dismissed.
+ *
+ * ⚠️ Short. This is a fade so the cue does not stop mid-bar, not a musical
+ * ending: anything longer and the setup screen is already up with the trailer
+ * still audible behind it, which reads as a bug rather than as a transition.
+ */
+const TEASER_FADE_MS = 550;
+
+/**
+ * Take the sound down, then hand back so the caller can free the file.
+ *
+ * ⚠️ Tolerant of a video that is already silent, already paused, or has no
+ * audio track at all. This runs on the natural ending as well as on a skip,
+ * and the natural ending has usually finished its own audio already.
+ */
+function fadeOutAudio(video: HTMLVideoElement, done: () => void): void {
+  const step = 40;
+  const start = video.volume;
+  if (start <= 0 || video.paused) {
+    done();
+    return;
+  }
+  const drop = start / Math.max(1, TEASER_FADE_MS / step);
+  const timer = window.setInterval(() => {
+    video.volume = Math.max(0, video.volume - drop);
+    if (video.volume > 0.001) return;
+    window.clearInterval(timer);
+    done();
+  }, step);
+}
+
 const STYLE = `
 .fe-attract {
   position: fixed; inset: 0; z-index: 70;
@@ -178,12 +210,25 @@ export function createAttract(): Attract {
         if (settled) return;
         settled = true;
         window.removeEventListener('keydown', onKey, true);
-        // Stop the download as well as the picture; a skipped film should not
-        // go on pulling 32 MB in the background.
-        video.pause();
-        video.removeAttribute('src');
-        video.load();
+        /*
+         * ⚠️ **Faded, not cut.** The teaser carries its own cue, and skipping
+         * used to stop it dead in the middle of a bar, straight into the
+         * silence of the setup screen. A film that reaches its own ending
+         * fades out in the edit; one the player escapes from should not sound
+         * worse than one they sat through.
+         *
+         * The picture goes immediately either way. Only the sound is held for
+         * the length of the fade, because a frozen frame lingering behind the
+         * settings would look like the app had hung.
+         */
         root.classList.remove('playing');
+        fadeOutAudio(video, () => {
+          // Stop the download as well as the picture; a skipped film should not
+          // go on pulling 32 MB in the background.
+          video.pause();
+          video.removeAttribute('src');
+          video.load();
+        });
         resolve();
       };
       const onKey = (e: KeyboardEvent): void => {

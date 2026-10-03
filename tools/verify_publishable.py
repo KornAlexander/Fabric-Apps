@@ -197,6 +197,10 @@ ALLOWLIST: dict[str, tuple[set[str], str]] = {
     "industry/harbour-pulse/scripts/provision-environment.ps1": ({"tenant_guid"},
         'the literal placeholder "11111111-1111-1111-1111-111111111111" shown as the '
         'shape of the value a user must supply'),
+    "games-and-learn/fabric-empires/tools/fabric/_config.py": ({"tenant_guid"},
+        'a uuid5 NAMESPACE constant invented for the app, not an address: "The namespace '
+        'every `lineageTag`, `logicalId` and relationship name in the generated definitions '
+        'is derived from, via uuid5." LINEAGE_NS = uuid.UUID(\'6f2b1c44-1f7d-4a52-9b0e-7c1d5c2f0a11\')'),
 
     # --- campus-twin. ⚠️ THIS APP'S OWN GATE MISSED THINGS THIS ONE CAUGHT, which is the
     # argument for keeping two checks with different shapes. Found and FIXED, not excused:

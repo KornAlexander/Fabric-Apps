@@ -211,6 +211,42 @@ export interface PresenterOptions extends SelectOptions {
    * a restricted set without the presenter needing to know why.
    */
   readonly questions?: readonly Question[];
+  /**
+   * Called once per answered question, with what happened.
+   *
+   * ⚠️ **This layer does not know, and must not know, where the record goes.**
+   * The same separation D35 draws between the engine and certifications is
+   * drawn again here: `learn` teaches and schedules, and if it also held a
+   * database client then asking a question would depend on a network being
+   * present. The callback is synchronous and its return value is ignored, so
+   * a recorder cannot slow an answer down or fail one.
+   *
+   * ⚠️ It fires whether the answer was right, wrong or abandoned. A stats
+   * table that only saw correct answers would be a very flattering and
+   * completely useless record of learning.
+   */
+  readonly onAttempt?: (attempt: AttemptRecord) => void;
+}
+
+/**
+ * One answered question, as the learning layer sees it.
+ *
+ * Deliberately free of ids that only mean something to a host application: no
+ * user, no game, no session. Whoever consumes this knows those; the presenter
+ * does not.
+ */
+export interface AttemptRecord {
+  readonly questionId: string;
+  /** The topic actually ASKED, which is not always the one requested. */
+  readonly topicId: string;
+  /** Why the question was asked: battle, research, settle, exam. */
+  readonly kind: string;
+  readonly tier: string;
+  readonly correct: boolean;
+  readonly abandoned: boolean;
+  /** Thinking time only. Reading time is granted free, see `readingAllowanceMs`. */
+  readonly thinkingMs: number;
+  readonly score: number;
 }
 
 /**
@@ -284,6 +320,30 @@ export function createQuestionPresenter(
 
     const thinkingMs = Math.max(0, given.elapsedMs - reading);
     const score = scoreFor(correct, thinkingMs, request.timeLimitMs, given.abandoned);
+
+    /*
+     * Tell whoever is listening, and never let it matter if they throw.
+     *
+     * ⚠️ The try/catch is not defensive padding. Without it, a recorder that
+     * failed (an expired token, an offline tab) would take the exception out
+     * through `present`, and the caller of `present` is a BATTLE: the player
+     * would lose the fight because a statistics write failed. Answering a
+     * question must not depend on anything but the answer.
+     */
+    try {
+      options.onAttempt?.({
+        questionId: question.id,
+        topicId: askedTopicId,
+        kind: String(request.kind),
+        tier: String(request.tier),
+        correct,
+        abandoned: given.abandoned,
+        thinkingMs,
+        score,
+      });
+    } catch {
+      // Recording is never worth a turn.
+    }
 
     /*
      * Retire it, or leave it in play.

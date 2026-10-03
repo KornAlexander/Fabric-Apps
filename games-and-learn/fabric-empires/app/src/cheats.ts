@@ -82,6 +82,17 @@ export interface CheatContext {
   /** Open the Proctor's paper. Resolves when it is over. */
   readonly faceProctor: () => void;
   /**
+   * Toggle the fog off, or back on. Returns whether it is now off.
+   *
+   * ⚠️ **A callback, like `faceProctor`, because there is no state to
+   * change.** Fog is a view: the engine's memory of what this seat has
+   * explored is not touched, so the code is reversible and turning it off puts
+   * the player back where they were. A version that wrote the whole map into
+   * the seat's memory would be permanent, would be indistinguishable from
+   * `lineage`, and would be a lie about what the player has actually seen.
+   */
+  readonly liftFog: () => boolean;
+  /**
    * Whatever was typed after the code, lower-cased and unspaced.
    *
    * Empty for every code that takes no argument, which is most of them. A
@@ -511,6 +522,36 @@ export const CHEATS: readonly Cheat[] = Object.freeze([
         ok: true,
         state: { ...state, memory: new Map(state.memory).set(seat, { ...seen, explored }) },
         message: `${explored.size - before} tiles traced. What stands on them is still yours to find.`,
+      };
+    },
+  },
+  {
+    code: 'adminportal',
+    category: 'world',
+    describe: 'Lift the fog completely: every army and town, live. Type it again to drop it.',
+    apply: ({ liftFog }) => {
+      /*
+       * The other half of `lineage`, and the two are deliberately separate.
+       *
+       * `lineage` marks ground explored, which lifts the black and leaves the
+       * map honest: you still have to walk past a town to know it is there.
+       * This is the tenant-admin view, and it shows the things as well as the
+       * ground, live, including the seven camps the opening works hard not to
+       * give away.
+       *
+       * ⚠️ **It changes nothing in the save, and that is why it can be turned
+       * off.** Every other world code writes state; this one flips a view flag,
+       * so dropping the fog again puts the player back exactly where they were
+       * rather than leaving them with a map they never actually scouted. The
+       * use is still recorded in `cheatsUsed` and still shows on the victory
+       * screen, because that is the part that has to survive.
+       */
+      const now = liftFog();
+      return {
+        ok: true,
+        message: now
+          ? 'The whole tenant, live. Nothing is hidden while this is on.'
+          : 'The fog closes again. You know only what you actually scouted.',
       };
     },
   },

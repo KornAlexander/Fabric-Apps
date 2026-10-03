@@ -19,6 +19,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { SEAT_KEYS, createDuoModal, type DuoModal, type Seat } from '../src/ui/duoModal.js';
+import { setLang } from '../src/i18n.js';
 import { DEFAULT_WORLD_CHOICE } from '@fabric-empires/engine';
 import type {
   QuestionAnswer,
@@ -209,6 +210,122 @@ describe('one keyboard, two open questions', () => {
     );
     expect(seats).toEqual([1, 2]);
     duo.hide();
+  });
+});
+
+describe('⚠️ the seat says who it is in the language being played', () => {
+  const OPTIONS = ['nine', 'ten', 'fifty five', 'eleven'] as const;
+
+  afterEach(() => {
+    setLang('en');
+  });
+
+  it('translates the player label', () => {
+    /*
+     * This read "Player 1" in a fully German game for as long as co-op has
+     * existed, with the German sitting unused in the catalogue. Verified by
+     * putting the bug back: assigning `config.who` straight to `textContent`
+     * fails this with "Player 1".
+     */
+    setLang('de');
+    const duo = newDuo();
+    void duo.ui({ seat: 1, who: 'Player 1', course: 'DP-600' }).ask(prompt(OPTIONS));
+
+    const label = document.querySelector('.fe-duo-head b');
+    expect(label?.textContent).toBe('Spieler 1');
+    duo.hide();
+  });
+
+  it('leaves the course name alone, because it is content and not chrome', () => {
+    setLang('de');
+    const duo = newDuo();
+    void duo.ui({ seat: 2, who: 'Player 2', course: '1. Klasse: Mathe' }).ask(prompt(OPTIONS));
+
+    expect(document.querySelector('.fe-duo-head span')?.textContent).toBe('1. Klasse: Mathe');
+    duo.hide();
+  });
+
+  it('is translated at render time, so a language switch mid-game lands', () => {
+    // The SeatConfig is built once when the game starts; the pane is rebuilt
+    // per question. Resolving the label at the call site would be right until
+    // somebody pressed the language toggle, and wrong for the rest of the game.
+    const duo = newDuo();
+    const ui = duo.ui({ seat: 1, who: 'Player 1', course: 'DP-600' });
+
+    setLang('en');
+    void ui.ask(prompt(OPTIONS));
+    expect(document.querySelector('.fe-duo-head b')?.textContent).toBe('Player 1');
+    duo.hide();
+
+    setLang('de');
+    void ui.ask(prompt(OPTIONS));
+    expect(document.querySelector('.fe-duo-head b')?.textContent).toBe('Spieler 1');
+    duo.hide();
+  });
+});
+
+describe('⚠️ the clock a seat is running against is visible', () => {
+  const OPTIONS = ['nine', 'ten', 'fifty five', 'eleven'] as const;
+
+  it('shows the seconds left, counting down', () => {
+    /*
+     * The time limit was always enforced - a seat that ran out resolved as
+     * abandoned - and simply never shown. The pane went blank on the player
+     * with no warning it was about to. A hidden clock that fails you is worse
+     * than no clock at all.
+     */
+    vi.useFakeTimers();
+    const duo = newDuo();
+    void duo.ui({ seat: 1, who: 'Player 1', course: 'DP-600' }).ask(prompt(OPTIONS));
+
+    const clock = document.querySelector('.fe-duo-clock');
+    expect(clock, 'the pane has a clock at all').not.toBeNull();
+    expect(clock?.textContent).toBe('20s');
+
+    vi.advanceTimersByTime(5_000);
+    expect(clock?.textContent).toBe('15s');
+    duo.hide();
+  });
+
+  it('turns red for the last quarter, the way the solo modal does', () => {
+    vi.useFakeTimers();
+    const duo = newDuo();
+    void duo.ui({ seat: 1, who: 'Player 1', course: 'DP-600' }).ask(prompt(OPTIONS));
+    const clock = document.querySelector('.fe-duo-clock')!;
+
+    vi.advanceTimersByTime(14_000); // 6s of 20 left, still over a quarter
+    expect(clock.classList.contains('low')).toBe(false);
+
+    vi.advanceTimersByTime(2_000); // 4s of 20 left
+    expect(clock.classList.contains('low')).toBe(true);
+    duo.hide();
+  });
+
+  it('⚠️ stops the clock the moment the seat answers', () => {
+    // Or the countdown keeps running under the verdict, telling a player who
+    // has already answered that they are about to run out of time.
+    vi.useFakeTimers();
+    const duo = newDuo();
+    void duo.ui({ seat: 1, who: 'Player 1', course: 'DP-600' }).ask(prompt(OPTIONS));
+    const clock = document.querySelector('.fe-duo-clock')!;
+
+    vi.advanceTimersByTime(3_000);
+    const frozen = clock.textContent;
+    press('1');
+    vi.advanceTimersByTime(6_000);
+
+    expect(clock.textContent, 'frozen at what was left').toBe(frozen);
+    duo.hide();
+  });
+
+  it('⚠️ still calls time on a seat that never answers', () => {
+    // The ticker now owns expiry as well as the paint, so this is the check
+    // that folding the two together did not drop the abandoning.
+    vi.useFakeTimers();
+    const duo = newDuo();
+    const answer = duo.ui({ seat: 2, who: 'Player 2', course: '1. Klasse' }).ask(prompt(OPTIONS));
+    vi.advanceTimersByTime(20_000);
+    return expect(answer).resolves.toMatchObject({ abandoned: true });
   });
 });
 

@@ -37,7 +37,20 @@ function stage(
   count: number,
   cityOver: Partial<City> = {},
 ): { state: GameState; factionId: string; cityId: string } {
-  const base = createGameState(SEED);
+  /*
+   * ⚠️ **Architect, so that `MAX_GARRISON_PER_FACTION` really is the cap.**
+   *
+   * These tests are about what a faction does when its army is full, and they
+   * express "full" as that constant. The cap became difficulty-dependent when
+   * `analyst` was made to field one raider fewer per faction, so on the default
+   * difficulty a staging of four units is already OVER the cap and the faction
+   * walls up instead of raising the troop these tests are watching for.
+   *
+   * Naming the difficulty here keeps the subject of the test the cap mechanism
+   * rather than the setting, and a future change to either one will now fail
+   * loudly instead of quietly testing something else.
+   */
+  const base = createGameState(SEED, { difficulty: 'architect' });
   const factionId = antagonist(base);
 
   const units = new Map<string, Unit>();

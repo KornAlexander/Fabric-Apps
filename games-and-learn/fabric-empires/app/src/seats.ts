@@ -6,14 +6,15 @@
  * into a sentence somebody can choose from, and it is separate from `main.ts`
  * for one reason:
  *
- * ⚠️ **The wording IS the feature.** \"Take a seat\" is only a real decision if
- * the screen says what you would be taking on, and \"three towns\" says nothing
- * without \"the leader has nine\". Keeping the phrasing in a pure function means
+ * ⚠️ **The wording IS the feature.** "Take a seat" is only a real decision if
+ * the screen says what you would be taking on, and "three towns" says nothing
+ * without "the leader has nine". Keeping the phrasing in a pure function means
  * a test can read the actual sentence, rather than a test asserting that some
- * numbers were passed to a dialog that might render them as anything.
+ * numbers reached a dialog which might render them as anything at all.
  */
 
 import { standings, type GameState, type Standing } from '@fabric-empires/engine';
+import { plural, t } from './i18n.js';
 
 export interface SeatOffer {
   readonly id: string;
@@ -30,24 +31,22 @@ export interface SeatTable {
   readonly current: Standing | undefined;
 }
 
-const BANDS: Record<Standing['band'], string> = {
-  commanding: 'commanding',
-  holding: 'holding',
-  struggling: 'struggling',
-};
+/** The one-word verdict, translated. */
+function band(row: Standing): string {
+  if (row.band === 'commanding') return t('commanding');
+  if (row.band === 'holding') return t('holding');
+  return t('struggling');
+}
 
 const percent = (share: number): string => `${Math.round(share * 100)}%`;
-
-const countOf = (n: number, one: string, many: string): string =>
-  `${n} ${n === 1 ? one : many}`;
 
 /**
  * Describe the board as a set of choices.
  *
  * ⚠️ **Every offer is measured against the LEADER, not against itself.** The
  * question a joiner is really asking is "which of these is worth taking", and
- * that is comparative. An empire with four towns is strong in one game and
- * finished in another, and only the second number says which.
+ * that is a comparison. Four towns is a strong empire in one game and a
+ * finished one in another, and only the second number says which.
  */
 export function seatTable(state: GameState, mySeat: string): SeatTable {
   const rows = standings(state);
@@ -58,17 +57,32 @@ export function seatTable(state: GameState, mySeat: string): SeatTable {
     .filter((r) => r.control === 'ai')
     .map((r) => ({
       id: r.factionId,
-      label: `${r.label} — ${BANDS[r.band]}`,
+      /*
+       * ⚠️ Assembled rather than translated. Both halves are already
+       * translated, and a key whose German is identical to its English is
+       * exactly what the i18n test calls out as a string somebody forgot.
+       *
+       * ⚠️ A colon, not an em dash. There is a test forbidding em and en
+       * dashes in this app's text, and it is right to: they are not a German
+       * punctuation mark and they read as an import.
+       */
+      label: `${r.label}: ${band(r)}`,
       detail: describe(r, leader),
     }));
 
   const body = current
-    ? `You are playing ${current.label}: ${BANDS[current.band]}, ${percent(current.share)} of the board. ` +
-      `Taking another seat hands this empire back to the machine, and you start the new one blind.`
-    : `You are not playing anybody. Take a seat to join.`;
+    ? t(
+        'You are playing {empire}: {band}, {share} of the board. Taking another seat hands it back to the machine, and you start the new one blind.',
+        {
+          empire: current.label,
+          band: band(current),
+          share: percent(current.share),
+        },
+      )
+    : t('You are not playing anybody yet.');
 
   return {
-    title: offers.length > 0 ? 'The seats on this board' : 'Every seat is taken',
+    title: offers.length > 0 ? t('The empires on this board') : t('Every empire is being played'),
     body,
     offers,
     current,
@@ -76,20 +90,28 @@ export function seatTable(state: GameState, mySeat: string): SeatTable {
 }
 
 function describe(row: Standing, leader: Standing | undefined): string {
-  const own =
-    `${countOf(row.cities, 'town', 'towns')}, ` +
-    `${countOf(row.units, 'unit', 'units')}, ` +
-    `${countOf(row.population, 'citizen', 'citizens')}. ` +
-    `${percent(row.share)} of the board`;
+  const holdings = [
+    plural(row.cities, '{n} town', '{n} towns'),
+    plural(row.units, '{n} unit', '{n} units'),
+    plural(row.population, '{n} citizen', '{n} citizens'),
+  ].join(', ');
 
   /*
    * ⚠️ The comparison is dropped when this row IS the leader, rather than
-   * printed as "the strongest holds 34%" next to its own 34%. Telling somebody
-   * that the best empire in the game is as good as the one they are looking at
-   * reads as a bug even when it is arithmetically true.
+   * printed as "against 34% for them" beside its own 34%. Telling somebody
+   * that the strongest empire in the game is doing as well as the one they are
+   * looking at reads as a bug, even though it is arithmetically true.
    */
   if (!leader || leader.factionId === row.factionId) {
-    return `${own}, and nobody on the board holds more.`;
+    return t('{holdings}. {share} of the board, and nobody holds more.', {
+      holdings,
+      share: percent(row.share),
+    });
   }
-  return `${own}, against ${percent(leader.share)} for ${leader.label}.`;
+  return t('{holdings}. {share} of the board, against {best} for {leader}.', {
+    holdings,
+    share: percent(row.share),
+    best: percent(leader.share),
+    leader: leader.label,
+  });
 }

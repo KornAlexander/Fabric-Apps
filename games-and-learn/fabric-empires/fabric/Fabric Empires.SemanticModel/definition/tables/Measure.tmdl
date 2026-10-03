@@ -1,0 +1,134 @@
+/// Every measure lives here, so the data tables stay pure columns.
+/// Disconnected and import-mode: relating a calculated table to a Direct
+/// Lake fact is the one join that drops the model out of Direct Lake.
+table 'Measure'
+	lineageTag: 0f3637b2-0ba9-5da7-a9bc-2b62929bf05e
+
+	column 'Value'
+		dataType: int64
+		isHidden
+		lineageTag: c2b530c7-e51d-5aef-9c12-1529821a1a7e
+		summarizeBy: none
+		sourceColumn: [Value]
+
+	/// Finished campaigns.
+	measure 'Games' = COUNTROWS('Game')
+		formatString: #,0
+		lineageTag: 17d25d6d-7462-5811-9bb9-e1f4bdb4fa09
+
+	measure 'Victories' = CALCULATE([Games], 'Game'[Outcome] = "victory")
+		formatString: #,0
+		lineageTag: 77faeba3-d860-5ad3-97a4-1ca7757bbb46
+
+	measure 'Win Rate' = DIVIDE([Victories], [Games])
+		formatString: 0.0%
+		lineageTag: 68452d39-c6d4-550b-a266-a4e364559e9b
+
+	measure 'Avg Turns' = AVERAGE('Game'[Turns])
+		formatString: #,0.0
+		lineageTag: c2f297b5-32c6-54a0-83b4-f50fb3f5d656
+
+	/// Mean end-of-game readiness. Already whole percent in the column.
+	measure 'Avg Readiness %' = AVERAGE('Game'[Readiness Percent])
+		formatString: #,0.0
+		lineageTag: 54b087cb-16cf-5d10-86e1-6cf9e7ea36e7
+
+	measure 'Avg Game Minutes' = DIVIDE(AVERAGE('Game'[Duration Seconds]), 60)
+		formatString: #,0.0
+		lineageTag: 388d2c38-acde-5a75-b829-23c74d9cfdaf
+
+	/// Questions answered.
+	measure 'Attempts' = COUNTROWS('Attempt')
+		formatString: #,0
+		lineageTag: 4bcd0656-2bc8-5929-acf0-970be362ef5c
+
+	measure 'Correct Answers' = CALCULATE([Attempts], 'Attempt'[Correct] = TRUE)
+		formatString: #,0
+		lineageTag: a87e4e9e-05c3-51c2-8394-bbe7a1ae65a2
+
+	measure 'Accuracy' = DIVIDE([Correct Answers], [Attempts])
+		formatString: 0.0%
+		lineageTag: cbddcc01-a3e7-57b3-b4a6-82195ff6c70d
+
+	measure 'Avg Answer Seconds' = AVERAGE('Attempt'[Seconds])
+		formatString: #,0.0
+		lineageTag: 5cefe3ec-1f12-56fd-8253-4cb0cefd04c8
+
+	measure 'Avg Seconds When Right' = CALCULATE([Avg Answer Seconds], 'Attempt'[Correct] = TRUE)
+		formatString: #,0.0
+		lineageTag: be231984-002c-55a4-9a15-b028879c4a7e
+
+	measure 'Avg Seconds When Wrong' = CALCULATE([Avg Answer Seconds], 'Attempt'[Correct] = FALSE)
+		formatString: #,0.0
+		lineageTag: f8d1b1b8-3ba8-5e3b-9aa8-cc9a1a538daf
+
+	/// Distinct DP-600 skills that have been answered at least once.
+	measure 'Skills Practised' = DISTINCTCOUNT('Attempt'[Topic Id])
+		formatString: #,0
+		lineageTag: ffb26811-6cdc-5583-90cd-c008862491a2
+
+	/// Share of the 41 published skills that have ever been practised. ALLNOBLANKROW, not ALL: ALL counts the blank row the engine materialises on the one side of a relationship, which made full coverage report as 97.6%.
+	measure 'Skill Coverage' = DIVIDE([Skills Practised], COUNTROWS(ALLNOBLANKROW('Skill')))
+		formatString: 0.0%
+		lineageTag: 96253e52-e6c0-5547-b437-fbc1378c91ed
+
+	/// Accuracy ignoring context and skill, so a bar can be compared to the player's own average.
+	measure 'Baseline Accuracy' = CALCULATE([Accuracy], REMOVEFILTERS('Attempt'[Context]), REMOVEFILTERS('Skill'))
+		formatString: 0.0%
+		lineageTag: bde46206-148a-50fc-bea3-260f1659c5d0
+
+	/// How far this context sits below or above the player's own overall accuracy.
+	measure 'Pressure Gap' = [Accuracy] - [Baseline Accuracy]
+		formatString: +0.0%;-0.0%;0.0%
+		lineageTag: 972f9366-68f5-5948-b9a1-1aedff2c7cef
+
+	/// Lowest-accuracy skill with enough attempts to mean anything.
+	/// The 12-attempt floor matters: without it this reports whichever skill was
+	/// answered once and missed, which is noise wearing the costume of a finding.
+	measure 'Weakest Skill' =
+			VAR Scored =
+				FILTER(
+					ADDCOLUMNS(VALUES('Skill'[Skill]), "@acc", [Accuracy], "@n", [Attempts]),
+					[@n] >= 12
+				)
+			RETURN
+				IF(
+					ISEMPTY(Scored),
+					"not enough attempts yet",
+					CONCATENATEX(TOPN(1, Scored, [@acc], ASC), 'Skill'[Skill], ", ")
+				)
+		lineageTag: 39f8bd6e-1d93-51fe-ab2e-1acf8c8373ab
+
+	/// Highest-accuracy skill, same 12-attempt floor and for the same reason.
+	measure 'Strongest Skill' =
+			VAR Scored =
+				FILTER(
+					ADDCOLUMNS(VALUES('Skill'[Skill]), "@acc", [Accuracy], "@n", [Attempts]),
+					[@n] >= 12
+				)
+			RETURN
+				IF(
+					ISEMPTY(Scored),
+					"not enough attempts yet",
+					CONCATENATEX(TOPN(1, Scored, [@acc], DESC), 'Skill'[Skill], ", ")
+				)
+		lineageTag: 1d48ce88-e282-5cc0-a263-9e8a8ae17985
+
+	/// Self-clearing banner for the seeded rows.
+	/// Written as a measure rather than a textbox on purpose: a static caption
+	/// would keep claiming the report contains sample data long after the rows
+	/// were deleted, which is precisely the kind of stale disclosure that makes
+	/// people stop reading disclosures.
+	measure 'Data Notice' =
+			VAR SampleGames = COUNTROWS(FILTER(ALL('Game'), LEFT('Game'[Player Id], 7) = "sample:"))
+			RETURN
+				IF(
+					COALESCE(SampleGames, 0) > 0,
+					"Note: includes " & SampleGames & " seeded sample games (userId sample:*). Delete those rows to see real play only.",
+					""
+				)
+		lineageTag: c49dbad2-072c-5495-9586-2a1d5f7fc832
+
+	partition 'Measure' = calculated
+		mode: import
+		source = {0}

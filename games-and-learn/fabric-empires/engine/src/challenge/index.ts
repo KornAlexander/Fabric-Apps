@@ -9,7 +9,7 @@
  * cannot be played through with it, the boundary has leaked.
  */
 
-export type ChallengeKind = 'battle' | 'research' | 'unrest' | 'boss' | 'treasure';
+export type ChallengeKind = 'battle' | 'research' | 'unrest' | 'boss' | 'treasure' | 'settle';
 export type ChallengeTier = 1 | 2 | 3;
 
 export interface ChallengeRequest {

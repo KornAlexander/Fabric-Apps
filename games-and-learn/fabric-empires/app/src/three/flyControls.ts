@@ -31,9 +31,12 @@ import { headingDegFromForward, normaliseAngle } from './compass';
  *   stop pressing → after {@link DISENGAGE_MS} it hands the camera back to the map, in place.
  *     Escape hands it back at once, for anyone who does not want to wait.
  *
- * The eight movement keys are six behaviours, not four: W A S D translate, Q and E translate
- * vertically, and R and F **swing the camera around whatever is in the middle of the view**. R and
- * F used to be a second pair of up/down keys — literally `held.has('e') || held.has('r')` — which
+ * The eight movement keys are six behaviours, not four: W A S D translate horizontally along the
+ * heading, Q and E translate vertically, and R and F **swing the camera around whatever is in the
+ * middle of the view**. ⚠️ W and S deliberately do NOT follow the look direction: on a map you are
+ * pitched down most of the time, so flying the view vector turns every attempt to move closer into
+ * a dive. Altitude has exactly one control, and it is Q and E. R and F used to be a second pair of
+ * up/down keys — literally `held.has('e') || held.has('r')` — which
  * is a key doing nothing, because nobody presses two keys for one thing. Circling the thing you
  * are looking at is the one camera move a drone cannot otherwise make: W A S D + drag can approach
  * it and can look at it, but keeping it centred while going round it needs both at once, in
@@ -372,6 +375,14 @@ export function createFlyControls(options: FlyControlsOptions): FlyControls {
   let speedMs = 0;
 
   const forward = new THREE.Vector3();
+  /**
+   * `forward` with the climb taken out of it — see the Move block.
+   *
+   * Kept separate rather than flattening `forward` in place, because the true
+   * look direction is still what the heading readout and the strafe axis are
+   * derived from.
+   */
+  const flatForward = new THREE.Vector3();
   const right = new THREE.Vector3();
   const up = new THREE.Vector3(0, 1, 0);
   const move = new THREE.Vector3();
@@ -769,9 +780,43 @@ export function createFlyControls(options: FlyControlsOptions): FlyControls {
       camera.getWorldDirection(forward);
       right.crossVectors(forward, up).normalize();
 
+      /*
+       * ⚠️ **W and S do not change altitude.** They translate along the
+       * heading, not along the look direction.
+       *
+       * Flying the raw view vector is what a plane does, and it is wrong for
+       * looking at a map: you spend most of the time pitched down at the
+       * ground, so every attempt to move closer to something also dives
+       * towards it, and holding W from a survey height lands you in the
+       * terrain. Correcting that means riding Q and E constantly just to hold
+       * a height nobody asked to leave.
+       *
+       * Altitude now has exactly one control, which is Q and E. A and D
+       * needed no change: crossing anything with world up already produces a
+       * horizontal vector, so strafing was always flat.
+       *
+       * ⚠️ Straight down is the case that breaks the obvious implementation.
+       * Zeroing Y and normalising is a divide by ~0 when the camera is looking
+       * at its own feet, which is a perfectly ordinary thing to do on a map
+       * and would send the position to NaN — from which nothing recovers.
+       * There, the direction the top of the screen points IS the heading, and
+       * that is the camera's own up vector flattened.
+       */
+      flatForward.set(forward.x, 0, forward.z);
+      if (flatForward.lengthSq() < 1e-8) {
+        flatForward.setFromMatrixColumn(camera.matrixWorld, 1);
+        flatForward.y = 0;
+        // Looking straight UP, screen-up points behind you rather than ahead.
+        if (forward.y > 0) flatForward.negate();
+      }
+      // Still degenerate only if the camera is somehow rolled onto its side
+      // with no horizontal component at all. Park it rather than emit NaN.
+      if (flatForward.lengthSq() < 1e-8) flatForward.set(0, 0, 0);
+      else flatForward.normalize();
+
       move.set(0, 0, 0);
-      if (held.has('w')) move.addScaledVector(forward, 1);
-      if (held.has('s')) move.addScaledVector(forward, -1);
+      if (held.has('w')) move.addScaledVector(flatForward, 1);
+      if (held.has('s')) move.addScaledVector(flatForward, -1);
       if (held.has('d')) move.addScaledVector(right, 1);
       if (held.has('a')) move.addScaledVector(right, -1);
       if (held.has('e')) move.addScaledVector(up, 1);

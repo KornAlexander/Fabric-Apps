@@ -11,6 +11,7 @@
   "dependencies": {
     "@fabric-empires/engine": "*",
     "@fabric-empires/learn": "*",
+    "@microsoft/rayfin-client": "^1.36.1",
     "read-excel-file": "^9.3.10",
     "three": "^0.185.1",
     "write-excel-file": "^4.1.1"

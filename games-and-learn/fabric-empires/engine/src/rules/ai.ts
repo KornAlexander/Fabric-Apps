@@ -1,6 +1,6 @@
 import { hexDistance, hexKey, type Hex } from '../hex/index.js';
 import { isCivilian, unitType, type UnitTypeId } from '../entities/index.js';
-import type { GameState } from '../state/index.js';
+import type { Difficulty, GameState } from '../state/index.js';
 import { cityAt, unitAt } from '../state/index.js';
 import { moveUnit } from './actions.js';
 import { canAttack, previewAttack, resolveAttack, type CombatLog } from './combat.js';
@@ -494,6 +494,30 @@ export const GARRISON_INTERVAL_TURNS = 6;
  */
 export const MAX_GARRISON_PER_FACTION = 4;
 
+/**
+ * The cap, by difficulty. The first rule in the game that reads `difficulty`.
+ *
+ * ⚠️ **The setting was inert until now.** `Difficulty` was chosen at setup,
+ * stored on the state and carried through every save, and not one rule looked
+ * at it. Three named difficulties that all played identically is worse than
+ * having none, because the menu makes a promise the game does not keep.
+ *
+ * ⚠️ **The knob is the garrison cap, NOT the number of factions.** Dropping a
+ * faction would be the obvious way to face fewer enemies and it would quietly
+ * remove a seventh of the exam: each faction quizzes on its own cluster, so an
+ * easier game would also be a game that never tests you on two of the branches
+ * you are revising for. Fewer raiders per faction keeps all seven fronts, and
+ * therefore all seven clusters, while making the pressure survivable.
+ *
+ * Starting strength is two, so `analyst` allows one reinforcement per faction
+ * rather than two: seven fewer raiders across a full board.
+ */
+export function garrisonCapFor(difficulty: Difficulty): number {
+  if (difficulty === 'apprentice') return 2;
+  if (difficulty === 'analyst') return 3;
+  return MAX_GARRISON_PER_FACTION;
+}
+
 /** What a village raises. Melee, because a village defends and marches. */
 const GARRISON_UNIT: UnitTypeId = 'pipelineRunner';
 
@@ -526,7 +550,7 @@ export function garrisonPhase(state: GameState, factionId: string): AiTurnResult
       changed = true;
       continue;
     }
-    if (standing >= MAX_GARRISON_PER_FACTION) {
+    if (standing >= garrisonCapFor(state.difficulty)) {
       /*
        * ⚠️ **An army at full strength digs in.**
        *

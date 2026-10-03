@@ -1,0 +1,116 @@
+/// One finished campaign per row.
+table 'Game'
+	lineageTag: 71fb4752-b199-55f1-bb96-97bafcfb5d6e
+
+	column 'Game Id'
+		dataType: string
+		isHidden
+		lineageTag: b46a908d-09cd-53ea-aa23-d71949604037
+		summarizeBy: none
+		sourceColumn: id
+
+	column 'Player Id'
+		dataType: string
+		isHidden
+		lineageTag: 0ab5f3e7-c2f3-58c5-ab6d-dc8f85106268
+		summarizeBy: none
+		sourceColumn: userId
+
+	/// Display name from the Fabric session claim.
+	column 'Player'
+		dataType: string
+		lineageTag: 61408205-1dd5-521b-93c5-7333096db38b
+		summarizeBy: none
+		sourceColumn: userName
+
+	/// With Difficulty, this IS the world: maps are generated, never stored.
+	column 'Seed'
+		dataType: string
+		lineageTag: c785fe7c-6b60-5839-ba8c-6dc16575a8d0
+		summarizeBy: none
+		sourceColumn: seed
+
+	/// apprentice, analyst or architect.
+	column 'Difficulty'
+		dataType: string
+		lineageTag: da82f50d-c6fa-577e-b83d-8debb84ed413
+		summarizeBy: none
+		sourceColumn: difficulty
+
+	column 'Players'
+		dataType: int64
+		lineageTag: b136cb4b-881f-5687-97af-46e09a8f9a8b
+		summarizeBy: none
+		sourceColumn: players
+		formatString: #,0
+
+	/// victory, defeat or abandoned. Abandoned is the common case.
+	column 'Outcome'
+		dataType: string
+		lineageTag: d4e7e31e-182d-555d-bfb4-cfa0bb485c1b
+		summarizeBy: none
+		sourceColumn: outcome
+
+	column 'Turns'
+		dataType: int64
+		lineageTag: 642b535c-e4ae-5b9f-821e-9b19f5b60348
+		summarizeBy: none
+		sourceColumn: turns
+		formatString: #,0
+
+	column 'Cities'
+		dataType: int64
+		lineageTag: 4540b7f5-e408-537b-86ef-475ba397f8f7
+		summarizeBy: none
+		sourceColumn: cities
+		formatString: #,0
+
+	/// Exam readiness at the end, as whole percent.
+	column 'Readiness Percent'
+		dataType: int64
+		lineageTag: 3414ac4c-bdf9-5f50-b6a3-4d6417d02492
+		summarizeBy: none
+		sourceColumn: readinessPercent
+		formatString: #,0
+
+	column 'Skills Researched'
+		dataType: int64
+		lineageTag: 8fa3328f-abb1-5cb6-8cc3-8e6c44f84caa
+		summarizeBy: none
+		sourceColumn: skillsResearched
+		formatString: #,0
+
+	/// Recorded because a game won with cheats is not evidence of anything.
+	column 'Cheats Used'
+		dataType: string
+		lineageTag: c68b3ce3-c7bd-5e70-8e52-0113e228a1b0
+		summarizeBy: none
+		sourceColumn: cheatsUsed
+
+	column 'Started At'
+		dataType: dateTime
+		lineageTag: df0e6642-2147-51c6-a433-023a3ad0db9c
+		summarizeBy: none
+		sourceColumn: startedAt
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Ended At'
+		dataType: dateTime
+		lineageTag: 545e7d48-f846-518b-a9a9-aa6dcaa731f7
+		summarizeBy: none
+		sourceColumn: endedAt
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Duration Seconds'
+		dataType: int64
+		lineageTag: c45346b0-ead6-5ef0-a6aa-8ec927811346
+		summarizeBy: none
+		sourceColumn: durationSeconds
+		formatString: #,0
+
+	partition 'GameResults' = entity
+		mode: directLake
+		source
+			entityName: GameResults
+			schemaName: dbo
+			expressionSource: 'DirectLake - fabric-empires'

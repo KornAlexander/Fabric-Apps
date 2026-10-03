@@ -18,7 +18,7 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { CUES, LAST_ONSET_SECONDS, createCues } from '../src/cues.js';
+import { CUES, FILMS, LAST_ONSET_SECONDS, createCues } from '../src/cues.js';
 
 const source = (relative: string): string =>
   readFileSync(resolve(process.cwd(), `app/src/${relative}`), 'utf8');
@@ -56,6 +56,52 @@ describe('⚠️ coverage', () => {
     const ids = new Set(cinematicIds());
     const orphans = Object.keys(CUES).filter((id) => !ids.has(id));
     expect(orphans).toEqual([]);
+  });
+});
+
+/**
+ * ⚠️ The silent video films.
+ *
+ * Both treasure clips carry no audio stream at all and the element is muted
+ * besides, so the discovery and the payoff both played in total silence. The
+ * only sound anywhere near a treasure was `windfall`, which fires at the very
+ * end and only when the answer was right and the prize was gold: getting it
+ * wrong was silent twice over.
+ *
+ * The same coverage argument as the cinematics, applied to the other kind of
+ * film. Scanned rather than listed, so the pairing cannot drift.
+ */
+describe('⚠️ the video films have sound of their own', () => {
+  function beats(): string[] {
+    const code = source('ui/treasureFilm.ts');
+    const type = /export type TreasureBeat =([^;]+);/.exec(code)?.[1] ?? '';
+    return [...type.matchAll(/'([^']+)'/g)].map((m) => m[1]!);
+  }
+
+  it('finds the beats at all, so the scan cannot pass by finding nothing', () => {
+    expect(beats().length).toBeGreaterThanOrEqual(2);
+  });
+
+  it('gives every beat a cue', () => {
+    const silent = beats().filter((b) => !FILMS[`treasure-${b}`]);
+    expect(silent, `${silent.length} treasure beats would play in silence`).toEqual([]);
+  });
+
+  it('plays them from main.ts, where the film is optional and the sound is not', () => {
+    // The film degrades to nothing when the clip is missing, which is exactly
+    // when the cue is carrying the whole moment. So it must not be triggered
+    // from inside the player.
+    const code = source('main.ts');
+    for (const beat of beats()) {
+      expect(code, `treasure-${beat} is never played`).toContain(`cues.play('treasure-${beat}')`);
+    }
+  });
+
+  it('runs longer than a sting, because it plays under a film', () => {
+    for (const [id, events] of Object.entries(FILMS)) {
+      const last = events[events.length - 1]!;
+      expect(last.at + last.seconds, `${id} is too short to sit under a 4s film`).toBeGreaterThan(2);
+    }
   });
 });
 

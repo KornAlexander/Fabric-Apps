@@ -31,6 +31,7 @@ function context(overrides: Partial<CheatContext> = {}): CheatContext {
     seat: PLAYER_FACTION_ID,
     selectedUnitId: undefined,
     faceProctor: () => {},
+    liftFog: () => true,
     argument: '',
     ...overrides,
   };
@@ -190,6 +191,39 @@ describe('the world codes', () => {
     expect(memoryOf(out.state!, PLAYER_FACTION_ID).seenCities.size).toBe(
       memoryOf(ctx.state, PLAYER_FACTION_ID).seenCities.size,
     );
+  });
+
+  it('⚠️ adminportal lifts the fog without touching what the seat has explored', () => {
+    /*
+     * The other half of `lineage`, and the difference is what makes it
+     * reversible. `lineage` writes the whole map into the seat's memory, which
+     * is permanent and honest: you really do know that ground now. This flips a
+     * view flag, so the engine's record of what was actually scouted is
+     * untouched and dropping the fog again puts the player back where they
+     * were.
+     */
+    const ctx = context();
+    const out = run('adminportal', ctx);
+    expect(out.ok).toBe(true);
+    // ⚠️ No state at all, which is what "changes nothing in the save" means.
+    expect(out.state).toBeUndefined();
+  });
+
+  it('⚠️ says which way it just went, rather than always claiming it is on', () => {
+    /*
+     * It is a toggle, so a message that always read "nothing is hidden" would
+     * be wrong half the time, and the console is the only place the player
+     * finds out which way the switch went.
+     */
+    let lifted = false;
+    const ctx = context({
+      liftFog: () => {
+        lifted = !lifted;
+        return lifted;
+      },
+    });
+    expect(run('adminportal', ctx).message).toContain('Nothing is hidden');
+    expect(run('adminportal', ctx).message).toContain('fog closes');
   });
 
   it('shortcut buries a cache beside a Profiler', () => {

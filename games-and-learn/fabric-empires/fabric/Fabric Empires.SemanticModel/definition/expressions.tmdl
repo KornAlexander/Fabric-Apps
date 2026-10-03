@@ -1,0 +1,8 @@
+expression 'DirectLake - fabric-empires' =
+		let
+			Source = AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/{{FE_WORKSPACE_ID}}/{{FE_SQLDB_ITEM_ID}}", [HierarchicalNavigation=true])
+		in
+			Source
+	lineageTag: f9714ad4-c5e9-5733-8604-0c955ca10d96
+
+	annotation PBI_IncludeFutureArtifacts = False

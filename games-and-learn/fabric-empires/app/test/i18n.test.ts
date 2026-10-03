@@ -173,6 +173,47 @@ describe('⚠️ coverage', () => {
     expect(offenders, 'these reach the screen without being translated').toEqual([]);
   });
 
+  it('⚠️ leaves no tooltip in the markup that only exists in English', () => {
+    /*
+     * The blind spot behind the one above.
+     *
+     * That test reads `app/src`, and a tooltip written as a bare `title=` in
+     * `index.html` is not in `app/src` at all. `applyStaticTranslations` only
+     * touches a title declared as `data-i18n-title`, so nine of them sat in
+     * English inside a German game for the life of the project: the Library,
+     * the readiness figure, the seats, the Proctor, and five of the six unit
+     * actions.
+     *
+     * A tooltip is also the hardest kind of untranslated string to notice by
+     * playing, because it does not exist until somebody hovers.
+     *
+     * Titles that JS owns are exempt BY EVIDENCE rather than by a list: the
+     * music, fullscreen, language, fortify and turn buttons all set `.title`
+     * from `main.ts` with `t()`, because their text depends on state as well
+     * as on language.
+     */
+    const markup = readFileSync(resolve(process.cwd(), 'app/index.html'), 'utf8');
+    const code = appSourceFiles().map((f) => source(f)).join('\n');
+    const body = markup.slice(markup.indexOf('<body'));
+
+    const prose = /[A-Za-z]{3,}\s+[A-Za-z]{3,}/;
+    const offenders: string[] = [];
+
+    for (const tag of body.matchAll(/<[a-z]+[^>]*>/g)) {
+      const attrs = tag[0];
+      const title = /\btitle="([^"]+)"/.exec(attrs);
+      if (!title || !prose.test(title[1]!)) continue;
+      if (attrs.includes('data-i18n-title')) continue;
+      const id = /\bid="([^"]+)"/.exec(attrs)?.[1];
+      // Owned by code: main.ts assigns this element's title through t().
+      if (id && new RegExp(`${id.replace(/-(.)/g, (_, c) => c.toUpperCase())}\\.title = `).test(code)) {
+        continue;
+      }
+      offenders.push(`#${id ?? '?'}: ${title[1]!.slice(0, 50)}`);
+    }
+    expect(offenders, 'these tooltips are English in every language').toEqual([]);
+  });
+
   it('⚠️ never logs a bare template literal', () => {
     /*
      * The gap the test above was blind to, in its turn.

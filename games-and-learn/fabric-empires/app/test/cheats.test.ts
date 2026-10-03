@@ -24,6 +24,7 @@ function context(overrides: Partial<CheatContext> = {}): CheatContext {
     seat: PLAYER_FACTION_ID,
     selectedUnitId: undefined,
     faceProctor: () => {},
+    liftFog: () => true,
     argument: '',
     ...overrides,
   };

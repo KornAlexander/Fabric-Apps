@@ -85,6 +85,13 @@ interface UnitFade extends Timed {
   readonly unitId: string;
 }
 
+export interface MarchOverlay {
+  /** Every hex of the route, for the dotted line. */
+  readonly path: readonly Hex[];
+  /** Where the unit stands at the end of each turn, and which turn that is. */
+  readonly stops: readonly { readonly hex: Hex; readonly turn: number }[];
+}
+
 export interface EffectsSystem {
   /** A number or word that rises and fades above a tile. */
   floatingText(hex: Hex, text: string, colour: string, scale?: number): void;
@@ -100,6 +107,20 @@ export interface EffectsSystem {
   lunge(unitId: string, from: Hex, toward: Hex): Promise<void>;
   /** Dissolve a unit that has died. */
   dissolve(unitId: string): void;
+
+  /**
+   * The route the selected unit is marching, drawn until it is cleared.
+   *
+   * ⚠️ **Persistent, unlike everything else in this module.** The rest of the
+   * effects are timed and fade themselves; this one is a piece of interface
+   * that stays until the selection changes. It lives here anyway because this
+   * is the only place that owns a 2D canvas over the map AND the projection to
+   * put world positions on it, and standing up a second overlay to draw two
+   * shapes would mean two things fighting over the same canvas.
+   *
+   * Pass undefined to clear it.
+   */
+  setMarch(march: MarchOverlay | undefined): void;
 
   /** World-space pixel offset to draw a unit at, if it is moving. */
   offsetOf(unitId: string): Point | undefined;
@@ -117,6 +138,7 @@ export interface EffectsSystem {
 
 export function createEffects(): EffectsSystem {
   const texts: FloatingText[] = [];
+  let march: MarchOverlay | undefined;
   const pulses: Pulse[] = [];
   const flashes: TileFlash[] = [];
   const shakes: Shake[] = [];
@@ -200,6 +222,10 @@ export function createEffects(): EffectsSystem {
       fades.set(unitId, { unitId, start: now, duration: 420 });
     },
 
+    setMarch(next) {
+      march = next;
+    },
+
     offsetOf(unitId) {
       const motion = motions.get(unitId);
       if (!motion) return undefined;
@@ -272,7 +298,17 @@ export function createEffects(): EffectsSystem {
     },
 
     active() {
+      /*
+       * ⚠️ A shown march counts as "needs drawing", or it would flicker off.
+       *
+       * The frame loop clears the overlay canvas every frame and only calls
+       * `draw` when this is true, which is correct for effects that fade
+       * themselves and wrong for a piece of interface that stays. The route
+       * would be painted on the frame the player clicked and erased on the
+       * next one.
+       */
       return (
+        march !== undefined ||
         texts.length > 0 ||
         pulses.length > 0 ||
         flashes.length > 0 ||
@@ -283,6 +319,52 @@ export function createEffects(): EffectsSystem {
     },
 
     draw(ctx, projection) {
+      /*
+       * The march, first, so everything else lands on top of it.
+       *
+       * ⚠️ Drawn before the timed effects rather than after, because a damage
+       * number or an impact ring is news and a route is context. A dotted line
+       * over the top of a floating "-32" would obscure the one thing the
+       * player is waiting to read.
+       */
+      if (march && march.path.length > 1) {
+        const points = march.path.map((h) => projection.project(h));
+        ctx.save();
+        ctx.setLineDash([5, 7]);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgba(207, 230, 255, 0.75)';
+        ctx.lineJoin = 'round';
+        ctx.beginPath();
+        ctx.moveTo(points[0]!.x, points[0]!.y);
+        for (let i = 1; i < points.length; i += 1) ctx.lineTo(points[i]!.x, points[i]!.y);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        for (const stop of march.stops) {
+          const p = projection.project(stop.hex);
+          /*
+           * ⚠️ A disc behind the number, not bare text. The map underneath is
+           * terrain photography at every brightness, and a plain glyph is
+           * legible over grass and invisible over snow.
+           */
+          const r = Math.max(9, projection.scaleAt(stop.hex) * 0.3);
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(12, 18, 28, 0.82)';
+          ctx.fill();
+          ctx.lineWidth = 1.5;
+          ctx.strokeStyle = 'rgba(207, 230, 255, 0.9)';
+          ctx.stroke();
+
+          ctx.fillStyle = '#eaf2ff';
+          ctx.font = `600 ${Math.round(r * 1.25)}px ui-sans-serif, system-ui, sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(String(stop.turn), p.x, p.y);
+        }
+        ctx.restore();
+      }
+
       for (const flash of flashes) {
         const t = progress(flash);
         const centre = projection.project(flash.hex);

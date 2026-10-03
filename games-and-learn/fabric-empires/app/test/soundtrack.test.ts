@@ -15,7 +15,16 @@
  */
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { DUCK, MOODS, SOUNDTRACK, createSoundtrack, nextRotation, shuffle, type Track } from '../src/soundtrack.js';
+import {
+  DUCK,
+  MOODS,
+  MUSIC_VOLUME,
+  SOUNDTRACK,
+  createSoundtrack,
+  nextRotation,
+  shuffle,
+  type Track,
+} from '../src/soundtrack.js';
 
 /**
  * A stand-in for `Audio`.
@@ -312,7 +321,10 @@ describe('ducking under a cinematic', () => {
   it('pulls the score down, and puts it back where it was', async () => {
     const { music, el } = await runUp();
     const full = el.volume;
-    expect(full).toBeGreaterThan(0.2);
+    // ⚠️ Against the real constant, not a magic number. This used to read
+    // `> 0.2`, which was the module's volume written down a second time, and
+    // lowering the music broke a ducking test for no reason.
+    expect(full).toBeCloseTo(MUSIC_VOLUME, 5);
 
     music.duck(true);
     vi.advanceTimersByTime(600);

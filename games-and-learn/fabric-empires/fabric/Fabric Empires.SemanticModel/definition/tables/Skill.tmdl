@@ -1,0 +1,83 @@
+/// The published DP-600 skills outline.
+table 'Skill'
+	lineageTag: 611e3f33-5159-5366-a713-bf15cfaa7a9e
+
+	column 'Topic Id'
+		dataType: string
+		isHidden
+		lineageTag: 0a952cab-d79b-510d-80bc-9de64e64b49f
+		summarizeBy: none
+		sourceColumn: topicId
+
+	column 'Skill Number'
+		dataType: int64
+		isHidden
+		lineageTag: ee7999da-3672-55ab-bbd7-0b3ece2d808b
+		summarizeBy: none
+		sourceColumn: skillNumber
+		formatString: #,0
+
+	/// One measured skill from the published DP-600 outline.
+	column 'Skill'
+		dataType: string
+		lineageTag: 37956414-2d74-52a2-a6df-cba3e74f19e3
+		summarizeBy: none
+		sourceColumn: skillLabel
+		sortByColumn: 'Skill Number'
+
+	column 'Cluster Id'
+		dataType: string
+		isHidden
+		lineageTag: 9d659f4d-df45-5dae-85f7-a375b1052f24
+		summarizeBy: none
+		sourceColumn: clusterId
+
+	column 'Cluster'
+		dataType: string
+		lineageTag: d07bbb57-ea9c-5bb7-8b6b-73f99ea892be
+		summarizeBy: none
+		sourceColumn: clusterLabel
+
+	column 'Domain Id'
+		dataType: string
+		isHidden
+		lineageTag: 750095c9-c86e-5464-9f1a-cb6d24aef2a5
+		summarizeBy: none
+		sourceColumn: domainId
+
+	column 'Domain Name'
+		dataType: string
+		lineageTag: 7fd778fb-ca2d-5b6e-8cde-c8a5c38bc64c
+		summarizeBy: none
+		sourceColumn: domainLabel
+
+	/// Exam domain with its published weighting.
+	column 'Domain'
+		dataType: string
+		lineageTag: 8c1eb6e5-ed92-50b5-a22d-27b64f9a7bb3
+		summarizeBy: none
+		sourceColumn: domainDisplay
+		sortByColumn: 'Domain Id'
+
+	column 'Domain Weight Min'
+		dataType: int64
+		isHidden
+		lineageTag: 956690fa-a904-5533-b64d-65dfef27b32f
+		summarizeBy: none
+		sourceColumn: domainWeightMin
+		formatString: #,0
+
+	column 'Domain Weight Max'
+		dataType: int64
+		isHidden
+		lineageTag: 0eb5eae8-9472-56c1-936e-80b186e59c4d
+		summarizeBy: none
+		sourceColumn: domainWeightMax
+		formatString: #,0
+
+	partition 'Skills' = entity
+		mode: directLake
+		source
+			entityName: Skills
+			schemaName: dbo
+			expressionSource: 'DirectLake - fabric-empires'

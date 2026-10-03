@@ -26,14 +26,17 @@ const ANTHEM_URL = 'audio/anthem.mp3';
 
 export interface Anthem {
   /**
-   * Start playing from the top.
+   * Start playing from the top, rising over `fadeMs`.
    *
    * ⚠️ Must be called from inside a user gesture or the browser will refuse.
    * The opening runs immediately after the player clicks Begin, which is one,
    * so this is safe where it is actually used. A rejected play is swallowed
    * rather than thrown: no music is a worse film, not a broken game.
+   *
+   * Pass 0 for the old behaviour of arriving at full level immediately, which
+   * is what a timing test wants and what a player never does.
    */
-  start(): void;
+  start(fadeMs?: number): void;
   /** Fade out over a moment and stop. */
   fade(ms?: number): void;
   /**
@@ -101,6 +104,22 @@ export async function audioExists(url: string): Promise<boolean> {
   return mediaExists(url, 'audio');
 }
 
+/**
+ * How long the anthem takes to rise, and to leave.
+ *
+ * ⚠️ **The rise used to be instant, and it was the worst edit in the game.**
+ * `start()` set the volume and called `play()`, so the anthem arrived at full
+ * level on its first sample, straight out of the silence of the setup screen.
+ * A fade of about a second reads as the music beginning; no fade reads as a
+ * speaker being switched on.
+ *
+ * The fall is longer than the rise on purpose. Music that leaves faster than it
+ * arrives sounds like it was interrupted, and this one is handing over rather
+ * than being cut off.
+ */
+export const ANTHEM_FADE_IN_MS = 1_100;
+export const ANTHEM_FADE_OUT_MS = 1_600;
+
 export function createAnthem(volume = 0.55): Anthem {
   let element: HTMLAudioElement | undefined;
   let ready = false;
@@ -140,17 +159,38 @@ export function createAnthem(volume = 0.55): Anthem {
       return element && !element.paused ? element.currentTime : 0;
     },
 
-    start() {
+    start(fadeMs = ANTHEM_FADE_IN_MS) {
       if (!element) return;
+      const audio = element;
       stopFade();
-      element.currentTime = 0;
-      element.volume = volume;
-      void element.play().catch(() => {
+      audio.currentTime = 0;
+
+      /*
+       * ⚠️ Started at zero and ramped, rather than set and played.
+       *
+       * The same interval that runs the fade out runs this, so the two can
+       * never disagree about how a volume ramp is done. A ramp of zero is
+       * still honoured as "straight to full", which is what the tests use.
+       */
+      if (fadeMs <= 0) {
+        audio.volume = volume;
+      } else {
+        audio.volume = 0;
+        const step = 40;
+        const rise = volume / Math.max(1, fadeMs / step);
+        fading = window.setInterval(() => {
+          audio.volume = Math.min(volume, audio.volume + rise);
+          if (audio.volume < volume - 0.001) return;
+          stopFade();
+        }, step);
+      }
+
+      void audio.play().catch(() => {
         // Autoplay refused. The film still plays.
       });
     },
 
-    fade(ms = 1600) {
+    fade(ms = ANTHEM_FADE_OUT_MS) {
       const audio = element;
       if (!audio || audio.paused) return;
       stopFade();

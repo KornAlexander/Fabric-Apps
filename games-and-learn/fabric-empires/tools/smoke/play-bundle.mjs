@@ -85,9 +85,22 @@ page.on('response', (r) => {
 });
 
 await page.goto(url, { waitUntil: 'domcontentloaded' });
-await page.waitForTimeout(3000);
 
+// ⚠️ The attract card runs BEFORE boot (main.ts), so the setup screen does not
+// exist until it is skipped or finishes. A fixed sleep followed by a one-shot
+// count reported "did not boot" on every healthy build.
 const play = page.locator('button.fe-setup-play');
+const skip = page.locator('button.fe-attract-skip');
+await play
+  .or(skip)
+  .first()
+  .waitFor({ state: 'visible', timeout: 60000 })
+  .catch(() => {});
+if (await skip.isVisible().catch(() => false)) {
+  await skip.click().catch((e) => problems.push('could not skip the attract card: ' + e.message.split('\n')[0]));
+}
+await play.waitFor({ state: 'visible', timeout: 60000 }).catch(() => {});
+
 if (!(await play.count())) {
   problems.push('no setup screen: the bundle did not boot');
 } else {

@@ -1,0 +1,87 @@
+/// One question, one answer.
+table 'Attempt'
+	lineageTag: 3e32f380-a402-5040-86cd-c8e84d60aa4b
+
+	column 'Attempt Id'
+		dataType: string
+		isHidden
+		lineageTag: bc45fd0b-801b-524f-84b9-27a4d9600f5c
+		summarizeBy: none
+		sourceColumn: id
+
+	column 'Player Id'
+		dataType: string
+		isHidden
+		lineageTag: 28c1da00-7b69-58e0-be4c-c35db12d36c6
+		summarizeBy: none
+		sourceColumn: userId
+
+	column 'Game Id'
+		dataType: string
+		isHidden
+		lineageTag: a80b7736-e6b0-5ede-bb7e-c9b1575172b7
+		summarizeBy: none
+		sourceColumn: gameId
+
+	column 'Topic Id'
+		dataType: string
+		isHidden
+		lineageTag: 1e66ca9e-32aa-5fc1-aa34-a025666a3036
+		summarizeBy: none
+		sourceColumn: topicId
+
+	column 'Question Id'
+		dataType: string
+		isHidden
+		lineageTag: 13b98c20-c289-5dd9-9b14-adf3ba2c97b8
+		summarizeBy: none
+		sourceColumn: questionId
+
+	column 'Correct'
+		dataType: boolean
+		lineageTag: f1aa8ae9-5668-58a3-b84b-4d9c778b99b4
+		summarizeBy: none
+		sourceColumn: correct
+
+	/// Where the question was asked: battle, settle, unrest, research, treasure, boss or exam.
+	column 'Context'
+		dataType: string
+		lineageTag: ae0cf392-b64c-5457-9837-714cd50b113a
+		summarizeBy: none
+		sourceColumn: context
+
+	/// Kept even when the answer was right: a slow correct answer leads the lapse that follows.
+	column 'Seconds'
+		dataType: int64
+		lineageTag: ce4c153a-f2c9-5eea-9880-c63b4c5be2cc
+		summarizeBy: none
+		sourceColumn: seconds
+		formatString: #,0
+
+	/// 1 or 2. Duo mode seats a second player.
+	column 'Seat'
+		dataType: int64
+		lineageTag: cab12b0e-e339-5073-bae4-f4112b30b60a
+		summarizeBy: none
+		sourceColumn: seat
+		formatString: #,0
+
+	column 'Course Id'
+		dataType: string
+		lineageTag: 52a8f06d-221d-5a0f-a468-eced5d3548f8
+		summarizeBy: none
+		sourceColumn: courseId
+
+	column 'Asked At'
+		dataType: dateTime
+		lineageTag: 2295090f-3340-53d8-a4c2-33eb2bfbba58
+		summarizeBy: none
+		sourceColumn: askedAt
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition 'QuestionAttempts' = entity
+		mode: directLake
+		source
+			entityName: QuestionAttempts
+			schemaName: dbo
+			expressionSource: 'DirectLake - fabric-empires'

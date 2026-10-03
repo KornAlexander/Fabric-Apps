@@ -19,9 +19,11 @@ services:
       - http://localhost:5180
       - http://127.0.0.1:5173
   data:
-    enabled: false
+    enabled: true
+    dialect: mssql
   staticHosting:
     enabled: true
+    assetAccess: public
     folder: app/dist
     buildCommand: npm run build
     indexDocument: index.html

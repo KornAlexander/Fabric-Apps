@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Fabric Empires"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "af4b0830-d19e-59cd-bb92-7e48fdb86ec9"
+  }
+}
