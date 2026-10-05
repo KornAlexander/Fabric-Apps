@@ -59,7 +59,11 @@ export function runtimeConfigProblem(cfg, { tenant, workspace, item }) {
   if (item && cfg.itemId !== item) return 'names a different item than the bound one';
   const api = new RegExp(`^https://[0-9a-f]{32}\\.pbidedicated\\.windows\\.net/webapi/capacities/[0-9a-f-]{36}/workloads/BaaS/BaaSService/automatic/v1/workspaces/${workspace}/appbackends/${cfg.itemId}/$`);
   if (!api.test(cfg.apiUrl)) return 'has an apiUrl that is not this item\'s backend';
-  const portal = new RegExp(`^https://app\\.fabric\\.microsoft\\.com/groups/${workspace}/appbackends/${cfg.itemId}(\\?ctid=${tenant})?$`);
+  // ⚠️ THE CLI WRITES THE BARE PORTAL ORIGIN here, not the item's deep link: rayfin-cli 1.36.2
+  // stores `fabricPortalUrl: portalBase` (default https://app.fabric.microsoft.com/, trailing
+  // slashes stripped) and passes that into the runtime config. Found when the first stricter
+  // check refused the real deploy on 2026-10-05. The item deep link is accepted as well.
+  const portal = new RegExp(`^https://app\\.fabric\\.microsoft\\.com(/groups/${workspace}/appbackends/${cfg.itemId}(\\?ctid=${tenant})?)?/?$`);
   if (!portal.test(cfg.portalUrl)) return 'has a portalUrl that is not this item\'s page';
   if (!/^pk-[A-Za-z0-9_-]{8,64}$/.test(cfg.publishableKey)) return 'has a malformed publishableKey';
   return null;

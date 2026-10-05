@@ -88,6 +88,10 @@ test('a bundled runtime config is approved only when every field belongs to the 
   const target = { tenant, workspace, item: null };
   assert.equal(runtimeConfigProblem(good, target), null);
   assert.equal(runtimeConfigProblem(good, { ...target, item }), null);
+  // What rayfin-cli 1.36.2 really writes: the bare portal origin.
+  assert.equal(runtimeConfigProblem({ ...good, portalUrl: 'https://app.fabric.microsoft.com' }, target), null);
+  assert.match(runtimeConfigProblem({ ...good, portalUrl: 'https://app.fabric.microsoft.com.example.com' }, target), /portalUrl/);
+  assert.match(runtimeConfigProblem({ ...good, portalUrl: `https://app.fabric.microsoft.com/groups/${workspace}/appbackends/${other}` }, target), /portalUrl/);
   assert.match(runtimeConfigProblem(good, { ...target, item: other }), /different item/);
   // Same workspace, stale copy for another item: the URLs no longer agree with the item id.
   assert.match(runtimeConfigProblem({ ...good, itemId: other }, target), /apiUrl/);
