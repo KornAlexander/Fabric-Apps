@@ -120,19 +120,21 @@ BLOCKED_NAME_DIGESTS: set[str] = {   # add with --hash "Name" or --hash "Two Wor
 WORD = re.compile(r"[A-Za-z\u00c0-\u024f]{3,}")
 # Base64 (lockfile integrity hashes, inline PNGs) contains random letter runs; a 3-letter
 # run there is noise, not a name. Measured: two lockfiles and a notebook PNG fired on a
-# 3-letter acronym. Only words INSIDE an encoded-looking run are skipped: >= 32 base64-alphabet
-# characters with a digit AND both letter cases well represented (random base64 is about half
-# upper case; paths and identifiers are not). An earlier rule skipped any word touching a digit
-# or + / =, and a length-only rule swallowed long ordinary paths (both caught in review).
+# 3-letter acronym. Only words INSIDE an encoded run are skipped, and a run counts as encoded
+# only in a context that SAYS it is encoded: right after an integrity prefix (sha512-) or a
+# data-URI marker (base64,), or starting with an image file's own base64 signature. Character
+# statistics alone were not enough: a digit rule hid "tiles/<name>/data", a length rule hid long
+# paths, and a letter-case rule still hid mixed-case paths such as "Exports/2024/ACME/<name>"
+# (three successive reviews).
 B64_RUN = re.compile(r"[A-Za-z0-9+/=]{32,}")
+B64_CONTEXT = re.compile(r"(?:sha(?:1|256|384|512)-|base64,)$")
+B64_SIGNATURE = ("iVBORw0KGgo", "/9j/", "R0lGOD", "UklGR")  # PNG, JPEG, GIF, WebP
 
 
-def _looks_encoded(run: str) -> bool:
-    letters = [c for c in run if c.isalpha()]
-    if not letters or not any(c.isdigit() for c in run):
+def _looks_encoded(text: str, start: int, run: str) -> bool:
+    if not any(c.isdigit() for c in run):
         return False
-    upper = sum(c.isupper() for c in letters) / len(letters)
-    return 0.2 <= upper <= 0.8
+    return bool(B64_CONTEXT.search(text[max(0, start - 8):start])) or run.startswith(B64_SIGNATURE)
 
 
 def digest(name: str) -> str:
@@ -140,7 +142,7 @@ def digest(name: str) -> str:
 
 
 def _words(text: str) -> list[str]:
-    encoded = [m.span() for m in B64_RUN.finditer(text) if _looks_encoded(m.group())]
+    encoded = [m.span() for m in B64_RUN.finditer(text) if _looks_encoded(text, m.start(), m.group())]
     out = []
     for m in WORD.finditer(text):
         if any(lo <= m.start() and m.end() <= hi for lo, hi in encoded):
@@ -537,7 +539,8 @@ def main() -> int:
         return 2
     # A name in a path segment or after "=" must still be caught (the base64 skip once hid both).
     for planted in ("tiles/" + "Pat" + "ris/data.json", "owner=" + "Pat" + "ris",
-                    "a" * 32 + "/2024/" + "Pat" + "ris/terrain/data"):
+                    "a" * 32 + "/2024/" + "Pat" + "ris/terrain/data",
+                    "Exports/2024/ACME/PROJECT/" + "Pat" + "ris/terrain/data"):
         if not scan_names(planted):
             print(f"GATE BROKEN: the name digests miss a planted name in: {planted[:6]}...")
             return 2
