@@ -11,8 +11,31 @@ const KEBAB = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const HEX = /^#[0-9a-fA-F]{6}$/;
 const CITY_STATUS = new Set(['ready', 'planned']);
 
+// ⚠️ THE SAME CONTRACT AS config/packs/pack.schema.json, INCLUDING ITS additionalProperties: false.
+// A misspelt key (`divison`, `kpiTarget`) that is silently ignored is a setting the customer
+// believes is applied. tests/ui/pack-runtime.test.tsx runs both validators on the same packs.
+const TOP_KEYS = new Set(['$schema', 'id', 'brand', 'defaultCity', 'cities', 'divisions', 'texts', 'kpiTargets', 'agent']);
+const BRAND_KEYS = new Set(['name', 'logo', 'colors']);
+const CITY_KEYS = new Set(['id', 'aois', 'status']);
+const AGENT_KEYS = new Set(['persona', 'language']);
+const BILINGUAL_KEYS = new Set(['de', 'en']);
+
+const isObject = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
+
+function known(value, keys, path, errors) {
+  for (const key of Object.keys(value)) if (!keys.has(key)) errors.push(`${path}${key} is not a known property`);
+}
+
+/** A required object section: reports it and returns {} when missing, so later checks still run. */
+function section(pack, key, errors) {
+  if (isObject(pack[key])) return pack[key];
+  errors.push(`${key} must be an object`);
+  return {};
+}
+
 function bilingual(value, path, errors) {
-  if (!value || typeof value !== 'object') { errors.push(`${path} must be an object with de and en`); return; }
+  if (!isObject(value)) { errors.push(`${path} must be an object with de and en`); return; }
+  known(value, BILINGUAL_KEYS, `${path}.`, errors);
   for (const lang of ['de', 'en']) {
     if (typeof value[lang] !== 'string' || !value[lang].trim()) errors.push(`${path}.${lang} must be a non-empty string`);
   }
@@ -21,11 +44,14 @@ function bilingual(value, path, errors) {
 /** Returns a list of problems; an empty list means the pack is valid. */
 export function validatePack(pack) {
   const errors = [];
-  if (!pack || typeof pack !== 'object') return ['pack must be an object'];
+  if (!isObject(pack)) return ['pack must be an object'];
+  known(pack, TOP_KEYS, '', errors);
   if (typeof pack.id !== 'string' || !KEBAB.test(pack.id)) errors.push('id must be kebab-case');
 
-  const brand = pack.brand ?? {};
+  const brand = section(pack, 'brand', errors);
+  known(brand, BRAND_KEYS, 'brand.', errors);
   bilingual(brand.name, 'brand.name', errors);
+  if (brand.colors !== undefined && !isObject(brand.colors)) errors.push('brand.colors must be an object');
   if (brand.logo !== null && brand.logo !== undefined && typeof brand.logo !== 'string') errors.push('brand.logo must be a path or null');
   for (const [key, color] of Object.entries(brand.colors ?? {})) {
     if (!HEX.test(color)) errors.push(`brand.colors.${key} must be #RRGGBB`);
@@ -35,7 +61,9 @@ export function validatePack(pack) {
   if (!cities.length) errors.push('cities must list at least one city');
   const ids = new Set();
   for (const [i, city] of cities.entries()) {
-    if (typeof city?.id !== 'string' || !KEBAB.test(city.id)) errors.push(`cities[${i}].id must be kebab-case`);
+    if (!isObject(city)) { errors.push(`cities[${i}] must be an object`); continue; }
+    known(city, CITY_KEYS, `cities[${i}].`, errors);
+    if (typeof city.id !== 'string' || !KEBAB.test(city.id)) errors.push(`cities[${i}].id must be kebab-case`);
     else if (ids.has(city.id)) errors.push(`cities[${i}].id "${city.id}" is duplicated`);
     else ids.add(city.id);
     if (!Array.isArray(city?.aois) || !city.aois.length || !city.aois.every(a => typeof a === 'string' && KEBAB.test(a))) {
@@ -44,22 +72,23 @@ export function validatePack(pack) {
     if (!CITY_STATUS.has(city?.status)) errors.push(`cities[${i}].status must be ready or planned`);
   }
   if (!ids.has(pack.defaultCity)) errors.push('defaultCity must be one of the listed cities');
-  else if (cities.find(c => c.id === pack.defaultCity)?.status !== 'ready') errors.push('defaultCity must be ready');
+  else if (cities.find(c => c?.id === pack.defaultCity)?.status !== 'ready') errors.push('defaultCity must be ready');
 
-  const divisions = pack.divisions ?? {};
+  const divisions = section(pack, 'divisions', errors);
   for (const [key, on] of Object.entries(divisions)) {
     if (!DIVISIONS.includes(key)) errors.push(`divisions.${key} is not a known division`);
     if (typeof on !== 'boolean') errors.push(`divisions.${key} must be true or false`);
   }
-  if (!Object.values(divisions).some(Boolean)) errors.push('at least one division must be enabled');
+  if (!Object.values(divisions).some((on) => on === true)) errors.push('at least one division must be enabled');
 
-  for (const [key, text] of Object.entries(pack.texts ?? {})) bilingual(text, `texts.${key}`, errors);
+  for (const [key, text] of Object.entries(section(pack, 'texts', errors))) bilingual(text, `texts.${key}`, errors);
 
-  for (const [key, value] of Object.entries(pack.kpiTargets ?? {})) {
+  for (const [key, value] of Object.entries(section(pack, 'kpiTargets', errors))) {
     if (typeof value !== 'number' || !Number.isFinite(value)) errors.push(`kpiTargets.${key} must be a finite number`);
   }
 
-  const agent = pack.agent ?? {};
+  const agent = section(pack, 'agent', errors);
+  known(agent, AGENT_KEYS, 'agent.', errors);
   if (typeof agent.persona !== 'string' || !agent.persona.trim()) errors.push('agent.persona must be a non-empty string');
   if (!['de', 'en'].includes(agent.language)) errors.push('agent.language must be de or en');
 
@@ -71,4 +100,32 @@ export function assertPack(pack) {
   const errors = validatePack(pack);
   if (errors.length) throw new Error(`Invalid config pack:\n- ${errors.join('\n- ')}`);
   return pack;
+}
+
+/**
+ * Problems between a (valid) pack and the sites this build actually ships.
+ *
+ * ⚠️ "READY" MEANS SHIPPED. A ready city whose AOI is not in the build would otherwise vanish
+ * from the switcher without a word, and a default city with nothing shipped would make the app
+ * open somewhere the pack never named. Both are build failures, not fallbacks. Run by
+ * vite.config.ts at build time and by the app at startup, so a pack that builds also runs.
+ */
+export function packSiteErrors(pack, shipped, shell) {
+  const errors = [];
+  const shippedSet = new Set(shipped);
+  const selected = new Set();
+  for (const city of pack.cities.filter((entry) => entry.status === 'ready')) {
+    for (const aoi of city.aois) {
+      if (shippedSet.has(aoi)) selected.add(aoi);
+      else errors.push(`city ${city.id} is ready, but this build does not ship its AOI ${aoi}`);
+    }
+  }
+  if (!selected.size) errors.push(`selects none of the shipped sites (${shipped.join(', ')})`);
+  else if (!selected.has(shell)) errors.push(`must include ${shell}, which holds the world shell`);
+  return errors;
+}
+
+export function assertPackSites(pack, shipped, shell) {
+  const errors = packSiteErrors(pack, shipped, shell);
+  if (errors.length) throw new Error(`Config pack "${pack.id}" does not fit this build:\n- ${errors.join('\n- ')}`);
 }

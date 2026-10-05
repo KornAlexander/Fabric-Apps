@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 import type { LiveLayer, WorldPlacement } from '../map/worldScene';
-import { clock, describeError, fetchJson, TextError, type StatusReporter } from './source';
+import { clock, describeError, TextError, type StatusReporter } from './source';
 import { later, t } from '../i18n';
 
 /**

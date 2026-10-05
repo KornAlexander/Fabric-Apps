@@ -1,4 +1,4 @@
-import {validateManifest,HASH,FILE_TYPES,MAX_ASSET_BYTES,MAX_MANIFEST_BYTES} from './contract.mjs';
+import {validateManifest,HASH,FILE_TYPES} from './contract.mjs';
 
 export class AssetError extends Error {
   constructor(code,name,detail=''){super(`${code}: ${name}${detail?` (${detail})`:''}`);this.name='AssetError';this.code=code;this.detail=detail;}

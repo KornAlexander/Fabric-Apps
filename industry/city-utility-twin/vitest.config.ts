@@ -9,7 +9,10 @@ import { defineConfig } from 'vitest/config';
  */
 export default defineConfig({
   plugins: [react()],
-  resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
+  resolve: { alias: {
+    '@': fileURLToPath(new URL('./src', import.meta.url)),
+    'virtual:config-pack': fileURLToPath(new URL('./config/packs/generic.json', import.meta.url)),
+  } },
   define: { __TWIN_ASSETS__: 'null' },
   test: {
     environment: 'jsdom',

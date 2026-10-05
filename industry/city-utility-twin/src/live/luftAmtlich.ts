@@ -374,7 +374,7 @@ export async function createLuftAmtlichLayer(options: LuftAmtlichOptions): Promi
           { signal: abort.signal, timeoutMs: READING_TIMEOUT_MS },
         );
         readings.set(station.id, newestReading(payload, station.id));
-      } catch (error) {
+      } catch {
         if (abort.signal.aborted) return;
         // One station failing must not blank the other four. It is drawn grey with a panel note.
         readings.set(station.id, null);

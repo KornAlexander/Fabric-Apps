@@ -91,9 +91,14 @@ export function siteById(id: string): SiteConfig | undefined {
  *
  * ⚠️ VALIDATED AGAINST THE SHIPPED LIST, never used as a path fragment directly. `?ort=` arrives
  * from the address bar, and the asset reader builds a URL from the site id; an unchecked value
- * would be a path-traversal seam straight into the fetch layer.
+ * would be a path-traversal seam straight into the fetch layer. The config pack narrows the list
+ * further (`sites`) and names the fallback (`fallback`).
  */
-export function requestedSiteId(search: string): string {
+export function requestedSiteId(
+  search: string,
+  sites: readonly SiteConfig[] = SITES,
+  fallback: string = DEFAULT_SITE,
+): string {
   const raw = new URLSearchParams(search).get('ort');
-  return raw && SITES.some((site) => site.id === raw) ? raw : DEFAULT_SITE;
+  return raw && sites.some((site) => site.id === raw) ? raw : fallback;
 }

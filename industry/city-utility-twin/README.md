@@ -94,8 +94,8 @@ tools/             asset gates, deployment scripts, geodata pipeline (tools/geod
 | Terrain, orthophoto, LoD2 buildings, trees | Bayerische Vermessungsverwaltung (CC BY 4.0) |
 | Coarse shell | Copernicus DEM GLO-30 |
 | Construction sites, no-parking zones, stops | City of Munich open data (`mor_wfs`) |
-| Departures | Munich public transport operator MVG (public departures interface) |
-| Vehicles | MVV timetable (GTFS), positions computed from the schedule, not tracked |
+| Departures | Munich public transport operator MVG (public departures interface; unofficial, off in the public build, see `VITE_UNOFFICIAL_FEEDS`) |
+| Vehicles | MVV planned service data (GTFS, CC BY, feed 09/2026), positions computed from planned departures, not tracked |
 | Air traffic | adsb.lol (ODbL) |
 | Land cover, airport geometry | OpenStreetMap contributors (ODbL) |
 

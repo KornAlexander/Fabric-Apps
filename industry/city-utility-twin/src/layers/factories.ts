@@ -7,9 +7,11 @@ import { createLuftBuergerLayer } from '../live/luftBuerger';
 import { createKoordinationLayer, type KoordinationLayer } from '../live/koordination';
 import { createWfsLayer } from '../live/wfs';
 import { createFahrzeugeLayer } from '../live/fahrzeuge';
-import { WFS_LAYERS } from '../live/wfsCatalogue';
+import { WFS_LAYERS, GROUP } from '../live/wfsCatalogue';
 import type { LiveStatus } from '../live/source';
 import type { MessageKey } from '../i18n';
+import { ENABLED_FEEDS, isUnofficial } from '../config/feeds';
+import { PACK, divisionOn, type ConfigPack, type Division } from '../config/activePack';
 
 /**
  * A layer is only constructed the first time it is switched on.
@@ -47,7 +49,41 @@ export function layerSourceKey(id: BuiltInLayer): MessageKey {
   return `layer.${id}.source` as MessageKey;
 }
 
-export function createFactories(hooks: LayerHooks): Record<string, LayerFactory> {
+/**
+ * Which utility division a layer belongs to; null for context layers that every pack keeps
+ * (air quality, city structure, accessibility).
+ */
+const BUILT_IN_DIVISION: Record<BuiltInLayer, Division | null> = {
+  flugverkehr: 'aviation',
+  baustellen: 'construction',
+  koordination: 'construction',
+  mvg: 'transit',
+  fahrzeuge: 'transit',
+  'luft-amtlich': null,
+  'luft-buerger': null,
+};
+const GROUP_DIVISION = new Map<unknown, Division>([
+  [GROUP.charging, 'emobility'],
+  [GROUP.traffic, 'transit'],
+  [GROUP.lines, 'transit'],
+]);
+
+export function layerDivision(id: string): Division | null {
+  if (id in BUILT_IN_DIVISION) return BUILT_IN_DIVISION[id as BuiltInLayer];
+  const spec = WFS_LAYERS.find((entry) => entry.id === id);
+  return spec ? GROUP_DIVISION.get(spec.group) ?? null : null;
+}
+
+/** Whether a layer exists at all under this pack (its division is switched on). */
+export function layerInPack(id: string, pack: ConfigPack = PACK): boolean {
+  return divisionOn(layerDivision(id), pack);
+}
+
+export function createFactories(
+  hooks: LayerHooks,
+  enabled: ReadonlySet<string> = ENABLED_FEEDS,
+  pack: ConfigPack = PACK,
+): Record<string, LayerFactory> {
   const factories: Record<string, LayerFactory> = {
     flugverkehr: async (world, onStatus) =>
       world.registerLayer(await createFlugverkehrLayer({
@@ -104,6 +140,13 @@ export function createFactories(hooks: LayerHooks): Record<string, LayerFactory>
   for (const spec of WFS_LAYERS) {
     factories[spec.id] = async (world, onStatus) =>
       world.registerLayer(await createWfsLayer(spec, { placement: world.placement, onStatus }));
+  }
+  // Unofficial interfaces are dropped unless this build enabled them; the panel then shows the
+  // row as switched off rather than offering a layer that would call them.
+  for (const id of Object.keys(factories)) {
+    if (isUnofficial(id) && !enabled.has(id)) delete factories[id];
+    // A division the pack switches off has no layers at all, not disabled ones.
+    else if (!layerInPack(id, pack)) delete factories[id];
   }
   return factories;
 }

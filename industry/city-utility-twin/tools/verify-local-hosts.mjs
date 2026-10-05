@@ -1,6 +1,6 @@
 // Focused H12 review regression: real Vite dev/preview MIME and production-shaped bundle guards.
 import assert from 'node:assert/strict';
-import {mkdir,readFile,writeFile,realpath,rm} from 'node:fs/promises';
+import {mkdir,writeFile,realpath,rm} from 'node:fs/promises';
 import {join,resolve,relative,isAbsolute,sep} from 'node:path';
 import {execFile} from 'node:child_process';
 import {promisify} from 'node:util';

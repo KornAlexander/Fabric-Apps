@@ -88,9 +88,9 @@ export function withoutApprovedOrigin(text, origin, releaseId) {
 export function configWithoutHostingRedirect(text) {
   let inRedirects = false;
   return text.split(/\r?\n/).map(line => {
-    if (/^    allowedRedirectUris:\s*$/.test(line)) { inRedirects = true; return line; }
-    if (inRedirects && /^      - https:\/\/[a-z0-9-]+\.webapp\.fabricapps\.net\/?\s*$/.test(line)) return '';
-    if (inRedirects && !/^      - /.test(line)) inRedirects = false;
+    if (/^ {4}allowedRedirectUris:\s*$/.test(line)) { inRedirects = true; return line; }
+    if (inRedirects && /^ {6}- https:\/\/[a-z0-9-]+\.webapp\.fabricapps\.net\/?\s*$/.test(line)) return '';
+    if (inRedirects && !/^ {6}- /.test(line)) inRedirects = false;
     return line;
   }).join('\n');
 }

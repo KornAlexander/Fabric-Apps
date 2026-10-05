@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/KornAlexander/Fabric-Apps/industry/city-utility-twin/config/packs/pack.schema.json",
+  "title": "City Utility Twin config pack",
+  "description": "Everything a utility can change without touching code. Validated at build time and at startup by src/config/pack.mjs; this schema is for editors and review, and tests/ui/pack-runtime.test.tsx keeps the two in step.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "brand", "defaultCity", "cities", "divisions", "texts", "kpiTargets", "agent"],
+  "$defs": {
+    "kebab": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "bilingual": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["de", "en"],
+      "properties": {
+        "de": { "type": "string", "minLength": 1 },
+        "en": { "type": "string", "minLength": 1 }
+      }
+    },
+    "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" }
+  },
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": { "$ref": "#/$defs/kebab" },
+    "brand": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "$ref": "#/$defs/bilingual" },
+        "logo": { "type": ["string", "null"] },
+        "colors": {
+          "type": "object",
+          "description": "accent: controls and highlights. accentDark: the accent on the dark theme (defaults to accent). alert: errors and warnings only (plan D20: pure red is reserved for alerts).",
+          "additionalProperties": { "$ref": "#/$defs/color" },
+          "properties": {
+            "accent": { "$ref": "#/$defs/color" },
+            "accentDark": { "$ref": "#/$defs/color" },
+            "alert": { "$ref": "#/$defs/color" }
+          }
+        }
+      }
+    },
+    "defaultCity": { "$ref": "#/$defs/kebab" },
+    "cities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "aois", "status"],
+        "properties": {
+          "id": { "$ref": "#/$defs/kebab" },
+          "aois": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/kebab" } },
+          "status": { "enum": ["ready", "planned"] }
+        }
+      }
+    },
+    "divisions": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "transit": { "type": "boolean" },
+        "construction": { "type": "boolean" },
+        "water": { "type": "boolean" },
+        "power": { "type": "boolean" },
+        "heat": { "type": "boolean" },
+        "emobility": { "type": "boolean" },
+        "fibre": { "type": "boolean" },
+        "aviation": { "type": "boolean" }
+      }
+    },
+    "texts": { "type": "object", "additionalProperties": { "$ref": "#/$defs/bilingual" } },
+    "kpiTargets": { "type": "object", "additionalProperties": { "type": "number" } },
+    "agent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["persona", "language"],
+      "properties": {
+        "persona": { "type": "string", "minLength": 1 },
+        "language": { "enum": ["de", "en"] }
+      }
+    }
+  }
+}

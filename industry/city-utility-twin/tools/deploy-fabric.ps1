@@ -10,12 +10,25 @@
 # `finally`. `rayfin up` is run WITHOUT --verbose because that mode prints a token prefix.
 
 param(
-    [switch]$WhatIf
+    [switch]$WhatIf,
+    # Unofficial live interfaces to build in, comma-separated (only 'mvg' today). Empty = off,
+    # exactly like the public build. See src/config/feeds.ts for why this is opt-in.
+    [string]$UnofficialFeeds = ''
 )
 
 $ErrorActionPreference = 'Stop'
 $repo = Split-Path -Parent $PSScriptRoot
 Set-Location $repo
+
+# Validated before anything touches Fabric: a typo ('mvgg') must stop the deploy, not quietly
+# ship a build without the feed the owner asked for. Keep in step with src/config/feeds.ts.
+$knownFeeds = @('mvg')
+$feedList = @($UnofficialFeeds -split ',' | ForEach-Object { $_.Trim().ToLowerInvariant() } | Where-Object { $_ })
+$unknownFeeds = @($feedList | Where-Object { $knownFeeds -notcontains $_ })
+if ($unknownFeeds.Count) { throw "Unknown unofficial feed(s): $($unknownFeeds -join ', '). Known: $($knownFeeds -join ', ')." }
+# ⚠️ NEVER AN EMPTY STRING. Before PowerShell 7.5, assigning '' to $env:X DELETES the variable,
+# and Vite then takes the value from a local .env file instead. 'none' is a value feeds.ts ignores.
+$feedValue = if ($feedList.Count) { $feedList -join ',' } else { 'none' }
 
 
 # Configuration comes from environment variables, see UMSETZUNG.md. There are deliberately NO
@@ -82,17 +95,25 @@ try {
     }
 
     # --- folder --------------------------------------------------------------------------------
-    $folders = Invoke-RestMethod -Uri "https://api.fabric.microsoft.com/v1/workspaces/$workspace/folders" -Headers $headers -TimeoutSec 60
-    $folder = $folders.value | Where-Object { $_.displayName -eq $folderName -and $_.parentFolderId -eq $customerFolder }
-    if ($folder) {
-        "folder exists: $($folder.id)"
-    } elseif ($WhatIf) {
-        "WHATIF would create folder '$folderName' under the configured folder"
+    # ⚠️ FIRST DEPLOY ONLY. Once the item exists, where it lives is the owner's choice: it was
+    # moved by hand into another folder on 2026-10-05, and refiling it on every redeploy (or
+    # recreating a folder that was renamed) would silently undo that.
+    $folder = $null
+    if (-not $boundItemId) {
+        $folders = Invoke-RestMethod -Uri "https://api.fabric.microsoft.com/v1/workspaces/$workspace/folders" -Headers $headers -TimeoutSec 60
+        $folder = $folders.value | Where-Object { $_.displayName -eq $folderName -and $_.parentFolderId -eq $customerFolder }
+        if ($folder) {
+            "folder exists: $($folder.id)"
+        } elseif ($WhatIf) {
+            "WHATIF would create folder '$folderName' under the configured folder"
+        } else {
+            $body = @{ displayName = $folderName; parentFolderId = $customerFolder } | ConvertTo-Json
+            $folder = Invoke-RestMethod -Method Post -Uri "https://api.fabric.microsoft.com/v1/workspaces/$workspace/folders" `
+                -Headers $headers -Body ([System.Text.Encoding]::UTF8.GetBytes($body)) -TimeoutSec 60
+            "created folder '$folderName': $($folder.id)"
+        }
     } else {
-        $body = @{ displayName = $folderName; parentFolderId = $customerFolder } | ConvertTo-Json
-        $folder = Invoke-RestMethod -Method Post -Uri "https://api.fabric.microsoft.com/v1/workspaces/$workspace/folders" `
-            -Headers $headers -Body ([System.Text.Encoding]::UTF8.GetBytes($body)) -TimeoutSec 60
-        "created folder '$folderName': $($folder.id)"
+        'redeploy: the item stays in the folder it is in now'
     }
 
     if ($WhatIf) { 'WHATIF stopping before rayfin up'; return }
@@ -107,6 +128,8 @@ try {
     $env:RAYFIN_FABRIC_API_URL = 'https://api.fabric.microsoft.com'
     # The bundle gate pins the runtime config to this item on a redeploy.
     $env:FABRIC_ITEM_ID = $boundItemId
+    $env:VITE_UNOFFICIAL_FEEDS = $feedValue
+    "unofficial feeds in this build: $feedValue"
     "`nrunning rayfin up ..."
     npx --no-install rayfin up --tenant $tenant --workspace-id $workspace --yes --json |
         Tee-Object -FilePath (Join-Path $repo 'tools\deploy.log')
@@ -127,16 +150,19 @@ try {
         -Headers $headers -Body ([System.Text.Encoding]::UTF8.GetBytes($patch)) -TimeoutSec 60 | Out-Null
     "renamed to '$displayName'"
 
-    $move = @{ targetFolderId = $folder.id } | ConvertTo-Json
-    Invoke-RestMethod -Method Post -Uri "https://api.fabric.microsoft.com/v1/workspaces/$workspace/items/$($active.fabricItemId)/move" `
-        -Headers $headers -Body ([System.Text.Encoding]::UTF8.GetBytes($move)) -TimeoutSec 60 | Out-Null
-    "moved into '$folderName'"
+    if ($folder) {
+        $move = @{ targetFolderId = $folder.id } | ConvertTo-Json
+        Invoke-RestMethod -Method Post -Uri "https://api.fabric.microsoft.com/v1/workspaces/$workspace/items/$($active.fabricItemId)/move" `
+            -Headers $headers -Body ([System.Text.Encoding]::UTF8.GetBytes($move)) -TimeoutSec 60 | Out-Null
+        "moved into '$folderName'"
+    }
 
     "`nDONE: $($active.hostingUrl)"
 } finally {
     $env:RAYFIN_TOKEN = $null
     $env:RAYFIN_FABRIC_API_URL = $null
     $env:FABRIC_ITEM_ID = $null
+    $env:VITE_UNOFFICIAL_FEEDS = $null
     $token = $null
     $headers = $null
     [System.GC]::Collect()

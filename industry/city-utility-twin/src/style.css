@@ -9,12 +9,14 @@
   --cp-text: #242424;
   --cp-text-muted: #5c5c5c;
   --cp-text-soft: #6f6f6f;
-  --cp-accent: #FF0000;
-  --cp-accent-hover: #FF0000;
-  --cp-accent-soft: rgba(255, 0, 0, 0.08);
-  --cp-accent-fg: #000000;
+  /* Plan D20: pure red is for alerts only (--cp-danger). The accent comes from the config pack
+     (src/config/activePack.ts, applyBrand sets --pack-*); these fallbacks are the generic blue. */
+  --cp-accent: var(--pack-accent, #0F6CBD);
+  --cp-accent-hover: var(--cp-accent);
+  --cp-accent-soft: color-mix(in srgb, var(--cp-accent) 8%, transparent);
+  --cp-accent-fg: #FFFFFF;
   --cp-success: #16a34a;
-  --cp-danger: #FF0000;
+  --cp-danger: var(--pack-alert, #FF0000);
   --cp-warning: #f59e0b;
   --cp-link: #0078d4;
   --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
@@ -22,7 +24,7 @@
   --cp-panel: rgba(255, 255, 255, 0.86);
   --cp-panel-strong: rgba(255, 255, 255, 0.96);
   --cp-sheen: rgba(255, 255, 255, 0.55);
-  --cp-highlight: rgba(255, 0, 0, 0.12);
+  --cp-highlight: color-mix(in srgb, var(--cp-accent) 12%, transparent);
 }
 html[data-theme="dark"] {
   color-scheme: dark;
@@ -35,12 +37,12 @@ html[data-theme="dark"] {
   --cp-text: #dedede;
   --cp-text-muted: #919191;
   --cp-text-soft: #b0b0b0;
-  --cp-accent: #FF0000;
-  --cp-accent-hover: #FF0000;
-  --cp-accent-soft: rgba(255, 0, 0, 0.14);
+  --cp-accent: var(--pack-accent-dark, var(--pack-accent, #4DA6FF));
+  --cp-accent-hover: var(--cp-accent);
+  --cp-accent-soft: color-mix(in srgb, var(--cp-accent) 14%, transparent);
   --cp-accent-fg: #000000;
   --cp-success: #4ade80;
-  --cp-danger: #FF0000;
+  --cp-danger: var(--pack-alert, #FF0000);
   --cp-warning: #fbbf24;
   --cp-link: #4da6ff;
   --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
@@ -48,7 +50,7 @@ html[data-theme="dark"] {
   --cp-panel: rgba(41, 41, 41, 0.72);
   --cp-panel-strong: rgba(41, 41, 41, 0.96);
   --cp-sheen: rgba(255, 255, 255, 0.04);
-  --cp-highlight: rgba(255, 0, 0, 0.12);
+  --cp-highlight: color-mix(in srgb, var(--cp-accent) 12%, transparent);
 }
 * { box-sizing: border-box; }
 html, body, #root, #map { width: 100%; height: 100%; margin: 0; overflow: hidden; }

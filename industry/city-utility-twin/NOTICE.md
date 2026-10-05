@@ -37,6 +37,19 @@ The coarse shell is resampled and seam-aligned to the core. It is a surface mode
 geometry used to define the airport area of interest, are provided under the
 [Open Database License](https://www.openstreetmap.org/copyright).
 
+## Public transport service data (MVV)
+
+The vehicle layer's service data (`public/data/fahrplan.json`) is an extract of the MVV
+Gesamt-Soll-Fahrplandaten (GTFS), feed 09/2026, extracted on 2026-09-22. The publisher's licence
+statement on its developer page (mvv-muenchen.de, "MVV-Content für Entwickler"), quoted verbatim:
+
+> Die von uns angebotenen GTFS-Daten stehen unter der Creative Commons Attribution License (cc-by).
+> Als Quellenangabe notieren Sie bitte „Münchner Verkehrs- und Tarifverbund GmbH (MVV)“ sowie das
+> Datum des Abrufs und ggf. die Feed-Versionsnummer.
+
+Quellenangabe: Münchner Verkehrs- und Tarifverbund GmbH (MVV), Soll-Fahrplandaten (GTFS),
+Feed 09/2026, abgerufen am 22.09.2026.
+
 ## Live sources
 
 These are queried at runtime and nothing from them is stored:
@@ -47,7 +60,13 @@ These are queried at runtime and nothing from them is stored:
 * **Construction and temporary no-parking** — Landeshauptstadt München, `mor_wfs:baustellen_opendata`
   via geoportal.muenchen.de, open data.
 * **Public transport stops and departures** — Landeshauptstadt München (`mor_wfs:oepnv_u_t_b_mvg_neu`)
-  and Münchner Verkehrsgesellschaft (public departures interface).
+  and Münchner Verkehrsgesellschaft (public departures interface). This interface is unofficial and
+  publishes no terms for third-party use, so the public build ships with it switched off
+  (`VITE_UNOFFICIAL_FEEDS`, see `src/config/feeds.ts`).
+* **Official air quality** — Umweltbundesamt (German Environment Agency), Air Data API
+  (luftdaten.umweltbundesamt.de), hourly station readings.
+* **Citizen air-quality sensors** — [Sensor.Community](https://sensor.community/), open data
+  under ODbL; not officially calibrated.
 
 ## Reuse
 

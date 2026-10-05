@@ -29,7 +29,7 @@ export const MESSAGES = {
     'Interaktive 3D-Karte von München und dem Flughafen München',
     'Interactive 3D map of Munich and Munich Airport',
   ),
-  'loading.title': s('City Utility Twin wird geladen', 'Loading City Utility Twin'),
+  'loading.title': f((brand: string) => `${brand} wird geladen`, (brand: string) => `Loading ${brand}`),
   'loading.preparing': s('Die Ansicht wird vorbereitet…', 'Preparing the view…'),
   'loading.progress': s('Ladefortschritt der Karte', 'Map loading progress'),
   'loading.note': s(
@@ -73,6 +73,10 @@ export const MESSAGES = {
   'layer.preparing': s('wird vorbereitet…', 'preparing…'),
   'layer.unavailable': s('Ebene nicht verfügbar', 'Layer unavailable'),
   'layer.notIncluded': s('nicht enthalten', 'not included'),
+  'layer.unofficialOff': s(
+    'in dieser Version aus (inoffizielle Schnittstelle ohne veröffentlichte Nutzungsbedingungen)',
+    'off in this build (unofficial interface without published terms of use)',
+  ),
   'layer.symbols': f((source: string) => `${source} · Markierungen sind Symbole`, (source: string) => `${source} · markers are symbols`),
   'layer.group': f((group: string, count: number) => `${group} (${count})`, (group: string, count: number) => `${group} (${count})`),
   'layer.refresh': s('Neu laden', 'Reload'),
@@ -415,8 +419,8 @@ export const MESSAGES = {
 
   // ------------------------------------------------------------------ attribution
   'attribution.summary': s(
-    'Kartendaten © LDBV · Copernicus · OpenStreetMap · adsb.lol · LHM · MVG · UBA · Sensor.Community',
-    'Map data © LDBV · Copernicus · OpenStreetMap · adsb.lol · LHM · MVG · UBA · Sensor.Community',
+    'Kartendaten © LDBV · Copernicus · OpenStreetMap · adsb.lol · LHM · MVV · MVG · UBA · Sensor.Community',
+    'Map data © LDBV · Copernicus · OpenStreetMap · adsb.lol · LHM · MVV · MVG · UBA · Sensor.Community',
   ),
 };
 

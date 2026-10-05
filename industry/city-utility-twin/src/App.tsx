@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { createWorldMap, type PickDetail, type WorldMap } from './map/worldScene';
 import type { FlyTelemetry } from './map/flyControls';
-import { SITES, requestedSiteId } from './config/world';
+import { requestedSiteId } from './config/world';
+import { PACK, brandName, packSites, packStartSite, type ConfigPack } from './config/activePack';
 import type { KoordinationLayer } from './live/koordination';
 import { createFactories } from './layers/factories';
 import { setAuthor } from './agent/client';
@@ -57,8 +58,10 @@ async function authorNoteFor(name: string): Promise<Text> {
   return proven ? later('author.verified', name) : later('author.unverified', name);
 }
 
-export function App() {
+export function App({ pack = PACK }: { pack?: ConfigPack } = {}) {
   const lang = useLanguage();
+  const sites = useMemo(() => packSites(pack), [pack]);
+  const brand = show(brandName(pack));
   const canvas = useRef<HTMLCanvasElement>(null);
   const notes = useRef<KoordinationLayer | null>(null);
   const telemetry = useMemo(() => createStore<FlyTelemetry | null>(null), []);
@@ -73,7 +76,7 @@ export function App() {
   const factories = useMemo(() => createFactories({
     showDetail: setDetail,
     notesReady: (layer) => { notes.current = layer; },
-  }), []);
+  }, undefined, pack), [pack]);
 
   // ------------------------------------------------------------------ the scene's lifetime
   //
@@ -114,7 +117,7 @@ export function App() {
       if (!closed) setProgress({ stage: update.stage, loadedBytes: update.loadedBytes, totalBytes: update.totalBytes });
     }, (next) => {
       if (!closed) telemetry.set(next);
-    }, requestedSiteId(window.location.search), request.signal).then((map) => {
+    }, requestedSiteId(window.location.search, sites, packStartSite(pack, sites)), request.signal, sites).then((map) => {
       if (closed) { map.dispose(); return; }
       created = map;
       window.__zwilling = () => map.debug();
@@ -141,13 +144,13 @@ export function App() {
       window.removeEventListener('pagehide', onPageHide);
       teardown();
     };
-  }, [telemetry]);
+  }, [telemetry, sites, pack]);
 
-  // The tab title names the site, in the current language.
+  // The tab title names the brand and the site, in the current language.
   useEffect(() => {
-    const site = SITES.find((entry) => entry.id === activeSite);
-    document.title = site ? `City Utility Twin · ${show(site.name)}` : 'City Utility Twin';
-  }, [activeSite, lang]);
+    const site = sites.find((entry) => entry.id === activeSite);
+    document.title = site ? `${brand} · ${show(site.name)}` : brand;
+  }, [activeSite, lang, brand, sites]);
 
   // ⚠️ Escape closes the panel only while it is open. Escape also releases the free-flight
   // camera, and stealing it while flying would break the promise the on-screen hint makes.
@@ -200,7 +203,7 @@ export function App() {
   const ready = phase === 'ready' && world !== null;
 
   return (
-    <main id="map" aria-label="City Utility Twin">
+    <main id="map" aria-label={brand}>
       <canvas
         id="city-map"
         ref={canvas}
@@ -209,7 +212,7 @@ export function App() {
         aria-describedby="navigation-hint"
       />
 
-      {phase === 'loading' ? <Loading progress={progress} /> : null}
+      {phase === 'loading' ? <Loading progress={progress} brand={brand} /> : null}
 
       {phase === 'error' ? (
         <div id="error" role="alert">
@@ -222,7 +225,7 @@ export function App() {
       {ready ? (
         <>
           <div id="site-switch" role="group" aria-label={t('sites.label')}>
-            {SITES.map((site) => (
+            {sites.map((site) => (
               <button
                 key={site.id}
                 type="button"
@@ -236,7 +239,7 @@ export function App() {
             ))}
           </div>
 
-          <LayerPanel world={world} factories={factories} refreshNotes={refreshNotes} />
+          <LayerPanel world={world} factories={factories} refreshNotes={refreshNotes} pack={pack} />
 
           {detail ? (
             <DetailPanel
@@ -284,12 +287,12 @@ const STAGES: Record<string, MessageKey> = {
   vegetation: 'loading.stage.vegetation',
 };
 
-function Loading({ progress }: { progress: Progress | null }) {
+function Loading({ progress, brand }: { progress: Progress | null; brand: string }) {
   const stage = progress ? (STAGES[progress.stage] ? t(STAGES[progress.stage] as 'loading.stage.terrain') : progress.stage) : null;
   const known = progress !== null && progress.totalBytes > 0;
   return (
     <div id="loading" role="status" aria-live="polite">
-      <strong>{t('loading.title')}</strong>
+      <strong>{t('loading.title', brand)}</strong>
       <span id="loading-detail">
         {progress ? `${stage} · ${(progress.loadedBytes / 1048576).toFixed(1)} MB` : t('loading.preparing')}
       </span>

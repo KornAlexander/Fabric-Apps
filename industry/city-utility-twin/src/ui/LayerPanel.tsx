@@ -4,9 +4,11 @@ import { groupedLayers, type WfsLayerSpec } from '../live/wfsCatalogue';
 import { idleStatus, type LiveStatus } from '../live/source';
 import { later, show, t, type Text } from '../i18n';
 import { useLanguage } from '../i18n/useLanguage';
+import { isUnofficial } from '../config/feeds';
 import {
-  BUILT_IN_LAYERS, layerNameKey, layerSourceKey, type LayerFactory,
+  BUILT_IN_LAYERS, layerInPack, layerNameKey, layerSourceKey, type LayerFactory,
 } from '../layers/factories';
+import { PACK, type ConfigPack } from '../config/activePack';
 
 interface RowState {
   checked: boolean;
@@ -19,15 +21,20 @@ export interface LayerPanelProps {
   factories: Record<string, LayerFactory>;
   /** Reload the notes layer; resolves when the reload has finished. */
   refreshNotes(): Promise<void>;
+  /** The config pack; layers of divisions it switches off are not listed. */
+  pack?: ConfigPack;
 }
 
 /** The data layer panel: built-in layers first, then the open-data catalogue by group. */
-export function LayerPanel({ world, factories, refreshNotes }: LayerPanelProps) {
+export function LayerPanel({ world, factories, refreshNotes, pack = PACK }: LayerPanelProps) {
   useLanguage();
   const [rows, setRows] = useState<Record<string, RowState>>({});
   const [refreshing, setRefreshing] = useState(false);
   const built = useRef(new Set<string>());
-  const groups = useMemo(() => groupedLayers(), []);
+  const groups = useMemo(() => groupedLayers()
+    .map(({ group, layers }) => ({ group, layers: layers.filter((spec) => layerInPack(spec.id, pack)) }))
+    .filter(({ layers }) => layers.length > 0), [pack]);
+  const builtIn = useMemo(() => BUILT_IN_LAYERS.filter((id) => layerInPack(id, pack)), [pack]);
 
   const row = (id: string): RowState =>
     rows[id] ?? { checked: false, busy: false, status: idleStatus() };
@@ -75,7 +82,7 @@ export function LayerPanel({ world, factories, refreshNotes }: LayerPanelProps) 
     const state = row(id);
     const missing = !factories[id];
     const status: LiveStatus = missing
-      ? { ...idleStatus(), text: later('layer.notIncluded') }
+      ? { ...idleStatus(), text: later(isUnofficial(id) ? 'layer.unofficialOff' : 'layer.notIncluded') }
       : state.status;
     return (
       <li key={id}>
@@ -104,7 +111,7 @@ export function LayerPanel({ world, factories, refreshNotes }: LayerPanelProps) 
       <h2>{t('layers.title')}</h2>
       <p className="layers-note">{t('layers.note')}</p>
       <ul>
-        {BUILT_IN_LAYERS.map((id) => renderRow(
+        {builtIn.map((id) => renderRow(
           id,
           later(layerNameKey(id)),
           later(layerSourceKey(id)),

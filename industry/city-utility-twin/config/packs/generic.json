@@ -3,7 +3,7 @@
   "brand": {
     "name": { "de": "City Utility Twin", "en": "City Utility Twin" },
     "logo": null,
-    "colors": { "accent": "#0F6CBD", "alert": "#FF0000" }
+    "colors": { "accent": "#0F6CBD", "accentDark": "#4DA6FF", "alert": "#FF0000" }
   },
   "defaultCity": "munich",
   "cities": [

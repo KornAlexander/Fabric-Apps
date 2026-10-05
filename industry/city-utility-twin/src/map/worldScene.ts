@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { SITES, WORLD_SHELL_SITE, siteById, type SiteConfig } from '../config/world';
+import { SITES, WORLD_SHELL_SITE, type SiteConfig } from '../config/world';
 import { ASSET_BINDING } from '../config/terrainBase';
 import { createAssetReader } from '../assets/reader.mjs';
 import { wgs84ToUtm32 } from '../geo/utm32.mjs';
@@ -170,7 +170,16 @@ export async function createWorldMap(
   onTelemetry: (value: FlyTelemetry) => void,
   startSiteId: string,
   signal?: AbortSignal,
+  /**
+   * The cores to build, in order; the first is the world origin. Chosen by the config pack.
+   * ⚠️ Must include WORLD_SHELL_SITE, which carries the shell that covers the whole world.
+   */
+  sites: readonly SiteConfig[] = SITES,
 ): Promise<WorldMap> {
+  if (!sites.some((site) => site.id === WORLD_SHELL_SITE)) {
+    throw new Error(`The selected sites must include ${WORLD_SHELL_SITE}, which holds the world shell.`);
+  }
+  const inScene = (id: string) => sites.find((site) => site.id === id);
   const cleanup: (() => void)[] = [];
   const textures = new Set<THREE.Texture>();
   let disposed = false;
@@ -215,7 +224,7 @@ export async function createWorldMap(
     let originEasting = 0;
     let originNorthing = 0;
 
-    for (const site of SITES) {
+    for (const site of sites) {
       const reader = await readerFor(site.id);
       const assets = await loadCore(reader, onProgress);
       for (const value of Object.values(assets)) {
@@ -392,7 +401,7 @@ export async function createWorldMap(
       return { target, position: target.clone().add(new THREE.Vector3(0, range * 0.8, range * 0.65)) };
     };
 
-    let activeSite = siteById(startSiteId) ? startSiteId : SITES[0].id;
+    let activeSite = inScene(startSiteId) ? startSiteId : sites[0].id;
     const siteListeners = new Set<(id: string) => void>();
     const announce = (id: string) => { for (const listener of siteListeners) listener(id); };
 
@@ -418,7 +427,7 @@ export async function createWorldMap(
       && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const flyToSite = (id: string) => {
-      const core = siteById(id) ? coreOf(id) : null;
+      const core = inScene(id) ? coreOf(id) : null;
       if (!core || core.site.id === activeSite) return;
       activeSite = core.site.id;
       announce(activeSite);

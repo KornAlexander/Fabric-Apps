@@ -2,8 +2,10 @@ import './style.css';
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
 import { getLanguage } from './i18n';
+import { applyBrand } from './config/activePack';
 
 document.documentElement.lang = getLanguage();
+applyBrand();
 
 // ⚠️ NO <StrictMode>. Its development double mount would dispose the WebGL scene and immediately
 // build a second one on the same canvas, which loads every terrain asset twice and can leave the

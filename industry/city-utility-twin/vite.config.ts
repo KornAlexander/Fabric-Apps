@@ -2,8 +2,23 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import { fileURLToPath } from 'node:url';
 import { buildAssetConfig, buildOutput } from './tools/asset-build-config.mjs';
-import { copyFileSync, mkdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { copyFileSync, mkdirSync, readFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
+import { assertPack, assertPackSites } from './src/config/pack.mjs';
+import { SITES, WORLD_SHELL_SITE } from './src/config/world';
+
+/**
+ * The config pack this build ships. CONFIG_PACK is a path to a pack JSON (customer packs live in
+ * the private repo); without it the public generic pack is used. Validated here, against the
+ * contract AND against the sites this build ships, so a pack that builds also starts: the app
+ * runs the same two checks at startup (src/config/activePack.ts).
+ */
+function configPackPath(): string {
+  const path = resolve(process.env.CONFIG_PACK || fileURLToPath(new URL('./config/packs/generic.json', import.meta.url)));
+  const pack = assertPack(JSON.parse(readFileSync(path, 'utf8')));
+  assertPackSites(pack, SITES.map((site) => site.id), WORLD_SHELL_SITE);
+  return path;
+}
 
 export default defineConfig(async () => {
   const config = await buildAssetConfig();
@@ -54,7 +69,10 @@ export default defineConfig(async () => {
   base: './',
   publicDir: config.mode === 'external' ? false : 'public',
   define: { __TWIN_ASSETS__: JSON.stringify(config.binding) },
-  resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
+  resolve: { alias: {
+    '@': fileURLToPath(new URL('./src', import.meta.url)),
+    'virtual:config-pack': configPackPath(),
+  } },
   server: { proxy: liveProxy },
   preview: { proxy: liveProxy },
   build: {

@@ -7,6 +7,8 @@ import { LayerPanel } from '../../src/ui/LayerPanel';
 import { DetailPanel } from '../../src/ui/DetailPanel';
 import { Assistant } from '../../src/ui/Assistant';
 import { ask, publishDraft } from '../../src/agent/client';
+import { createFactories } from '../../src/layers/factories';
+import { enabledFeeds } from '../../src/config/feeds';
 
 vi.mock('../../src/agent/client', async (importOriginal) => ({
   ...(await importOriginal<typeof import('../../src/agent/client')>()),
@@ -56,6 +58,18 @@ describe('LayerPanel', () => {
     const box = screen.getByRole('checkbox', { name: /Baustellen und Halteverbote/ }) as HTMLInputElement;
     expect(box.disabled).toBe(true);
     expect(document.querySelector('[data-state-for="baustellen"]')!.textContent).toBe('nicht enthalten');
+  });
+
+  // Plan D09: unofficial interfaces are off unless the build enables them.
+  it('builds without the unofficial MVG layer unless enabled, and says why', () => {
+    const hooks = { showDetail: () => {}, notesReady: () => {} };
+    expect('mvg' in createFactories(hooks, new Set())).toBe(false);
+    expect('mvg' in createFactories(hooks, enabledFeeds('mvg'))).toBe(true);
+    expect([...enabledFeeds(' MVG , unknown,')]).toEqual(['mvg']);
+    render(<LayerPanel world={fakeWorld()} factories={createFactories(hooks, new Set())} refreshNotes={async () => {}} />);
+    const box = screen.getByRole('checkbox', { name: /MVG Echtzeit/ }) as HTMLInputElement;
+    expect(box.disabled).toBe(true);
+    expect(document.querySelector('[data-state-for="mvg"]')!.textContent).toMatch(/^in dieser Version aus/);
   });
 
   it('reverts the checkbox and shows the reason when building fails', async () => {
