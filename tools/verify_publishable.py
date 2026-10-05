@@ -33,20 +33,38 @@ import re
 import subprocess
 import sys
 import zlib
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 REPO = Path(__file__).resolve().parent.parent
 
 # ---------------------------------------------------------------- restricted paths
 # Files that must never exist in this tree at all, whatever they contain.
+# ⚠️ CASE-INSENSITIVE: `plan.md` on a case-insensitive disk is the same file as `PLAN.md`, and a
+# rule that only knows one spelling is a rule a rename defeats (review 2026-10-05).
 RESTRICTED_PATHS = [
-    (re.compile(r"(^|/)rayfin/\.deployments\.json$"),
+    (re.compile(r"(^|/)rayfin/\.deployments\.json$", re.I),
      "written by `rayfin up`: tenant id, workspace id, capacity host, hosting url"),
     # `.env.example` / `.env.sample` / `.env.template` are documentation, not secrets -
-    # they are the standard way to tell someone which variables an app needs.
-    (re.compile(r"(^|/)\.env(?:\.[A-Za-z]+)?$(?<!\.example)(?<!\.sample)(?<!\.template)"),
+    # they are the standard way to tell someone which variables an app needs. Every other
+    # `.env` variant is local configuration, including multi-part ones (`.env.production.local`).
+    (re.compile(r"(^|/)\.env(?!\.(?:example|sample|template)$)(?:\.[^/]*)?$", re.I),
      "local secrets"),
+    # Private planning and provenance documents. They name customer repositories by design and
+    # live outside this repo; an exact name here is the second line of defence after the marker
+    # check below (`campus-twin/docs/plan-umplanen-*.md` is a public doc and must stay allowed).
+    (re.compile(r"(^|/)(PLAN|PLAN-draft|PROVENANCE)\.md$", re.I), "private plan or provenance document"),
+    (re.compile(r"(^|/)(provenance\.json|build_provenance\.py)$", re.I), "private provenance manifest"),
+    (re.compile(r"(^|/)rayfin\.config\.json$", re.I), "written by `rayfin up`: tenant, workspace and item ids"),
 ]
+
+# Text that private documents carry on purpose so they cannot be published by accident.
+# Assembled from fragments, or this file would carry the marker itself.
+# ⚠️ JOINED AT RUNTIME, NOT WITH `+`. The compiler folds `b"PRIV" + b"ATE"` into one constant, so
+# the tracked tools/__pycache__/*.pyc carried the whole marker and failed the binary marker check.
+_join = b"".join
+PRIVATE_MARKER = re.compile(_join((
+    rb"This file is ", rb"PRIV", rb"ATE|PRIV", rb"ATE: this folder",
+    rb"|Do not copy\s+into the public|must never be copied into\s+the public")))
 
 # ---------------------------------------------------------------- classes
 # SHAPE-matched. A live Fabric SQL endpoint once survived every green run because its
@@ -375,6 +393,139 @@ def iter_files(root: Path):
             yield Path(dp) / fn
 
 
+def _git(*args: str) -> bytes:
+    return subprocess.run(["git", "-C", str(REPO), *args], check=True, capture_output=True,
+                          timeout=600).stdout
+
+
+class _BlobReader:
+    """Every blob through ONE `git cat-file --batch` process.
+
+    A process per blob was fine while only text files were read; once every file is read for the
+    private marker, a staged scan of this repo took 220 s, nearly all of it process start-up.
+    """
+
+    def __init__(self) -> None:
+        self.proc: subprocess.Popen | None = None
+
+    def read(self, sha: str) -> bytes:
+        if self.proc is None:
+            self.proc = subprocess.Popen(["git", "-C", str(REPO), "cat-file", "--batch"],
+                                         stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        assert self.proc.stdin and self.proc.stdout
+        self.proc.stdin.write(sha.encode() + b"\n")
+        self.proc.stdin.flush()
+        header = self.proc.stdout.readline().split()
+        if len(header) != 3 or header[1] != b"blob":
+            raise OSError(f"git has no blob {sha}")
+        size = int(header[2])
+        data = self.proc.stdout.read(size)
+        # ⚠️ A git that dies mid-object leaves a SHORT read at EOF, which `read` returns without
+        # complaint. Short bytes would be scanned as if complete; the stream is unusable after it.
+        if len(data) != size or self.proc.stdout.read(1) != b"\n":
+            self.proc.kill()
+            self.proc = None
+            raise OSError(f"git cat-file returned a truncated blob {sha}")
+        return data
+
+
+_BLOBS = _BlobReader()
+
+
+def _blob(sha: str):
+    return lambda: _BLOBS.read(sha)
+
+
+def _raise(error: OSError):
+    raise error
+
+
+# Generated pages embed text as JSON with ASCII escaped (`\u003c`, `\u0026`, and anything else a
+# serialiser chooses). Undo every ASCII-range escape before matching: "\u003cyour-app-host\u003e"
+# otherwise reads as a host named "u003e", and `\u0050RIVATE` would hide a marker.
+_ASCII_ESCAPE = re.compile(rb"\\u00([0-7][0-9a-fA-F])")
+
+
+def normalise(raw: bytes) -> bytes:
+    """The bytes a reader would see: UTF-16 re-encoded as UTF-8, ASCII \\u escapes undone."""
+    if raw[:2] in (b"\xff\xfe", b"\xfe\xff"):
+        raw = raw.decode("utf-16", "replace").encode("utf-8")
+    return _ASCII_ESCAPE.sub(lambda m: bytes([int(m.group(1), 16)]), raw)
+
+
+def iter_sources(args):
+    """Yield (rel, label, read) for everything the chosen mode would publish.
+
+    ⚠️ THE WORKING TREE IS NOT WHAT GETS PUSHED (review 2026-10-05). A leak that is staged and
+    then scrubbed only in the working copy passes a tree scan and still lands in the commit; a
+    leak committed and removed again in a later local commit is still in the pushed history.
+    So the gate can also read the index (`--staged`), every blob that any commit in a range
+    added or changed (`--commits A..B`), and generated output that never enters git at all
+    (`--dir site/out`, the GitHub Pages artifact).
+    `rel` is always the repo-relative path, so allowlist entries apply unchanged; `label` adds
+    where the bytes came from. A `read` of None means a symbolic link in generated output.
+    """
+    if args.dir:
+        # ⚠️ FAIL CLOSED, AND NEVER FOLLOW A LINK THE UPLOADER WOULD (review 2026-10-05). The Pages
+        # artifact is a `tar --dereference`, so a symlinked file or folder publishes its TARGET,
+        # which this walk would never have read. A missing folder or a read error is not "clean".
+        base = (REPO / args.dir).resolve()
+        if not base.is_dir():
+            raise SystemExit(f"verify_publishable: --dir {args.dir} does not exist or is not a directory")
+        for dp, dns, fns in os.walk(base, onerror=_raise):
+            for name in dns + fns:
+                fp = Path(dp) / name
+                if fp.is_symlink():
+                    rel = fp.relative_to(REPO).as_posix()
+                    yield rel, rel, None
+            dns[:] = [d for d in dns if not (Path(dp) / d).is_symlink()]
+            for fn in fns:
+                fp = Path(dp) / fn
+                if fp.is_symlink():
+                    continue
+                rel = fp.relative_to(REPO).as_posix()
+                yield rel, rel, fp.read_bytes
+        return
+    if args.staged:
+        out = _git("ls-files", "--stage", "-z", "--", args.path)
+        for entry in out.split(b"\x00"):
+            if not entry:
+                continue
+            meta, path = entry.split(b"\t", 1)
+            mode, sha, _stage = meta.decode().split()
+            if mode == "160000":  # submodule pointer, no blob
+                continue
+            rel = path.decode("utf-8", "replace")
+            yield rel, f"{rel} (staged)", _blob(sha)
+        return
+    if args.commits:
+        # ⚠️ EVERY (PATH, BLOB) PAIR, AND MERGES TOO (review 2026-10-05). Deduplicating by blob alone
+        # let a forbidden PLAN.md through when a later commit renamed the same bytes to an allowed
+        # name: the allowed path was seen first, and the verdict depends on the path. And
+        # `diff-tree` without -m prints nothing for a merge, so a leak typed into a conflict
+        # resolution and removed afterwards was never read. -m diffs a merge against each parent.
+        seen: set[tuple[str, str]] = set()
+        for commit in _git("rev-list", args.commits).decode().split():
+            raw = _git("diff-tree", "-r", "-m", "-z", "--no-commit-id", "--root", "--no-renames",
+                       "--diff-filter=AMT", commit, "--", args.path).split(b"\x00")
+            for meta, path in zip(raw[0::2], raw[1::2]):
+                if not meta:
+                    continue
+                fields = meta.decode().split()
+                mode, sha = fields[1], fields[3]
+                if mode == "160000":  # submodule pointer, no blob
+                    continue
+                rel = path.decode("utf-8", "replace")
+                if (rel, sha) in seen:
+                    continue
+                seen.add((rel, sha))
+                yield rel, f"{rel} (commit {commit[:7]})", _blob(sha)
+        return
+    for fp in iter_files((REPO / args.path).resolve()):
+        rel = fp.relative_to(REPO).as_posix()
+        yield rel, rel, fp.read_bytes
+
+
 def allowed_classes(rel: str) -> tuple[set[str], str | None]:
     entry = ALLOWLIST.get(rel)
     if entry:
@@ -404,6 +555,11 @@ def main() -> int:
     ap.add_argument("--path", default=".", help="subtree to scan")
     ap.add_argument("--hash", help="print the salted digest for a surname and exit")
     ap.add_argument("--quiet", action="store_true")
+    mode = ap.add_mutually_exclusive_group()
+    mode.add_argument("--staged", action="store_true", help="scan the index (what the next commit holds)")
+    mode.add_argument("--commits", metavar="RANGE",
+                      help="scan every blob added or changed by the commits in RANGE, e.g. origin/main..HEAD")
+    mode.add_argument("--dir", help="scan a generated output directory, e.g. site/out")
     ap.add_argument("--no-allowlist", action="store_true",
                     help="ignore every allowlist entry. Run this before trusting a CLEAN "
                          "run: an entry excuses a whole class for a file, so it can hide "
@@ -414,43 +570,63 @@ def main() -> int:
         print(f'    "{digest(args.hash)}",   # add to BLOCKED_NAME_DIGESTS')
         return 0
 
-    root = (REPO / args.path).resolve()
     findings: list[tuple[str, str, str]] = []   # (class, path, detail)
     allowed_used: set[str] = set()
     scanned = 0
 
-    for fp in iter_files(root):
-        rel = fp.relative_to(REPO).as_posix()
-
+    for rel, label, read in iter_sources(args):
+        if read is None:
+            findings.append(("restricted_path", label,
+                             "symbolic link in generated output: the upload follows it, the scan does not"))
+            continue
         for rx, why in RESTRICTED_PATHS:
             if rx.search(rel):
-                findings.append(("restricted_path", rel, why))
+                findings.append(("restricted_path", label, why))
 
-        if fp.suffix.lower() not in TEXT_EXT:
+        suffix = PurePosixPath(rel).suffix.lower()
+        if suffix not in TEXT_EXT:
+            # The private-document marker is checked in EVERY file, whatever its extension: a
+            # plan renamed to `.bak` or pasted into a `.log` is still the plan. The other classes
+            # stay on text files, where a match means text and not random bytes.
+            try:
+                raw = read()
+            except (OSError, subprocess.CalledProcessError):
+                findings.append(("unscanned", label, "unreadable, not scanned"))
+                continue
+            if len(raw) > MAX_SCAN_BYTES:
+                findings.append(("unscanned", label, f"over {MAX_SCAN_BYTES // 1_000_000} MB, not scanned"))
+            elif PRIVATE_MARKER.search(normalise(raw)):
+                findings.append(("restricted_path", label, "carries a private-document marker"))
             continue
         try:
-            if fp.stat().st_size > MAX_SCAN_BYTES:
-                findings.append(("unscanned", rel, f"over {MAX_SCAN_BYTES // 1_000_000} MB, not scanned"))
+            raw = read()
+            if len(raw) > MAX_SCAN_BYTES:
+                findings.append(("unscanned", label, f"over {MAX_SCAN_BYTES // 1_000_000} MB, not scanned"))
                 continue
-            raw = fp.read_bytes()
-            if fp.suffix.lower() == ".gz":
+            if suffix == ".gz":
                 # Compressed JSON/CSV is still text that ships. Binary payloads (terrain
                 # heights) decode to noise and match nothing, which is fine.
                 with gzip.GzipFile(fileobj=io.BytesIO(raw)) as gz:
                     raw = gz.read(MAX_SCAN_BYTES + 1)
                 if len(raw) > MAX_SCAN_BYTES:
-                    findings.append(("unscanned", rel, "decompresses past the scan cap"))
+                    findings.append(("unscanned", label, "decompresses past the scan cap"))
                     continue
-        except (OSError, EOFError, gzip.BadGzipFile, zlib.error):
-            findings.append(("unscanned", rel, "unreadable or corrupt, not scanned"))
+        except (OSError, EOFError, gzip.BadGzipFile, zlib.error, subprocess.CalledProcessError):
+            findings.append(("unscanned", label, "unreadable or corrupt, not scanned"))
             continue
         scanned += 1
+        raw = normalise(raw)
+
+        if PRIVATE_MARKER.search(raw):
+            findings.append(("restricted_path", label, "carries a private-document marker"))
 
         excused, reason = allowed_classes(rel)
         if args.no_allowlist:
             excused, reason = set(), None
         if reason:
             allowed_used.add(rel)
+        fp_name = PurePosixPath(rel).name
+        rel = label
 
         if "internal" not in excused:
             for m in sorted({m.decode() for m in INTERNAL.findall(raw)}):
@@ -476,7 +652,7 @@ def main() -> int:
             for h in scan_disclosure(text):
                 findings.append(("disclosure", rel, h))
 
-        if fp.name == "README.md" and "german" not in excused:
+        if fp_name == "README.md" and "german" not in excused:
             if GERMAN.search(text):
                 hits = sorted(set(GERMAN.findall(text)))
                 findings.append(("german", rel,
@@ -519,6 +695,22 @@ def main() -> int:
             return 2
     if scan_names(name_clean):
         print("GATE BROKEN: the name digests fire on an innocent line.")
+        return 2
+    if not PRIVATE_MARKER.search(_join((b"Status: draft. This file is ", b"PRIV", b"ATE (it names source repos)."))):
+        print("GATE BROKEN: the private-document marker no longer fires.")
+        return 2
+    # Escaped and UTF-16 copies of the marker must still be found once normalised.
+    for disguised in (_join((b"This file is \\u0050RIV", b"ATE")),
+                      _join((b"This file is ", b"PRIV", b"ATE")).decode().encode("utf-16")):
+        if not PRIVATE_MARKER.search(normalise(disguised)):
+            print("GATE BROKEN: an escaped or UTF-16 private marker is no longer recognised.")
+            return 2
+    restricted = lambda p: any(rx.search(p) for rx, _ in RESTRICTED_PATHS)  # noqa: E731
+    if not all(restricted(p) for p in ("industry/x/PLAN.md", "industry/x/plan.md", "x/Provenance.json",
+                                       "app/.env", "app/.env.local", "app/.env.production.local")) \
+            or any(restricted(p) for p in ("industry/education/campus-twin/docs/plan-umplanen.md",
+                                           "app/.env.example", "app/.env.sample", "app/.env.template")):
+        print("GATE BROKEN: the restricted path rules no longer discriminate.")
         return 2
 
     by_class: dict[str, list] = {}

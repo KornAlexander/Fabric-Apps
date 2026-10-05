@@ -16,10 +16,10 @@ on:
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
+# Read-only by default. Only the deploy job, which runs no repository code, may write to Pages
+# or mint an OIDC token; the build job runs `npm ci` and the site's own build scripts.
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 # Never let two deploys race. Queue instead of cancelling, so a push that lands during a
 # build still ends up published rather than silently dropped.
@@ -30,6 +30,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read   # configure-pages reads the site settings
     steps:
       - uses: actions/checkout@v4
 
@@ -56,6 +59,14 @@ jobs:
         # underscore. Next puts every script and stylesheet in _next.
         run: touch site/out/.nojekyll
 
+      # The site is generated output that never enters git, so the repo gate never saw it.
+      # Scan exactly what is about to be uploaded.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Publication gate on the built site
+        run: python tools/verify_publishable.py --dir site/out
+
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
@@ -65,6 +76,9 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

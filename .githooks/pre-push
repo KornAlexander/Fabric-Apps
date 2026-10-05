@@ -1,0 +1,17 @@
+#!/bin/sh
+# Publication gate on everything about to be pushed: the tree, and every blob of every outgoing
+# commit (a leak committed and scrubbed again later is still in the pushed history).
+# Enable once per clone:  git config core.hooksPath .githooks
+set -e
+python=python3
+command -v "$python" >/dev/null 2>&1 || python=python
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ "$local_sha" = "0000000000000000000000000000000000000000" ] && continue
+  if [ "$remote_sha" = "0000000000000000000000000000000000000000" ]; then
+    range="origin/main..$local_sha"
+  else
+    range="$remote_sha..$local_sha"
+  fi
+  "$python" tools/verify_publishable.py --commits "$range" --quiet
+done
+"$python" tools/verify_publishable.py --quiet
