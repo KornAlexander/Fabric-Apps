@@ -34,15 +34,18 @@ import { colourForPm25, parseArea } from './luftParse.mjs';
 const AREA_URL = 'https://data.sensor.community/airrohr/v1/filter/area=';
 
 /**
- * The two query areas, as the user chose: city core and airport.
+ * Munich's two query areas, as the user chose: city core and airport. Other cities pass their own
+ * (`areas`, see src/layers/factories.ts).
  *
  * Sensor.Community answers the browser directly with `Access-Control-Allow-Origin: *`, so unlike
  * ADS-B and the Umweltbundesamt this layer needs no relay and no dev proxy at all.
  */
-const AREAS = [
+export interface SensorArea { label: string; lat: number; lon: number; radiusKm: number }
+
+const AREAS: readonly SensorArea[] = [
   { label: 'Stadt', lat: 48.137, lon: 11.575, radiusKm: 6 },
   { label: 'Flughafen', lat: 48.354, lon: 11.786, radiusKm: 6 },
-] as const;
+];
 
 /** The feed republishes every few minutes. */
 const POLL_MS = 180_000;
@@ -102,12 +105,15 @@ export interface LuftBuergerOptions {
   onStatus: StatusReporter;
   /** Overrides for tests. */
   areaUrl?: (lat: number, lon: number, radiusKm: number) => string;
+  /** Which areas to query; Munich's city and airport when omitted. */
+  areas?: readonly SensorArea[];
   /** Called when a refresh replaces the markers while one of them was selected. */
   onSelectionStale?: () => void;
 }
 
 export async function createLuftBuergerLayer(options: LuftBuergerOptions): Promise<LiveLayer> {
   const { placement, onStatus } = options;
+  const areas = options.areas ?? AREAS;
   const areaUrl = options.areaUrl
     ?? ((lat: number, lon: number, radiusKm: number) => `${AREA_URL}${lat},${lon},${radiusKm}`);
 
@@ -183,7 +189,7 @@ export async function createLuftBuergerLayer(options: LuftBuergerOptions): Promi
   const loadOnce = async () => {
     const now = Date.now();
     const byId = new Map<string, Sensor>();
-    for (const area of AREAS) {
+    for (const area of areas) {
       if (abort.signal.aborted) return;
       const payload = await fetchJson<unknown>(
         areaUrl(area.lat, area.lon, area.radiusKm),

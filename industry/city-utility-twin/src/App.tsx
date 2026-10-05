@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { createWorldMap, type PickDetail, type WorldMap } from './map/worldScene';
 import type { FlyTelemetry } from './map/flyControls';
-import { requestedSiteId } from './config/world';
+import { requestedSiteId, worldSites, type SiteConfig, type WorldId } from './config/world';
 import { PACK, brandName, packSites, packStartSite, type ConfigPack } from './config/activePack';
 import type { KoordinationLayer } from './live/koordination';
 import { createFactories } from './layers/factories';
@@ -61,6 +61,14 @@ async function authorNoteFor(name: string): Promise<Text> {
 export function App({ pack = PACK }: { pack?: ConfigPack } = {}) {
   const lang = useLanguage();
   const sites = useMemo(() => packSites(pack), [pack]);
+  // ⚠️ ONE CITY PER SCENE (see src/config/world.ts). The scene holds the active city's sites;
+  // the switcher lists every city's. The start site is kept in a ref so that flying between two
+  // sites of the same city does not rebuild the scene, while picking another city does.
+  const startSite = useRef<string>('');
+  if (!startSite.current) startSite.current = requestedSiteId(window.location.search, sites, packStartSite(pack, sites));
+  const [worldId, setWorldId] = useState<WorldId>(
+    () => sites.find((site) => site.id === startSite.current)?.world ?? sites[0].world);
+  const sceneSites = useMemo(() => worldSites(worldId, sites), [worldId, sites]);
   const brand = show(brandName(pack));
   const canvas = useRef<HTMLCanvasElement>(null);
   const notes = useRef<KoordinationLayer | null>(null);
@@ -76,7 +84,7 @@ export function App({ pack = PACK }: { pack?: ConfigPack } = {}) {
   const factories = useMemo(() => createFactories({
     showDetail: setDetail,
     notesReady: (layer) => { notes.current = layer; },
-  }, undefined, pack), [pack]);
+  }, undefined, pack, worldId), [pack, worldId]);
 
   // ------------------------------------------------------------------ the scene's lifetime
   //
@@ -95,6 +103,11 @@ export function App({ pack = PACK }: { pack?: ConfigPack } = {}) {
       created?.dispose();
       created = null;
       delete window.__zwilling;
+      // A city switch tears the old world down before the next one exists: nothing may still
+      // claim readiness, show the old flight readout or point at the old notes layer.
+      delete element.dataset.ready;
+      telemetry.set(null);
+      notes.current = null;
     };
     const fail = () => {
       delete element.dataset.ready;
@@ -117,7 +130,7 @@ export function App({ pack = PACK }: { pack?: ConfigPack } = {}) {
       if (!closed) setProgress({ stage: update.stage, loadedBytes: update.loadedBytes, totalBytes: update.totalBytes });
     }, (next) => {
       if (!closed) telemetry.set(next);
-    }, requestedSiteId(window.location.search, sites, packStartSite(pack, sites)), request.signal, sites).then((map) => {
+    }, startSite.current, request.signal, sceneSites).then((map) => {
       if (closed) { map.dispose(); return; }
       created = map;
       window.__zwilling = () => map.debug();
@@ -144,7 +157,7 @@ export function App({ pack = PACK }: { pack?: ConfigPack } = {}) {
       window.removeEventListener('pagehide', onPageHide);
       teardown();
     };
-  }, [telemetry, sites, pack]);
+  }, [telemetry, sceneSites]);
 
   // The tab title names the brand and the site, in the current language.
   useEffect(() => {
@@ -202,6 +215,21 @@ export function App({ pack = PACK }: { pack?: ConfigPack } = {}) {
   const refreshNotes = async () => { await notes.current?.refresh(); };
   const ready = phase === 'ready' && world !== null;
 
+  /** Same city: fly there. Another city: rebuild the scene around it, starting at that site. */
+  const goTo = (site: SiteConfig) => {
+    if (!world) return;
+    if (site.world === worldId) { world.flyToSite(site.id); return; }
+    startSite.current = site.id;
+    const url = new URL(window.location.href);
+    url.searchParams.set('ort', site.id);
+    window.history.replaceState(window.history.state, '', url);
+    setDetail(null);
+    setWorld(null);
+    setProgress(null);
+    setPhase('loading');
+    setWorldId(site.world);
+  };
+
   return (
     <main id="map" aria-label={brand}>
       <canvas
@@ -231,7 +259,7 @@ export function App({ pack = PACK }: { pack?: ConfigPack } = {}) {
                 type="button"
                 data-site={site.id}
                 aria-pressed={site.id === activeSite}
-                onClick={() => world.flyToSite(site.id)}
+                onClick={() => goTo(site)}
               >
                 <strong>{show(site.name)}</strong>
                 <small>{show(site.subtitle)}</small>
@@ -239,7 +267,7 @@ export function App({ pack = PACK }: { pack?: ConfigPack } = {}) {
             ))}
           </div>
 
-          <LayerPanel world={world} factories={factories} refreshNotes={refreshNotes} pack={pack} />
+          <LayerPanel key={worldId} world={world} factories={factories} refreshNotes={refreshNotes} pack={pack} worldId={worldId} />
 
           {detail ? (
             <DetailPanel
@@ -249,12 +277,16 @@ export function App({ pack = PACK }: { pack?: ConfigPack } = {}) {
             />
           ) : null}
 
-          <Assistant
-            onNoteSaved={() => { void refreshNotes(); }}
-            onSignIn={onSignIn}
-            authorNote={authorNote}
-            offerSignIn={offerSignIn}
-          />
+          {/* ⚠️ MUNICH ONLY. The agent's tools (roadworks, notes, UBA stations) query Munich's
+              services; offered in Hamburg it would answer about Munich and draft Munich notes. */}
+          {worldId === 'munich' ? (
+            <Assistant
+              onNoteSaved={() => { void refreshNotes(); }}
+              onSignIn={onSignIn}
+              authorNote={authorNote}
+              offerSignIn={offerSignIn}
+            />
+          ) : null}
 
           <nav id="map-controls" aria-label={t('controls.label')}>
             <button

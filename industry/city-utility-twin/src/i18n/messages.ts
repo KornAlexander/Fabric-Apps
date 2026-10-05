@@ -26,8 +26,8 @@ const n = (count: number, one: string, many: string) => `${count} ${count === 1 
 export const MESSAGES = {
   // ------------------------------------------------------------------ shell
   'app.canvas': s(
-    'Interaktive 3D-Karte von München und dem Flughafen München',
-    'Interactive 3D map of Munich and Munich Airport',
+    'Interaktive 3D-Karte der gewählten Stadt',
+    'Interactive 3D map of the selected city',
   ),
   'loading.title': f((brand: string) => `${brand} wird geladen`, (brand: string) => `Loading ${brand}`),
   'loading.preparing': s('Die Ansicht wird vorbereitet…', 'Preparing the view…'),
@@ -73,6 +73,11 @@ export const MESSAGES = {
   'layer.preparing': s('wird vorbereitet…', 'preparing…'),
   'layer.unavailable': s('Ebene nicht verfügbar', 'Layer unavailable'),
   'layer.notIncluded': s('nicht enthalten', 'not included'),
+  'layer.otherCity': s('in dieser Stadt nicht verfügbar', 'not available in this city'),
+  'layers.catalogueOtherCity': s(
+    'Die offenen Daten der Landeshauptstadt München gibt es nur in München.',
+    'The City of Munich’s open data is available in Munich only.',
+  ),
   'layer.unofficialOff': s(
     'in dieser Version aus (inoffizielle Schnittstelle ohne veröffentlichte Nutzungsbedingungen)',
     'off in this build (unofficial interface without published terms of use)',
@@ -419,8 +424,8 @@ export const MESSAGES = {
 
   // ------------------------------------------------------------------ attribution
   'attribution.summary': s(
-    'Kartendaten © LDBV · Copernicus · OpenStreetMap · adsb.lol · LHM · MVV · MVG · UBA · Sensor.Community',
-    'Map data © LDBV · Copernicus · OpenStreetMap · adsb.lol · LHM · MVV · MVG · UBA · Sensor.Community',
+    'Kartendaten © LDBV · LGV · LGL · Copernicus · OpenStreetMap · adsb.lol · LHM · MVV · MVG · UBA · Sensor.Community',
+    'Map data © LDBV · LGV · LGL · Copernicus · OpenStreetMap · adsb.lol · LHM · MVV · MVG · UBA · Sensor.Community',
   ),
 };
 

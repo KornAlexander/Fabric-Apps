@@ -5,7 +5,7 @@ import { buildAssetConfig, buildOutput } from './tools/asset-build-config.mjs';
 import { copyFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { assertPack, assertPackSites } from './src/config/pack.mjs';
-import { SITES, WORLD_SHELL_SITE } from './src/config/world';
+import { SHELL_SITES, SITES } from './src/config/world';
 
 /**
  * The config pack this build ships. CONFIG_PACK is a path to a pack JSON (customer packs live in
@@ -16,7 +16,7 @@ import { SITES, WORLD_SHELL_SITE } from './src/config/world';
 function configPackPath(): string {
   const path = resolve(process.env.CONFIG_PACK || fileURLToPath(new URL('./config/packs/generic.json', import.meta.url)));
   const pack = assertPack(JSON.parse(readFileSync(path, 'utf8')));
-  assertPackSites(pack, SITES.map((site) => site.id), WORLD_SHELL_SITE);
+  assertPackSites(pack, Object.fromEntries(SITES.map((site) => [site.id, site.world])), SHELL_SITES);
   return path;
 }
 

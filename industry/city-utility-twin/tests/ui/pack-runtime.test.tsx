@@ -52,21 +52,43 @@ describe('config pack contract', () => {
   });
 
   it('selects only ready cities\' shipped sites and requires the world shell', () => {
-    expect(packSites(loadPack(generic)).map((site) => site.id)).toEqual(['munich', 'flughafen']);
+    expect(packSites(loadPack(generic)).map((site) => site.id)).toEqual(['munich', 'flughafen', 'hamburg-centre', 'stuttgart-centre']);
     expect(packStartSite(loadPack(generic))).toBe('munich');
     const cityOnly = pack({ cities: [{ id: 'munich', aois: ['munich'], status: 'ready' }] });
     expect(() => packSites(cityOnly)).toThrow(/world shell/);
   });
 
   it('fails a ready city whose AOI this build does not ship, instead of dropping it', () => {
-    const shipped = ['munich', 'flughafen'];
+    const shipped = { munich: 'munich', flughafen: 'munich' };
+    const shells = { munich: 'flughafen', hamburg: 'hamburg-centre' };
     const early = pack({ cities: [
       { id: 'munich', aois: ['munich', 'flughafen'], status: 'ready' },
       { id: 'hamburg', aois: ['hamburg-centre'], status: 'ready' },
     ] });
-    expect(packSiteErrors(early, shipped, 'flughafen')).toEqual(['city hamburg is ready, but this build does not ship its AOI hamburg-centre']);
-    expect(() => packSites(early)).toThrow(/hamburg-centre/);
-    expect(packSiteErrors(loadPack(generic), shipped, 'flughafen')).toEqual([]);
+    expect(packSiteErrors(early, shipped, shells)).toEqual(['city hamburg is ready, but this build does not ship its AOI hamburg-centre']);
+    expect(packSiteErrors(loadPack(generic),
+      { munich: 'munich', flughafen: 'munich', 'hamburg-centre': 'hamburg', 'stuttgart-centre': 'stuttgart' },
+      { ...shells, stuttgart: 'stuttgart-centre' })).toEqual([]);
+    // An AOI listed under the wrong city would show in that city's switcher and fail to load.
+    const misfiled = pack({ defaultCity: 'hamburg', cities: [
+      { id: 'hamburg', aois: ['hamburg-centre', 'munich'], status: 'ready' },
+    ] });
+    expect(() => packSites(misfiled)).toThrow(/city hamburg lists AOI munich, which belongs to munich/);
+    // A city this build has no world for at all fails at startup too, naming the city.
+    const unknown = pack({ cities: [
+      { id: 'munich', aois: ['munich', 'flughafen'], status: 'ready' },
+      { id: 'berlin', aois: ['berlin-centre'], status: 'ready' },
+    ] });
+    expect(() => packSites(unknown)).toThrow(/berlin-centre[\s\S]*no world for it/);
+  });
+
+  it('requires each ready city to ship its own world shell', () => {
+    const hamburgOnly = pack({ defaultCity: 'hamburg', cities: [
+      { id: 'munich', aois: ['munich', 'flughafen'], status: 'planned' },
+      { id: 'hamburg', aois: ['hamburg-centre'], status: 'ready' },
+    ] });
+    expect(packSites(hamburgOnly).map((site) => site.id)).toEqual(['hamburg-centre']);
+    expect(packStartSite(hamburgOnly)).toBe('hamburg-centre');
   });
 
   it('brands through pack variables, so the dark theme keeps its own accent', () => {
@@ -104,5 +126,28 @@ describe('a different pack changes the running app', () => {
 
     act(() => setLanguage('en'));
     expect(document.title).toBe('Beispielstadt Utilities · Munich city centre');
+  });
+
+  it('switching to another city rebuilds the scene with that city only', async () => {
+    render(<App pack={loadPack(generic)} />);
+    await screen.findByRole('heading', { name: 'Datenebenen' });
+    expect((createWorldMap.mock.calls[0][5] as { id: string }[]).map((s) => s.id)).toEqual(['munich', 'flughafen']);
+    world.dispose.mockClear();
+
+    await act(async () => { screen.getByRole('button', { name: /Hamburg Innenstadt/ }).click(); });
+    await screen.findByRole('heading', { name: 'Datenebenen' });
+    const last = createWorldMap.mock.calls.at(-1)!;
+    expect(last[3]).toBe('hamburg-centre');
+    expect((last[5] as { id: string }[]).map((s) => s.id)).toEqual(['hamburg-centre']);
+    expect(world.dispose).toHaveBeenCalledTimes(1);
+    // The assistant's tools are Munich's; it is not offered elsewhere.
+    expect(screen.queryByRole('button', { name: /Assistent/ })).toBeNull();
+    expect(new URL(window.location.href).searchParams.get('ort')).toBe('hamburg-centre');
+
+    // Munich-only sources are offered as such, not silently empty.
+    expect((screen.getByRole('checkbox', { name: /Baustellen und Halteverbote/ }) as HTMLInputElement).disabled).toBe(true);
+    expect(document.querySelector('[data-state-for="baustellen"]')?.textContent).toBe('in dieser Stadt nicht verfügbar');
+    expect((screen.getByRole('checkbox', { name: /Luftqualität amtlich/ }) as HTMLInputElement).disabled).toBe(false);
+    expect(document.getElementById('catalogue-other-city')).not.toBeNull();
   });
 });

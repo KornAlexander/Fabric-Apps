@@ -3,7 +3,7 @@ import { createFlugverkehrLayer } from '../live/flugverkehr';
 import { createBaustellenLayer } from '../live/baustellen';
 import { createMvgLayer } from '../live/mvg';
 import { createLuftAmtlichLayer } from '../live/luftAmtlich';
-import { createLuftBuergerLayer } from '../live/luftBuerger';
+import { createLuftBuergerLayer, type SensorArea } from '../live/luftBuerger';
 import { createKoordinationLayer, type KoordinationLayer } from '../live/koordination';
 import { createWfsLayer } from '../live/wfs';
 import { createFahrzeugeLayer } from '../live/fahrzeuge';
@@ -12,6 +12,7 @@ import type { LiveStatus } from '../live/source';
 import type { MessageKey } from '../i18n';
 import { ENABLED_FEEDS, isUnofficial } from '../config/feeds';
 import { PACK, divisionOn, type ConfigPack, type Division } from '../config/activePack';
+import type { WorldId } from '../config/world';
 
 /**
  * A layer is only constructed the first time it is switched on.
@@ -79,10 +80,33 @@ export function layerInPack(id: string, pack: ConfigPack = PACK): boolean {
   return divisionOn(layerDivision(id), pack);
 }
 
+/**
+ * Layers whose source covers every city of the app, and what each needs per city. Everything else
+ * is a Munich service (its geoportal WFS, MVG, the roadworks and the notes on them, and ADS-B,
+ * whose relay only answers for a box around Munich) and exists in Munich only.
+ */
+const EVERY_CITY = new Set<string>(['luft-amtlich', 'luft-buerger']);
+
+/** The Umweltbundesamt's `station city` for each world (verified 2026-10-05: 5, 15 and 4 active). */
+const UBA_CITY: Record<WorldId, string> = { munich: 'München', hamburg: 'Hamburg', stuttgart: 'Stuttgart' };
+
+/** Sensor.Community query areas: centred on each core, 6 km like Munich's city area. */
+const SENSOR_AREAS: Record<WorldId, readonly SensorArea[] | undefined> = {
+  munich: undefined, // the layer's own city + airport areas
+  hamburg: [{ label: 'Stadt', lat: 53.5455, lon: 10.0035, radiusKm: 6 }],
+  stuttgart: [{ label: 'Stadt', lat: 48.7758, lon: 9.177, radiusKm: 6 }],
+};
+
+/** Whether a layer has a data source in this city. */
+export function layerAvailableIn(id: string, world: WorldId): boolean {
+  return world === 'munich' || EVERY_CITY.has(id);
+}
+
 export function createFactories(
   hooks: LayerHooks,
   enabled: ReadonlySet<string> = ENABLED_FEEDS,
   pack: ConfigPack = PACK,
+  worldId: WorldId = 'munich',
 ): Record<string, LayerFactory> {
   const factories: Record<string, LayerFactory> = {
     flugverkehr: async (world, onStatus) =>
@@ -105,6 +129,7 @@ export function createFactories(
       world.registerLayer(await createLuftAmtlichLayer({
         placement: world.placement,
         onStatus,
+        city: UBA_CITY[worldId],
         // Frame the stations the first time they are drawn. Without this the layer switches on,
         // reports five stations and shows an empty view, because none of them happen to fall in
         // the default camera's frame.
@@ -122,6 +147,7 @@ export function createFactories(
       world.registerLayer(await createLuftBuergerLayer({
         placement: world.placement,
         onStatus,
+        areas: SENSOR_AREAS[worldId],
         onSelectionStale: () => world.clearPick(),
       })),
     koordination: async (world, onStatus) => {
@@ -147,6 +173,8 @@ export function createFactories(
     if (isUnofficial(id) && !enabled.has(id)) delete factories[id];
     // A division the pack switches off has no layers at all, not disabled ones.
     else if (!layerInPack(id, pack)) delete factories[id];
+    // A layer with no source in this city is not offered; the panel says why.
+    else if (!layerAvailableIn(id, worldId)) delete factories[id];
   }
   return factories;
 }

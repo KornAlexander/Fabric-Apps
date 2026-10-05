@@ -11,7 +11,7 @@
  */
 import raw from 'virtual:config-pack';
 import { assertPack, assertPackSites } from './pack.mjs';
-import { SITES, WORLD_SHELL_SITE, type SiteConfig } from './world';
+import { SHELL_SITES, SITES, type SiteConfig } from './world';
 import { both, type Text } from '../i18n';
 
 export type Division =
@@ -47,11 +47,11 @@ export function divisionOn(division: Division | null, pack: ConfigPack = PACK): 
  *
  * ⚠️ ONLY READY CITIES, AND EVERY READY AOI MUST SHIP. A planned city in the pack is a promise,
  * not terrain; listing it would offer a site the scene cannot load. A ready city whose AOI this
- * build lacks is an error, not a quiet omission, and the world shell core is required because it
- * carries the terrain around every site. vite.config.ts runs the same check at build time.
+ * build lacks is an error, not a quiet omission, and each ready city must ship its own world's
+ * shell core. vite.config.ts runs the same check at build time.
  */
 export function packSites(pack: ConfigPack = PACK, sites: readonly SiteConfig[] = SITES): SiteConfig[] {
-  assertPackSites(pack, sites.map((site) => site.id), WORLD_SHELL_SITE);
+  assertPackSites(pack, Object.fromEntries(sites.map((site) => [site.id, site.world])), SHELL_SITES);
   const wanted = new Set(pack.cities.filter((city) => city.status === 'ready').flatMap((city) => city.aois));
   return sites.filter((site) => wanted.has(site.id));
 }

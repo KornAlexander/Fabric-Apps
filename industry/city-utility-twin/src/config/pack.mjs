@@ -106,26 +106,33 @@ export function assertPack(pack) {
  * Problems between a (valid) pack and the sites this build actually ships.
  *
  * ⚠️ "READY" MEANS SHIPPED. A ready city whose AOI is not in the build would otherwise vanish
- * from the switcher without a word, and a default city with nothing shipped would make the app
- * open somewhere the pack never named. Both are build failures, not fallbacks. Run by
- * vite.config.ts at build time and by the app at startup, so a pack that builds also runs.
+ * from the switcher without a word, and a city without its own shell core would load as cores
+ * floating in a void. Both are build failures, not fallbacks. Run by vite.config.ts at build time
+ * and by the app at startup, so a pack that builds also runs.
+ *
+ * `siteWorld` maps every shipped core to its world (= city) id; `shells` maps each world to the
+ * core that carries its shell. An AOI listed under a city it does not belong to is an error too:
+ * it would appear in that city's switcher and fail to load there (review 2026-10-05).
  */
-export function packSiteErrors(pack, shipped, shell) {
+export function packSiteErrors(pack, siteWorld, shells) {
   const errors = [];
-  const shippedSet = new Set(shipped);
-  const selected = new Set();
+  const shipped = Object.keys(siteWorld);
+  let selected = 0;
   for (const city of pack.cities.filter((entry) => entry.status === 'ready')) {
     for (const aoi of city.aois) {
-      if (shippedSet.has(aoi)) selected.add(aoi);
-      else errors.push(`city ${city.id} is ready, but this build does not ship its AOI ${aoi}`);
+      if (!(aoi in siteWorld)) errors.push(`city ${city.id} is ready, but this build does not ship its AOI ${aoi}`);
+      else if (siteWorld[aoi] !== city.id) errors.push(`city ${city.id} lists AOI ${aoi}, which belongs to ${siteWorld[aoi]}`);
+      else selected += 1;
     }
+    const shell = shells[city.id];
+    if (!shell) errors.push(`city ${city.id} is ready, but this build has no world for it`);
+    else if (!city.aois.includes(shell)) errors.push(`city ${city.id} must include ${shell}, which holds the world shell`);
   }
-  if (!selected.size) errors.push(`selects none of the shipped sites (${shipped.join(', ')})`);
-  else if (!selected.has(shell)) errors.push(`must include ${shell}, which holds the world shell`);
+  if (!selected) errors.push(`selects none of the shipped sites (${shipped.join(', ')})`);
   return errors;
 }
 
-export function assertPackSites(pack, shipped, shell) {
-  const errors = packSiteErrors(pack, shipped, shell);
+export function assertPackSites(pack, siteWorld, shells) {
+  const errors = packSiteErrors(pack, siteWorld, shells);
   if (errors.length) throw new Error(`Config pack "${pack.id}" does not fit this build:\n- ${errors.join('\n- ')}`);
 }

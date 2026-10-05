@@ -6,9 +6,10 @@ import { later, show, t, type Text } from '../i18n';
 import { useLanguage } from '../i18n/useLanguage';
 import { isUnofficial } from '../config/feeds';
 import {
-  BUILT_IN_LAYERS, layerInPack, layerNameKey, layerSourceKey, type LayerFactory,
+  BUILT_IN_LAYERS, layerAvailableIn, layerInPack, layerNameKey, layerSourceKey, type LayerFactory,
 } from '../layers/factories';
 import { PACK, type ConfigPack } from '../config/activePack';
+import type { WorldId } from '../config/world';
 
 interface RowState {
   checked: boolean;
@@ -23,17 +24,23 @@ export interface LayerPanelProps {
   refreshNotes(): Promise<void>;
   /** The config pack; layers of divisions it switches off are not listed. */
   pack?: ConfigPack;
+  /** The city on screen; layers without a source there are shown as such. */
+  worldId?: WorldId;
 }
 
 /** The data layer panel: built-in layers first, then the open-data catalogue by group. */
-export function LayerPanel({ world, factories, refreshNotes, pack = PACK }: LayerPanelProps) {
+export function LayerPanel({ world, factories, refreshNotes, pack = PACK, worldId = 'munich' }: LayerPanelProps) {
   useLanguage();
   const [rows, setRows] = useState<Record<string, RowState>>({});
   const [refreshing, setRefreshing] = useState(false);
   const built = useRef(new Set<string>());
-  const groups = useMemo(() => groupedLayers()
+  const allGroups = useMemo(() => groupedLayers()
     .map(({ group, layers }) => ({ group, layers: layers.filter((spec) => layerInPack(spec.id, pack)) }))
     .filter(({ layers }) => layers.length > 0), [pack]);
+  // The catalogue is one city's open data; elsewhere it is one line, not a wall of disabled rows.
+  const groups = useMemo(() => allGroups
+    .map(({ group, layers }) => ({ group, layers: layers.filter((spec) => layerAvailableIn(spec.id, worldId)) }))
+    .filter(({ layers }) => layers.length > 0), [allGroups, worldId]);
   const builtIn = useMemo(() => BUILT_IN_LAYERS.filter((id) => layerInPack(id, pack)), [pack]);
 
   const row = (id: string): RowState =>
@@ -82,7 +89,11 @@ export function LayerPanel({ world, factories, refreshNotes, pack = PACK }: Laye
     const state = row(id);
     const missing = !factories[id];
     const status: LiveStatus = missing
-      ? { ...idleStatus(), text: later(isUnofficial(id) ? 'layer.unofficialOff' : 'layer.notIncluded') }
+      ? {
+        ...idleStatus(),
+        text: later(!layerAvailableIn(id, worldId) ? 'layer.otherCity'
+          : isUnofficial(id) ? 'layer.unofficialOff' : 'layer.notIncluded'),
+      }
       : state.status;
     return (
       <li key={id}>
@@ -133,6 +144,9 @@ export function LayerPanel({ world, factories, refreshNotes, pack = PACK }: Laye
         ))}
       </ul>
       <div id="layer-groups">
+        {groups.length < allGroups.length ? (
+          <p className="layers-note" id="catalogue-other-city">{t('layers.catalogueOtherCity')}</p>
+        ) : null}
         {groups.map(({ group, layers }) => (
           <details className="layer-group" key={layers[0].id}>
             <summary>{t('layer.group', show(group), layers.length)}</summary>

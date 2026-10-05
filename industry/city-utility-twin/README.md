@@ -91,9 +91,11 @@ tools/             asset gates, deployment scripts, geodata pipeline (tools/geod
 
 | Layer | Source |
 |---|---|
-| Terrain, orthophoto, LoD2 buildings, trees | Bayerische Vermessungsverwaltung (CC BY 4.0) |
+| Terrain, orthophoto, LoD2 buildings, trees (Munich) | Bayerische Vermessungsverwaltung (CC BY 4.0) |
+| Terrain, orthophoto, LoD2 buildings (Hamburg) | LGV Hamburg (dl-de/by-2-0) |
+| Terrain, orthophoto, LoD2 buildings (Stuttgart) | LGL Baden-Wuerttemberg (dl-de/by-2-0) |
 | Coarse shell | Copernicus DEM GLO-30 |
-| Construction sites, no-parking zones, stops | City of Munich open data (`mor_wfs`) |
+| Construction sites, no-parking zones, stops (Munich only) | City of Munich open data (`mor_wfs`) |
 | Departures | Munich public transport operator MVG (public departures interface; unofficial, off in the public build, see `VITE_UNOFFICIAL_FEEDS`) |
 | Vehicles | MVV planned service data (GTFS, CC BY, feed 09/2026), positions computed from planned departures, not tracked |
 | Air traffic | adsb.lol (ODbL) |

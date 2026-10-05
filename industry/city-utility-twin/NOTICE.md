@@ -25,6 +25,39 @@ decoded into metres. Tree crown radius is estimated from height; species are unk
 visible in the orthophoto are part of the photograph, taken on the survey flight, and are not
 live data.
 
+## Hamburg survey data
+
+Terrain (DGM1, 2022 airborne laser scan), imagery (DOP, leaf-on series) and LoD2 building geometry
+(vintage 2026-04-28) of the Hamburg core are from the Landesbetrieb Geoinformation und Vermessung
+under [Datenlizenz Deutschland – Namensnennung – Version 2.0](https://www.govdata.de/dl-de/by-2-0).
+
+Datenquelle: Freie und Hansestadt Hamburg, Landesbetrieb Geoinformation und Vermessung (LGV), dl-de/by-2-0
+
+| | Hamburg Innenstadt |
+|---|---|
+| height grid | 2 m posting, rendered at 4 m |
+| imagery | ~0.70 m/px, one image |
+| buildings | 2 338 |
+| trees | none built |
+
+The LGV imagery service covers Hamburg only, so the coarse surrounding imagery is blank where the
+shell reaches into Schleswig-Holstein and Niedersachsen.
+
+## Baden-Württemberg survey data
+
+Terrain (DGM1), imagery (DOP20) and LoD2 building geometry of the Stuttgart core are from the
+Landesamt für Geoinformation und Landentwicklung Baden-Württemberg under
+[Datenlizenz Deutschland – Namensnennung – Version 2.0](https://www.govdata.de/dl-de/by-2-0).
+
+Datenquelle: LGL, www.lgl-bw.de, dl-de/by-2-0
+
+| | Stuttgart Zentrum |
+|---|---|
+| height grid | 2 m posting, rendered at 4 m |
+| imagery | ~0.94 m/px, one image |
+| buildings | 15 219 |
+| trees | none built |
+
 ## Copernicus DEM
 
 produced using Copernicus WorldDEM-30 © DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA; all rights reserved

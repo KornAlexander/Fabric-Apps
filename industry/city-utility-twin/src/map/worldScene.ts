@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { SITES, WORLD_SHELL_SITE, type SiteConfig } from '../config/world';
+import { SITES, WORLDS, type SiteConfig } from '../config/world';
 import { ASSET_BINDING } from '../config/terrainBase';
 import { createAssetReader } from '../assets/reader.mjs';
 import { wgs84ToUtm32 } from '../geo/utm32.mjs';
@@ -171,13 +171,18 @@ export async function createWorldMap(
   startSiteId: string,
   signal?: AbortSignal,
   /**
-   * The cores to build, in order; the first is the world origin. Chosen by the config pack.
-   * ⚠️ Must include WORLD_SHELL_SITE, which carries the shell that covers the whole world.
+   * The cores to build, in order; the first is the world origin. ONE world (city) only: its
+   * shell core must be among them. Chosen by the config pack and the city the user picked.
    */
-  sites: readonly SiteConfig[] = SITES,
+  sites: readonly SiteConfig[] = SITES.filter((site) => site.world === SITES[0].world),
 ): Promise<WorldMap> {
-  if (!sites.some((site) => site.id === WORLD_SHELL_SITE)) {
-    throw new Error(`The selected sites must include ${WORLD_SHELL_SITE}, which holds the world shell.`);
+  const worldId = sites[0]?.world;
+  if (!worldId || sites.some((site) => site.world !== worldId)) {
+    throw new Error('A scene holds exactly one world; the selected sites span several or none.');
+  }
+  const shellSite = WORLDS[worldId].shellSite;
+  if (!sites.some((site) => site.id === shellSite)) {
+    throw new Error(`The selected sites must include ${shellSite}, which holds the ${worldId} shell.`);
   }
   const inScene = (id: string) => sites.find((site) => site.id === id);
   const cleanup: (() => void)[] = [];
@@ -293,8 +298,8 @@ export async function createWorldMap(
     // ---------------------------------------------------------------- shell
     // ⚠️ ONE shell for the whole world, taken from the core whose AOI declares the union box.
     // See config/aoi/flughafen.json: two per-core shells 28 km apart leave a hole exactly where
-    // the camera flies.
-    const shellReader = await readerFor(WORLD_SHELL_SITE);
+    // the camera flies. Every other city is a world of its own with its own shell core.
+    const shellReader = await readerFor(shellSite);
     const shellAssets = await loadShell(shellReader, onProgress);
     textures.add(shellAssets.shellTexture);
     textures.add(shellAssets.shellDrapeTexture);

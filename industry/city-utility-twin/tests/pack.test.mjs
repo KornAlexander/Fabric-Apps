@@ -15,7 +15,9 @@ test('the shipped generic pack is valid and enables all eight divisions', () => 
 test('the default city must exist and be ready', () => {
   const missing = clone(); missing.defaultCity = 'atlantis';
   assert.match(validatePack(missing).join('\n'), /defaultCity must be one of/);
-  const planned = clone(); planned.defaultCity = 'hamburg';
+  const planned = clone();
+  planned.cities.find((city) => city.id === 'hamburg').status = 'planned';
+  planned.defaultCity = 'hamburg';
   assert.match(validatePack(planned).join('\n'), /defaultCity must be ready/);
 });
 

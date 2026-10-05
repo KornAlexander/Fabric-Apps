@@ -37,16 +37,48 @@ test('the build core list matches the app site list', async () => {
   );
 });
 
-test('the world shell comes from a core that actually has one', async () => {
+/** site id -> world id, and world id -> shell core, as src/config/world.ts declares them. */
+async function declaredWorlds() {
   const source = await readFile(projectUrl('src/config/world.ts'), 'utf8');
-  const match = source.match(/WORLD_SHELL_SITE\s*=\s*'([a-z0-9-]+)'/);
-  assert.ok(match, 'WORLD_SHELL_SITE is not declared');
-  const shellSite = match[1];
-  assert.ok(CORES.includes(shellSite), `${shellSite} is not one of the shipped cores`);
+  const siteWorld = Object.fromEntries(
+    [...source.matchAll(/^\s{4}id:\s*'([a-z0-9-]+)',\s*\n\s{4}world:\s*'([a-z0-9-]+)',$/gm)].map((m) => [m[1], m[2]]),
+  );
+  const shells = Object.fromEntries(
+    [...source.matchAll(/^\s{2}([a-z0-9-]+):\s*\{\s*shellSite:\s*'([a-z0-9-]+)'\s*\},$/gm)].map((m) => [m[1], m[2]]),
+  );
+  return { siteWorld, shells };
+}
 
-  const manifest = await inspectCore(projectPath(`public/terrain/${shellSite}`));
-  assert.equal(manifest.files['shell.u16'].state, 'present');
-  assert.equal(manifest.files['shell-drape.jpg'].state, 'present');
+const coreBox = (m) => ({
+  minE: m.origin.easting, minN: m.origin.northing,
+  maxE: m.origin.easting + m.width * m.resolutionM, maxN: m.origin.northing + m.height * m.resolutionM,
+});
+
+test('every shipped core belongs to a world, and every world shell is a shipped core that has one', async () => {
+  const { siteWorld, shells } = await declaredWorlds();
+  assert.deepEqual(Object.keys(siteWorld), [...CORES], 'a core has no world in src/config/world.ts');
+  assert.ok(Object.keys(shells).length > 0, 'no world shells declared');
+  for (const [worldId, shellSite] of Object.entries(shells)) {
+    if (!Object.values(siteWorld).includes(worldId)) continue; // a world with no shipped core yet
+    assert.equal(siteWorld[shellSite], worldId, `${worldId}'s shell core ${shellSite} is not one of its cores`);
+    const manifest = await inspectCore(projectPath(`public/terrain/${shellSite}`));
+    assert.equal(manifest.files['shell.u16'].state, 'present');
+    assert.equal(manifest.files['shell-drape.jpg'].state, 'present');
+  }
+});
+
+test('every core lies inside its own world\'s shell', async () => {
+  // A core outside its shell ends in a cliff over the void, and a flight between two cores of
+  // one world crosses a hole. Checked per world: the cities are separate scenes.
+  const { siteWorld, shells } = await declaredWorlds();
+  for (const [site, worldId] of Object.entries(siteWorld)) {
+    const meta = JSON.parse(await readFile(projectUrl(`public/terrain/${site}/heightmap.json`), 'utf8'));
+    const shell = JSON.parse(await readFile(projectUrl(`public/terrain/${shells[worldId]}/shell.json`), 'utf8'));
+    const core = coreBox(meta);
+    const box = coreBox(shell);
+    assert.ok(core.minE >= box.minE && core.minN >= box.minN && core.maxE <= box.maxE && core.maxN <= box.maxN,
+      `${site} is not inside the ${worldId} shell`);
+  }
 });
 
 test('each core ships exactly one form of imagery', async () => {
@@ -69,12 +101,12 @@ test('the airfield core declares no vegetation rather than shipping empty vegeta
   assert.equal(manifest.files['vegetation.bin'].state, 'absent');
 });
 
-test('the two cores are far enough apart to need one shared shell', async () => {
+test('Munich\'s two cores are far enough apart to need one shared shell', async () => {
   // The whole two-core design exists because the sites are tens of kilometres apart. If a future
   // core landed next to an existing one this assumption, and the union shell built for it, would
   // need revisiting rather than silently still working.
   const metas = await Promise.all(
-    CORES.map(async (id) =>
+    ['munich', 'flughafen'].map(async (id) =>
       JSON.parse(await readFile(projectUrl(`public/terrain/${id}/heightmap.json`), 'utf8'))
     )
   );

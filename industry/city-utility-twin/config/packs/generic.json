@@ -8,8 +8,8 @@
   "defaultCity": "munich",
   "cities": [
     { "id": "munich", "aois": ["munich", "flughafen"], "status": "ready" },
-    { "id": "hamburg", "aois": ["hamburg-centre"], "status": "planned" },
-    { "id": "stuttgart", "aois": ["stuttgart-centre"], "status": "planned" }
+    { "id": "hamburg", "aois": ["hamburg-centre"], "status": "ready" },
+    { "id": "stuttgart", "aois": ["stuttgart-centre"], "status": "ready" }
   ],
   "divisions": {
     "transit": true,
