@@ -65,7 +65,13 @@ MAX_REQUEST_PX = 6500
 USER_AGENT = "City-Utility-Twin/0.1 (open geodata pipeline; +https://geodaten.bayern.de)"
 
 
-def get_map(bbox: tuple[float, float, float, float], width: int, height: int) -> Image.Image:
+def get_map(
+    bbox: tuple[float, float, float, float],
+    width: int,
+    height: int,
+    wms: str = WMS,
+    layer: str = LAYER,
+) -> Image.Image:
     """One WMS GetMap, in the AOI's own UTM zone.
 
     WMS 1.3.0 uses each CRS's own axis order. EPSG:258xx is easting-then-northing, so the bbox goes
@@ -78,7 +84,7 @@ def get_map(bbox: tuple[float, float, float, float], width: int, height: int) ->
         "SERVICE": "WMS",
         "REQUEST": "GetMap",
         "VERSION": "1.3.0",
-        "LAYERS": LAYER,
+        "LAYERS": layer,
         "STYLES": "",
         "CRS": f"EPSG:258{active_zone()}",
         "BBOX": f"{bbox[0]:.2f},{bbox[1]:.2f},{bbox[2]:.2f},{bbox[3]:.2f}",
@@ -86,7 +92,7 @@ def get_map(bbox: tuple[float, float, float, float], width: int, height: int) ->
         "HEIGHT": str(height),
         "FORMAT": "image/jpeg",
     }
-    url = f"{WMS}?{urllib.parse.urlencode(params)}"
+    url = f"{wms}?{urllib.parse.urlencode(params)}"
     request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     with urllib.request.urlopen(request, timeout=300) as response:
         blob = response.read()
@@ -120,6 +126,13 @@ def main() -> None:
     args = parser.parse_args()
 
     cfg = load_aoi(args.aoi)
+    # The survey authority that photographed this AOI. The Munich AOIs predate these fields, so the
+    # Bavarian service and credits stay the defaults; any other state names its own in the AOI's
+    # geobasis block (dopWms, dopLayer, dopSource, ...), because a drape credited to the wrong
+    # authority is a licence breach, not a cosmetic slip.
+    survey = cfg.get("geobasis") or {}
+    wms = survey.get("dopWms", WMS)
+    layer = survey.get("dopLayer", LAYER)
     # ⚠️ **Long side, and it is a rendering constraint rather than a photographic one.**
     #
     # This defaulted to 8192 px on the reasoning that WebGL2 guarantees an 8192 texture limit.
@@ -207,7 +220,7 @@ def main() -> None:
                 min_e + span_e * x1 / width,
                 max_n - span_n * y0 / height,
             )
-            patch = get_map(patch_bbox, x1 - x0, y1 - y0)
+            patch = get_map(patch_bbox, x1 - x0, y1 - y0, wms, layer)
             mosaic.paste(patch, (x0, y0))
             done += 1
             print(f"  [{done}/{cols * rows}] {x1 - x0} x {y1 - y0} px, {time.time() - started:.0f}s")
@@ -224,13 +237,14 @@ def main() -> None:
         "origin": {"easting": min_e, "northing": min_n},
         "spanM": {"east": span_e, "north": span_n},
         "encoding": "JPEG, row 0 = north — same orientation as the heightmap",
-        "source": "Digitale Orthophotos DOP20, Bayerische Vermessungsverwaltung (LDBV)",
-        "service": WMS,
-        "layer": LAYER,
-        "licence": "CC BY 4.0",
-        "attribution": (
+        "source": survey.get("dopSource", "Digitale Orthophotos DOP20, Bayerische Vermessungsverwaltung (LDBV)"),
+        "service": wms,
+        "layer": layer,
+        "licence": survey.get("licence", "CC BY 4.0"),
+        "attribution": survey.get(
+            "attribution",
             "Datenquelle: Bayerische Vermessungsverwaltung – www.geodaten.bayern.de "
-            "[Daten bearbeitet]"
+            "[Daten bearbeitet]",
         ),
         "resolutionNote": (
             "The source is 20 cm. This drape is resampled by the WMS to about "
@@ -238,7 +252,9 @@ def main() -> None:
             "posting and a 2-gigapixel texture is neither loadable nor useful. It is a "
             "photograph of the ground, not a measurement, and nothing is derived from it."
         ),
-        "acquisition": "LDBV Bayernbefliegung; the flight date varies by tile and is not per-pixel",
+        "acquisition": survey.get(
+            "dopAcquisition", "LDBV Bayernbefliegung; the flight date varies by tile and is not per-pixel"
+        ),
     }
     meta_path.write_text(json.dumps(meta, indent=2, ensure_ascii=False), encoding="utf-8")
 

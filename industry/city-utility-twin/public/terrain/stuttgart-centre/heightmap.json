@@ -1,0 +1,68 @@
+{
+  "width": 1571,
+  "height": 1922,
+  "resolutionM": 2,
+  "crs": "EPSG:25832",
+  "verticalDatum": "DHHN2016",
+  "origin": {
+    "easting": 511434,
+    "northing": 5400620
+  },
+  "heightMinM": 229.64,
+  "heightMaxM": 472.47,
+  "heightScale": 0.003705348315114896,
+  "encoding": "uint16-le, row-major, row 0 = north",
+  "boundsWgs84": {
+    "west": 9.155574,
+    "south": 48.758486,
+    "east": 9.198461,
+    "north": 48.793
+  },
+  "coveragePct": 100.0,
+  "focusPlaces": [
+    {
+      "id": "hauptbahnhof",
+      "name": "Hauptbahnhof",
+      "u": 0.63501,
+      "v": 0.21504,
+      "groundM": 246.39
+    },
+    {
+      "id": "schlossplatz",
+      "name": "Schlossplatz",
+      "u": 0.5465,
+      "v": 0.40925,
+      "groundM": 247.18
+    },
+    {
+      "id": "charlottenplatz",
+      "name": "Charlottenplatz",
+      "u": 0.63841,
+      "v": 0.49496,
+      "groundM": 249.37
+    },
+    {
+      "id": "rotebuehlplatz",
+      "name": "Roteb\u00fchlplatz",
+      "u": 0.40049,
+      "v": 0.53792,
+      "groundM": 258.12
+    },
+    {
+      "id": "marienplatz",
+      "name": "Marienplatz",
+      "u": 0.30517,
+      "v": 0.83133,
+      "groundM": 265.13
+    }
+  ],
+  "flyingSites": [],
+  "nodataFill": "nearest",
+  "nodataNote": "Cells without DGM1 data \u2014 a survey authority's tiles stop at its own state boundary, and the UTM envelope of a geographic bbox bows outside the bbox at its corners \u2014 are filled from the nearest measured cell for appearance, and flagged in the nodata mask. See PLAN.md \u00a74.1.",
+  "source": "DGM1, Landesamt f\u00fcr Geoinformation und Landentwicklung Baden-W\u00fcrttemberg (LGL)",
+  "sourceAcquisition": "open geodata, retrieved 2026",
+  "attribution": "Datenquelle: LGL, www.lgl-bw.de, dl-de/by-2-0",
+  "licence": "Datenlizenz Deutschland \u2013 Namensnennung \u2013 Version 2.0 (dl-de/by-2-0)",
+  "file": "heightmap.u16",
+  "nodataFile": "heightmap_nodata.u8"
+}

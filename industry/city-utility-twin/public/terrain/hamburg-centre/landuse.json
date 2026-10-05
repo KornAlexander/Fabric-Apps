@@ -1,0 +1,53 @@
+{
+  "aoi": "hamburg-centre",
+  "file": "landuse_2m.u8z",
+  "compression": "gzip",
+  "bytes": 1714538,
+  "compressedBytes": 104425,
+  "width": 1442,
+  "height": 1189,
+  "resolutionM": 2,
+  "origin": {
+    "easting": 565050,
+    "northing": 5932236
+  },
+  "classes": {
+    "0": "not mapped",
+    "1": "vineyard",
+    "2": "orchard",
+    "3": "forest",
+    "4": "farmland",
+    "5": "meadow and grass",
+    "6": "park and garden",
+    "7": "allotments",
+    "8": "residential",
+    "9": "commercial and industrial",
+    "10": "scrub and heath",
+    "11": "water",
+    "12": "wetland",
+    "13": "rock and quarry",
+    "20": "paved road, major",
+    "21": "paved road, minor",
+    "22": "unpaved track",
+    "23": "railway"
+  },
+  "coveragePct": 64.26,
+  "sharePct": {
+    "not mapped": 35.74,
+    "forest": 0.1,
+    "meadow and grass": 2.1,
+    "park and garden": 1.81,
+    "residential": 5.15,
+    "commercial and industrial": 13.65,
+    "scrub and heath": 0.54,
+    "water": 24.55,
+    "wetland": 0.06,
+    "rock and quarry": 0.31,
+    "paved road, major": 5.01,
+    "paved road, minor": 6.84,
+    "unpaved track": 0.06,
+    "railway": 4.07
+  },
+  "attribution": "\u00a9 OpenStreetMap contributors (ODbL)",
+  "note": "Land cover as currently mapped in OpenStreetMap, not as it stood in July 2021. Used for surface colour only; it takes no part in the simulation."
+}

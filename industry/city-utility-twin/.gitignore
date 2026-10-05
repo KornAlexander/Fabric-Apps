@@ -15,6 +15,7 @@ rayfin/data/
 # ⚠️ `rayfin up --json` prints the deployment record, which contains a publishableKey.
 tools/deploy.log
 tools/flughafen-build.log
+tools/*-build.log
 *.tsbuildinfo
 test-results/
 playwright-report/

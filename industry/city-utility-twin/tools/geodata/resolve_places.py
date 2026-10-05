@@ -18,36 +18,13 @@ from __future__ import annotations
 
 import argparse
 import json
-import time
-import urllib.parse
-import urllib.request
 
 from aoi import bbox_tuple, cache_dir, load_aoi
-
-OVERPASS = "https://overpass-api.de/api/interpreter"
-USER_AGENT = "City-Utility-Twin/0.1 (open geodata pipeline)"
-
-
-def overpass(query: str, attempts: int = 4) -> dict:
-    body = urllib.parse.urlencode({"data": query}).encode()
-    last: Exception | None = None
-    for attempt in range(attempts):
-        try:
-            request = urllib.request.Request(
-                OVERPASS, data=body, headers={"User-Agent": USER_AGENT}
-            )
-            with urllib.request.urlopen(request, timeout=240) as response:
-                return json.loads(response.read())
-        except Exception as exc:  # noqa: BLE001
-            last = exc
-            # ⚠️ Overpass is a free, shared, donation-funded service and it rate-limits hard: four
-            # separate queries in quick succession earned an immediate HTTP 429. Hence ONE combined
-            # query per run, a cached response, and a long backoff. Being impolite to Overpass is
-            # both rude and self-defeating.
-            wait = 15 * (attempt + 1)
-            print(f"  Overpass attempt {attempt + 1} failed ({exc}) — retrying in {wait}s")
-            time.sleep(wait)
-    raise RuntimeError(f"Overpass failed after {attempts} attempts: {last}")
+# ⚠️ THE SHARED CLIENT, not a private copy. This step had its own single-endpoint version; on
+# 2026-10-05 the main instance answered 504 four times running while the mirror in the shared
+# client was healthy, and the Stuttgart build died on its first step. One combined query per run,
+# a cached response and a long backoff still apply: Overpass is free, shared and rate-limited.
+from overpass_client import overpass
 
 
 def centre_of(element: dict) -> tuple[float, float] | None:

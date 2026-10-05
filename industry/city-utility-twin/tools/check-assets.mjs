@@ -24,13 +24,16 @@ if(config.mode==='local'){
   // and the single-drape form optional — the airfield core has no tree data and the city core no
   // longer carries its own shell. But "optional in the format" is not "optional in this app":
   // src/config/world.ts declares `hasVegetation: true` for Munich and the scene throws if it is
-  // missing, and exactly one core must hold the world shell. Deleting Munich's two vegetation
+  // missing, and every world (city) needs its own shell core. Deleting Munich's two vegetation
   // files would otherwise pass every gate here and fail at runtime in front of an audience.
   const world=await readFile(join(PROJECT,'src/config/world.ts'),'utf8');
-  const shellSite=(world.match(/WORLD_SHELL_SITE\s*=\s*'([a-z0-9-]+)'/)??[])[1];
-  if(!shellSite||!CORES.includes(shellSite))throw new Error('WORLD_SHELL_SITE does not name a shipped core.');
-  for(const name of ['shell.json','shell.u16','shell-drape.json','shell-drape.jpg']){
-    if(manifests[shellSite].files[name].state!=='present')throw new Error(`World shell core ${shellSite} is missing ${name}.`);
+  const shellSites=[...world.matchAll(/shellSite:\s*'([a-z0-9-]+)'/g)].map(([,id])=>id);
+  if(!shellSites.length)throw new Error('src/config/world.ts declares no world shell.');
+  for(const shellSite of shellSites){
+    if(!CORES.includes(shellSite))throw new Error(`World shell ${shellSite} does not name a shipped core.`);
+    for(const name of ['shell.json','shell.u16','shell-drape.json','shell-drape.jpg']){
+      if(manifests[shellSite].files[name].state!=='present')throw new Error(`World shell core ${shellSite} is missing ${name}.`);
+    }
   }
   const vegetation=[...world.matchAll(/id:\s*'([a-z0-9-]+)',[\s\S]*?hasVegetation:\s*(true|false)/g)]
     .reduce((all,[,id,flag])=>({...all,[id]:flag==='true'}),{});

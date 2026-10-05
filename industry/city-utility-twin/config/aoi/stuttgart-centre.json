@@ -1,0 +1,59 @@
+{
+  "$comment": "City Utility Twin AOI. Munich-sized core (about 3.1 x 3.8 km, like config/aoi/munich.json) centred on the Kessel: Hauptbahnhof and the Stuttgart 21 site, Schlossplatz, Charlottenplatz, south to Marienplatz. Decided 2026-10-05. Focus places and control points from OSM (ids below), queried 2026-10-05.",
+  "id": "stuttgart-centre",
+  "probedOn": "2026-10-05",
+  "site": {
+    "name": { "de": "Stuttgart Zentrum", "en": "Stuttgart city centre" },
+    "region": { "de": "Talkessel von Hauptbahnhof bis Marienplatz", "en": "The Kessel from the main station to Marienplatz" },
+    "timezone": "Europe/Berlin"
+  },
+  "bbox": { "crs": "EPSG:4326", "west": 9.1557, "east": 9.1983, "south": 48.7585, "north": 48.793 },
+  "shell": { "crs": "EPSG:4326", "west": 9.0, "east": 9.4, "south": 48.66, "north": 48.9 },
+  "workingCrs": "EPSG:25832",
+  "verticalDatum": "DHHN2016",
+  "elevationRangeM": { "min": 200, "max": 480 },
+  "$elevationComment": "A basin: the Kessel floor sits around 240 m and the slopes inside the box climb towards the surrounding ridges (Bopser 483 m just south of it). Generous on purpose; it exists to catch a wrong region, not to describe this one.",
+  "verification": {
+    "minCoveragePct": 99.5,
+    "toleranceM": 3.0,
+    "shellToleranceM": 12.0,
+    "maxSeamOffsetM": 3.0,
+    "controlPoints": [
+      { "name": "Birkenkopf", "lat": 48.765375, "lon": 9.131481, "publishedM": 511.2, "tier": "shell", "source": "OSM node/1668156962 natural=peak ele=511.20 wikidata" },
+      { "name": "Bopser", "lat": 48.755518, "lon": 9.189184, "publishedM": 483, "tier": "shell", "source": "OSM node/8476105932 natural=peak ele=483 wikidata" },
+      { "name": "Kernen", "lat": 48.782438, "lon": 9.311222, "publishedM": 513.2, "tier": "shell", "source": "OSM node/90630671 natural=peak ele=513.2 wikidata" },
+      { "name": "Kappelberg", "lat": 48.795654, "lon": 9.283826, "publishedM": 469, "tier": "shell", "source": "OSM node/60206925 natural=peak ele=469 wikidata" },
+      { "name": "Engelberg", "lat": 48.80217, "lon": 9.024619, "publishedM": 481, "tier": "shell", "source": "OSM node/2231386618 natural=peak ele=481 wikidata" }
+    ]
+  },
+  "drape": { "maxPx": 4096 },
+  "grids": { "sourceResolutionM": 1, "renderResolutionM": 2, "renderDecimation": 2 },
+  "shellGrids": { "sourceResolutionM": 30, "renderResolutionM": 30, "renderDecimation": 3, "transitionBandM": 250 },
+  "focusPlaces": [
+    { "id": "hauptbahnhof", "name": "Hauptbahnhof", "lat": 48.78559, "lon": 9.18282 },
+    { "id": "schlossplatz", "name": "Schlossplatz", "lat": 48.77888, "lon": 9.17901 },
+    { "id": "charlottenplatz", "name": "Charlottenplatz", "lat": 48.77591, "lon": 9.18293 },
+    { "id": "rotebuehlplatz", "name": "Rotebühlplatz", "lat": 48.77444, "lon": 9.17275 },
+    { "id": "marienplatz", "name": "Marienplatz", "lat": 48.7643, "lon": 9.16864 }
+  ],
+  "geobasis": {
+    "provider": "lgl-bw",
+    "authority": "Landesamt für Geoinformation und Landentwicklung Baden-Württemberg (LGL)",
+    "licence": "Datenlizenz Deutschland – Namensnennung – Version 2.0 (dl-de/by-2-0)",
+    "licenceUrl": "https://www.govdata.de/dl-de/by-2-0",
+    "attribution": "Datenquelle: LGL, www.lgl-bw.de, dl-de/by-2-0",
+    "$attributionComment": "The exact wording LGL prescribes on https://opengeodata.lgl-bw.de/ (checked 2026-10-05).",
+    "dopWms": "https://owsproxy.lgl-bw.de/owsproxy/ows/WMS_LGL-BW_ATKIS_DOP_20_C",
+    "dopLayer": "IMAGES_DOP_20_RGB",
+    "dopSource": "Digitale Orthophotos DOP20, Landesamt für Geoinformation und Landentwicklung Baden-Württemberg (LGL)",
+    "dopAcquisition": "LGL aerial survey; the flight date varies by tile"
+  },
+  "shellGeobasis": {
+    "authority": "ESA / DLR / Airbus Defence and Space — Copernicus DEM GLO-30",
+    "licence": "Copernicus DEM free licence (worldwide, free reuse with the prescribed notice)",
+    "licenceUrl": "https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM",
+    "attribution": "produced using Copernicus WorldDEM-30 © DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018 provided under COPERNICUS by the European Union and ESA; all rights reserved",
+    "cogUrlTemplate": "https://copernicus-dem-30m.s3.eu-central-1.amazonaws.com/Copernicus_DSM_COG_10_{NS}{lat:02d}_00_{EW}{lon:03d}_00_DEM/Copernicus_DSM_COG_10_{NS}{lat:02d}_00_{EW}{lon:03d}_00_DEM.tif",
+    "tiles": ["N48_E009"]
+  }
+}

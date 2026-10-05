@@ -38,9 +38,31 @@ from building_class import WALL_CLASS_NAMES, wall_class
 from utm import bbox_to_utm, wgs84_to_utm
 
 NS = {
+    # ⚠️ REBOUND PER DOCUMENT by `use_building_namespace`. Bavaria and the 2016 Hamburg vintage are
+    # CityGML 1.0, LGL and the 2026 Hamburg vintage may be 2.0, and the two use different URIs for
+    # the same element names. A hard-coded URI does not fail: it finds no buildings and reports an
+    # empty tile, which across hundreds of tiles reads as "this AOI has no buildings".
     "bldg": "http://www.opengis.net/citygml/building/1.0",
     "gml": "http://www.opengis.net/gml",
 }
+
+#: Building namespaces seen in German LoD2 deliveries.
+BUILDING_NS_CANDIDATES = (
+    "http://www.opengis.net/citygml/building/1.0",
+    "http://www.opengis.net/citygml/building/2.0",
+)
+
+
+def use_building_namespace(root: ET.Element) -> str:
+    """Point NS['bldg'] at the namespace this document actually uses for `bldg:Building`."""
+    found = BUILDING_NS_CANDIDATES[0]
+    for element in root.iter():
+        tag = element.tag
+        if isinstance(tag, str) and tag.endswith("}Building"):
+            found = tag[1:].split("}")[0]
+            break
+    NS["bldg"] = found
+    return found
 
 
 def read_gml(path: Path) -> str:
@@ -51,12 +73,22 @@ def read_gml(path: Path) -> str:
 
 
 def polygons_of(element: ET.Element) -> list[list[tuple[float, float, float]]]:
-    """Every gml:posList under an element, as lists of (easting, northing, height)."""
+    """Every gml:LinearRing under an element, as lists of (easting, northing, height).
+
+    ⚠️ A RING IS ENCODED ONE OF TWO WAYS, AND READING ONLY ONE FAILS SILENTLY. A ring carries
+    either one `gml:posList` with every coordinate or a run of `gml:pos` elements with one vertex
+    each; both are valid CityGML. Bavaria uses posList; Hamburg's LoD2 uses `gml:pos` exclusively
+    (a 1 km tile there has 68 520 `pos` and not one `posList`). Reading only posList returns no
+    geometry and the build reports an empty AOI.
+    """
     rings: list[list[tuple[float, float, float]]] = []
-    for pos in element.iter(f"{{{NS['gml']}}}posList"):
-        if not pos.text:
-            continue
-        values = [float(v) for v in pos.text.split()]
+    gml = NS["gml"]
+    for ring in element.iter(f"{{{gml}}}LinearRing"):
+        pos_list = ring.find(f"{{{gml}}}posList")
+        if pos_list is not None and pos_list.text:
+            values = [float(v) for v in pos_list.text.split()]
+        else:
+            values = [float(v) for pos in ring.findall(f"{{{gml}}}pos") if pos.text for v in pos.text.split()]
         points = [
             (values[i], values[i + 1], values[i + 2]) for i in range(0, len(values) - 2, 3)
         ]
@@ -272,6 +304,7 @@ def main() -> None:
 
     for path in tiles:
         root = ET.fromstring(read_gml(path))
+        use_building_namespace(root)
         kept = 0
 
         for building in root.iter(f"{{{NS['bldg']}}}Building"):

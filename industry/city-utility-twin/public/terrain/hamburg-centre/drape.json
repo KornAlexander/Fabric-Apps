@@ -1,0 +1,24 @@
+{
+  "aoi": "hamburg-centre",
+  "file": "drape.jpg",
+  "width": 4096,
+  "height": 3377,
+  "resolutionM": 0.7041,
+  "crs": "EPSG:25832",
+  "origin": {
+    "easting": 565050.0,
+    "northing": 5932236.0
+  },
+  "spanM": {
+    "east": 2884.0,
+    "north": 2378.0
+  },
+  "encoding": "JPEG, row 0 = north — same orientation as the heightmap",
+  "source": "Digitale Orthophotos (DOP), Landesbetrieb Geoinformation und Vermessung Hamburg (LGV)",
+  "service": "https://geodienste.hamburg.de/wms_dop_zeitreihe_belaubt",
+  "layer": "dop_zeitreihe_belaubt",
+  "licence": "Datenlizenz Deutschland – Namensnennung – Version 2.0 (dl-de/by-2-0)",
+  "attribution": "Datenquelle: Freie und Hansestadt Hamburg, Landesbetrieb Geoinformation und Vermessung (LGV), dl-de/by-2-0",
+  "resolutionNote": "The source is 20 cm. This drape is resampled by the WMS to about 0.7 m per pixel, because the terrain mesh beneath it is at 16 m posting and a 2-gigapixel texture is neither loadable nor useful. It is a photograph of the ground, not a measurement, and nothing is derived from it.",
+  "acquisition": "LGV Hamburg aerial survey, leaf-on time series; the flight date varies by tile"
+}

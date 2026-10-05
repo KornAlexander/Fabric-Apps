@@ -11,7 +11,7 @@ import {assertKeys,validateOrigin,HASH,externalBase} from '../src/assets/contrac
  * list. `npm test` asserts the two agree, which turns the duplication into a checked fact rather
  * than a thing to remember.
  */
-export const CORES = ['munich','flughafen'];
+export const CORES = ['munich','flughafen','hamburg-centre','stuttgart-centre'];
 
 export async function buildAssetConfig(env=process.env){
   if(!env.TWIN_ASSET_CONFIG){

@@ -138,3 +138,35 @@ def cache_dir(*parts: str) -> Path:
     path = Path(__file__).resolve().parents[2] / "data" / Path(*parts)
     path.mkdir(parents=True, exist_ok=True)
     return path
+
+
+def bind_cache(directory: Path, identity: dict[str, Any], expected: set[str], suffix: str) -> None:
+    """Refuse a tile cache that was filled from a different source, or holds stray tiles.
+
+    ⚠️ THE BUILD STEPS MOSAIC EVERY TILE IN THE FOLDER. Pointing an AOI at a newer archive used to
+    keep the old tiles: same-named ones were treated as cached, differently named ones (LGL puts
+    the survey year in the name) were mosaicked next to the new ones. Nothing failed; the terrain
+    was simply two surveys at once (review 2026-10-05). So the folder records which source filled
+    it, and any tile this run would not have written stops the build. The identity carries every
+    selected member's CRC and size, so a re-published archive with the same member names is a
+    different source too.
+    """
+    stamp = directory / "source.json"
+    if stamp.exists():
+        recorded = json.loads(stamp.read_text(encoding="utf-8"))
+        if recorded != identity:
+            raise SystemExit(
+                f"{directory} was filled from a different source or vintage than this run's "
+                f"({identity.get('provider')}, {len(identity.get('members', []))} members). "
+                "Delete the folder and run again; mixing survey vintages is not a cache hit."
+            )
+    elif any(directory.glob(f"*{suffix}")):
+        # Tiles with no record of where they came from cannot be told apart from another vintage.
+        raise SystemExit(f"{directory} holds tiles without a source record. Delete the folder and run again.")
+    stray = sorted(p.name for p in directory.glob(f"*{suffix}") if p.name not in expected)
+    if stray:
+        raise SystemExit(
+            f"{directory} holds {len(stray)} tile(s) this source would not write "
+            f"(e.g. {stray[:3]}). Delete the folder and run again."
+        )
+    stamp.write_text(json.dumps(identity, indent=2), encoding="utf-8")

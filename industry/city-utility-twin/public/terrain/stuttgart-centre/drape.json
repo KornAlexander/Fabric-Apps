@@ -1,0 +1,24 @@
+{
+  "aoi": "stuttgart-centre",
+  "file": "drape.jpg",
+  "width": 3348,
+  "height": 4096,
+  "resolutionM": 0.9385,
+  "crs": "EPSG:25832",
+  "origin": {
+    "easting": 511434.0,
+    "northing": 5400620.0
+  },
+  "spanM": {
+    "east": 3142.0,
+    "north": 3844.0
+  },
+  "encoding": "JPEG, row 0 = north — same orientation as the heightmap",
+  "source": "Digitale Orthophotos DOP20, Landesamt für Geoinformation und Landentwicklung Baden-Württemberg (LGL)",
+  "service": "https://owsproxy.lgl-bw.de/owsproxy/ows/WMS_LGL-BW_ATKIS_DOP_20_C",
+  "layer": "IMAGES_DOP_20_RGB",
+  "licence": "Datenlizenz Deutschland – Namensnennung – Version 2.0 (dl-de/by-2-0)",
+  "attribution": "Datenquelle: LGL, www.lgl-bw.de, dl-de/by-2-0",
+  "resolutionNote": "The source is 20 cm. This drape is resampled by the WMS to about 0.9 m per pixel, because the terrain mesh beneath it is at 16 m posting and a 2-gigapixel texture is neither loadable nor useful. It is a photograph of the ground, not a measurement, and nothing is derived from it.",
+  "acquisition": "LGL aerial survey; the flight date varies by tile"
+}

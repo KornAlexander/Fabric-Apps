@@ -1,0 +1,68 @@
+{
+  "width": 1442,
+  "height": 1189,
+  "resolutionM": 2,
+  "crs": "EPSG:25832",
+  "verticalDatum": "DHHN2016",
+  "origin": {
+    "easting": 565050,
+    "northing": 5932236
+  },
+  "heightMinM": -4.4,
+  "heightMaxM": 17.16,
+  "heightScale": 0.00032898451121964663,
+  "encoding": "uint16-le, row-major, row 0 = north",
+  "boundsWgs84": {
+    "west": 9.981488,
+    "south": 53.535003,
+    "east": 10.025511,
+    "north": 53.55601
+  },
+  "coveragePct": 100.0,
+  "focusPlaces": [
+    {
+      "id": "rathausmarkt",
+      "name": "Rathausmarkt",
+      "u": 0.28017,
+      "v": 0.27626,
+      "groundM": 6.32
+    },
+    {
+      "id": "jungfernstieg",
+      "name": "Jungfernstieg",
+      "u": 0.27016,
+      "v": 0.14495,
+      "groundM": 3.93
+    },
+    {
+      "id": "elbphilharmonie",
+      "name": "Elbphilharmonie",
+      "u": 0.05692,
+      "v": 0.70675,
+      "groundM": 7.23
+    },
+    {
+      "id": "deichtorhallen",
+      "name": "Deichtorhallen",
+      "u": 0.57407,
+      "v": 0.41677,
+      "groundM": 5.43
+    },
+    {
+      "id": "baakenhafen",
+      "name": "Baakenhafen",
+      "u": 0.69463,
+      "v": 0.8419,
+      "groundM": 8.69
+    }
+  ],
+  "flyingSites": [],
+  "nodataFill": "nearest",
+  "nodataNote": "Cells without DGM1 data \u2014 a survey authority's tiles stop at its own state boundary, and the UTM envelope of a geographic bbox bows outside the bbox at its corners \u2014 are filled from the nearest measured cell for appearance, and flagged in the nodata mask. See PLAN.md \u00a74.1.",
+  "source": "DGM1, Freie und Hansestadt Hamburg, Landesbetrieb Geoinformation und Vermessung (LGV)",
+  "sourceAcquisition": "open geodata, retrieved 2026",
+  "attribution": "Datenquelle: Freie und Hansestadt Hamburg, Landesbetrieb Geoinformation und Vermessung (LGV), dl-de/by-2-0",
+  "licence": "Datenlizenz Deutschland \u2013 Namensnennung \u2013 Version 2.0 (dl-de/by-2-0)",
+  "file": "heightmap.u16",
+  "nodataFile": "heightmap_nodata.u8"
+}
