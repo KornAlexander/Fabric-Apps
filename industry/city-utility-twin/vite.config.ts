@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
 import { fileURLToPath } from 'node:url';
 import { buildAssetConfig, buildOutput } from './tools/asset-build-config.mjs';
 import { copyFileSync, mkdirSync } from 'node:fs';
@@ -68,9 +69,11 @@ export default defineConfig(async () => {
         main: fileURLToPath(new URL('./index.html', import.meta.url)),
         auth: fileURLToPath(new URL('./auth.html', import.meta.url)),
       },
+      // Libraries in their own chunks: they change on dependency upgrades, the app on every deploy.
+      output: { manualChunks: { react: ['react', 'react-dom', 'react-dom/client'], three: ['three'] } },
     },
   },
-  plugins: [{ name: 'external-map-notices', closeBundle() {
+  plugins: [react(), { name: 'external-map-notices', closeBundle() {
     if (config.mode !== 'external') return;
     mkdirSync(outDir, { recursive: true });
     for (const name of ['LICENSE.txt', 'THIRD-PARTY-NOTICES.txt']) copyFileSync(fileURLToPath(new URL(`./public/${name}`, import.meta.url)), join(outDir, name));

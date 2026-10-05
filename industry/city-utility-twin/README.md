@@ -13,8 +13,10 @@ Munich city centre and Munich Airport as **one continuous 1:1 3D twin**, with sw
 layers from live open sources, an assistant that answers questions about construction sites with
 visible tool calls, and shared coordination notes. Built as a **Microsoft Fabric App** (preview).
 
-The app UI is German. The step-by-step guide for running the twin in your own tenant is German
-too: **[UMSETZUNG.md](UMSETZUNG.md)**.
+The app UI is German and English: it follows the browser (German browsers get German, everyone
+else English), `?lang=de` or `?lang=en` overrides that, and the toggle next to the map controls
+switches live. The step-by-step guide for running the twin in your own tenant is German:
+**[UMSETZUNG.md](UMSETZUNG.md)**.
 
 ## What it does
 
@@ -38,7 +40,7 @@ too: **[UMSETZUNG.md](UMSETZUNG.md)**.
 
 | Part | What | Runs on |
 |---|---|---|
-| `src/`, `index.html`, `public/` | three.js scene, data layers, assistant panel | Fabric App static hosting |
+| `src/`, `index.html`, `public/` | React 19 shell around one three.js scene, data layers, assistant panel | Fabric App static hosting |
 | `public/terrain/`, `public/data/` | prebuilt terrain, orthophoto, LoD2 buildings, trees, timetable | shipped with the app |
 | `server/` | assistant (FastAPI, Azure OpenAI with tool calls) and notes store | Azure Container App |
 | `server/sql/koordination.sql` | coordination notes schema | Fabric SQL database |
@@ -48,8 +50,9 @@ Fabric Apps are not available in every region yet (for example not in Germany We
 North Europe); see [Fabric region availability](https://learn.microsoft.com/fabric/admin/region-availability)
 and [Multi-Geo](https://learn.microsoft.com/fabric/admin/service-admin-premium-multi-geo).
 
-⚠️ The static app and everything under `public/` is anonymously downloadable once deployed, and the
-coordination notes are not confidential in this version. Details in [UMSETZUNG.md](UMSETZUNG.md).
+⚠️ The hosted app and its assets use `assetAccess: protected`, so only signed-in users of the
+tenant can load them. The coordination notes are still not confidential in this version. Details
+in [UMSETZUNG.md](UMSETZUNG.md).
 
 ## Getting started
 
@@ -70,8 +73,8 @@ public/terrain/    prebuilt cores and shell (open data, see NOTICE.md)
 public/data/       timetable extract for the vehicle layer
 relay/             ADS-B relay (zero-dependency Node)
 server/            assistant, tools, notes store, Entra token check
-src/               app: scene, live layers, assistant client
-tests/             unit tests
+src/               app: React shell (App.tsx, ui/), scene (map/), live layers, i18n (DE/EN), assistant client
+tests/             unit tests (node:test) and component tests (tests/ui, Vitest)
 tools/             asset gates, deployment scripts, geodata pipeline (tools/geodata/)
 ```
 
@@ -81,7 +84,7 @@ tools/             asset gates, deployment scripts, geodata pipeline (tools/geod
 |---|---|
 | `npm run dev` | local dev server on port 5190 |
 | `npm run build` | type check, asset gate, Vite build, bundle gate (no unapproved identifiers) |
-| `npm test` | unit tests: map, geometry, relay, timetable |
+| `npm test` | unit tests (map, geometry, relay, vehicles) and component tests (shell, panels, DE/EN) |
 | `npm run data:flughafen` | rebuild the airport core from open data (optional) |
 
 ## Data

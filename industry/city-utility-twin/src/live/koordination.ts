@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 
 import type { LiveLayer, PickDetail, WorldPlacement } from '../map/worldScene';
-import { clock, describeError, type StatusReporter } from './source';
+import { clock, failure, type StatusReporter } from './source';
+import { categoryLabel, later, locale, t, type Text } from '../i18n';
 import { listNotes, type Note } from '../agent/client';
 
 /**
@@ -31,34 +32,44 @@ const COLOUR: Record<string, number> = {
 const FALLBACK_COLOUR = 0x9aa3ab;
 
 function detailFor(note: Note, colour: number): PickDetail {
-  const fields: { label: string; value: string }[] = [];
-  const add = (label: string, value: string | null | undefined) => {
-    const text = typeof value === 'string' ? value.trim() : '';
+  const fields: { label: Text; value: Text }[] = [];
+  const add = (label: Text, value: Text | null | undefined) => {
+    const text = typeof value === 'string' ? value.trim() : value;
     if (text) fields.push({ label, value: text });
   };
 
-  add('Kategorie', note.kategorie);
-  add('Notiz', note.text);
-  if (note.zeitraumVon && note.zeitraumBis) add('Zeitraum', `${note.zeitraumVon} bis ${note.zeitraumBis}`);
-  else if (note.zeitraumVon) add('Ab', note.zeitraumVon);
-  else if (note.zeitraumBis) add('Bis', note.zeitraumBis);
-  add('Bezug', note.ort ? `Baustelle ${note.baustelleId} · ${note.ort}` : `Baustelle ${note.baustelleId}`);
+  const kategorie = note.kategorie;
+  add(later('notes.field.category'), kategorie ? () => categoryLabel(kategorie) : null);
+  add(later('notes.field.text'), note.text);
+  if (note.zeitraumVon && note.zeitraumBis) add(later('field.period'), later('field.periodValue', note.zeitraumVon, note.zeitraumBis));
+  else if (note.zeitraumVon) add(later('notes.field.from'), note.zeitraumVon);
+  else if (note.zeitraumBis) add(later('notes.field.until'), note.zeitraumBis);
+  add(
+    later('notes.field.reference'),
+    note.ort
+      ? () => `${t('notes.roadworks', note.baustelleId)} · ${note.ort}`
+      : later('notes.roadworks', note.baustelleId),
+  );
   // ⚠️ "gemeldet", nicht "geprüft". Der Name kommt aus der Fabric-Sitzung im Browser und wird vom
   // Client geschickt; die Anwendung kann ihn nicht unabhängig nachweisen.
-  add('Verfasst von (gemeldet)', note.autorGemeldet ?? 'nicht angegeben');
-  add('Erfasst über', note.quelleKanal === 'agent-entwurf' ? 'Entwurf des Assistenten, anschließend bestätigt' : 'Notizformular der Anwendung');
+  add(later('notes.field.author'), note.autorGemeldet ?? later('notes.authorUnknown'));
+  add(
+    later('notes.field.channel'),
+    note.quelleKanal === 'agent-entwurf' ? later('notes.channel.agent') : later('notes.channel.form'),
+  );
   if (note.erstelltAm) {
     const at = new Date(note.erstelltAm);
-    add('Erstellt am', Number.isNaN(at.valueOf()) ? note.erstelltAm : at.toLocaleString('de-DE'));
+    const raw = note.erstelltAm;
+    add(later('notes.field.created'), Number.isNaN(at.valueOf()) ? raw : () => at.toLocaleString(locale()));
   }
 
   return {
     layerId: 'koordination',
-    title: note.ort || `Baustelle ${note.baustelleId}`,
-    subtitle: 'Koordinationsnotiz · nicht amtlich',
+    title: note.ort || later('notes.roadworks', note.baustelleId),
+    subtitle: later('notes.subtitle'),
     accent: colour,
     fields,
-    source: 'City Utility Twin, app-eigene Koordinationsnotiz. Kein amtlicher Datensatz.',
+    source: later('notes.source'),
   };
 }
 
@@ -159,7 +170,7 @@ export async function createKoordinationLayer(
           if (visible) {
             onStatus({
               state: 'error',
-              text: 'Notizspeicher ist nicht eingerichtet',
+              text: later('notes.unavailable'),
               fetchedAt: null, count: 0,
             });
           }
@@ -167,14 +178,17 @@ export async function createKoordinationLayer(
         }
         const { drawn, withoutPlace } = draw(payload.eintraege ?? []);
         const at = new Date();
-        const parts = drawn === 0 && withoutPlace === 0
-          ? ['noch keine Notizen']
-          : [`${drawn} Notizen`];
-        if (withoutPlace > 0) parts.push(`${withoutPlace} ohne Position im Modell`);
-        parts.push('nicht amtlich');
-        parts.push(`Abruf ${clock(at)}`);
+        const text = () => {
+          const parts = drawn === 0 && withoutPlace === 0
+            ? [t('notes.none')]
+            : [t('notes.count', drawn)];
+          if (withoutPlace > 0) parts.push(t('notes.withoutPlace', withoutPlace));
+          parts.push(t('status.notOfficial'));
+          parts.push(t('status.fetched', clock(at)));
+          return parts.join(' · ');
+        };
         if (visible) {
-          onStatus({ state: 'live', text: parts.join(' · '), fetchedAt: at, count: drawn });
+          onStatus({ state: 'live', text, fetchedAt: at, count: drawn });
         }
       } catch (error) {
         if (abort.signal.aborted) return;
@@ -182,7 +196,7 @@ export async function createKoordinationLayer(
         if (visible) {
           onStatus({
             state: 'error',
-            text: `Koordinationsnotizen ${describeError(error)}`,
+            text: failure(later('notes.name'), error),
             fetchedAt: null, count: 0,
           });
         }
@@ -215,10 +229,10 @@ export async function createKoordinationLayer(
       visible = next;
       group.visible = next;
       if (next) {
-        onStatus({ state: 'loading', text: 'Notizen werden geladen…', fetchedAt: null, count: 0 });
+        onStatus({ state: 'loading', text: later('notes.loading'), fetchedAt: null, count: 0 });
         void load();
       } else {
-        onStatus({ state: 'idle', text: 'aus', fetchedAt: null, count: 0 });
+        onStatus({ state: 'idle', text: later('layer.off'), fetchedAt: null, count: 0 });
       }
     },
     async refresh() {

@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 
 import type { LiveLayer, PickDetail, WorldPlacement } from '../map/worldScene';
-import { clock, describeError, fetchJson, type StatusReporter } from './source';
+import { clock, describeError, failure, fetchJson, type StatusReporter } from './source';
+import { later, t, type Text } from '../i18n';
 
 /**
  * MVG-Echtzeitabfahrten an den Haltestellen im Kartenausschnitt.
@@ -70,8 +71,8 @@ interface Stop {
   departures: number;
   /** The rows behind the colour, kept so a click can show them instead of just a number. */
   list: Departure[];
-  /** Why the last attempt for this stop failed, if it did. */
-  failed: string | null;
+  /** Why the last attempt for this stop failed, if it did. Kept raw so its wording can follow the language. */
+  failed: { error: unknown } | null;
 }
 
 export interface MvgOptions {
@@ -193,26 +194,26 @@ export async function createMvgLayer(options: MvgOptions): Promise<LiveLayer> {
    */
   const rowFor = (departure: Departure): string => {
     const label = departure.label?.trim() || '?';
-    const destination = departure.destination?.trim() || 'unbekanntes Ziel';
+    const destination = departure.destination?.trim() || t('mvg.unknownDestination');
     const planned = departure.plannedDepartureTime;
     const actual = departure.realtimeDepartureTime;
     const shown = typeof actual === 'number' ? actual : planned;
-    const time = typeof shown === 'number' ? hhmm(shown) : 'ohne Zeit';
+    const time = typeof shown === 'number' ? hhmm(shown) : t('mvg.noTime');
 
-    let suffix = ' · ohne Echtzeit';
+    let suffix = t('mvg.rowNoRealtime');
     if (departure.realtime === true && typeof planned === 'number' && typeof actual === 'number') {
       const minutes = Math.round((actual - planned) / 60000);
       suffix = minutes === 0
-        ? ' · pünktlich'
+        ? t('mvg.onTime')
         : minutes > 0 ? ` · +${minutes} min` : ` · ${minutes} min`;
     }
     return `${label} → ${destination}, ${time}${suffix}`;
   };
 
   const detailFor = (stop: Stop): PickDetail => {
-    const fields: { label: string; value: string }[] = [];
-    if (stop.modes) fields.push({ label: 'Verkehrsmittel', value: stop.modes });
-    fields.push({ label: 'Haltestellen-ID', value: stop.id });
+    const fields: { label: Text; value: Text }[] = [];
+    if (stop.modes) fields.push({ label: later('mvg.field.modes'), value: stop.modes });
+    fields.push({ label: later('mvg.field.stopId'), value: stop.id });
 
     if (stop.live) {
       const cancelled = stop.list.filter((d) => d.cancelled === true).length;
@@ -224,32 +225,32 @@ export async function createMvgLayer(options: MvgOptions): Promise<LiveLayer> {
           - (b.realtimeDepartureTime ?? b.plannedDepartureTime ?? 0))
         .slice(0, 8);
       if (rows.length === 0) {
-        fields.push({ label: 'Abfahrten', value: 'derzeit keine Abfahrten gemeldet' });
+        fields.push({ label: later('mvg.field.departures'), value: later('mvg.noDepartures') });
       } else {
         rows.forEach((departure, index) => {
-          fields.push({ label: index === 0 ? 'Nächste Abfahrten' : ' ', value: rowFor(departure) });
+          fields.push({ label: index === 0 ? later('mvg.field.next') : ' ', value: () => rowFor(departure) });
         });
       }
       if (cancelled) {
-        fields.push({ label: 'Entfällt', value: `${cancelled} Fahrt(en) als entfallen gemeldet` });
+        fields.push({ label: later('mvg.field.cancelled'), value: later('mvg.cancelled', cancelled) });
       }
     } else {
+      const failed = stop.failed;
       fields.push({
-        label: 'Abfahrten',
-        value: stop.failed
-          ? `nicht abrufbar (${stop.failed})`
-          : requested.has(stop.id) ? 'werden abgefragt…' : 'noch nicht abgefragt',
+        label: later('mvg.field.departures'),
+        value: failed
+          ? () => t('mvg.failed', describeError(failed.error))
+          : requested.has(stop.id) ? later('mvg.requesting') : later('mvg.notRequested'),
       });
     }
 
     return {
       layerId: 'mvg',
       title: stop.name,
-      subtitle: 'MVG-Haltestelle',
+      subtitle: later('mvg.subtitle'),
       accent: colourFor(stop),
       fields,
-      source: 'Haltestellen: Landeshauptstadt München (mor_wfs:oepnv_u_t_b_mvg_neu) · '
-        + 'Abfahrten: MVG, Echtzeit',
+      source: later('mvg.source'),
       haltestelleId: stop.id,
       easting: stop.easting,
       northing: stop.northing,
@@ -312,7 +313,7 @@ export async function createMvgLayer(options: MvgOptions): Promise<LiveLayer> {
     try {
       await loadStops();
       if (abort.signal.aborted || stops.length === 0) {
-        onStatus({ state: 'live', text: 'keine Haltestellen im Ausschnitt', fetchedAt: new Date(), count: 0 });
+        onStatus({ state: 'live', text: later('mvg.noStops'), fetchedAt: new Date(), count: 0 });
         return;
       }
       // Nearest to the world origin of this core, which is where the camera arrives.
@@ -337,25 +338,31 @@ export async function createMvgLayer(options: MvgOptions): Promise<LiveLayer> {
         const reason = results.find((r) => r.status === 'rejected');
         onStatus({
           state: 'error',
-          text: `MVG ${describeError(reason && 'reason' in reason ? reason.reason : null)}`,
+          text: failure(() => 'MVG', reason && 'reason' in reason ? reason.reason : null),
           fetchedAt: null, count: 0,
         });
         return;
       }
       // The timestamp belongs to THIS poll's successful measurements, never to retained ones.
       fetchedAt = new Date();
-      const parts = [
-        `${stops.length} Haltestellen`,
-        `${live.length} abgefragt`,
-        `${delayed} mit Verspätung`,
-      ];
-      if (unknown) parts.push(`${unknown} ohne Echtzeit`);
-      if (failed) parts.push(`${failed} ohne Antwort`);
-      parts.push(`Stand ${clock(fetchedAt)}`);
-      onStatus({ state: 'live', text: parts.join(' · '), fetchedAt, count: stops.length });
+      const at = fetchedAt;
+      const total = stops.length;
+      const queried = live.length;
+      const text = () => {
+        const parts = [
+          t('mvg.stops', total),
+          t('mvg.queried', queried),
+          t('mvg.delayed', delayed),
+        ];
+        if (unknown) parts.push(t('mvg.noRealtime', unknown));
+        if (failed) parts.push(t('mvg.noAnswer', failed));
+        parts.push(t('status.asOf', clock(at)));
+        return parts.join(' · ');
+      };
+      onStatus({ state: 'live', text, fetchedAt, count: stops.length });
     } catch (error) {
       if (abort.signal.aborted) return;
-      onStatus({ state: 'error', text: `MVG ${describeError(error)}`, fetchedAt: null, count: 0 });
+      onStatus({ state: 'error', text: failure(() => 'MVG', error), fetchedAt: null, count: 0 });
     }
   };
 
@@ -381,7 +388,7 @@ export async function createMvgLayer(options: MvgOptions): Promise<LiveLayer> {
       refreshDetail(stop);
       void pollStop(stop).catch((error) => {
         if (abort.signal.aborted) return;
-        stop.failed = describeError(error);
+        stop.failed = { error };
         // Allow a later retry: the failure may have been a passing network problem.
         requested.delete(stop.id);
         refreshDetail(stop);
@@ -391,12 +398,12 @@ export async function createMvgLayer(options: MvgOptions): Promise<LiveLayer> {
       visible = next;
       group.visible = next;
       if (next) {
-        onStatus({ state: 'loading', text: 'MVG-Daten werden geladen…', fetchedAt: null, count: 0 });
+        onStatus({ state: 'loading', text: later('mvg.loading'), fetchedAt: null, count: 0 });
         void poll();
         if (!timer) timer = window.setInterval(() => { void poll(); }, POLL_MS);
       } else {
         stop();
-        onStatus({ state: 'idle', text: 'aus', fetchedAt: null, count: 0 });
+        onStatus({ state: 'idle', text: later('layer.off'), fetchedAt: null, count: 0 });
       }
     },
     dispose() {

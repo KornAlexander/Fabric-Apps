@@ -98,8 +98,15 @@ try {
     if ($WhatIf) { 'WHATIF stopping before rayfin up'; return }
 
     # --- deploy --------------------------------------------------------------------------------
+    # ⚠️ A LEFTOVER public/rayfin.config.json IS REUSED UNCHANGED by the CLI (it only writes the
+    # file when none exists), so a copy from another item would ship in this bundle. Refuse it.
+    if (Test-Path (Join-Path $repo 'public\rayfin.config.json')) {
+        throw 'public/rayfin.config.json already exists. Delete it; rayfin up writes a fresh one.'
+    }
     $env:RAYFIN_TOKEN = $token
     $env:RAYFIN_FABRIC_API_URL = 'https://api.fabric.microsoft.com'
+    # The bundle gate pins the runtime config to this item on a redeploy.
+    $env:FABRIC_ITEM_ID = $boundItemId
     "`nrunning rayfin up ..."
     npx --no-install rayfin up --tenant $tenant --workspace-id $workspace --yes --json |
         Tee-Object -FilePath (Join-Path $repo 'tools\deploy.log')
@@ -129,6 +136,7 @@ try {
 } finally {
     $env:RAYFIN_TOKEN = $null
     $env:RAYFIN_FABRIC_API_URL = $null
+    $env:FABRIC_ITEM_ID = $null
     $token = $null
     $headers = $null
     [System.GC]::Collect()

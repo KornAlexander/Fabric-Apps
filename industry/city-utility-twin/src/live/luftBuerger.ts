@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 
 import type { LiveLayer, PickDetail, WorldPlacement } from '../map/worldScene';
-import { clock, describeError, fetchJson, type StatusReporter } from './source';
+import { clock, failure, fetchJson, type StatusReporter } from './source';
+import { later, t, type Text } from '../i18n';
 import { colourForPm25, parseArea } from './luftParse.mjs';
 
 /**
@@ -71,32 +72,28 @@ interface Sensor {
 }
 
 function detailFor(sensor: Sensor, colour: number): PickDetail {
-  const fields: { label: string; value: string }[] = [];
-  const add = (label: string, value: string | null) => {
-    if (value && value.length) fields.push({ label, value });
+  const fields: { label: Text; value: Text }[] = [];
+  const add = (label: Text, value: Text | null) => {
+    if (value && (typeof value === 'function' || value.length)) fields.push({ label, value });
   };
 
-  if (sensor.pm25 !== null) add('PM₂,₅ Feinstaub', `${sensor.pm25} µg/m³`);
-  if (sensor.pm10 !== null) add('PM₁₀ Feinstaub', `${sensor.pm10} µg/m³`);
-  add('Messzeitpunkt', `${sensor.timestamp} UTC`);
-  add('Sensortyp', sensor.model || null);
-  add('Sensor-ID', sensor.id);
+  if (sensor.pm25 !== null) add(later('sensors.field.pm25'), `${sensor.pm25} µg/m³`);
+  if (sensor.pm10 !== null) add(later('sensors.field.pm10'), `${sensor.pm10} µg/m³`);
+  add(later('sensors.field.time'), `${sensor.timestamp} UTC`);
+  add(later('sensors.field.model'), sensor.model || null);
+  add(later('sensors.field.id'), sensor.id);
   if (sensor.blurred) {
-    add('Standort', 'von der Quelle gerundet veröffentlicht (Datenschutz), nicht die genaue Adresse');
+    add(later('sensors.field.location'), later('sensors.blurred'));
   }
-  add(
-    'Einordnung',
-    'Bürgermessnetz, nicht amtlich kalibriert. Optische Sensoren messen bei hoher Luftfeuchte '
-    + 'tendenziell zu hoch. Nicht direkt mit den amtlichen Stationen vergleichbar.',
-  );
+  add(later('sensors.field.context'), later('sensors.context'));
 
   return {
     layerId: 'luft-buerger',
-    title: `Bürgersensor ${sensor.id}`,
-    subtitle: 'Sensor.Community · nicht amtlich',
+    title: later('sensors.title', sensor.id),
+    subtitle: later('sensors.subtitle'),
     accent: colour,
     fields,
-    source: 'Sensor.Community (data.sensor.community), offene Daten unter ODbL',
+    source: later('sensors.source'),
   };
 }
 
@@ -204,12 +201,15 @@ export async function createLuftBuergerLayer(options: LuftBuergerOptions): Promi
     const sensors = [...byId.values()];
     const { drawn, offMap } = draw(sensors);
     const at = new Date();
-    const parts = [`${drawn} Bürgersensoren`];
-    if (offMap > 0) parts.push(`${offMap} außerhalb des Modells`);
-    parts.push('nicht amtlich');
-    parts.push(`Abruf ${clock(at)}`);
+    const text = () => {
+      const parts = [t('sensors.count', drawn)];
+      if (offMap > 0) parts.push(t('status.offMap', offMap));
+      parts.push(t('status.notOfficial'));
+      parts.push(t('status.fetched', clock(at)));
+      return parts.join(' · ');
+    };
     if (visible) {
-      onStatus({ state: 'live', text: parts.join(' · '), fetchedAt: at, count: drawn });
+      onStatus({ state: 'live', text, fetchedAt: at, count: drawn });
     }
   };
 
@@ -231,7 +231,7 @@ export async function createLuftBuergerLayer(options: LuftBuergerOptions): Promi
           clearMarkers();
           onStatus({
             state: 'error',
-            text: `Bürgersensoren ${describeError(error)}`,
+            text: failure(later('sensors.name'), error),
             fetchedAt: null,
             count: 0,
           });
@@ -266,11 +266,11 @@ export async function createLuftBuergerLayer(options: LuftBuergerOptions): Promi
       visible = next;
       group.visible = next;
       if (next) {
-        onStatus({ state: 'loading', text: 'Bürgersensoren werden geladen…', fetchedAt: null, count: 0 });
+        onStatus({ state: 'loading', text: later('sensors.loading'), fetchedAt: null, count: 0 });
         void poll();
       } else {
         if (timer !== null) { clearTimeout(timer); timer = null; }
-        onStatus({ state: 'idle', text: 'aus', fetchedAt: null, count: 0 });
+        onStatus({ state: 'idle', text: later('layer.off'), fetchedAt: null, count: 0 });
       }
     },
     onPicked(detail) { applyHighlight(detail); },

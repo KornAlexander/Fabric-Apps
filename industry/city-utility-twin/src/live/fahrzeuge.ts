@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 
 import type { LiveLayer, PickDetail, WorldPlacement } from '../map/worldScene';
-import { clock, describeError, fetchJson, type StatusReporter } from './source';
+import { clock, failure, fetchJson, type StatusReporter } from './source';
+import { later, t } from '../i18n';
 import { modeOfLine, serviceStamp, previousServiceDay, servicesOnDate } from './fahrplan.mjs';
 
 /**
@@ -215,34 +216,23 @@ export async function createFahrzeugeLayer(options: FahrzeugeOptions): Promise<L
     const due = new Date(Date.now() + remaining * 1000);
     return {
       layerId: 'fahrzeuge',
-      title: `${entry.pattern.l} → ${entry.pattern.h || 'ohne Ziel'}`,
+      title: entry.pattern.h
+        ? `${entry.pattern.l} → ${entry.pattern.h}`
+        : () => `${entry.pattern.l} → ${t('vehicles.noDestination')}`,
       subtitle: label[entry.mode],
       accent: spec.colour,
       fields: [
-        { label: 'Verkehrsmittel', value: label[entry.mode] },
-        { label: 'Halt', value: `${stopIndex + 1} von ${entry.pattern.p.length}` },
-        { label: 'Soll-Abfahrt am nächsten Halt', value: clock(due) },
-        {
-          label: 'Fahrzeuglänge',
-          value: `${spec.lengthM} m (typische Baureihe, Flotte gemischt)`,
-        },
-        {
-          label: 'Position',
-          value: 'aus den Soll-Abfahrtszeiten berechnet, keine Fahrzeugortung',
-        },
-        {
-          label: 'Fahrweg',
-          value: 'gerade Linie zwischen den Haltestellen, kein Gleis- oder Straßenverlauf',
-        },
+        { label: later('vehicles.mode'), value: label[entry.mode] },
+        { label: later('vehicles.stop'), value: later('vehicles.stopOf', stopIndex + 1, entry.pattern.p.length) },
+        { label: later('vehicles.nextDeparture'), value: () => clock(due) },
+        { label: later('vehicles.length'), value: later('vehicles.lengthValue', spec.lengthM) },
+        { label: later('vehicles.position'), value: later('vehicles.positionValue') },
+        { label: later('vehicles.path'), value: later('vehicles.pathValue') },
         ...(spec.subsurface
-          ? [{
-            label: 'Hinweis',
-            value: 'Fährt hier im Tunnel; Tunnel sind nicht modelliert, '
-              + 'daher an der Oberfläche und transparent dargestellt',
-          }]
+          ? [{ label: later('vehicles.note'), value: later('vehicles.tunnel') }]
           : []),
       ],
-      source: 'MVV Gesamt-Soll-Fahrplandaten (GTFS), MVV GmbH',
+      source: later('vehicles.source'),
     };
   };
 
@@ -311,7 +301,7 @@ export async function createFahrzeugeLayer(options: FahrzeugeOptions): Promise<L
       // the same wording would imply a freshness the layer does not have.
       onStatus({
         state: 'live',
-        text: `${used} Fahrzeuge · Soll-Fahrplan, keine Ortung · berechnet ${clock(now)}`,
+        text: later('vehicles.live', used, clock(now)),
         fetchedAt: now,
         count: used,
       });
@@ -321,7 +311,7 @@ export async function createFahrzeugeLayer(options: FahrzeugeOptions): Promise<L
   const load = async () => {
     if (data) return;
     if (loading) return loading;
-    onStatus({ state: 'loading', text: 'Fahrplan wird geladen…', fetchedAt: null, count: 0 });
+    onStatus({ state: 'loading', text: later('vehicles.loading'), fetchedAt: null, count: 0 });
     loading = (async () => {
       try {
         const payload = await fetchJson<Fahrplan>(`${base}data/fahrplan.json`, {
@@ -333,7 +323,7 @@ export async function createFahrzeugeLayer(options: FahrzeugeOptions): Promise<L
         if (!usable(payload)) {
           onStatus({
             state: 'error',
-            text: 'Fahrplandaten unvollständig, Ebene bleibt aus',
+            text: later('vehicles.incomplete'),
             fetchedAt: null,
             count: 0,
           });
@@ -346,7 +336,7 @@ export async function createFahrzeugeLayer(options: FahrzeugeOptions): Promise<L
         if (abort.signal.aborted) return;
         onStatus({
           state: 'error',
-          text: `Fahrplan ${describeError(error)}`,
+          text: failure(later('vehicles.name'), error),
           fetchedAt: null,
           count: 0,
         });
@@ -370,7 +360,7 @@ export async function createFahrzeugeLayer(options: FahrzeugeOptions): Promise<L
       visible = next;
       group.visible = next;
       if (next) void load();
-      else onStatus({ state: 'idle', text: 'aus', fetchedAt: null, count: 0 });
+      else onStatus({ state: 'idle', text: later('layer.off'), fetchedAt: null, count: 0 });
       placement.invalidate();
     },
     dispose() {

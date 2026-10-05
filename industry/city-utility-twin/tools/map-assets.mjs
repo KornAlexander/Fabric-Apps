@@ -39,6 +39,32 @@ export function cleanDescriptor(name, input) {
 export const inheritedName = /campus|schedul|timetable|planner|occupancy|fakultät|universit|\brooms?\b|calendar|uConditionMix|aRenovation|aGrade|glider/i;
 export const privateCoordinate = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|Bearer\s+[A-Za-z0-9._-]+|https:\/\/[^\s"']*(?:azurecontainerapps\.(?:net|io)|fabricapps\.net|azurecr\.io)/i;
 
+const RUNTIME_FIELDS = new Set(['apiUrl', 'publishableKey', 'workspaceId', 'itemId', 'portalUrl', 'tenantId']);
+const GUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+
+/**
+ * Why a bundled `rayfin.config.json` must not be approved, or null when it may.
+ *
+ * ⚠️ EVERY FIELD IS BOUND, not only tenant and workspace: approval skips the coordinate and
+ * secret scan for the whole file, so an unchecked field is an unscanned field. Each value must be
+ * exactly what the CLI writes for this tenant, workspace and item.
+ */
+export function runtimeConfigProblem(cfg, { tenant, workspace, item }) {
+  if (!cfg || typeof cfg !== 'object' || Array.isArray(cfg)) return 'is not an object';
+  const keys = Object.keys(cfg);
+  if (keys.length !== RUNTIME_FIELDS.size || keys.some((k) => !RUNTIME_FIELDS.has(k) || typeof cfg[k] !== 'string')) return 'has unexpected fields';
+  if (!GUID.test(tenant) || !GUID.test(workspace)) return 'cannot be bound: the target ids are not GUIDs';
+  if (cfg.tenantId !== tenant || cfg.workspaceId !== workspace) return 'names a different tenant or workspace than this deployment';
+  if (!GUID.test(cfg.itemId)) return 'has a malformed itemId';
+  if (item && cfg.itemId !== item) return 'names a different item than the bound one';
+  const api = new RegExp(`^https://[0-9a-f]{32}\\.pbidedicated\\.windows\\.net/webapi/capacities/[0-9a-f-]{36}/workloads/BaaS/BaaSService/automatic/v1/workspaces/${workspace}/appbackends/${cfg.itemId}/$`);
+  if (!api.test(cfg.apiUrl)) return 'has an apiUrl that is not this item\'s backend';
+  const portal = new RegExp(`^https://app\\.fabric\\.microsoft\\.com/groups/${workspace}/appbackends/${cfg.itemId}(\\?ctid=${tenant})?$`);
+  if (!portal.test(cfg.portalUrl)) return 'has a portalUrl that is not this item\'s page';
+  if (!/^pk-[A-Za-z0-9_-]{8,64}$/.test(cfg.publishableKey)) return 'has a malformed publishableKey';
+  return null;
+}
+
 // Strip only complete URL occurrences for the exact selected public origin.
 // Never blank a line, skip arbitrary files, or exempt a hostname suffix.
 export function withoutApprovedOrigin(text, origin, releaseId) {
@@ -160,6 +186,11 @@ const VENDOR_SYMBOLS = [
   // used to reach the native-broker browser extension. Verified in node_modules rather than
   // assumed, because approving a GUID nobody can explain would defeat the whole check.
   '53ee284d-920a-4b59-9d30-a60315b26836',
+  // ⚠️ REACT'S OWN SCHEDULER, measured in the 2026-10-05 React 19 bundle: exactly these two
+  // identifiers (six occurrences) match the guard, both from `scheduler`/`react-dom` internals.
+  // They are React's task queue, unrelated to the project name the guard is watching for.
+  'unstable_scheduleCallback',
+  'unstable_scheduleHydration',
 ];
 
 export function withoutVendorSymbols(text) {

@@ -15,7 +15,7 @@
     "build": "tsc --noEmit && node tools/check-assets.mjs && vite build && node tools/check-assets.mjs --bundle",
     "build:fabric": "npm run build",
     "preview": "vite preview --host 127.0.0.1 --port 4190 --strictPort",
-    "test": "node --test tests/map.test.mjs tests/geo.test.mjs tests/world.test.mjs tests/relay.test.mjs tests/luft.test.mjs tests/fahrplan.test.mjs tests/pack.test.mjs",
+    "test": "node --test tests/map.test.mjs tests/geo.test.mjs tests/world.test.mjs tests/relay.test.mjs tests/luft.test.mjs tests/fahrplan.test.mjs tests/pack.test.mjs && vitest run",
     "check:bundle": "node tools/check-assets.mjs --bundle",
     "data:flughafen": "pwsh -NoProfile -File tools/build-flughafen.ps1",
     "package:check": "pwsh -NoProfile -File tools/package-check.ps1"
@@ -24,14 +24,23 @@
     "@azure/msal-browser": "^5.22.0",
     "@microsoft/rayfin-auth-provider-fabric": "1.36.2",
     "@microsoft/rayfin-client": "1.36.2",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
     "three": "0.170.0"
   },
   "devDependencies": {
     "@microsoft/rayfin-cli": "1.36.2",
     "@playwright/test": "1.60.0",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/react": "^16.3.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "@types/three": "0.170.0",
+    "@vitejs/plugin-react-swc": "^4.3.3",
+    "jsdom": "^24.1.3",
     "typescript": "~5.8.3",
-    "vite": "~7.3.2"
+    "vite": "~7.3.2",
+    "vitest": "^3.2.7"
   },
   "engines": {
     "node": ">=22.12.0"

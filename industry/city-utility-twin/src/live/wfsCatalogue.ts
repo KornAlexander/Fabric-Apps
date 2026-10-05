@@ -21,13 +21,15 @@
  * the source rather than as a bug here.
  */
 
+import { both, later, type Text } from '../i18n';
+
 export interface WfsLayerSpec {
   /** Layer id, unique across the app. Also the `data-layer` value and the pick detail's source. */
   id: string;
-  /** German label in the panel. */
-  label: string;
-  /** Panel group heading. */
-  group: string;
+  /** Label in the panel, German or English with the app. */
+  label: Text;
+  /** Panel group heading. Shared objects from `GROUP`, so grouping can compare by identity. */
+  group: Text;
   /** Full OWS endpoint, including the GeoServer workspace. */
   endpoint: string;
   typeName: string;
@@ -36,13 +38,13 @@ export interface WfsLayerSpec {
   geometry: 'point' | 'line' | 'polygon';
   colour: number;
   /** Attribution shown in the detail panel footer. */
-  source: string;
-  /** Short German noun for the status line, e.g. "Anlagen". */
-  unit?: string;
+  source: Text;
+  /** Short noun for the status line, e.g. "Anlagen" / "signals". */
+  unit?: Text;
   /** First non-empty property becomes the detail panel's title. */
   titleFields?: string[];
   /** Explicit panel rows. When omitted every non-empty published property is listed. */
-  fields?: { label: string; key: string }[];
+  fields?: { label: Text; key: string }[];
   /** Real-world ribbon width in metres for line layers. */
   widthM?: number;
   /**
@@ -76,8 +78,16 @@ export interface WfsLayerSpec {
   measuredOn: string;
 }
 
-const LHM = (typeName: string) =>
-  `Landeshauptstadt München, offene Daten (${typeName}), dl-de/by-2-0`;
+const LHM = (typeName: string) => later('wfs.source', typeName);
+
+/** Panel groups. One object each, so `groupedLayers` can group by identity in either language. */
+export const GROUP = {
+  charging: both('Ladeinfrastruktur', 'Charging infrastructure'),
+  traffic: both('Verkehr und Parken', 'Traffic and parking'),
+  access: both('Barrierefreiheit', 'Accessibility'),
+  city: both('Stadtstruktur und Versorgung', 'City structure and amenities'),
+  lines: both('Liniennetz', 'Transit lines'),
+} as const;
 
 const MOR = 'https://geoportal.muenchen.de/geoserver/mor_wfs/ows';
 const BAUT = 'https://geoportal.muenchen.de/geoserver/baut_wfs/ows';
@@ -88,14 +98,14 @@ export const WFS_LAYERS: WfsLayerSpec[] = [
   // ── Ladeinfrastruktur ────────────────────────────────────────────────────────────────────
   {
     id: 'ladeeinrichtungen',
-    label: 'Ladeeinrichtungen',
-    group: 'Ladeinfrastruktur',
+    label: both('Ladeeinrichtungen', 'Charging points'),
+    group: GROUP.charging,
     endpoint: MOR,
     typeName: 'mor_wfs:ruhver_els_saeule_point',
     version: '1.0.0',
     geometry: 'point',
     colour: 0x1a7f37,
-    unit: 'Ladeeinrichtungen',
+    unit: both('Ladeeinrichtungen', 'charging points'),
     titleFields: ['standort'],
     source: LHM('mor_wfs:ruhver_els_saeule_point'),
     measuredCount: 121,
@@ -103,14 +113,14 @@ export const WFS_LAYERS: WfsLayerSpec[] = [
   },
   {
     id: 'ladestandorte',
-    label: 'Standorte der Ladeinfrastruktur',
-    group: 'Ladeinfrastruktur',
+    label: both('Standorte der Ladeinfrastruktur', 'Charging sites'),
+    group: GROUP.charging,
     endpoint: MOR,
     typeName: 'mor_wfs:ruhver_els_standort_point',
     version: '1.0.0',
     geometry: 'point',
     colour: 0x0f5c28,
-    unit: 'Standorte',
+    unit: both('Standorte', 'sites'),
     titleFields: ['standort', 'betreiber'],
     source: LHM('mor_wfs:ruhver_els_standort_point'),
     measuredCount: 72,
@@ -120,14 +130,14 @@ export const WFS_LAYERS: WfsLayerSpec[] = [
   // ── Verkehr und Parken ───────────────────────────────────────────────────────────────────
   {
     id: 'lichtsignalanlagen',
-    label: 'Lichtsignalanlagen',
-    group: 'Verkehr und Parken',
+    label: both('Lichtsignalanlagen', 'Traffic signals'),
+    group: GROUP.traffic,
     endpoint: MOR,
     typeName: 'mor_wfs:lsa_opendata',
     version: '1.0.0',
     geometry: 'point',
     colour: 0xf0b323,
-    unit: 'Anlagen',
+    unit: both('Anlagen', 'signals'),
     titleFields: ['standort'],
     source: LHM('mor_wfs:lsa_opendata'),
     measuredCount: 182,
@@ -135,14 +145,14 @@ export const WFS_LAYERS: WfsLayerSpec[] = [
   },
   {
     id: 'parkraumgebiete',
-    label: 'Parkraummanagementgebiete',
-    group: 'Verkehr und Parken',
+    label: both('Parkraummanagementgebiete', 'Parking management areas'),
+    group: GROUP.traffic,
     endpoint: MOR,
     typeName: 'mor_wfs:ruhver_prm_gebiete_poly',
     version: '1.0.0',
     geometry: 'polygon',
     colour: 0x7a5cc4,
-    unit: 'Gebiete',
+    unit: both('Gebiete', 'areas'),
     titleFields: ['name'],
     source: LHM('mor_wfs:ruhver_prm_gebiete_poly'),
     measuredCount: 35,
@@ -150,14 +160,14 @@ export const WFS_LAYERS: WfsLayerSpec[] = [
   },
   {
     id: 'parkseiten',
-    label: 'Parkseiten',
-    group: 'Verkehr und Parken',
+    label: both('Parkseiten', 'Kerbside parking'),
+    group: GROUP.traffic,
     endpoint: MOR,
     typeName: 'mor_wfs:ruhver_parkseiten_line',
     version: '1.0.0',
     geometry: 'line',
     colour: 0x6b7f9e,
-    unit: 'Parkseiten',
+    unit: both('Parkseiten', 'kerbside sections'),
     titleFields: ['strasse', 'parkregel_name'],
     widthM: 2.2,
     // ⚠️ CAPPED, AND THE PANEL SAYS SO. This layer alone fills the core: the probe returned the
@@ -170,14 +180,14 @@ export const WFS_LAYERS: WfsLayerSpec[] = [
   },
   {
     id: 'laden-liefern',
-    label: 'Laden, Liefern, Leisten',
-    group: 'Verkehr und Parken',
+    label: both('Laden, Liefern, Leisten', 'Loading and delivery zones'),
+    group: GROUP.traffic,
     endpoint: MOR,
     typeName: 'mor_wfs:ruhver_laden_liefern_line',
     version: '1.0.0',
     geometry: 'line',
     colour: 0xd06010,
-    unit: 'Zonen',
+    unit: both('Zonen', 'zones'),
     titleFields: ['angebot', 'parkregel_beschreibung'],
     widthM: 2.5,
     source: LHM('mor_wfs:ruhver_laden_liefern_line'),
@@ -186,14 +196,14 @@ export const WFS_LAYERS: WfsLayerSpec[] = [
   },
   {
     id: 'radwege',
-    label: 'Radwege (Radlstadtplan)',
-    group: 'Verkehr und Parken',
+    label: both('Radwege (Radlstadtplan)', 'Cycle routes (Radlstadtplan)'),
+    group: GROUP.traffic,
     endpoint: MOR,
     typeName: 'mor_wfs:rad_rsp_radwege_line',
     version: '1.0.0',
     geometry: 'line',
     colour: 0x1668c1,
-    unit: 'Abschnitte',
+    unit: both('Abschnitte', 'sections'),
     titleFields: ['legende'],
     widthM: 2.5,
     source: LHM('mor_wfs:rad_rsp_radwege_line'),
@@ -202,14 +212,14 @@ export const WFS_LAYERS: WfsLayerSpec[] = [
   },
   {
     id: 'strassennetz',
-    label: 'Straßennetz Baureferat Tiefbau',
-    group: 'Verkehr und Parken',
+    label: both('Straßennetz Baureferat Tiefbau', 'Street network, civil engineering department'),
+    group: GROUP.traffic,
     endpoint: BAUT,
     typeName: 'baut_wfs:strassenabschnitte_wu',
     version: '1.0.0',
     geometry: 'line',
     colour: 0x8a8f94,
-    unit: 'Abschnitte',
+    unit: both('Abschnitte', 'sections'),
     titleFields: ['nr', 'str_nr'],
     widthM: 3,
     maxFeatures: 1200,
@@ -221,14 +231,14 @@ export const WFS_LAYERS: WfsLayerSpec[] = [
   // ── Barrierefreiheit ─────────────────────────────────────────────────────────────────────
   {
     id: 'behindertenparkplaetze',
-    label: 'Behindertenparkplätze',
-    group: 'Barrierefreiheit',
+    label: both('Behindertenparkplätze', 'Disabled parking'),
+    group: GROUP.access,
     endpoint: MOR,
     typeName: 'mor_wfs:behindertenparkplaetze',
     version: '1.0.0',
     geometry: 'point',
     colour: 0x0a63c2,
-    unit: 'Standorte',
+    unit: both('Standorte', 'sites'),
     titleFields: ['bezeichnung', 'detail'],
     // ⚠️ "Standorte", NOT "Stellplätze". The layer counts FEATURES, and a feature carries
     // `anzahl_stellplaetze`, which is 2 at Damenstiftstraße 4. Labelling the feature count as a
@@ -239,14 +249,14 @@ export const WFS_LAYERS: WfsLayerSpec[] = [
   },
   {
     id: 'blindenleitsystem',
-    label: 'Blindenleitsystem Altstadt',
-    group: 'Barrierefreiheit',
+    label: both('Blindenleitsystem Altstadt', 'Tactile paving, old town'),
+    group: GROUP.access,
     endpoint: BAUT,
     typeName: 'baut_wfs:blindenleitsystem_altstadt',
     version: '1.1.0',
     geometry: 'line',
     colour: 0xffd400,
-    unit: 'Abschnitte',
+    unit: both('Abschnitte', 'sections'),
     titleFields: ['art'],
     // Measured 2026-09-22: `breite_cm` is 50 on 30 of the 32 features, 70 on one and 40 on one.
     // The width is therefore read per feature; this fallback only applies if it goes missing.
@@ -260,14 +270,14 @@ export const WFS_LAYERS: WfsLayerSpec[] = [
   // ── Stadtstruktur und Versorgung ─────────────────────────────────────────────────────────
   {
     id: 'stadtbezirksviertel',
-    label: 'Stadtbezirksviertel',
-    group: 'Stadtstruktur und Versorgung',
+    label: both('Stadtbezirksviertel', 'District quarters'),
+    group: GROUP.city,
     endpoint: GSM,
     typeName: 'gsm_wfs:vablock_viertel',
     version: '1.0.0',
     geometry: 'polygon',
     colour: 0x5b6770,
-    unit: 'Viertel',
+    unit: both('Viertel', 'quarters'),
     titleFields: ['vi_nummer'],
     source: LHM('gsm_wfs:vablock_viertel'),
     measuredCount: 91,
@@ -275,14 +285,14 @@ export const WFS_LAYERS: WfsLayerSpec[] = [
   },
   {
     id: 'trinkbrunnen',
-    label: 'Trinkbrunnen',
-    group: 'Stadtstruktur und Versorgung',
+    label: both('Trinkbrunnen', 'Drinking fountains'),
+    group: GROUP.city,
     endpoint: BAUG,
     typeName: 'baug_wfs:trinkwasserbrunnen',
     version: '1.0.0',
     geometry: 'point',
     colour: 0x00a4d6,
-    unit: 'Brunnen',
+    unit: both('Brunnen', 'fountains'),
     titleFields: ['bezeichnung', 'objekt'],
     source: LHM('baug_wfs:trinkwasserbrunnen'),
     measuredCount: 28,
@@ -297,19 +307,19 @@ export const WFS_LAYERS: WfsLayerSpec[] = [
   // never be presented as when anything departs.
   {
     id: 'liniennetz-bahn',
-    label: 'Tram- und U-Bahn-Linien',
-    group: 'Liniennetz',
+    label: both('Tram- und U-Bahn-Linien', 'Tram and U-Bahn lines'),
+    group: GROUP.lines,
     endpoint: MOR,
     typeName: 'mor_wfs:mvg_fahrplan_solldaten_line',
     version: '1.1.0',
     geometry: 'line',
     colour: 0x005a9c,
-    unit: 'Linien',
+    unit: both('Linien', 'lines'),
     titleFields: ['route_short_name'],
     fields: [
-      { label: 'Linie', key: 'route_short_name' },
-      { label: 'Verkehrsmittel', key: 'art' },
-      { label: 'Linienweg', key: 'route_long_name' },
+      { label: both('Linie', 'Line'), key: 'route_short_name' },
+      { label: both('Verkehrsmittel', 'Mode'), key: 'art' },
+      { label: both('Linienweg', 'Route'), key: 'route_long_name' },
     ],
     widthM: 6,
     cqlFilter: "art IN ('Tram','U-Bahn')",
@@ -322,19 +332,19 @@ export const WFS_LAYERS: WfsLayerSpec[] = [
   },
   {
     id: 'liniennetz-bus',
-    label: 'Bus- und SEV-Linien',
-    group: 'Liniennetz',
+    label: both('Bus- und SEV-Linien', 'Bus and replacement bus lines'),
+    group: GROUP.lines,
     endpoint: MOR,
     typeName: 'mor_wfs:mvg_fahrplan_solldaten_line',
     version: '1.1.0',
     geometry: 'line',
     colour: 0x9a6a00,
-    unit: 'Linien',
+    unit: both('Linien', 'lines'),
     titleFields: ['route_short_name'],
     fields: [
-      { label: 'Linie', key: 'route_short_name' },
-      { label: 'Verkehrsmittel', key: 'art' },
-      { label: 'Linienweg', key: 'route_long_name' },
+      { label: both('Linie', 'Line'), key: 'route_short_name' },
+      { label: both('Verkehrsmittel', 'Mode'), key: 'art' },
+      { label: both('Linienweg', 'Route'), key: 'route_long_name' },
     ],
     widthM: 5,
     cqlFilter: "art IN ('Bus','SEV')",
@@ -346,18 +356,18 @@ export const WFS_LAYERS: WfsLayerSpec[] = [
   },
   {
     id: 'liniennetz-sbahn',
-    label: 'S-Bahn-Linien',
-    group: 'Liniennetz',
+    label: both('S-Bahn-Linien', 'S-Bahn lines'),
+    group: GROUP.lines,
     endpoint: MOR,
     typeName: 'mor_wfs:mvv_sbahn_line',
     version: '1.1.0',
     geometry: 'line',
     colour: 0x008d4f,
-    unit: 'Linien',
+    unit: both('Linien', 'lines'),
     titleFields: ['short_name'],
     fields: [
-      { label: 'Linie', key: 'short_name' },
-      { label: 'Typ', key: 'typ' },
+      { label: both('Linie', 'Line'), key: 'short_name' },
+      { label: both('Typ', 'Type'), key: 'typ' },
     ],
     widthM: 7,
     maxBytes: 20_000_000,
@@ -368,8 +378,8 @@ export const WFS_LAYERS: WfsLayerSpec[] = [
 ];
 
 /** Catalogue layers in panel order, grouped by their `group`. */
-export function groupedLayers(): { group: string; layers: WfsLayerSpec[] }[] {
-  const groups: { group: string; layers: WfsLayerSpec[] }[] = [];
+export function groupedLayers(): { group: Text; layers: WfsLayerSpec[] }[] {
+  const groups: { group: Text; layers: WfsLayerSpec[] }[] = [];
   for (const spec of WFS_LAYERS) {
     let entry = groups.find((candidate) => candidate.group === spec.group);
     if (!entry) {

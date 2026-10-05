@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 
 import type { LiveLayer, PickDetail, WorldPlacement } from '../map/worldScene';
-import { clock, describeError, fetchJson, type StatusReporter } from './source';
+import { clock, failure, fetchJson, type StatusReporter } from './source';
+import { later, t, type Text } from '../i18n';
 
 /**
  * Baustellen und vorübergehende Haltverbote der Landeshauptstadt München.
@@ -100,31 +101,31 @@ function detailFor(
     const trimmed = typeof value === 'string' ? value.trim() : '';
     return trimmed.length ? trimmed : null;
   };
-  const fields: { label: string; value: string }[] = [];
-  const add = (label: string, value: string | null | undefined) => {
+  const fields: { label: Text; value: Text }[] = [];
+  const add = (label: Text, value: string | null | undefined) => {
     const usable = text(value);
     if (usable) fields.push({ label, value: usable });
   };
 
   const from = text(properties.beginn_datum_kombiniert);
   const to = text(properties.ende_datum_kombiniert);
-  if (from && to) add('Zeitraum', `${from} bis ${to}`);
-  else if (from) add('Beginn', from);
-  else if (to) add('Ende', to);
+  if (from && to) fields.push({ label: later('field.period'), value: later('field.periodValue', from, to) });
+  else if (from) add(later('field.start'), from);
+  else if (to) add(later('field.end'), to);
 
-  add('Betroffene Bereiche', properties.betroffene_bereiche);
-  add('Beeinträchtigung', properties.beeintraechtigung);
-  add('Beschreibung', properties.beschreibung);
-  add('Weitere Informationen', properties.weitere_info);
-  add('Kontakt', properties.kontakt_oeffentlich);
+  add(later('field.areas'), properties.betroffene_bereiche);
+  add(later('field.impact'), properties.beeintraechtigung);
+  add(later('field.description'), properties.beschreibung);
+  add(later('field.moreInfo'), properties.weitere_info);
+  add(later('field.contact'), properties.kontakt_oeffentlich);
 
   return {
     layerId: 'baustellen',
-    title: text(properties.strasse_hausnr) ?? 'Ohne Ortsangabe',
+    title: text(properties.strasse_hausnr) ?? later('roadworks.noPlace'),
     subtitle: text(properties.art) ?? undefined,
     accent: colour,
     fields,
-    source: 'Landeshauptstadt München, offene Daten (mor_wfs:baustellen_opendata)',
+    source: later('roadworks.source'),
     // ⚠️ `feature.id`, NOT `fachliche_id`. Measured over 400 records: the city's own reference is
     // null on 83 of them, so keying a note on it would leave a fifth of the Baustellen
     // unannotatable, silently.
@@ -164,7 +165,7 @@ export async function createBaustellenLayer(options: BaustellenOptions): Promise
    * drawn twice, at double opacity, with the count reported once.
    */
   let pending: Promise<void> | null = null;
-  let lastStatus: { text: string; at: Date } | null = null;
+  let lastStatus: { text: Text; at: Date } | null = null;
 
   const materials = new Map<number, THREE.MeshBasicMaterial>();
   const materialFor = (colour: number) => {
@@ -242,9 +243,11 @@ export async function createBaustellenLayer(options: BaustellenOptions): Promise
       byKind.set(kind, (byKind.get(kind) ?? 0) + 1);
     }
     count = features.length;
-    const summary = [...byKind.entries()]
+    const summary = () => [...byKind.entries()]
       .sort((a, b) => b[1] - a[1])
-      .map(([kind, n]) => `${n} ${kind === 'Vorübergehendes Haltverbot' ? 'Haltverbote' : kind}`)
+      // The category is the city's own word and stays as published; only the app's short form
+      // for the no-stopping zones is translated.
+      .map(([kind, n]) => `${n} ${kind === 'Vorübergehendes Haltverbot' ? t('roadworks.noStopping') : kind}`)
       .join(' · ');
     return { drawn, summary };
   };
@@ -257,7 +260,7 @@ export async function createBaustellenLayer(options: BaustellenOptions): Promise
       return;
     }
     if (pending) return pending;
-    onStatus({ state: 'loading', text: 'Baustellen werden geladen…', fetchedAt: null, count: 0 });
+    onStatus({ state: 'loading', text: later('roadworks.loading'), fetchedAt: null, count: 0 });
     pending = (async () => {
       try {
         const box = placement.coreBboxUtm(siteId);
@@ -282,14 +285,14 @@ export async function createBaustellenLayer(options: BaustellenOptions): Promise
         const { summary } = build(features);
         const at = new Date();
         const text = features.length === 0
-          ? `keine Einträge im Kartenausschnitt · Stand ${clock(at)}`
-          : `${summary} · Stand ${clock(at)}`;
+          ? () => `${t('status.noFeatures')} · ${t('status.asOf', clock(at))}`
+          : () => `${summary()} · ${t('status.asOf', clock(at))}`;
         lastStatus = { text, at };
         if (visible) onStatus({ state: 'live', text, fetchedAt: at, count });
       } catch (error) {
         if (abort.signal.aborted) return;
         if (visible) {
-          onStatus({ state: 'error', text: `Baustellen ${describeError(error)}`, fetchedAt: null, count: 0 });
+          onStatus({ state: 'error', text: failure(later('roadworks.name'), error), fetchedAt: null, count: 0 });
         }
       } finally {
         pending = null;
@@ -339,7 +342,7 @@ export async function createBaustellenLayer(options: BaustellenOptions): Promise
       visible = next;
       group.visible = next;
       if (next) void load();
-      else onStatus({ state: 'idle', text: 'aus', fetchedAt: null, count: 0 });
+      else onStatus({ state: 'idle', text: later('layer.off'), fetchedAt: null, count: 0 });
     },
     onPicked(detail) { applyHighlight(detail); },
     dispose() {

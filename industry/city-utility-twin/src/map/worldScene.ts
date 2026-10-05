@@ -12,6 +12,7 @@ import { loadVegetation } from './vegetation';
 import { createSky } from './sky';
 import { createFlyControls, type FlyTelemetry } from './flyControls';
 import { headingFromAzimuth } from './compass';
+import { show, t, type Text } from '../i18n';
 
 /**
  * Where a live layer may put things, and how it converts a real-world position into one.
@@ -79,13 +80,14 @@ export interface LiveLayer {
 export interface PickDetail {
   /** Which layer it came from, so the panel can label the source. */
   layerId: string;
-  title: string;
-  subtitle?: string;
+  title: Text;
+  subtitle?: Text;
   /** Accent colour for the panel's leading edge, matching the object on the map. */
   accent?: number;
-  fields: { label: string; value: string }[];
+  /** Source values stay plain strings; app wording is a function so it follows the language. */
+  fields: { label: Text; value: Text }[];
   /** Attribution line for the panel footer. */
-  source: string;
+  source: Text;
   /**
    * Identifiers a coordination note needs, when the picked object is a construction site.
    *
@@ -221,7 +223,7 @@ export async function createWorldMap(
       }
       for (const tile of assets.drapeTiles ?? []) textures.add(tile);
       if (!assets.drapeTexture && !assets.drapeTiles) {
-        throw new Error(`Für ${site.name} fehlt das Luftbild.`);
+        throw new Error(t('scene.missingDrape', show(site.name)));
       }
 
       const terrain = assets.terrain;
@@ -267,7 +269,7 @@ export async function createWorldMap(
       if (site.hasVegetation) {
         const vegetationReader = await readerFor(site.id);
         const vegetation = await loadVegetation(vegetationReader, onProgress);
-        if (!vegetation) throw new Error(`Für ${site.name} fehlt die Vegetation.`);
+        if (!vegetation) throw new Error(t('scene.missingVegetation', show(site.name)));
         cleanup.push(() => vegetation.dispose());
         vegetation.group.position.copy(offset);
         scene.add(vegetation.group);

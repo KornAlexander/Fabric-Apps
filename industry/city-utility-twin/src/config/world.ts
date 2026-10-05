@@ -11,13 +11,15 @@
  * form that survives a re-bake at a different resolution.
  */
 
+import { both, type Text } from '../i18n';
+
 export interface SiteConfig {
   /** Directory under `public/terrain/`, and the value of the `?ort=` deep link. */
   readonly id: string;
-  /** German label. The app's UI is German; the audience and all four data owners are German. */
-  readonly name: string;
+  /** Site name in the switcher, German or English with the app. */
+  readonly name: Text;
   /** One line under the name in the switcher. */
-  readonly subtitle: string;
+  readonly subtitle: Text;
   /** Normalised east position of the camera target inside this core's heightmap. */
   readonly u: number;
   /** Normalised south position (v = 0 is the NORTH edge, matching the raster row order). */
@@ -41,8 +43,8 @@ export interface SiteConfig {
 export const SITES: readonly SiteConfig[] = [
   {
     id: 'munich',
-    name: 'München Zentrum',
-    subtitle: 'Maxvorstadt und Altstadtrand',
+    name: both('München Zentrum', 'Munich city centre'),
+    subtitle: both('Maxvorstadt und Altstadtrand', 'Maxvorstadt and the old town edge'),
     // Geschwister-Scholl-Platz. A measured map anchor, not a displayed place label.
     u: 0.60175,
     v: 0.30707,
@@ -52,8 +54,8 @@ export const SITES: readonly SiteConfig[] = [
   },
   {
     id: 'flughafen',
-    name: 'Flughafen München',
-    subtitle: 'Nord- und Südbahn, Terminal 1 und 2',
+    name: both('Flughafen München', 'Munich Airport'),
+    subtitle: both('Nord- und Südbahn, Terminal 1 und 2', 'North and south runways, Terminals 1 and 2'),
     // Munich Airport Center, OSM way/4446890. build_terrain.py sampled u=0.502 v=0.528 at 452.3 m.
     u: 0.502,
     v: 0.528,

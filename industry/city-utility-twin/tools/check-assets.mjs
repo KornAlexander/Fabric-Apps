@@ -2,7 +2,7 @@ import {readFile,readdir,lstat} from 'node:fs/promises';
 import {join,resolve} from 'node:path';
 import {buildAssetConfig,CORES} from './asset-build-config.mjs';
 import {PROJECT,inspectCore,privateValues,safeTree} from './asset-release.mjs';
-import {inheritedName,privateCoordinate,withoutApprovedOrigin,withoutApprovedRelay,withoutVendorSymbols,withoutApprovedFabricIds,withoutApprovedPlaceNames,configWithoutHostingRedirect} from './map-assets.mjs';
+import {inheritedName,privateCoordinate,withoutApprovedOrigin,withoutApprovedRelay,withoutVendorSymbols,withoutApprovedFabricIds,withoutApprovedPlaceNames,configWithoutHostingRedirect,runtimeConfigProblem} from './map-assets.mjs';
 const bundle=process.argv.includes('--bundle');
 if(process.argv.slice(2).some(v=>v!=='--bundle'))throw new Error('Unknown asset check argument.');
 const config=await buildAssetConfig();
@@ -52,22 +52,27 @@ if(config.mode==='local'){
 let checked=0;
 // `rayfin up` (CLI >= 1.36) writes rayfin.config.json into public/ before it builds, so the deployed
 // bundle legitimately carries the target's own workspace/item/tenant ids. Approved only when it is
-// exactly that file, holds only the CLI's six fields, and names the tenant and workspace this
-// deployment was configured for (FABRIC_TENANT_ID / FABRIC_WORKSPACE_ID, set by deploy-fabric.ps1).
-const RUNTIME_FIELDS=new Set(['apiUrl','publishableKey','workspaceId','itemId','portalUrl','tenantId']);
+// exactly that file, holds only the CLI's six fields, names the tenant and workspace this
+// deployment was configured for (FABRIC_TENANT_ID / FABRIC_WORKSPACE_ID), and every OTHER field has
+// the exact shape the CLI writes for that same workspace and item.
+//
+// ⚠️ EVERY FIELD IS BOUND, because approval skips the coordinate and secret scan for the whole
+// file. The CLI reuses a pre-existing public/rayfin.config.json unchanged, so a stale copy for
+// another item, or a value smuggled into apiUrl, would otherwise ride along unchecked (review
+// 2026-10-05). FABRIC_ITEM_ID, set by deploy-fabric.ps1 on a redeploy, pins the item as well.
 function approvedRuntimeConfig(path,raw){
   if(!bundle||resolve(path)!==resolve(join(out,'rayfin.config.json')))return false;
   const tenant=process.env.FABRIC_TENANT_ID,workspace=process.env.FABRIC_WORKSPACE_ID;
   if(!tenant||!workspace)throw new Error('rayfin.config.json in the bundle, but no FABRIC_TENANT_ID/FABRIC_WORKSPACE_ID to bind it to.');
   let cfg;try{cfg=JSON.parse(raw);}catch{throw new Error('rayfin.config.json is not JSON.');}
-  if(!cfg||typeof cfg!=='object'||Object.keys(cfg).some(k=>!RUNTIME_FIELDS.has(k)||typeof cfg[k]!=='string'))throw new Error('rayfin.config.json has unexpected fields.');
-  if(cfg.tenantId!==tenant||cfg.workspaceId!==workspace)throw new Error('rayfin.config.json names a different tenant or workspace than this deployment.');
+  const problem=runtimeConfigProblem(cfg,{tenant,workspace,item:process.env.FABRIC_ITEM_ID||null});
+  if(problem)throw new Error(`rayfin.config.json ${problem}.`);
   return true;
 }
 async function scan(path){
   const info=await lstat(path);if(info.isSymbolicLink())throw new Error('Linked build content rejected.');
   if(info.isDirectory()){for(const name of await readdir(path))await scan(join(path,name));return;}
-  if(!/\.(?:html|css|ts|mjs|js|json|yml)$/.test(path))return;
+  if(!/\.(?:html|css|tsx?|mjs|js|json|yml)$/.test(path))return;
   const raw=await readFile(path,'utf8');
   if(approvedRuntimeConfig(path,raw)){checked++;return;}
   // The ADS-B relay is a deliberately public endpoint the browser must know about; see

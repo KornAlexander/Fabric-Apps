@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 
 import type { LiveLayer, WorldPlacement } from '../map/worldScene';
-import { clock, describeError, fetchJson, type StatusReporter } from './source';
+import { clock, describeError, fetchJson, TextError, type StatusReporter } from './source';
+import { later, t } from '../i18n';
 
 /**
  * Live air traffic over Munich and the airport, from ADS-B.
@@ -428,14 +429,20 @@ export async function createFlugverkehrLayer(options: FlugverkehrOptions): Promi
   };
 
   const liveText = (at: Date) => {
-    const parts = [`${tracks.size} Flugzeuge`];
-    // ⚠️ "als Positionssymbol", NOT "ohne Musterangabe". Most of these DO carry a type in the
-    // feed — C172, EC45, PC12 — it is this app that has no silhouette for them. Saying the
-    // source gave no type would blame the source for the app's own limitation.
-    if (genericCount) parts.push(`${genericCount} als Positionssymbol`);
-    if (skippedOffMap) parts.push(`${skippedOffMap} außerhalb des Modells`);
-    parts.push(`Stand ${clock(at)}`);
-    return parts.join(' \u00b7 ');
+    // Counts are read now; the wording is resolved when the panel draws it.
+    const total = tracks.size;
+    const generic = genericCount;
+    const offMap = skippedOffMap;
+    return () => {
+      const parts = [t('flights.count', total)];
+      // ⚠️ "als Positionssymbol", NOT "ohne Musterangabe". Most of these DO carry a type in the
+      // feed — C172, EC45, PC12 — it is this app that has no silhouette for them. Saying the
+      // source gave no type would blame the source for the app's own limitation.
+      if (generic) parts.push(t('flights.generic', generic));
+      if (offMap) parts.push(t('status.offMap', offMap));
+      parts.push(t('status.asOf', clock(at)));
+      return parts.join(' \u00b7 ');
+    };
   };
 
   const poll = async () => {
@@ -469,7 +476,7 @@ export async function createFlugverkehrLayer(options: FlugverkehrOptions): Promi
       visible = next;
       group.visible = next;
       if (next) {
-        onStatus({ state: 'loading', text: 'Flugdaten werden geladen\u2026', fetchedAt: null, count: 0 });
+        onStatus({ state: 'loading', text: later('flights.loading'), fetchedAt: null, count: 0 });
         void poll();
         if (!timer) timer = window.setInterval(() => { void poll(); }, POLL_MS);
       } else {
@@ -479,7 +486,7 @@ export async function createFlugverkehrLayer(options: FlugverkehrOptions): Promi
         clear();
         feedDown = false;
         fetchedAt = null;
-        onStatus({ state: 'idle', text: 'aus', fetchedAt: null, count: 0 });
+        onStatus({ state: 'idle', text: later('layer.off'), fetchedAt: null, count: 0 });
       }
     },
     update(dt) {
@@ -532,12 +539,12 @@ export async function createFlugverkehrLayer(options: FlugverkehrOptions): Promi
  * broken app; it is in fact the expected behaviour of a static host with no server side, and the
  * operator needs to know to run the local preview rather than to debug anything.
  */
-function describeProxyFailure(error: unknown): string {
+function describeProxyFailure(error: unknown): () => string {
   const message = error instanceof Error ? error.message : '';
   if (/JSON|Unexpected token|<!doctype/i.test(message)) {
-    return 'Live-Flugdaten nur \u00fcber den lokalen Datenzugang verf\u00fcgbar (kein CORS beim Anbieter)';
+    return later('flights.localOnly');
   }
-  return `Flugdaten ${describeError(error)}`;
+  return () => t('error.prefixed', t('flights.name'), describeError(error));
 }
 /**
  * Fetch the feed and read how long the relay had been holding the answer.
@@ -557,7 +564,7 @@ async function fetchAdsb(url: string, signal: AbortSignal): Promise<AdsbFetch> {
   });
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   const text = await response.text();
-  if (text.length > 8_000_000) throw new Error('Antwort zu groß');
+    if (text.length > 8_000_000) throw new TextError(later('error.tooLarge'));
   const declared = Number(response.headers.get('x-relay-age-ms') ?? '0');
   return {
     data: JSON.parse(text) as AdsbResponse,

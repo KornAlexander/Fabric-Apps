@@ -14,6 +14,7 @@
  */
 
 import { token as tokenFor } from './token';
+import { t } from '../i18n';
 
 // Aus der Build-Umgebung, siehe UMSETZUNG.md.
 const AGENT_ORIGIN = (import.meta.env.VITE_AGENT_ORIGIN ?? '').replace(/\/$/, '');
@@ -111,7 +112,8 @@ export async function* ask(prompt: string, signal?: AbortSignal): AsyncGenerator
     signal,
   });
   if (!response.ok || !response.body) {
-    yield { type: 'error', error: 'http', message: `Assistent nicht erreichbar (HTTP ${response.status})` };
+    // A transcript line: written in the language active when it happened, like the question.
+    yield { type: 'error', error: 'http', message: t('assistant.unreachableHttp', response.status) };
     return;
   }
 

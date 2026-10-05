@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 
 import type { LiveLayer, PickDetail, WorldPlacement } from '../map/worldScene';
-import { clock, describeError, fetchJson, type StatusReporter } from './source';
+import { clock, failure, fetchJson, type StatusReporter } from './source';
+import { later, t, type Text } from '../i18n';
 import {
   newestReading, parseComponents, parseStations, requestWindow,
 } from './luftParse.mjs';
@@ -164,29 +165,30 @@ function detailFor(
   components: Map<string, ComponentMeta>,
   colour: number,
 ): PickDetail {
-  const fields: { label: string; value: string }[] = [];
-  const add = (label: string, value: string | null) => {
-    if (value && value.length) fields.push({ label, value });
+  const fields: { label: Text; value: Text }[] = [];
+  const add = (label: Text, value: Text | null) => {
+    if (value && (typeof value === 'function' || value.length)) fields.push({ label, value });
   };
 
-  add('Stationstyp', [station.type, station.setting].filter(Boolean).join(', ') || null);
-  add('Adresse', station.street || null);
+  add(later('air.field.type'), [station.type, station.setting].filter(Boolean).join(', ') || null);
+  add(later('air.field.address'), station.street || null);
 
   if (!reading) {
-    add('Messwerte', 'für das abgefragte Zeitfenster nicht veröffentlicht');
+    add(later('air.field.readings'), later('air.notPublished'));
   } else {
-    add('Messzeitraum', `${reading.start} bis ${reading.end} (MEZ)`);
+    add(later('air.field.window'), later('air.windowValue', reading.start, reading.end));
     // ⚠️ NO "von 5". The API publishes no scale definition, so the maximum is not ours to state.
-    add('Gesamtindex', reading.totalIndex === null ? null : String(reading.totalIndex));
+    add(later('air.field.index'), reading.totalIndex === null ? null : String(reading.totalIndex));
     if (reading.incomplete) {
       // The source's own flag, named "data incomplete" in the response's `indices`. It does NOT
       // mean the hour is still being assembled, so the wording must not say that: at Stachus and
       // Landshuter Allee it reflects that no ozone is measured there at all.
-      add('Hinweis', 'Die Quelle kennzeichnet die Daten dieser Stunde als unvollständig.');
+      add(later('air.field.note'), later('air.incomplete'));
     }
     for (const value of reading.values) {
       const meta = components.get(value.componentId);
-      const label = meta ? `${meta.symbol} ${meta.name}`.trim() : `Komponente ${value.componentId}`;
+      // Component names are the source's own (requested in German) and stay as published.
+      const label: Text = meta ? `${meta.symbol} ${meta.name}`.trim() : later('air.component', value.componentId);
       const unit = meta?.unit ? ` ${meta.unit}` : '';
       // Index 0 is a published class, not an absent one, and it is by far the most common:
       // 2160 of 2760 component readings in a measured week. Suppressing it hid the normal case.
@@ -198,10 +200,10 @@ function detailFor(
   return {
     layerId: 'luft-amtlich',
     title: station.name,
-    subtitle: `Messstation ${station.id} · amtlich`,
+    subtitle: later('air.subtitle', station.id),
     accent: colour,
     fields,
-    source: 'Umweltbundesamt, Air Data (luftdaten.umweltbundesamt.de), stündlich',
+    source: later('air.source'),
   };
 }
 
@@ -335,7 +337,7 @@ export async function createLuftAmtlichLayer(options: LuftAmtlichOptions): Promi
       if (visible) {
         onStatus({
           state: 'loading',
-          text: 'Stationsverzeichnis wird geladen (kann beim ersten Mal dauern)…',
+          text: later('air.catalogue'),
           fetchedAt: null,
           count: 0,
         });
@@ -354,7 +356,7 @@ export async function createLuftAmtlichLayer(options: LuftAmtlichOptions): Promi
       if (visible) {
         onStatus({
           state: 'loading',
-          text: `${stations.length} Stationen gefunden, Messwerte werden geladen…`,
+          text: later('air.found', stations.length),
           fetchedAt: null,
           count: 0,
         });
@@ -392,7 +394,7 @@ export async function createLuftAmtlichLayer(options: LuftAmtlichOptions): Promi
       if (visible) {
         onStatus({
           state: 'error',
-          text: 'Messwerte derzeit nicht abrufbar',
+          text: later('air.unavailable'),
           fetchedAt: null,
           count: 0,
         });
@@ -400,12 +402,16 @@ export async function createLuftAmtlichLayer(options: LuftAmtlichOptions): Promi
       return;
     }
 
-    const parts = [`${drawn} Messstationen`];
-    if (withData < drawn) parts.push(`${drawn - withData} ohne aktuelle Werte`);
-    if (offMap > 0) parts.push(`${offMap} außerhalb des Modells`);
-    parts.push(`Abruf ${clock(at)}`);
+    const offMapNow = offMap;
+    const text = () => {
+      const parts = [t('air.stations', drawn)];
+      if (withData < drawn) parts.push(t('air.noCurrent', drawn - withData));
+      if (offMapNow > 0) parts.push(t('status.offMap', offMapNow));
+      parts.push(t('status.fetched', clock(at)));
+      return parts.join(' · ');
+    };
     if (visible) {
-      onStatus({ state: 'live', text: parts.join(' · '), fetchedAt: at, count: drawn });
+      onStatus({ state: 'live', text, fetchedAt: at, count: drawn });
     }
   };
 
@@ -427,7 +433,7 @@ export async function createLuftAmtlichLayer(options: LuftAmtlichOptions): Promi
           clearColumns();
           onStatus({
             state: 'error',
-            text: `Luftqualität ${describeError(error)}`,
+            text: failure(later('air.name'), error),
             fetchedAt: null,
             count: 0,
           });
@@ -462,11 +468,11 @@ export async function createLuftAmtlichLayer(options: LuftAmtlichOptions): Promi
       visible = next;
       group.visible = next;
       if (next) {
-        onStatus({ state: 'loading', text: 'Messwerte werden geladen…', fetchedAt: null, count: 0 });
+        onStatus({ state: 'loading', text: later('air.loading'), fetchedAt: null, count: 0 });
         void poll();
       } else {
         if (timer !== null) { clearTimeout(timer); timer = null; }
-        onStatus({ state: 'idle', text: 'aus', fetchedAt: null, count: 0 });
+        onStatus({ state: 'idle', text: later('layer.off'), fetchedAt: null, count: 0 });
       }
     },
     onPicked(detail) { applyHighlight(detail); },

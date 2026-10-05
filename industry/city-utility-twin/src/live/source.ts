@@ -7,12 +7,17 @@
  * front of four data owners is that what is on the map is what the source actually published.
  */
 
+import { later, locale, t, type Text } from '../i18n';
+
 export type LiveState = 'idle' | 'loading' | 'live' | 'error';
 
 export interface LiveStatus {
   state: LiveState;
-  /** German, user-facing, short enough for the layer panel. */
-  text: string;
+  /**
+   * User-facing, short enough for the layer panel. App wording is passed as a function so the
+   * panel can redraw it in the other language without waiting for the next poll.
+   */
+  text: Text;
   /** When the displayed data was fetched. Null while nothing has been fetched. */
   fetchedAt: Date | null;
   /** How many features are currently drawn. */
@@ -21,13 +26,23 @@ export interface LiveStatus {
 
 export type StatusReporter = (status: LiveStatus) => void;
 
+/**
+ * An error whose message is app text. `describeError` asks it for its wording at display time,
+ * so a failure reported in German reads in English after a switch, like every other line.
+ */
+export class TextError extends Error {
+  constructor(readonly text: () => string) {
+    super(text());
+  }
+}
+
 export function idleStatus(): LiveStatus {
-  return { state: 'idle', text: 'aus', fetchedAt: null, count: 0 };
+  return { state: 'idle', text: later('layer.off'), fetchedAt: null, count: 0 };
 }
 
 /** `14:07` in local time — the label that turns "live" from a claim into a checkable one. */
 export function clock(at: Date): string {
-  return at.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+  return at.toLocaleTimeString(locale(), { hour: '2-digit', minute: '2-digit', hour12: false });
 }
 
 export interface FetchJsonOptions {
@@ -75,11 +90,11 @@ export async function fetchJson<T>(url: string, options: FetchJsonOptions = {}):
   }
   const declared = Number(response.headers.get('content-length') ?? '0');
   if (declared > maxBytes) {
-    throw new Error(`Antwort zu groß (${declared} Bytes)`);
+    throw new TextError(later('error.tooLargeBytes', declared));
   }
   const text = await response.text();
   if (text.length > maxBytes) {
-    throw new Error('Antwort zu groß');
+    throw new TextError(later('error.tooLarge'));
   }
   return JSON.parse(text) as T;
 }
@@ -93,9 +108,15 @@ export async function fetchJson<T>(url: string, options: FetchJsonOptions = {}):
  * Fabric, so the message names the possibility instead of blaming the source.
  */
 export function describeError(error: unknown): string {
-  if (error instanceof DOMException && error.name === 'TimeoutError') return 'Zeitüberschreitung';
-  if (error instanceof DOMException && error.name === 'AbortError') return 'abgebrochen';
-  if (error instanceof TypeError) return 'nicht erreichbar (Netzwerk oder CORS)';
+  if (error instanceof DOMException && error.name === 'TimeoutError') return t('error.timeout');
+  if (error instanceof DOMException && error.name === 'AbortError') return t('error.aborted');
+  if (error instanceof TypeError) return t('error.unreachable');
+  if (error instanceof TextError) return error.text();
   if (error instanceof Error) return error.message;
-  return 'unbekannter Fehler';
+  return t('error.unknown');
+}
+
+/** "<what> <why>" as a status line that follows the language, e.g. "Baustellen Zeitüberschreitung". */
+export function failure(what: () => string, error: unknown): () => string {
+  return () => t('error.prefixed', what(), describeError(error));
 }

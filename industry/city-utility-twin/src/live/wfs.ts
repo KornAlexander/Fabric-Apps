@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 
 import type { LiveLayer, PickDetail, WorldPlacement } from '../map/worldScene';
-import { clock, describeError, fetchJson, type StatusReporter } from './source';
+import { clock, failure, fetchJson, type StatusReporter } from './source';
+import { later, show, t, type Text } from '../i18n';
 import { clipPolylineToBox } from './clip.mjs';
 import type { WfsLayerSpec } from './wfsCatalogue';
 
@@ -137,7 +138,7 @@ function text(value: unknown): string | null {
  * would imply the city was asked and gave no answer.
  */
 function detailFor(spec: WfsLayerSpec, properties: Record<string, unknown>): PickDetail {
-  const fields: { label: string; value: string }[] = [];
+  const fields: { label: Text; value: Text }[] = [];
   if (spec.fields?.length) {
     for (const field of spec.fields) {
       const value = text(properties[field.key]);
@@ -155,7 +156,7 @@ function detailFor(spec: WfsLayerSpec, properties: Record<string, unknown>): Pic
       shown++;
     }
     // Silently dropping fields would make the panel look complete when it is not.
-    if (hidden) fields.push({ label: 'Weitere Felder', value: `${hidden} nicht angezeigt` });
+    if (hidden) fields.push({ label: later('wfs.moreFields'), value: later('wfs.hidden', hidden) });
   }
 
   let title: string | null = null;
@@ -203,7 +204,7 @@ export async function createWfsLayer(
    * the same features drawn twice, at double opacity, reported once.
    */
   let pending: Promise<void> | null = null;
-  let lastStatus: { text: string; at: Date } | null = null;
+  let lastStatus: { text: Text; at: Date } | null = null;
 
   const material = new THREE.MeshBasicMaterial({
     color: spec.colour,
@@ -359,7 +360,7 @@ export async function createWfsLayer(
       return;
     }
     if (pending) return pending;
-    onStatus({ state: 'loading', text: `${spec.label} wird geladen…`, fetchedAt: null, count: 0 });
+    onStatus({ state: 'loading', text: () => t('wfs.loading', show(spec.label)), fetchedAt: null, count: 0 });
     pending = (async () => {
       try {
         const box = placement.coreBboxUtm(siteId);
@@ -404,17 +405,20 @@ export async function createWfsLayer(
         build(features);
         count = features.length;
         const at = new Date();
-        const unit = spec.unit ?? 'Einträge';
+        const total = features.length;
         // ⚠️ A CAP MUST BE VISIBLE. `maxFeatures` silently truncates, so a capped layer would
         // otherwise state a confident count that is really "as many as I allowed myself", and
         // somebody would read it as the number of parking sides in the district.
-        const capped = spec.maxFeatures !== undefined && features.length >= spec.maxFeatures;
-        const label = features.length === 0
-          ? 'keine Einträge im Kartenausschnitt'
-          : capped
-            ? `${features.length} ${unit} (Anzeige begrenzt)`
-            : `${features.length} ${unit}`;
-        const text = `${label} · Stand ${clock(at)}`;
+        const capped = spec.maxFeatures !== undefined && total >= spec.maxFeatures;
+        const text = () => {
+          const unit = spec.unit ? show(spec.unit) : t('wfs.entries');
+          const label = total === 0
+            ? t('status.noFeatures')
+            : capped
+              ? t('wfs.capped', total, unit)
+              : t('wfs.count', total, unit);
+          return `${label} · ${t('status.asOf', clock(at))}`;
+        };
         lastStatus = { text, at };
         if (visible) onStatus({ state: 'live', text, fetchedAt: at, count });
       } catch (error) {
@@ -422,7 +426,7 @@ export async function createWfsLayer(
         if (visible) {
           onStatus({
             state: 'error',
-            text: `${spec.label} ${describeError(error)}`,
+            text: failure(() => show(spec.label), error),
             fetchedAt: null,
             count: 0,
           });
@@ -440,7 +444,7 @@ export async function createWfsLayer(
       visible = next;
       group.visible = next;
       if (next) void load();
-      else onStatus({ state: 'idle', text: 'aus', fetchedAt: null, count: 0 });
+      else onStatus({ state: 'idle', text: later('layer.off'), fetchedAt: null, count: 0 });
       placement.invalidate();
     },
     dispose() {

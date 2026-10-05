@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { ASSET_FILES, cleanDescriptor, inheritedName, privateCoordinate, configWithoutHostingRedirect, withoutApprovedRelay, withoutApprovedFabricIds, APPROVED_AGENT_ORIGIN, APPROVED_RELAY_ORIGIN } from '../tools/map-assets.mjs';
+import { ASSET_FILES, cleanDescriptor, inheritedName, privateCoordinate, configWithoutHostingRedirect, withoutApprovedRelay, withoutApprovedFabricIds, APPROVED_AGENT_ORIGIN, APPROVED_RELAY_ORIGIN, runtimeConfigProblem } from '../tools/map-assets.mjs';
 
 test('only map assets are admitted', () => {
   assert.equal(ASSET_FILES.length, 17);
@@ -71,4 +71,32 @@ test('approved Fabric ids are four exact values, not a GUID-shaped hole', () => 
   const stranger = '11111111-2222-3333-4444-555555555555';
   assert.equal(withoutApprovedFabricIds(stranger), stranger);
   assert(privateCoordinate.test(withoutApprovedFabricIds(stranger)));
+});
+
+test('a bundled runtime config is approved only when every field belongs to the bound item', () => {
+  // Synthetic ids, assembled so this file holds no literal GUID.
+  const id = (c) => [8, 4, 4, 4, 12].map((n) => c.repeat(n)).join('-');
+  const [tenant, workspace, item, other, capacity] = [id('1'), id('2'), id('3'), id('4'), id('5')];
+  const good = {
+    apiUrl: `https://${'5'.repeat(32)}.pbidedicated.windows.net/webapi/capacities/${capacity}/workloads/BaaS/BaaSService/automatic/v1/workspaces/${workspace}/appbackends/${item}/`,
+    publishableKey: 'pk-AbCdEf123_-xyz',
+    workspaceId: workspace,
+    itemId: item,
+    portalUrl: `https://app.fabric.microsoft.com/groups/${workspace}/appbackends/${item}?ctid=${tenant}`,
+    tenantId: tenant,
+  };
+  const target = { tenant, workspace, item: null };
+  assert.equal(runtimeConfigProblem(good, target), null);
+  assert.equal(runtimeConfigProblem(good, { ...target, item }), null);
+  assert.match(runtimeConfigProblem(good, { ...target, item: other }), /different item/);
+  // Same workspace, stale copy for another item: the URLs no longer agree with the item id.
+  assert.match(runtimeConfigProblem({ ...good, itemId: other }, target), /apiUrl/);
+  // A value smuggled into an otherwise approved field.
+  assert.match(runtimeConfigProblem({ ...good, apiUrl: `${good.apiUrl}?secret=abc` }, target), /apiUrl/);
+  assert.match(runtimeConfigProblem({ ...good, portalUrl: 'https://example.com/' }, target), /portalUrl/);
+  assert.match(runtimeConfigProblem({ ...good, publishableKey: 'Bearer abc.def' }, target), /publishableKey/);
+  assert.match(runtimeConfigProblem({ ...good, extra: 'x' }, target), /unexpected fields/);
+  const { tenantId: _dropped, ...missing } = good;
+  assert.match(runtimeConfigProblem(missing, target), /unexpected fields/);
+  assert.match(runtimeConfigProblem(good, { ...target, workspace: other }), /different tenant or workspace/);
 });
