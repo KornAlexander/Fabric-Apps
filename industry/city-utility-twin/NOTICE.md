@@ -53,4 +53,6 @@ These are queried at runtime and nothing from them is stored:
 
 The source attribution wording above is preserved verbatim. The app provides these notices in its map attribution control. The imported metadata retains source licenses, while application-specific place labels are omitted.
 
-The JavaScript bundle includes Three.js and OrbitControls under MIT. Their copyright and license are included in [public/THIRD-PARTY-NOTICES.txt](public/THIRD-PARTY-NOTICES.txt), which travels with the built app.
+The JavaScript bundle includes Three.js and OrbitControls, React, React DOM and Scheduler, the
+Microsoft Authentication Library and the Fabric Apps client libraries, all under MIT. Their
+copyright and license texts are included in [public/THIRD-PARTY-NOTICES.txt](public/THIRD-PARTY-NOTICES.txt), which travels with the built app.

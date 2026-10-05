@@ -15,7 +15,7 @@
     "build": "tsc --noEmit && node tools/check-assets.mjs && vite build && node tools/check-assets.mjs --bundle",
     "build:fabric": "npm run build",
     "preview": "vite preview --host 127.0.0.1 --port 4190 --strictPort",
-    "test": "node --test tests/map.test.mjs tests/geo.test.mjs tests/world.test.mjs tests/relay.test.mjs tests/luft.test.mjs tests/fahrplan.test.mjs tests/pack.test.mjs && vitest run",
+    "test": "node --test tests/map.test.mjs tests/geo.test.mjs tests/world.test.mjs tests/relay.test.mjs tests/luft.test.mjs tests/fahrplan.test.mjs tests/pack.test.mjs tests/notices.test.mjs && vitest run",
     "check:bundle": "node tools/check-assets.mjs --bundle",
     "data:flughafen": "pwsh -NoProfile -File tools/build-flughafen.ps1",
     "package:check": "pwsh -NoProfile -File tools/package-check.ps1"
