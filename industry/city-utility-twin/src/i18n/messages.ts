@@ -92,12 +92,30 @@ export const MESSAGES = {
   'layer.flugverkehr.source': s('ADS-B, adsb.lol', 'ADS-B, adsb.lol'),
   'layer.baustellen.name': s('Baustellen und Halteverbote', 'Roadworks and no-stopping zones'),
   'layer.baustellen.source': s('Landeshauptstadt München, WFS', 'City of Munich, WFS'),
+  'layer.baustellen-hamburg.name': s('Baustellen Hamburg', 'Roadworks Hamburg'),
+  'layer.baustellen-hamburg.source': s(
+    'Behörde für Verkehr und Mobilitätswende Hamburg, Baustellensteckbriefe aus dem Bauweiser (WFS des LGV) · Markierungen sind Symbole',
+    'Hamburg Authority for Transport and Mobility Transition, roadworks profiles from Bauweiser (LGV WFS) · markers are symbols',
+  ),
+  'layer.baustellen-bw.name': s('Baustellen auf Bundes-, Landes- und Kreisstraßen', 'Roadworks on federal, state and district roads'),
+  'layer.baustellen-bw.source': s(
+    'Verkehrsministerium Baden-Württemberg, MobiData BW · nur klassifizierte Straßen, keine Gemeindestraßen',
+    'Baden-Württemberg Ministry of Transport, MobiData BW · classified roads only, no municipal streets',
+  ),
   'layer.mvg.name': s('MVG Echtzeit', 'MVG real time'),
   'layer.mvg.source': s('MVG Abfahrten, live', 'MVG departures, live'),
   'layer.fahrzeuge.name': s('Fahrzeuge auf der Strecke', 'Vehicles on the network'),
   'layer.fahrzeuge.source': s(
     'MVV Soll-Fahrplan (GTFS), Fahrplanstand 09/2026 · Positionen aus den Soll-Abfahrtszeiten berechnet, keine Fahrzeugortung · Fahrweg als gerade Linie zwischen den Haltestellen, kein Gleisverlauf · U-Bahn und S-Bahn fahren hier im Tunnel und werden transparent an der Oberfläche gezeigt',
     'MVV planned service (GTFS), data as of 09/2026 · positions computed from planned departure times, no vehicle tracking · path drawn as a straight line between stops, not the track · U-Bahn and S-Bahn run in tunnels here and are shown transparent at the surface',
+  ),
+  'layer.fahrzeuge.source.hamburg': s(
+    'hvv Soll-Fahrplan (GTFS) · Positionen aus den Soll-Abfahrtszeiten berechnet, keine Fahrzeugortung · gerade Linie zwischen den Haltestellen · U-Bahn und S-Bahn transparent, Fähren als Symbol',
+    'hvv planned service (GTFS) · positions computed from planned departure times, no vehicle tracking · straight line between stops · U-Bahn and S-Bahn transparent, ferries as symbols',
+  ),
+  'layer.fahrzeuge.source.stuttgart': s(
+    'VVS Soll-Fahrplan (GTFS) · Positionen aus den Soll-Abfahrtszeiten berechnet, keine Fahrzeugortung · gerade Linie zwischen den Haltestellen · Stadtbahn und S-Bahn transparent, Zahnradbahn als Symbol',
+    'VVS planned service (GTFS) · positions computed from planned departure times, no vehicle tracking · straight line between stops · Stadtbahn and S-Bahn transparent, rack railway as symbols',
   ),
   'layer.luft-amtlich.name': s('Luftqualität amtlich', 'Air quality, official'),
   'layer.luft-amtlich.source': s(
@@ -169,6 +187,22 @@ export const MESSAGES = {
     'Landeshauptstadt München, offene Daten (mor_wfs:baustellen_opendata)',
     'City of Munich, open data (mor_wfs:baustellen_opendata)',
   ),
+  'roadworks.source.hamburg': s(
+    'Freie und Hansestadt Hamburg, Behörde für Verkehr und Mobilitätswende; Baustellen Hamburg (Bauweiser, WFS des LGV), dl-de/by-2-0',
+    'Freie und Hansestadt Hamburg, Behörde für Verkehr und Mobilitätswende; Baustellen Hamburg (Bauweiser, LGV WFS), dl-de/by-2-0',
+  ),
+  'roadworks.source.bw': s(
+    'Verkehrsministerium Baden-Württemberg, Baustelleninformationen über MobiData BW, dl-de/by-2-0',
+    'Baden-Württemberg Ministry of Transport, roadworks information via MobiData BW, dl-de/by-2-0',
+  ),
+  'roadworks.sites': f((count: number) => `${count} Baustellen`, (count: number) => n(count, 'roadworks site', 'roadworks sites')),
+  'roadworks.classifiedOnly': s('nur Bundes-, Landes- und Kreisstraßen', 'federal, state and district roads only'),
+  'field.organisation': s('Realisierungsträger', 'Carried out by'),
+  'field.reason': s('Anlass', 'Reason'),
+  'field.updated': s('Zuletzt aktualisiert', 'Last updated'),
+  'field.street': s('Straße', 'Road'),
+  'field.kind': s('Art (laut Quelle)', 'Type (as published)'),
+  'field.direction': s('Richtung (laut Quelle)', 'Direction (as published)'),
   'field.period': s('Zeitraum', 'Period'),
   'field.periodValue': f((from: string, to: string) => `${from} bis ${to}`, (from: string, to: string) => `${from} to ${to}`),
   'field.start': s('Beginn', 'Start'),
@@ -213,6 +247,37 @@ export const MESSAGES = {
     'Runs in a tunnel here; tunnels are not modelled, so it is shown transparent at the surface',
   ),
   'vehicles.source': s('MVV Gesamt-Soll-Fahrplandaten (GTFS), MVV GmbH', 'MVV planned service data (GTFS), MVV GmbH'),
+  'vehicles.source.hamburg': s(
+    'hvv Fahrplandaten (GTFS), Hamburger Verkehrsverbund, Transparenzportal Hamburg, dl-de/by-2-0',
+    'hvv service data (GTFS), Hamburger Verkehrsverbund, Hamburg transparency portal, dl-de/by-2-0',
+  ),
+  'vehicles.source.stuttgart': s(
+    'Soll-Fahrplandaten VVS (GTFS), Verkehrs- und Tarifverbund Stuttgart, MobiData BW, CC BY 4.0',
+    'VVS planned service data (GTFS), Verkehrs- und Tarifverbund Stuttgart, MobiData BW, CC BY 4.0',
+  ),
+  'vehicles.tunnel.hamburg': s(
+    'U-Bahn und S-Bahn fahren hier überwiegend im Tunnel, die U3 am Baumwall auf dem Viadukt; Tunnel und Viadukte sind nicht modelliert, daher an der Oberfläche und transparent dargestellt',
+    'U-Bahn and S-Bahn run mostly in tunnels here, the U3 at Baumwall on a viaduct; tunnels and viaducts are not modelled, so it is shown transparent at the surface',
+  ),
+  'vehicles.tunnel.stuttgart': s(
+    'Stadtbahn und S-Bahn fahren im Talkessel überwiegend im Tunnel; Tunnel sind nicht modelliert, daher an der Oberfläche und transparent dargestellt, auch auf den oberirdischen Abschnitten',
+    'Stadtbahn and S-Bahn run mostly in tunnels in the city centre; tunnels are not modelled, so it is shown transparent at the surface, on the open sections too',
+  ),
+  'vehicles.lengthUnitValue': f(
+    (metres: number) => `${metres} m (eine Einheit der typischen Baureihe; Züge fahren oft gekuppelt)`,
+    (metres: number) => `${metres} m (one unit of the typical class; trains often run coupled)`,
+  ),
+  'vehicles.symbolValue': s(
+    'Positionssymbol, keine Fahrzeuggröße (Maße nicht belegt)',
+    'position symbol, not the vehicle size (dimensions not verified)',
+  ),
+  'vehicles.kind.tram': s('Tram', 'Tram'),
+  'vehicles.kind.ubahn': s('U-Bahn', 'U-Bahn'),
+  'vehicles.kind.stadtbahn': s('Stadtbahn', 'Stadtbahn (light rail)'),
+  'vehicles.kind.bus': s('Bus', 'Bus'),
+  'vehicles.kind.sbahn': s('S-Bahn', 'S-Bahn'),
+  'vehicles.kind.ferry': s('Fähre', 'Ferry'),
+  'vehicles.kind.rack': s('Zahnrad- oder Standseilbahn', 'Rack railway or funicular'),
 
   // ------------------------------------------------------------------ air traffic
   'flights.loading': s('Flugdaten werden geladen…', 'Loading flight data…'),
@@ -455,8 +520,8 @@ export const MESSAGES = {
 
   // ------------------------------------------------------------------ attribution
   'attribution.summary': s(
-    'Kartendaten © LDBV · LGV · LGL · Copernicus · OpenStreetMap · adsb.lol · LHM · MVV · MVG · UBA · Sensor.Community',
-    'Map data © LDBV · LGV · LGL · Copernicus · OpenStreetMap · adsb.lol · LHM · MVV · MVG · UBA · Sensor.Community',
+    'Kartendaten © LDBV · LGV · LGL · Copernicus · OpenStreetMap · adsb.lol · LHM · MVV · MVG · hvv · VVS · VM BW · UBA · Sensor.Community',
+    'Map data © LDBV · LGV · LGL · Copernicus · OpenStreetMap · adsb.lol · LHM · MVV · MVG · hvv · VVS · VM BW · UBA · Sensor.Community',
   ),
 };
 

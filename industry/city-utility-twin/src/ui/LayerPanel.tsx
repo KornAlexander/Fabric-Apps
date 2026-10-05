@@ -196,7 +196,7 @@ export function LayerPanel({ world, factories, refreshNotes, pack = PACK, worldI
         {builtIn.map((id) => renderRow(
           id,
           later(layerNameKey(id)),
-          later(layerSourceKey(id)),
+          later(layerSourceKey(id, worldId)),
           // A note somebody else published is not pushed to this browser, so the layer offers an
           // explicit reload, shown only while the layer is on: a button that reloads an invisible
           // layer would do nothing a user could see.

@@ -93,6 +93,21 @@ test('underground lines are recognised by label and by type', () => {
   assert.equal(modeOfLine('N17', '0'), 'tram');
 });
 
+// Measured in the hvv and VVS feeds on 2026-10-05: both use the extended route types.
+test('the extended route types of the hvv and VVS feeds map to the right mode', () => {
+  assert.equal(modeOfLine('U3', '402'), 'ubahn');   // hvv U-Bahn, VVS Stadtbahn
+  assert.equal(modeOfLine('U14', '402'), 'ubahn');
+  assert.equal(modeOfLine('S1', '109'), 'sbahn');
+  assert.equal(modeOfLine('S60', '109'), 'sbahn');
+  assert.equal(modeOfLine('X35', '702'), 'bus');     // hvv express bus
+  assert.equal(modeOfLine('72', '1200'), 'ferry');   // HADAG line 72
+  assert.equal(modeOfLine('10', '1400'), 'rack');    // Stuttgart rack railway
+});
+
+test('replacement buses labelled after a rail line stay buses', () => {
+  for (const label of ['S4E', 'U6E', 'RB31-SEV', 'RE7-SEV']) assert.equal(modeOfLine(label, '3'), 'bus', label);
+});
+
 test('the previous service day is a calendar day, not 24 hours earlier', () => {
   // ⚠️ THE BUG THIS REPLACES. In Europe/Berlin, 2026-03-30 00:30 CEST minus 86 400 000 ms is
   // 2026-03-28 23:30 CET, which skips Sunday the 29th entirely — and the wrong service set was
@@ -150,7 +165,20 @@ test('an added service runs even outside its own validity window', () => {
  *
  */
 
-const TIMETABLE = 'dist/data/fahrplan.json';
+const TIMETABLE = 'dist/data/fahrplan-munich.json';
+
+test('every city\'s baked timetable, and nothing else, is a place-name asset', () => {
+  for (const path of ['public/data/fahrplan-hamburg.json', 'dist/data/fahrplan-stuttgart.json']) {
+    assert.ok(!inheritedName.test(withoutApprovedPlaceNames('"h":"Universität"', path)), path);
+  }
+  for (const path of ['public/data/fahrplan-berlin.json', 'public/data/fahrplan-hamburg.json.bak']) {
+    assert.ok(inheritedName.test(withoutApprovedPlaceNames('Universität', path)), path);
+  }
+  // The approved hvv terminus is exempt as the exact published name only.
+  assert.ok(!inheritedName.test(withoutApprovedPlaceNames('"h":"Energie-Campus Bergedorf"', 'public/data/fahrplan-hamburg.json')));
+  assert.ok(inheritedName.test(withoutApprovedPlaceNames('Energie-Campus Hamburg', 'public/data/fahrplan-hamburg.json')));
+  assert.ok(inheritedName.test(withoutApprovedPlaceNames('Energie-Campus Bergedorf', 'src/main.ts')));
+});
 
 test('the published terminus is exempt inside the data file', () => {
   const cleaned = withoutApprovedPlaceNames('"h":"Universität"', TIMETABLE);

@@ -7,6 +7,7 @@ import { createLuftBuergerLayer, type SensorArea } from '../live/luftBuerger';
 import { createKoordinationLayer, type KoordinationLayer } from '../live/koordination';
 import { createWfsLayer } from '../live/wfs';
 import { createFahrzeugeLayer } from '../live/fahrzeuge';
+import { createRoadworksLayer } from '../live/strassenbaustellen';
 import { WFS_LAYERS, GROUP } from '../live/wfsCatalogue';
 import type { LiveStatus } from '../live/source';
 import type { MessageKey } from '../i18n';
@@ -39,7 +40,8 @@ export interface LayerHooks {
 
 /** The hand-written layers, in panel order, with the message keys for their name and source. */
 export const BUILT_IN_LAYERS = [
-  'flugverkehr', 'baustellen', 'mvg', 'fahrzeuge', 'luft-amtlich', 'luft-buerger', 'koordination',
+  'flugverkehr', 'baustellen', 'baustellen-hamburg', 'baustellen-bw', 'mvg', 'fahrzeuge',
+  'luft-amtlich', 'luft-buerger', 'koordination',
 ] as const;
 
 export type BuiltInLayer = (typeof BUILT_IN_LAYERS)[number];
@@ -48,7 +50,9 @@ export function layerNameKey(id: BuiltInLayer): MessageKey {
   return `layer.${id}.name` as MessageKey;
 }
 
-export function layerSourceKey(id: BuiltInLayer): MessageKey {
+/** Where a layer's rows says its data comes from; the vehicle layer reads each city's own feed. */
+export function layerSourceKey(id: BuiltInLayer, world: WorldId = 'munich'): MessageKey {
+  if (id === 'fahrzeuge' && world !== 'munich') return `layer.fahrzeuge.source.${world}` as MessageKey;
   return `layer.${id}.source` as MessageKey;
 }
 
@@ -59,6 +63,8 @@ export function layerSourceKey(id: BuiltInLayer): MessageKey {
 const BUILT_IN_DIVISION: Record<BuiltInLayer, Division | null> = {
   flugverkehr: 'aviation',
   baustellen: 'construction',
+  'baustellen-hamburg': 'construction',
+  'baustellen-bw': 'construction',
   koordination: 'construction',
   mvg: 'transit',
   fahrzeuge: 'transit',
@@ -91,6 +97,8 @@ export function layerInPack(id: string, pack: ConfigPack = PACK): boolean {
 const BUILT_IN_MODE: Record<BuiltInLayer, DataMode> = {
   flugverkehr: 'live',
   baustellen: 'dataset',
+  'baustellen-hamburg': 'dataset',
+  'baustellen-bw': 'dataset',
   mvg: 'live',
   fahrzeuge: 'planned',
   'luft-amtlich': 'live',
@@ -152,6 +160,10 @@ export function createFactories(
       })),
     baustellen: async (world, onStatus) =>
       world.registerLayer(await createBaustellenLayer({ placement: world.placement, onStatus })),
+    'baustellen-hamburg': async (world, onStatus) =>
+      world.registerLayer(await createRoadworksLayer({ placement: world.placement, onStatus, source: 'baustellen-hamburg' })),
+    'baustellen-bw': async (world, onStatus) =>
+      world.registerLayer(await createRoadworksLayer({ placement: world.placement, onStatus, source: 'baustellen-bw' })),
     mvg: async (world, onStatus) =>
       world.registerLayer(await createMvgLayer({
         placement: world.placement,
@@ -161,7 +173,7 @@ export function createFactories(
         onDetail: (detail) => hooks.showDetail(detail),
       })),
     fahrzeuge: async (world, onStatus) =>
-      world.registerLayer(await createFahrzeugeLayer({ placement: world.placement, onStatus })),
+      world.registerLayer(await createFahrzeugeLayer({ placement: world.placement, onStatus, city: worldId })),
     'luft-amtlich': async (world, onStatus) =>
       world.registerLayer(await createLuftAmtlichLayer({
         placement: world.placement,

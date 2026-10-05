@@ -2,51 +2,117 @@ import * as THREE from 'three';
 
 import type { LiveLayer, PickDetail, WorldPlacement } from '../map/worldScene';
 import { clock, failure, fetchJson, type StatusReporter } from './source';
-import { later, t } from '../i18n';
+import { later, t, type MessageKey, type Text } from '../i18n';
 import { modeOfLine, serviceStamp, previousServiceDay, servicesOnDate } from './fahrplan.mjs';
+import type { WorldId } from '../config/world';
 
 /**
- * Trams, buses and underground trains moving on the map, from the published MVV Soll-Fahrplan.
+ * Trams, buses and trains moving on the map, from each city's published Soll-Fahrplan.
  *
+ * ⚠️ THE PATH BETWEEN TWO STOPS IS A STRAIGHT LINE. The MVV feed ships no geometry (shapes.txt is
+ * present and EMPTY, measured 2026-09-22); HVV and VVS do, but it is not used yet, so all three
+ * cities are drawn the same way. Exact AT each published stop, an approximation between them.
  *
- * ⚠️ THE FEED SHIPS NO GEOMETRY. `shapes.txt` in gesamt_gtfs.zip is present and EMPTY, measured
- * 2026-09-22, so the path between two stops is a straight line. It is exact AT each published
- * stop and an approximation between them: a tram rounding a curve cuts the corner slightly.
+ * ⚠️ UNDERGROUND SERVICES ARE DRAWN TRANSLUCENT AT STREET LEVEL, AND THAT IS AN ADMISSION. No
+ * tunnel or viaduct geometry is available here, so the train is drawn on the surface above its
+ * route. Opaque, that would be a plainly false statement about where it is; translucent, with the
+ * panel saying so, it is a statement about a service rather than a location. Each city's note says
+ * what is actually underground there.
  *
- * ⚠️ UNDERGROUND SERVICES ARE DRAWN TRANSLUCENT AT STREET LEVEL, AND THAT IS AN ADMISSION. A
- * U-Bahn under Odeonsplatz, and every S-Bahn on the Stammstrecke between Hauptbahnhof and
- * Isartor, runs in a tunnel below the surface this app models. No tunnel geometry is available
- * here, so the train is drawn on the surface above its route. Opaque, that would be a plainly
- * false statement about where it is; translucent, with the panel saying so, it is a statement
- * about a service rather than a location.
- *
- * Data: MVV Gesamt-Soll-Fahrplandaten (GTFS), baked to the modelled core by
- * temp/mz-gtfs/bake_fahrplan.py.
+ * Data: public/data/fahrplan-<city>.json, baked by tools/transit/bake_fahrplan.py.
  */
 
-type Mode = 'tram' | 'ubahn' | 'bus' | 'sbahn';
+type Mode = 'tram' | 'ubahn' | 'bus' | 'sbahn' | 'ferry' | 'rack';
+
+interface VehicleClass {
+  lengthM: number;
+  widthM: number;
+  heightM: number;
+  colour: number;
+  subsurface: boolean;
+  /** Drawn as a position symbol, because no verified dimensions exist for this class. */
+  symbol?: boolean;
+  /** One unit of a class that often runs coupled; the panel says so next to the length. */
+  unit?: boolean;
+}
+
+/** Standard 12 m city bus. Articulated units on trunk routes are longer. */
+const BUS: VehicleClass = { lengthM: 12, widthM: 2.55, heightM: 3.1, colour: 0xe07b00, subsurface: false };
 
 /**
- * Typical published class dimensions in metres, length x width x height.
+ * A position symbol, NOT a vehicle. Same idea as the air-traffic layer's marker for aircraft
+ * without a verified silhouette: the planned service gives a position, and drawing a ferry or a rack
+ * railway car at a guessed size would break the real-size rule. Its size is a fixed symbol size.
+ */
+const SYMBOL_SPAN_M = 24;
+const SYMBOL = (colour: number): VehicleClass => ({
+  lengthM: SYMBOL_SPAN_M, widthM: SYMBOL_SPAN_M, heightM: SYMBOL_SPAN_M, colour, subsurface: false, symbol: true,
+});
+
+/**
+ * Published class dimensions in metres, length x width x height, per city.
  *
  * ⚠️ REAL SIZES, NEVER SCALED UP TO BE EASIER TO SEE, which is the standing rule for every 3D
- * scene here. A 37 m tram is a 37 m tram; at the arrival camera it is a few dozen pixels and
- * that is the correct impression of a tram on a 3.25 km map.
- *
- * ⚠️ THE FLEET IS MIXED, so one figure cannot be right for every unit. These are typical class
- * figures for the vehicle most often seen on that mode, not a claim about the specific run.
+ * scene here. ⚠️ THE FLEET IS MIXED and trains run coupled, so one figure cannot be right for
+ * every run. These are the class figures of the vehicle most often seen on that mode:
+ * - Munich: four-section low-floor tram, six-car U-Bahn train, ET 423 S-Bahn unit.
+ * - Hamburg: one DT5 unit (39.6 x 2.6 x 3.37 m) and one ET 490 unit (66.0 x 3.014 x 3.76 m),
+ *   which run as two or three coupled units at busy times.
+ * - Stuttgart: one DT 8 Stadtbahn unit (38.8 x 2.65 x 3.715 m, often run in pairs) and one
+ *   ET 430 S-Bahn unit (68.3 x 3.02 x 4.273 m).
+ * Ferries (HADAG, height not published) and the rack railway and funicular (no verified vehicle
+ * figures) are symbols. Figures as published in each class's reference data (German Wikipedia
+ * infoboxes, citing operators and manufacturers), checked 2026-10-05.
  */
-const CLASS: Record<Mode, {
-  lengthM: number; widthM: number; heightM: number; colour: number; subsurface: boolean;
-}> = {
-  // Four-section low-floor tram of the current generation.
-  tram: { lengthM: 37, widthM: 2.3, heightM: 3.4, colour: 0xd2001e, subsurface: false },
-  // Six-car underground train.
-  ubahn: { lengthM: 114, widthM: 2.9, heightM: 3.55, colour: 0x0a67b1, subsurface: true },
-  // Standard 12 m city bus. Articulated units on trunk routes are longer.
-  bus: { lengthM: 12, widthM: 2.55, heightM: 3.1, colour: 0xe07b00, subsurface: false },
-  // Three-car suburban unit. Inside this core it is on the Stammstrecke, which is in tunnel.
-  sbahn: { lengthM: 67.4, widthM: 3.02, heightM: 3.58, colour: 0x008d4f, subsurface: true },
+const CLASSES: Record<WorldId, Partial<Record<Mode, VehicleClass>>> = {
+  munich: {
+    tram: { lengthM: 37, widthM: 2.3, heightM: 3.4, colour: 0xd2001e, subsurface: false },
+    ubahn: { lengthM: 114, widthM: 2.9, heightM: 3.55, colour: 0x0a67b1, subsurface: true },
+    bus: BUS,
+    sbahn: { lengthM: 67.4, widthM: 3.02, heightM: 3.58, colour: 0x008d4f, subsurface: true },
+  },
+  hamburg: {
+    ubahn: { lengthM: 39.6, widthM: 2.6, heightM: 3.37, colour: 0x0a67b1, subsurface: true, unit: true },
+    sbahn: { lengthM: 66, widthM: 3.014, heightM: 3.76, colour: 0x008d4f, subsurface: true, unit: true },
+    bus: BUS,
+    ferry: SYMBOL(0x1f6fd1),
+  },
+  stuttgart: {
+    ubahn: { lengthM: 38.8, widthM: 2.65, heightM: 3.715, colour: 0xf2b600, subsurface: true, unit: true },
+    sbahn: { lengthM: 68.3, widthM: 3.02, heightM: 4.273, colour: 0x008d4f, subsurface: true, unit: true },
+    bus: BUS,
+    rack: SYMBOL(0x8a5a2b),
+  },
+};
+
+/** A mode a city's table does not list is drawn as a neutral symbol rather than at a borrowed size. */
+const UNKNOWN = SYMBOL(0x9aa3ab);
+
+/** What a mode is called in the panel, per city: Stuttgart's "U" lines are a Stadtbahn. */
+const MODE_NAME: Record<Mode, MessageKey> = {
+  tram: 'vehicles.kind.tram',
+  ubahn: 'vehicles.kind.ubahn',
+  bus: 'vehicles.kind.bus',
+  sbahn: 'vehicles.kind.sbahn',
+  ferry: 'vehicles.kind.ferry',
+  rack: 'vehicles.kind.rack',
+};
+
+function modeName(mode: Mode, city: WorldId): Text {
+  return later(city === 'stuttgart' && mode === 'ubahn' ? 'vehicles.kind.stadtbahn' : MODE_NAME[mode]);
+}
+
+/** The tunnel note per city: what is really underground there, and what is not. */
+const TUNNEL_NOTE: Record<WorldId, MessageKey> = {
+  munich: 'vehicles.tunnel',
+  hamburg: 'vehicles.tunnel.hamburg',
+  stuttgart: 'vehicles.tunnel.stuttgart',
+};
+
+const SOURCE: Record<WorldId, MessageKey> = {
+  munich: 'vehicles.source',
+  hamburg: 'vehicles.source.hamburg',
+  stuttgart: 'vehicles.source.stuttgart',
 };
 
 /** Metres above the terrain, so a vehicle sits on the street rather than in it. */
@@ -121,11 +187,16 @@ export interface FahrzeugeOptions {
   placement: WorldPlacement;
   onStatus: StatusReporter;
   baseUrl?: string;
+  /** Whose planned service, vehicle classes and wording. */
+  city?: WorldId;
 }
 
 export async function createFahrzeugeLayer(options: FahrzeugeOptions): Promise<LiveLayer> {
   const { placement, onStatus } = options;
   const base = options.baseUrl ?? import.meta.env.BASE_URL;
+  const city: WorldId = options.city ?? 'munich';
+  const classes = CLASSES[city];
+  const classOf = (mode: Mode): VehicleClass => classes[mode] ?? UNKNOWN;
 
   const group = new THREE.Group();
   group.name = 'fahrzeuge';
@@ -137,11 +208,14 @@ export async function createFahrzeugeLayer(options: FahrzeugeOptions): Promise<L
   let data: Fahrplan | null = null;
   let loading: Promise<void> | null = null;
 
-  const geometries = new Map<Mode, THREE.BoxGeometry>();
-  const materials = new Map<Mode, THREE.MeshBasicMaterial>();
-  for (const [mode, spec] of Object.entries(CLASS) as [Mode, typeof CLASS[Mode]][]) {
-    geometries.set(mode, new THREE.BoxGeometry(spec.widthM, spec.heightM, spec.lengthM));
-    materials.set(mode, new THREE.MeshBasicMaterial({
+  const geometries = new Map<VehicleClass, THREE.BufferGeometry>();
+  const materials = new Map<VehicleClass, THREE.MeshBasicMaterial>();
+  for (const spec of [...Object.values(classes), UNKNOWN]) {
+    geometries.set(spec, spec.symbol
+      // A neutral octahedron: it says "something is here" without claiming a shape or a size.
+      ? new THREE.OctahedronGeometry(spec.lengthM / 2)
+      : new THREE.BoxGeometry(spec.widthM, spec.heightM, spec.lengthM));
+    materials.set(spec, new THREE.MeshBasicMaterial({
       color: spec.colour,
       // ⚠️ UNLIT ON PURPOSE, NOT BECAUSE THE SCENE IS UNLIT. It has a DirectionalLight and an
       // AmbientLight; an earlier comment here claimed otherwise and was wrong. A flat fill keeps
@@ -204,10 +278,8 @@ export async function createFahrzeugeLayer(options: FahrzeugeOptions): Promise<L
   };
 
   const detailFor = (entry: Active, stopIndex: number, rel: number): PickDetail => {
-    const spec = CLASS[entry.mode];
-    const label: Record<Mode, string> = {
-      tram: 'Tram', ubahn: 'U-Bahn', bus: 'Bus', sbahn: 'S-Bahn',
-    };
+    const spec = classOf(entry.mode);
+    const kind = modeName(entry.mode, city);
     const nextStop = Math.min(stopIndex + 1, entry.pattern.o.length - 1);
     // ⚠️ SECONDS REMAINING, NOT THE WHOLE SEGMENT. This previously added the entire stop-to-stop
     // duration to the current time, so a vehicle halfway between two stops reported an arrival
@@ -219,20 +291,22 @@ export async function createFahrzeugeLayer(options: FahrzeugeOptions): Promise<L
       title: entry.pattern.h
         ? `${entry.pattern.l} → ${entry.pattern.h}`
         : () => `${entry.pattern.l} → ${t('vehicles.noDestination')}`,
-      subtitle: label[entry.mode],
+      subtitle: kind,
       accent: spec.colour,
       fields: [
-        { label: later('vehicles.mode'), value: label[entry.mode] },
+        { label: later('vehicles.mode'), value: kind },
         { label: later('vehicles.stop'), value: later('vehicles.stopOf', stopIndex + 1, entry.pattern.p.length) },
         { label: later('vehicles.nextDeparture'), value: () => clock(due) },
-        { label: later('vehicles.length'), value: later('vehicles.lengthValue', spec.lengthM) },
+        spec.symbol
+          ? { label: later('vehicles.length'), value: later('vehicles.symbolValue') }
+          : { label: later('vehicles.length'), value: later(spec.unit ? 'vehicles.lengthUnitValue' : 'vehicles.lengthValue', spec.lengthM) },
         { label: later('vehicles.position'), value: later('vehicles.positionValue') },
         { label: later('vehicles.path'), value: later('vehicles.pathValue') },
         ...(spec.subsurface
-          ? [{ label: later('vehicles.note'), value: later('vehicles.tunnel') }]
+          ? [{ label: later('vehicles.note'), value: later(TUNNEL_NOTE[city]) }]
           : []),
       ],
-      source: later('vehicles.source'),
+      source: later(SOURCE[city]),
     };
   };
 
@@ -262,19 +336,20 @@ export async function createFahrzeugeLayer(options: FahrzeugeOptions): Promise<L
       const to = placement.toWorld(b[0], b[1]);
 
       const mesh = pool[used] ?? (() => {
-        const created = new THREE.Mesh(geometries.get(entry.mode)!, materials.get(entry.mode)!);
+        const spec = classOf(entry.mode);
+        const created = new THREE.Mesh(geometries.get(spec)!, materials.get(spec)!);
         pool.push(created);
         return created;
       })();
       used++;
 
-      // Reuse the pooled mesh for whatever mode it now carries, and put it back in the scene if
+      // Reuse the pooled mesh for whatever class it now carries, and put it back in the scene if
       // a previous frame detached it.
-      mesh.geometry = geometries.get(entry.mode)!;
-      mesh.material = materials.get(entry.mode)!;
+      const spec = classOf(entry.mode);
+      mesh.geometry = geometries.get(spec)!;
+      mesh.material = materials.get(spec)!;
       if (!mesh.parent) group.add(mesh);
 
-      const spec = CLASS[entry.mode];
       mesh.position.set(
         from.x + (to.x - from.x) * f,
         from.y + (to.y - from.y) * f + RIDE_HEIGHT_M + spec.heightM / 2,
@@ -315,7 +390,7 @@ export async function createFahrzeugeLayer(options: FahrzeugeOptions): Promise<L
     onStatus({ state: 'loading', text: later('vehicles.loading'), fetchedAt: null, count: 0 });
     loading = (async () => {
       try {
-        const payload = await fetchJson<Fahrplan>(`${base}data/fahrplan.json`, {
+        const payload = await fetchJson<Fahrplan>(`${base}data/fahrplan-${city}.json`, {
           signal: abort.signal,
           timeoutMs: 20000,
           maxBytes: 8_000_000,

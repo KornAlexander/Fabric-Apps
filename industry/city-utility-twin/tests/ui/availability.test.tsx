@@ -12,7 +12,7 @@ import { validateAvailability } from '../../src/config/availabilityMatrix.mjs';
 import { DIVISIONS } from '../../src/config/pack.mjs';
 import { WORLDS, type WorldId } from '../../src/config/world';
 import { badgeFor, stamp } from '../../src/live/dataMode';
-import type { LiveStatus } from '../../src/live/source';
+import { fetchJson, type LiveStatus } from '../../src/live/source';
 import { later, setLanguage, show } from '../../src/i18n';
 import { LayerPanel } from '../../src/ui/LayerPanel';
 import { loadPack } from '../../src/config/activePack';
@@ -54,10 +54,12 @@ describe('availability matrix (P1.4)', () => {
   });
 
   it('decides which layers each city offers', () => {
-    expect(layersIn('munich').size).toBe(KNOWN_LAYERS.length);
-    expect([...layersIn('hamburg')].sort()).toEqual(['luft-amtlich', 'luft-buerger']);
-    expect([...layersIn('stuttgart')].sort()).toEqual(['luft-amtlich', 'luft-buerger']);
+    const elsewhere = ['baustellen-hamburg', 'baustellen-bw'];
+    expect([...layersIn('munich')].sort()).toEqual(KNOWN_LAYERS.filter((id) => !elsewhere.includes(id)).sort());
+    expect([...layersIn('hamburg')].sort()).toEqual(['baustellen-hamburg', 'fahrzeuge', 'luft-amtlich', 'luft-buerger']);
+    expect([...layersIn('stuttgart')].sort()).toEqual(['baustellen-bw', 'fahrzeuge', 'luft-amtlich', 'luft-buerger']);
     expect(layerAvailableIn('flugverkehr', 'hamburg')).toBe(false);
+    expect(layerAvailableIn('baustellen-bw', 'munich')).toBe(false);
     expect(layerAvailableIn('luft-buerger', 'stuttgart')).toBe(true);
   });
 
@@ -159,10 +161,13 @@ describe('LayerPanel availability and badges', () => {
     expect(chip('water').hasAttribute('title')).toBe(false);
     unmount();
 
-    render(<LayerPanel world={fakeWorld()} factories={{}} refreshNotes={async () => {}} worldId="hamburg" />);
-    const modes = [...document.querySelectorAll('#division-chips [data-availability]')].map((li) => li.getAttribute('data-availability'));
-    expect(modes).toHaveLength(DIVISIONS.length);
-    expect(new Set(modes)).toEqual(new Set(['none']));
+    render(<LayerPanel world={fakeWorld()} factories={{}} refreshNotes={async () => {}} worldId="stuttgart" />);
+    const modes = Object.fromEntries([...document.querySelectorAll('#division-chips [data-availability]')]
+      .map((li) => [li.getAttribute('data-division'), li.getAttribute('data-availability')]));
+    expect(Object.keys(modes)).toHaveLength(DIVISIONS.length);
+    expect(modes).toMatchObject({ transit: 'real', construction: 'real', water: 'none', aviation: 'none' });
+    // The coverage limit of the state feed is part of the chip's source, not hidden behind "real".
+    expect(document.querySelector('[data-division="construction"]')!.getAttribute('title')).toMatch(/keine Gemeindestraßen/);
   });
 
   it('shows no chip for a division the pack switches off', () => {
@@ -198,5 +203,24 @@ describe('LayerPanel availability and badges', () => {
 
     await act(async () => { fireEvent.click(box); });
     expect(badge()).toBeNull();
+  });
+});
+
+describe('fetchJson credentials (protected hosting)', () => {
+  it('sends the session only to the app itself, never to a third party', async () => {
+    const calls: RequestInit[] = [];
+    const fake = vi.fn(async (_url: string, init: RequestInit) => {
+      calls.push(init);
+      return new Response('{"ok":true}', { status: 200, headers: { 'content-type': 'application/json' } });
+    });
+    vi.stubGlobal('fetch', fake);
+    try {
+      await fetchJson('/data/fahrplan-hamburg.json');
+      await fetchJson(`${location.origin}/data/fahrplan-stuttgart.json`);
+      await fetchJson('https://geodienste.hamburg.de/hh_wfs_baustellen');
+      expect(calls.map((c) => c.credentials)).toEqual(['same-origin', 'same-origin', 'omit']);
+    } finally {
+      vi.unstubAllGlobals();
+    }
   });
 });

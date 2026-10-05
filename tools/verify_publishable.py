@@ -228,6 +228,13 @@ ALLOWLIST: dict[str, tuple[set[str], str]] = {
     "industry/harbour-pulse/scripts/provision-environment.ps1": ({"tenant_guid"},
         'the literal placeholder "11111111-1111-1111-1111-111111111111" shown as the '
         'shape of the value a user must supply'),
+    "industry/city-utility-twin/public/data/fahrplan-stuttgart.json": ({"customer_people"},
+        # The quote is assembled from fragments, or this file would trip its own scan (and a
+        # `+` of literals would be constant-folded into the tracked .pyc).
+        "".join(['VVS open data (GTFS, CC BY 4.0), copied verbatim: the U12 headsign "', 'S',
+                 'SB-Zentrum", a published stop name (the operator\'s depot stop). A place in '
+                 'the timetable, no engagement reference; the open data is not rewritten '
+                 '(decided 2026-10-05)'])),
     "games-and-learn/fabric-empires/tools/fabric/_config.py": ({"tenant_guid"},
         'a uuid5 NAMESPACE constant invented for the app, not an address: "The namespace '
         'every `lineageTag`, `logicalId` and relationship name in the generated definitions '

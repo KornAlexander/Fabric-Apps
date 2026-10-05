@@ -45,8 +45,19 @@
     },
     "hamburg": {
       "divisions": {
-        "transit": { "mode": "none" },
-        "construction": { "mode": "none" },
+        "transit": {
+          "mode": "real",
+          "source": {
+            "de": "hvv Soll-Fahrplan (GTFS), Transparenzportal Hamburg; keine offene Echtzeit",
+            "en": "hvv planned service (GTFS), Hamburg transparency portal; no open real-time feed"
+          },
+          "layers": ["fahrzeuge"]
+        },
+        "construction": {
+          "mode": "real",
+          "source": { "de": "Behörde für Verkehr und Mobilitätswende Hamburg, Baustellen Hamburg (Bauweiser, WFS des LGV)", "en": "Hamburg Authority for Transport and Mobility Transition, Baustellen Hamburg (Bauweiser, LGV WFS)" },
+          "layers": ["baustellen-hamburg"]
+        },
         "water": { "mode": "none" },
         "power": { "mode": "none" },
         "heat": { "mode": "none" },
@@ -58,8 +69,22 @@
     },
     "stuttgart": {
       "divisions": {
-        "transit": { "mode": "none" },
-        "construction": { "mode": "none" },
+        "transit": {
+          "mode": "real",
+          "source": {
+            "de": "VVS Soll-Fahrplan (GTFS), MobiData BW; keine offene Echtzeit",
+            "en": "VVS planned service (GTFS), MobiData BW; no open real-time feed"
+          },
+          "layers": ["fahrzeuge"]
+        },
+        "construction": {
+          "mode": "real",
+          "source": {
+            "de": "Verkehrsministerium BW (MobiData BW): nur Bundes-, Landes- und Kreisstraßen, keine Gemeindestraßen",
+            "en": "BW Ministry of Transport (MobiData BW): federal, state and district roads only, no municipal streets"
+          },
+          "layers": ["baustellen-bw"]
+        },
         "water": { "mode": "none" },
         "power": { "mode": "none" },
         "heat": { "mode": "none" },

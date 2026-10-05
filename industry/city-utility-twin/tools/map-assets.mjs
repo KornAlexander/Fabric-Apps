@@ -214,10 +214,15 @@ export function withoutVendorSymbols(text) {
  * rule for this app is that it shows what the source says.
  *
  */
-const APPROVED_PLACE_NAMES = ['Universität'];
+const APPROVED_PLACE_NAMES = [
+  'Universität',
+  // hvv bus 122 terminus, verbatim from the hvv GTFS (stop name, checked 2026-10-05). Exact string
+  // only: "Campus" on its own, or any other compound, is still rejected.
+  'Energie-Campus Bergedorf',
+];
 
-/** The only artefact whose published place names are exempt, as source and as built output. */
-const PLACE_NAME_ASSET = /(^|[\\/])(public[\\/])?data[\\/]fahrplan\.json$/;
+/** The only artefacts whose published place names are exempt: each city's baked timetable. */
+const PLACE_NAME_ASSET = /(^|[\\/])(public[\\/])?data[\\/]fahrplan(-(munich|hamburg|stuttgart))?\.json$/;
 
 export function withoutApprovedPlaceNames(text, path = '') {
   if (!PLACE_NAME_ASSET.test(path)) return text;

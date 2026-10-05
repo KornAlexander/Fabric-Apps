@@ -72,7 +72,8 @@ geometry used to define the airport area of interest, are provided under the
 
 ## Public transport service data (MVV)
 
-The vehicle layer's service data (`public/data/fahrplan.json`) is an extract of the MVV
+The vehicle layer's service data (`public/data/fahrplan-munich.json`, baked by
+`tools/transit/bake_fahrplan.py`) is an extract of the MVV
 Gesamt-Soll-Fahrplandaten (GTFS), feed 09/2026, extracted on 2026-09-22. The publisher's licence
 statement on its developer page (mvv-muenchen.de, "MVV-Content für Entwickler"), quoted verbatim:
 
@@ -83,6 +84,23 @@ statement on its developer page (mvv-muenchen.de, "MVV-Content für Entwickler")
 Quellenangabe: Münchner Verkehrs- und Tarifverbund GmbH (MVV), Soll-Fahrplandaten (GTFS),
 Feed 09/2026, abgerufen am 22.09.2026.
 
+## Public transport service data (hvv, VVS)
+
+Extracts baked by `tools/transit/bake_fahrplan.py` on 2026-10-05:
+
+* `public/data/fahrplan-hamburg.json`: Hamburger Verkehrsverbund (hvv), hvv Fahrplandaten (GTFS),
+  feed version 2026-09-03, from the [Transparenzportal Hamburg](https://suche.transparenz.hamburg.de/?q=hvv%20Fahrplandaten%20GTFS), under
+  [Datenlizenz Deutschland – Namensnennung – Version 2.0](https://www.govdata.de/dl-de/by-2-0).
+* `public/data/fahrplan-stuttgart.json`: Verkehrs- und Tarifverbund Stuttgart (VVS),
+  Soll-Fahrplandaten (GTFS), feed version 20261004, via
+  [MobiData BW](https://www.mobidata-bw.de/dataset/soll-fahrplandaten-vvs), under
+  [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) (the dataset record names CC BY for the
+  VVS data, deviating from the portal's default).
+
+Only line labels, headsigns, stop coordinates and planned times are kept. Positions are
+interpolated between stops, not tracked. Ferries and the rack railway are drawn as position
+symbols, because no verified vehicle dimensions are on file.
+
 ## Live sources
 
 These are queried at runtime and nothing from them is stored:
@@ -92,6 +110,14 @@ These are queried at runtime and nothing from them is stored:
   aircraft transmits ADS-B.
 * **Construction and temporary no-parking** — Landeshauptstadt München, `mor_wfs:baustellen_opendata`
   via geoportal.muenchen.de, open data.
+* **Roadworks Hamburg** — Freie und Hansestadt Hamburg, Behörde für Verkehr und Mobilitätswende
+  (credit as prescribed by the service), "Baustellen Hamburg" (`de.hh.up:baustelle`, roadworks
+  profiles from the Bauweiser platform), provided by the Landesbetrieb Geoinformation und
+  Vermessung (LGV)
+  via [geodienste.hamburg.de](https://geodienste.hamburg.de/hh_wfs_baustellen?Service=WFS&Version=1.1.0&Request=GetCapabilities), dl-de/by-2-0.
+* **Roadworks on federal, state and district roads (Stuttgart)** — Verkehrsministerium
+  Baden-Württemberg, ["Baustelleninformationen Baden-Württemberg"](https://www.mobidata-bw.de/dataset/baustelleninformationen-baden-wurttemberg)
+  via MobiData BW (api.mobidata-bw.de), dl-de/by-2-0. Classified roads only, no municipal streets.
 * **Public transport stops and departures** — Landeshauptstadt München (`mor_wfs:oepnv_u_t_b_mvg_neu`)
   and Münchner Verkehrsgesellschaft (public departures interface). This interface is unofficial and
   publishes no terms for third-party use, so the public build ships with it switched off

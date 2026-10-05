@@ -14,18 +14,27 @@
  * would draw every S-Bahn at tram length.
  *
  * ⚠️ "SEV" IS A BUS. Schienenersatzverkehr replaces a rail service and its label begins with S,
- * so a naive prefix test draws a replacement bus as an S-Bahn.
+ * so a naive prefix test draws a replacement bus as an S-Bahn. The same holds for the
+ * replacement buses VVS labels "S4E" or "U6E" and HVV labels "RB31-SEV": the label is a rail line
+ * plus a suffix, the route_type is bus, and the type wins for anything that is not a bare U/S line.
+ *
+ * ⚠️ HVV AND VVS USE THE EXTENDED ROUTE TYPES. Their U-Bahn and Stadtbahn are 402, their S-Bahn
+ * 109, their express buses 702, the HADAG ferries 1200 and the Stuttgart rack railway and
+ * funicular 1400. Reading only the basic codes 0 to 3 would draw all of those as trams.
  *
  * @param {string} label route_short_name
  * @param {string} type  GTFS route_type as published
- * @returns {'tram'|'ubahn'|'bus'|'sbahn'}
+ * @returns {'tram'|'ubahn'|'bus'|'sbahn'|'ferry'|'rack'}
  */
 export function modeOfLine(label, type) {
   const name = String(label ?? '').trim().toUpperCase();
+  const code = Number(type);
   if (name.startsWith('SEV')) return 'bus';
-  if (type === '1' || /^U\d*$/.test(name)) return 'ubahn';
-  if (/^S\d+$/.test(name)) return 'sbahn';
-  if (type === '3') return 'bus';
+  if (code === 4 || code === 1200) return 'ferry';
+  if (code === 7 || code === 1400) return 'rack';
+  if (code === 3 || (code >= 700 && code <= 716)) return 'bus';
+  if (code === 1 || (code >= 400 && code <= 405) || /^U\d*$/.test(name)) return 'ubahn';
+  if (code === 109 || /^S\d+$/.test(name)) return 'sbahn';
   return 'tram';
 }
 

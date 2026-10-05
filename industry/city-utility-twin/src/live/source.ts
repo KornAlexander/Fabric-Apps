@@ -68,6 +68,16 @@ export interface FetchJsonOptions {
   maxBytes?: number;
 }
 
+/** Whether a URL is the app's own origin (relative URLs are). */
+export function sameOrigin(url: string): boolean {
+  if (typeof location === 'undefined') return false;
+  try {
+    return new URL(url, location.href).origin === location.origin;
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Fetch and parse JSON with a timeout and a size ceiling.
  *
@@ -96,8 +106,10 @@ export async function fetchJson<T>(url: string, options: FetchJsonOptions = {}):
 
   const response = await fetch(url, {
     signal,
-    // No credentials to a third-party open-data endpoint, ever.
-    credentials: 'omit',
+    // ⚠️ NO CREDENTIALS TO A THIRD-PARTY ENDPOINT, EVER, but the app's OWN files need the session:
+    // the hosted app serves its assets (the baked service data) only to signed-in users, so a
+    // same-origin request without the cookie is refused with 401. Same rule as the terrain reader.
+    credentials: sameOrigin(url) ? 'same-origin' : 'omit',
     referrerPolicy: 'no-referrer',
     headers: { Accept: 'application/json' },
   });

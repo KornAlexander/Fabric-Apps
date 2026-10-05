@@ -24,7 +24,8 @@ switches live. The step-by-step guide for running the twin in your own tenant is
   (8.58 x 5.81 km), 28 km apart, joined by a coarse terrain shell. Switching between them is a
   camera flight, not a reload.
 - **Live open-data layers.** Construction sites and temporary no-parking zones from the city's
-  WFS, MVG stops with live departures, vehicles moving along the published timetable, ADS-B air
+  WFS (Hamburg: the city's roadworks register; Stuttgart: the state's feed for classified roads),
+  MVG stops with live departures, vehicles moving along each city's published planned service, ADS-B air
   traffic. Every layer is built only when switched on and shows its source and timestamp.
 - **Honest data badges.** Each active layer carries a badge saying what kind of data it draws
   (live, planned, dataset, user entries, and for later divisions recording and synthetic) and
@@ -103,8 +104,10 @@ tools/             asset gates, deployment scripts, geodata pipeline (tools/geod
 | Terrain, orthophoto, LoD2 buildings (Stuttgart) | LGL Baden-Wuerttemberg (dl-de/by-2-0) |
 | Coarse shell | Copernicus DEM GLO-30 |
 | Construction sites, no-parking zones, stops (Munich only) | City of Munich open data (`mor_wfs`) |
+| Roadworks (Hamburg) | Hamburg Authority for Transport and Mobility Transition, Baustellen Hamburg (Bauweiser, LGV WFS, dl-de/by-2-0) |
+| Roadworks (Stuttgart) | Baden-Wuerttemberg Ministry of Transport via MobiData BW (dl-de/by-2-0); federal, state and district roads only |
 | Departures | Munich public transport operator MVG (public departures interface; unofficial, off in the public build, see `VITE_UNOFFICIAL_FEEDS`) |
-| Vehicles | MVV planned service data (GTFS, CC BY, feed 09/2026), positions computed from planned departures, not tracked |
+| Vehicles | MVV (CC BY, feed 09/2026), hvv (dl-de/by-2-0) and VVS (CC BY 4.0) planned service data (GTFS), baked per city by `tools/transit/bake_fahrplan.py`; positions computed from planned departures, not tracked |
 | Air traffic | adsb.lol (ODbL) |
 | Land cover, airport geometry | OpenStreetMap contributors (ODbL) |
 
