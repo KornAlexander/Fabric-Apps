@@ -7,7 +7,7 @@
 
 **Your city's digital twin on one map: power, water, heat, transit, fibre. Live.**
 
-![City Utility Twin, Munich starting point: construction sites, MVG stops and vehicles on the 1:1 city model](../../docs/previews/muenchen-zwilling.webp)
+![City Utility Twin, Munich starting point: construction sites, MVG stops and vehicles on the 1:1 city model](../../docs/previews/city-utility-twin.webp)
 
 Munich city centre and Munich Airport as **one continuous 1:1 3D twin**, with switchable data
 layers from live open sources, an assistant that answers questions about construction sites with

@@ -20,9 +20,10 @@ coverage/
 # Generated geodata. These are rebuilt by each app's own pipeline and must never
 # be committed - one terrain cache makes the clone painful for every other app.
 **/public/terrain/
-# Exception, approved by the repo owner on 2026-09-24: this app ships its prebuilt open-data
-# terrain (57 MB, CC BY 4.0) so a customer can run it without the geodata pipeline.
-!industry/muenchen-zwilling/public/terrain/
+# Exception, approved by the repo owner on 2026-09-24 for the Munich twin and carried over to its
+# successor on 2026-10-05: this app ships its prebuilt open-data terrain (CC BY 4.0) so it can run
+# without the geodata pipeline.
+!industry/city-utility-twin/public/terrain/
 **/public/tiles/
 **/data/terrain/
 *.tif
