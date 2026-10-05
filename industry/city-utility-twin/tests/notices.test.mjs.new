@@ -5,28 +5,35 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const project = new URL('../', import.meta.url);
 const root = fileURLToPath(project);
+const require = createRequire(join(root, 'package.json'));
 const flat = (text) => text.replace(/\r/g, '').replace(/\s+/g, ' ').trim();
 
 /**
  * Where each bundled package resolves FROM ITS IMPORTER, not from the top level.
  * ⚠️ @azure/msal-common is the case that bit: the top-level copy is a dev-only 16.13.0, while
  * msal-browser bundles its own nested 16.14.1 (review 2026-10-05).
- *
- * Node's own lookup for package folders (<dir>/node_modules/<name>, then each parent), done by
- * hand because several packages (three, msal) hide package.json behind "exports".
  */
 function resolvePackage(name, importer) {
-  for (let dir = importer ? resolvePackage(importer).dir : root; ; dir = dirname(dir)) {
-    const candidate = join(dir, 'node_modules', ...name.split('/'), 'package.json');
+  const from = importer ? resolvePackage(importer).dir : root;
+  let entry;
+  try {
+    entry = require.resolve(`${name}/package.json`, { paths: [from] });
+  } catch {
+    // Packages whose "exports" hide package.json: resolve the entry and walk up to it.
+    entry = require.resolve(name, { paths: [from] });
+  }
+  for (let dir = dirname(entry); ; dir = dirname(dir)) {
+    const candidate = join(dir, 'package.json');
     if (existsSync(candidate) && JSON.parse(readFileSync(candidate, 'utf8')).name === name) {
-      return { path: candidate, dir: dirname(candidate) };
+      return { path: candidate, dir };
     }
-    if (dirname(dir) === dir) throw new Error(`cannot find package ${name}`);
+    if (dirname(dir) === dir) throw new Error(`cannot find package.json of ${name}`);
   }
 }
 
@@ -55,7 +62,7 @@ test('the shipped notice carries each bundled package at its bundled version wit
     const { path, dir } = resolvePackage(name, importer);
     const { version, license } = JSON.parse(await readFile(path, 'utf8'));
     assert.ok(text.includes(`${label} ${version}`), `${label} ${version} missing from THIRD-PARTY-NOTICES.txt`);
-    const own = await readFile(`${dir}/LICENSE`, 'utf8').catch(() => readFile(`${dir}/LICENSE.md`, 'utf8'));
+    const own = await readFile(join(dir, 'LICENSE'), 'utf8').catch(() => readFile(join(dir, 'LICENSE.md'), 'utf8'));
     // three.js ships the licence it names; everything else must match its file word for word.
     if (name !== 'three') assert.ok(flat(text).includes(flat(own)), `${name} (${license}) licence text differs`);
   }
@@ -65,11 +72,11 @@ test('code emitted by the build tool and code vendored inside three.js is notice
   const text = await notice();
   const vite = JSON.parse(await readFile(resolvePackage('vite').path, 'utf8'));
   assert.ok(text.includes(`Vite ${vite.version}`), `Vite ${vite.version} missing`);
-  const viteCore = (await readFile(`${resolvePackage('vite').dir}/LICENSE.md`, 'utf8'))
+  const viteCore = (await readFile(join(resolvePackage('vite').dir, 'LICENSE.md'), 'utf8'))
     .split('# Licenses of bundled dependencies')[0].split('MIT License')[1];
   assert.ok(flat(text).includes(flat(viteCore)), 'Vite core licence text differs');
 
-  const earcut = await readFile(`${resolvePackage('three').dir}/src/extras/Earcut.js`, 'utf8');
+  const earcut = await readFile(join(resolvePackage('three').dir, 'src', 'extras', 'Earcut.js'), 'utf8');
   const vendored = earcut.match(/mapbox\/earcut \(v([\d.]+)\)/)?.[1];
   assert.ok(vendored, 'three.js no longer names its Earcut version; re-check what it vendors');
   assert.ok(text.includes(`Earcut ${vendored}`), `Earcut ${vendored} missing`);
