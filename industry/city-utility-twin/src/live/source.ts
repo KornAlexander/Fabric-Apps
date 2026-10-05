@@ -8,6 +8,7 @@
  */
 
 import { later, locale, t, type Text } from '../i18n';
+import type { DataMode } from './dataMode';
 
 export type LiveState = 'idle' | 'loading' | 'live' | 'error';
 
@@ -20,6 +21,21 @@ export interface LiveStatus {
   text: Text;
   /** When the displayed data was fetched. Null while nothing has been fetched. */
   fetchedAt: Date | null;
+  /**
+   * When the newest drawn data was observed, where the source publishes that (a measuring hour,
+   * a sensor's reading time). Absent means only the fetch time is known; the badge then shows it.
+   */
+  observedAt?: Date | null;
+  /**
+   * `computed` when `fetchedAt` is when the app computed the drawing from data it already had
+   * (vehicle positions from the planned service), not a fetch. The badge then says so.
+   */
+  timeBasis?: 'fetched' | 'computed';
+  /**
+   * Overrides the layer's usual data mode for this status, when the source delivered less than the
+   * layer normally draws (MVG answering with planned times only is not a measurement).
+   */
+  dataMode?: DataMode;
   /** How many features are currently drawn. */
   count: number;
 }

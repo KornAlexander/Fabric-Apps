@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 import type { LiveLayer, PickDetail, WorldPlacement } from '../map/worldScene';
-import { clock, failure, type StatusReporter } from './source';
+import { failure, type StatusReporter } from './source';
 import { categoryLabel, later, locale, t, type Text } from '../i18n';
 import { listNotes, type Note } from '../agent/client';
 
@@ -184,7 +184,6 @@ export async function createKoordinationLayer(
             : [t('notes.count', drawn)];
           if (withoutPlace > 0) parts.push(t('notes.withoutPlace', withoutPlace));
           parts.push(t('status.notOfficial'));
-          parts.push(t('status.fetched', clock(at)));
           return parts.join(' · ');
         };
         if (visible) {

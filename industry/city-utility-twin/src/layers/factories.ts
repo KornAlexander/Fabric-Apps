@@ -13,6 +13,8 @@ import type { MessageKey } from '../i18n';
 import { ENABLED_FEEDS, isUnofficial } from '../config/feeds';
 import { PACK, divisionOn, type ConfigPack, type Division } from '../config/activePack';
 import type { WorldId } from '../config/world';
+import { layersIn, type AvailabilityMatrix } from '../config/availability';
+import type { DataMode } from '../live/dataMode';
 
 /**
  * A layer is only constructed the first time it is switched on.
@@ -81,11 +83,42 @@ export function layerInPack(id: string, pack: ConfigPack = PACK): boolean {
 }
 
 /**
- * Layers whose source covers every city of the app, and what each needs per city. Everything else
- * is a Munich service (its geoportal WFS, MVG, the roadworks and the notes on them, and ADS-B,
- * whose relay only answers for a box around Munich) and exists in Munich only.
+ * What kind of data each hand-written layer draws; every open-data catalogue layer is a dataset.
+ *
+ * ⚠️ A REGISTER IS NOT A MEASUREMENT. The roadworks WFS and the geoportal layers are what the
+ * city has published, fetched now; badging them "Live" would claim a sensor behind them.
  */
-const EVERY_CITY = new Set<string>(['luft-amtlich', 'luft-buerger']);
+const BUILT_IN_MODE: Record<BuiltInLayer, DataMode> = {
+  flugverkehr: 'live',
+  baustellen: 'dataset',
+  mvg: 'live',
+  fahrzeuge: 'planned',
+  'luft-amtlich': 'live',
+  'luft-buerger': 'live',
+  koordination: 'entries',
+};
+
+export function layerDataMode(id: string): DataMode {
+  return id in BUILT_IN_MODE ? BUILT_IN_MODE[id as BuiltInLayer] : 'dataset';
+}
+
+/**
+ * How old measured data may be before the badge says "Veraltet" instead of "Live".
+ *
+ * Each bound sits well above the layer's own poll interval plus the source's usual lag, so a
+ * healthy layer never flips: ADS-B polls every 12 s, MVG every 30 s, Sensor.Community every 3 min
+ * with readings minutes old, and the Umweltbundesamt publishes an hour about an hour late.
+ */
+const STALE_AFTER_MS: Partial<Record<BuiltInLayer, number>> = {
+  flugverkehr: 2 * 60_000,
+  mvg: 5 * 60_000,
+  'luft-buerger': 15 * 60_000,
+  'luft-amtlich': 2 * 3_600_000,
+};
+
+export function layerStaleAfterMs(id: string): number | null {
+  return STALE_AFTER_MS[id as BuiltInLayer] ?? null;
+}
 
 /** The Umweltbundesamt's `station city` for each world (verified 2026-10-05: 5, 15 and 4 active). */
 const UBA_CITY: Record<WorldId, string> = { munich: 'München', hamburg: 'Hamburg', stuttgart: 'Stuttgart' };
@@ -97,9 +130,13 @@ const SENSOR_AREAS: Record<WorldId, readonly SensorArea[] | undefined> = {
   stuttgart: [{ label: 'Stadt', lat: 48.7758, lon: 9.177, radiusKm: 6 }],
 };
 
-/** Whether a layer has a data source in this city. */
-export function layerAvailableIn(id: string, world: WorldId): boolean {
-  return world === 'munich' || EVERY_CITY.has(id);
+/**
+ * Whether a layer has a data source in this city: config/availability.json decides. Most layers
+ * are Munich services (its geoportal WFS, MVG, the roadworks and the notes on them, and ADS-B,
+ * whose relay only answers for a box around Munich); air quality covers every city.
+ */
+export function layerAvailableIn(id: string, world: WorldId, matrix?: AvailabilityMatrix): boolean {
+  return layersIn(world, matrix).has(id);
 }
 
 export function createFactories(

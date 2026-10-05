@@ -96,12 +96,40 @@ progress { width: 100%; height: 8px; accent-color: var(--cp-accent); }
 #layers input:disabled { cursor: not-allowed; }
 #layers .layer-name { font-size: 13px; }
 #layers .layer-source { grid-column: 2; color: var(--cp-text-soft); font-size: 10px; }
-/* The freshness line. It carries the capture time, which is what turns "live" from a claim into
-   something the viewer can check against the clock on the wall. */
-#layers .layer-state { display: block; margin: 2px 0 0 24px; color: var(--cp-text-muted); font-size: 11px; line-height: 1.35; }
+/* The status line under a layer: the data-mode badge, then what the layer drew. The badge carries
+   the time, which is what turns "live" from a claim into something the viewer can check against
+   the clock on the wall. */
+#layers .layer-status { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; margin: 2px 0 0 24px; }
+#layers .layer-state { display: block; color: var(--cp-text-muted); font-size: 11px; line-height: 1.35; }
 #layers .layer-state[data-state="live"] { color: var(--cp-success); }
 #layers .layer-state[data-state="error"] { color: var(--cp-danger); }
 #layers .layer-state[data-state="loading"] { font-style: italic; }
+/* ⚠️ NO RED HERE (D20: red is for alerts only). Stale is a caution, so it takes the warning tone;
+   synthetic takes the accent so generated data never passes for measured at a glance. */
+#layers .layer-badge {
+  flex: none; padding: 0 6px; border-radius: 999px; font-size: 10px; line-height: 16px; font-weight: 600;
+  color: var(--cp-text); background: var(--cp-surface-soft); border: 1px solid var(--cp-border-strong);
+  cursor: help;
+}
+#layers .layer-badge[data-mode="live"] { border-color: var(--cp-success); }
+#layers .layer-badge[data-mode="stale"] { border-color: var(--cp-warning); background: color-mix(in srgb, var(--cp-warning) 14%, transparent); }
+#layers .layer-badge[data-mode="synthetic"] { border-color: var(--cp-accent); color: var(--cp-accent); background: var(--cp-accent-soft); }
+#layers .layer-badge[data-mode="replay"] { border-style: dashed; }
+/* Divisions in this city: one chip each, real / synthetic / no source. */
+#layers .division-title { margin: 0 0 4px; font-weight: 600; color: var(--cp-text); }
+#layers ul.division-chips { flex-direction: row; flex-wrap: wrap; gap: 4px; margin: 0 0 12px; }
+#layers .division-chips li {
+  padding: 1px 7px; border-radius: 999px; font-size: 10.5px; line-height: 16px;
+  border: 1px solid var(--cp-border); color: var(--cp-text-soft);
+}
+#layers .division-chips li[data-availability="real"] { border-color: var(--cp-success); color: var(--cp-text); }
+#layers .division-chips li[data-availability="synthetic"] { border-color: var(--cp-accent); color: var(--cp-text); background: var(--cp-accent-soft); }
+#layers .division-chips li[data-availability="none"] { border-style: dashed; }
+/* Text for assistive technology only (the badge and chip explanations otherwise live in titles). */
+.visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
+}
 /* Explicit reload for the notes layer: a note published by somebody else is not pushed here. */
 #layers .layer-refresh {
   display: block; margin: 4px 0 0 24px; padding: 2px 8px;

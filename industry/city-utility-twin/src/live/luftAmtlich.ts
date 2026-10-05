@@ -1,10 +1,10 @@
 import * as THREE from 'three';
 
 import type { LiveLayer, PickDetail, WorldPlacement } from '../map/worldScene';
-import { clock, failure, fetchJson, type StatusReporter } from './source';
+import { failure, fetchJson, type StatusReporter } from './source';
 import { later, t, type Text } from '../i18n';
 import {
-  newestReading, parseComponents, parseStations, requestWindow,
+  cetEndToEpoch, newestReading, parseComponents, parseStations, requestWindow,
 } from './luftParse.mjs';
 
 /**
@@ -252,6 +252,10 @@ export async function createLuftAmtlichLayer(options: LuftAmtlichOptions): Promi
   let components: Map<string, ComponentMeta> = new Map();
   /** Stations that are real but fall outside the modelled terrain. Counted, never drawn. */
   let offMap = 0;
+  /** End of the newest measuring hour among the DRAWN stations, epoch ms. */
+  let newestEnd: number | null = null;
+  /** Drawn stations that have a reading. Off-map readings never vouch for the map. */
+  let drawnWithData = 0;
   let announcedFirstDraw = false;
 
   const geometry = new THREE.CylinderGeometry(COLUMN_RADIUS_M, COLUMN_RADIUS_M, 1, 16, 1, true);
@@ -292,6 +296,8 @@ export async function createLuftAmtlichLayer(options: LuftAmtlichOptions): Promi
   const draw = (readings: Map<string, Reading | null>) => {
     clearColumns();
     offMap = 0;
+    newestEnd = null;
+    drawnWithData = 0;
     let drawn = 0;
     const placed: THREE.Vector3[] = [];
     const [minX, minZ, maxX, maxZ] = placement.worldBoundsM;
@@ -303,6 +309,9 @@ export async function createLuftAmtlichLayer(options: LuftAmtlichOptions): Promi
         continue;
       }
       const reading = readings.get(station.id) ?? null;
+      if (reading) drawnWithData++;
+      const end = reading ? cetEndToEpoch(reading.end) : null;
+      if (end !== null && (newestEnd === null || end > newestEnd)) newestEnd = end;
       const index = reading?.totalIndex ?? null;
       const colour = index !== null ? (INDEX_COLOUR[index] ?? UNKNOWN_COLOUR) : UNKNOWN_COLOUR;
       const height = COLUMN_BASE_M + (index ?? 0) * COLUMN_PER_INDEX_M;
@@ -383,13 +392,15 @@ export async function createLuftAmtlichLayer(options: LuftAmtlichOptions): Promi
     if (abort.signal.aborted) return;
 
     const drawn = draw(readings);
-    const withData = [...readings.values()].filter((reading) => reading !== null).length;
+    const withData = drawnWithData;
     const at = new Date();
 
     // ⚠️ EVERY MEASUREMENT REQUEST FAILING IS NOT A LIVE LAYER. Reporting 'live' with five grey
     // columns, each claiming the values were "nicht veröffentlicht", states something a failed
-    // request cannot establish: the source was never successfully asked.
-    if (stations.length > 0 && withData === 0) {
+    // request cannot establish: the source was never successfully asked. The same holds when
+    // only stations OUTSIDE the model answered: nothing on the map is measured, so the badge
+    // must not say "Live".
+    if (drawn > 0 && withData === 0) {
       clearColumns();
       if (visible) {
         onStatus({
@@ -407,11 +418,12 @@ export async function createLuftAmtlichLayer(options: LuftAmtlichOptions): Promi
       const parts = [t('air.stations', drawn)];
       if (withData < drawn) parts.push(t('air.noCurrent', drawn - withData));
       if (offMapNow > 0) parts.push(t('status.offMap', offMapNow));
-      parts.push(t('status.fetched', clock(at)));
       return parts.join(' · ');
     };
+    // The end of the newest measuring hour a drawn station published: the time these values describe.
+    const observedAt = newestEnd !== null ? new Date(newestEnd) : null;
     if (visible) {
-      onStatus({ state: 'live', text, fetchedAt: at, count: drawn });
+      onStatus({ state: 'live', text, fetchedAt: at, observedAt, count: drawn });
     }
   };
 

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 import type { LiveLayer, PickDetail, WorldPlacement } from '../map/worldScene';
-import { clock, failure, fetchJson, type StatusReporter } from './source';
+import { failure, fetchJson, type StatusReporter } from './source';
 import { later, show, t, type Text } from '../i18n';
 import { clipPolylineToBox } from './clip.mjs';
 import type { WfsLayerSpec } from './wfsCatalogue';
@@ -412,12 +412,12 @@ export async function createWfsLayer(
         const capped = spec.maxFeatures !== undefined && total >= spec.maxFeatures;
         const text = () => {
           const unit = spec.unit ? show(spec.unit) : t('wfs.entries');
-          const label = total === 0
+          // The time is on the row's data-mode badge, not in this line.
+          return total === 0
             ? t('status.noFeatures')
             : capped
               ? t('wfs.capped', total, unit)
               : t('wfs.count', total, unit);
-          return `${label} · ${t('status.asOf', clock(at))}`;
         };
         lastStatus = { text, at };
         if (visible) onStatus({ state: 'live', text, fetchedAt: at, count });

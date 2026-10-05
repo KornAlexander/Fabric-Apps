@@ -226,6 +226,29 @@ export function newestReading(payload, stationId) {
 }
 
 /**
+ * The instant a reading's `end` (`YYYY-MM-DD HH:MM:SS`, CET all year, hours 1..24) denotes, as
+ * epoch milliseconds, or null for anything else.
+ *
+ * ⚠️ CET IS UTC+1 ALL YEAR HERE, see `requestWindow`. Parsing the string as local time would put
+ * every summer reading an hour into the future, and hour 24 is the next day's midnight.
+ *
+ * @param {string} end
+ * @returns {number|null}
+ */
+export function cetEndToEpoch(end) {
+  const match = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/.exec(String(end ?? ''));
+  if (!match) return null;
+  const [year, month, day, hour, minute, second] = match.slice(1).map(Number);
+  if (month < 1 || month > 12 || day < 1 || hour > 24 || minute > 59 || second > 59) return null;
+  // Hour 24 is only the end of a day, never 24:30.
+  if (hour === 24 && (minute !== 0 || second !== 0)) return null;
+  // A day that exists: Date.UTC would quietly turn 31 February into early March.
+  const date = new Date(Date.UTC(year, month - 1, day));
+  if (date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) return null;
+  return Date.UTC(year, month - 1, day, hour, minute, second) - 60 * 60 * 1000;
+}
+
+/**
  * The request window, in the API's own clock.
  *
  * ⚠️ THE API RUNS ON CET ALL YEAR, NOT ON LOCAL TIME, and it counts hours 1..24 rather than

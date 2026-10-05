@@ -296,13 +296,14 @@ export async function createFahrzeugeLayer(options: FahrzeugeOptions): Promise<L
 
     if (visible && (!lastStatusAt || now.getTime() - lastStatusAt.getTime() > 5000)) {
       lastStatusAt = now;
-      // ⚠️ "berechnet", NOT "Stand". Every other layer's "Stand HH:MM" means the data was
-      // fetched then. Here the clock advances while the underlying Soll-Fahrplan does not, so
-      // the same wording would imply a freshness the layer does not have.
+      // ⚠️ THE BADGE SAYS "FAHRPLAN", NOT "LIVE". Its time is when the positions were computed;
+      // the clock advances while the underlying Soll-Fahrplan does not, so calling it live or a
+      // fetch would imply a freshness the layer does not have.
       onStatus({
         state: 'live',
-        text: later('vehicles.live', used, clock(now)),
+        text: later('vehicles.live', used),
         fetchedAt: now,
+        timeBasis: 'computed',
         count: used,
       });
     }

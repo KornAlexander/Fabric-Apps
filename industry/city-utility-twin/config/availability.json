@@ -1,0 +1,73 @@
+{
+  "$comment": "What each city really has, per division: real (a published source), synthetic (a seeded generator, badged as such) or none. 'layers' are the layer ids that deliver it there; 'context' lists layers that belong to no division. This file decides which layers a city offers; tests check it against the layers themselves.",
+  "cities": {
+    "munich": {
+      "divisions": {
+        "transit": {
+          "mode": "real",
+          "source": {
+            "de": "Geoportal München (Liniennetz, Verkehr und Parken), Soll-Fahrplan; MVG-Abfahrten nur wo freigeschaltet",
+            "en": "Munich geoportal (transit lines, traffic and parking), planned service; MVG departures only where enabled"
+          },
+          "layers": [
+            "mvg", "fahrzeuge",
+            "lichtsignalanlagen", "parkraumgebiete", "parkseiten", "laden-liefern", "radwege", "strassennetz",
+            "liniennetz-bahn", "liniennetz-bus", "liniennetz-sbahn"
+          ]
+        },
+        "construction": {
+          "mode": "real",
+          "source": {
+            "de": "Landeshauptstadt München, Baustellen-WFS; Koordinationsnotizen der Nutzer",
+            "en": "City of Munich, roadworks WFS; users' coordination notes"
+          },
+          "layers": ["baustellen", "koordination"]
+        },
+        "water": { "mode": "none" },
+        "power": { "mode": "none" },
+        "heat": { "mode": "none" },
+        "emobility": {
+          "mode": "real",
+          "source": { "de": "Geoportal München, Ladeinfrastruktur", "en": "Munich geoportal, charging infrastructure" },
+          "layers": ["ladeeinrichtungen", "ladestandorte"]
+        },
+        "fibre": { "mode": "none" },
+        "aviation": {
+          "mode": "real",
+          "source": { "de": "ADS-B, adsb.lol, über das Relay der App", "en": "ADS-B, adsb.lol, via the app's relay" },
+          "layers": ["flugverkehr"]
+        }
+      },
+      "context": [
+        "luft-amtlich", "luft-buerger",
+        "behindertenparkplaetze", "blindenleitsystem", "stadtbezirksviertel", "trinkbrunnen"
+      ]
+    },
+    "hamburg": {
+      "divisions": {
+        "transit": { "mode": "none" },
+        "construction": { "mode": "none" },
+        "water": { "mode": "none" },
+        "power": { "mode": "none" },
+        "heat": { "mode": "none" },
+        "emobility": { "mode": "none" },
+        "fibre": { "mode": "none" },
+        "aviation": { "mode": "none" }
+      },
+      "context": ["luft-amtlich", "luft-buerger"]
+    },
+    "stuttgart": {
+      "divisions": {
+        "transit": { "mode": "none" },
+        "construction": { "mode": "none" },
+        "water": { "mode": "none" },
+        "power": { "mode": "none" },
+        "heat": { "mode": "none" },
+        "emobility": { "mode": "none" },
+        "fibre": { "mode": "none" },
+        "aviation": { "mode": "none" }
+      },
+      "context": ["luft-amtlich", "luft-buerger"]
+    }
+  }
+}

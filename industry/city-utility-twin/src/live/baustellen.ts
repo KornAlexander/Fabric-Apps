@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 import type { LiveLayer, PickDetail, WorldPlacement } from '../map/worldScene';
-import { clock, failure, fetchJson, type StatusReporter } from './source';
+import { failure, fetchJson, type StatusReporter } from './source';
 import { later, t, type Text } from '../i18n';
 
 /**
@@ -284,9 +284,8 @@ export async function createBaustellenLayer(options: BaustellenOptions): Promise
         const features = Array.isArray(data.features) ? data.features : [];
         const { summary } = build(features);
         const at = new Date();
-        const text = features.length === 0
-          ? () => `${t('status.noFeatures')} · ${t('status.asOf', clock(at))}`
-          : () => `${summary()} · ${t('status.asOf', clock(at))}`;
+        // The time is on the row's data-mode badge, not in this line.
+        const text = features.length === 0 ? () => t('status.noFeatures') : summary;
         lastStatus = { text, at };
         if (visible) onStatus({ state: 'live', text, fetchedAt: at, count });
       } catch (error) {

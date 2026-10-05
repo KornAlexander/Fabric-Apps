@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 import type { LiveLayer, PickDetail, WorldPlacement } from '../map/worldScene';
-import { clock, describeError, failure, fetchJson, type StatusReporter } from './source';
+import { describeError, failure, fetchJson, type StatusReporter } from './source';
 import { later, t, type Text } from '../i18n';
 
 /**
@@ -345,7 +345,6 @@ export async function createMvgLayer(options: MvgOptions): Promise<LiveLayer> {
       }
       // The timestamp belongs to THIS poll's successful measurements, never to retained ones.
       fetchedAt = new Date();
-      const at = fetchedAt;
       const total = stops.length;
       const queried = live.length;
       const text = () => {
@@ -356,10 +355,14 @@ export async function createMvgLayer(options: MvgOptions): Promise<LiveLayer> {
         ];
         if (unknown) parts.push(t('mvg.noRealtime', unknown));
         if (failed) parts.push(t('mvg.noAnswer', failed));
-        parts.push(t('status.asOf', clock(at)));
         return parts.join(' · ');
       };
-      onStatus({ state: 'live', text, fetchedAt, count: stops.length });
+      // ⚠️ ANSWERED IS NOT MEASURED. A stop can answer with planned times only; if none of the
+      // queried stops carried real-time data, the badge must not say "Live".
+      onStatus({
+        state: 'live', text, fetchedAt, count: stops.length,
+        ...(unknown === queried ? { dataMode: 'planned' as const } : {}),
+      });
     } catch (error) {
       if (abort.signal.aborted) return;
       onStatus({ state: 'error', text: failure(() => 'MVG', error), fetchedAt: null, count: 0 });

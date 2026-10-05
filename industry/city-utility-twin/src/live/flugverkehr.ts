@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 import type { LiveLayer, WorldPlacement } from '../map/worldScene';
-import { clock, describeError, TextError, type StatusReporter } from './source';
+import { describeError, TextError, type StatusReporter } from './source';
 import { later, t } from '../i18n';
 
 /**
@@ -428,8 +428,9 @@ export async function createFlugverkehrLayer(options: FlugverkehrOptions): Promi
     }
   };
 
-  const liveText = (at: Date) => {
-    // Counts are read now; the wording is resolved when the panel draws it.
+  const liveText = () => {
+    // Counts are read now; the wording is resolved when the panel draws it. The time is on the
+    // row's data-mode badge.
     const total = tracks.size;
     const generic = genericCount;
     const offMap = skippedOffMap;
@@ -440,7 +441,6 @@ export async function createFlugverkehrLayer(options: FlugverkehrOptions): Promi
       // source gave no type would blame the source for the app's own limitation.
       if (generic) parts.push(t('flights.generic', generic));
       if (offMap) parts.push(t('status.offMap', offMap));
-      parts.push(t('status.asOf', clock(at)));
       return parts.join(' \u00b7 ');
     };
   };
@@ -454,7 +454,9 @@ export async function createFlugverkehrLayer(options: FlugverkehrOptions): Promi
       apply(Array.isArray(data.ac) ? data.ac : [], relayAgeMs);
       feedDown = false;
       fetchedAt = new Date();
-      onStatus({ state: 'live', text: liveText(fetchedAt), fetchedAt, count: tracks.size });
+      // The snapshot's own time: the relay may have held it for a few seconds before answering.
+      const observedAt = new Date(fetchedAt.getTime() - relayAgeMs);
+      onStatus({ state: 'live', text: liveText(), fetchedAt, observedAt, count: tracks.size });
     } catch (error) {
       if (abort.signal.aborted) return;
       // ⚠️ Freeze rather than carry on. Extrapolating from a position the source can no longer

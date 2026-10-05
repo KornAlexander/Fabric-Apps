@@ -26,6 +26,13 @@ switches live. The step-by-step guide for running the twin in your own tenant is
 - **Live open-data layers.** Construction sites and temporary no-parking zones from the city's
   WFS, MVG stops with live departures, vehicles moving along the published timetable, ADS-B air
   traffic. Every layer is built only when switched on and shows its source and timestamp.
+- **Honest data badges.** Each active layer carries a badge saying what kind of data it draws
+  (live, planned, dataset, user entries, and for later divisions recording and synthetic) and
+  from when: the source's own observation time where it publishes one, otherwise the fetch time.
+  Measured data past its bound is badged as stale.
+- **Availability per city.** [config/availability.json](config/availability.json) states, per city
+  and division, whether there is a real source, a synthetic one or none, and which layers deliver
+  it. It decides which layers a city offers, and the layer panel shows it as a row of chips.
 - **Assistant with tools.** A question such as "which construction sites on this street overlap
   in space and time?" runs a query for nearby construction sites (within a radius) with
   overlapping dates and shows the tool call.

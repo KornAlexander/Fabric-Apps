@@ -11,7 +11,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import {
-  colourForPm25, newestReading, parseArea, parseComponents, parseStations, requestWindow,
+  cetEndToEpoch, colourForPm25, newestReading, parseArea, parseComponents, parseStations, requestWindow,
 } from '../src/live/luftParse.mjs';
 
 /** The layer drops a reading older than an hour rather than drawing it as current. */
@@ -176,6 +176,17 @@ test('the request window is built in CET on a 1..24 clock, not in local time', (
   assert.equal(window_.hourTo, 12);
   assert.equal(window_.dateFrom, '2026-09-21');
   assert.equal(window_.hourFrom, 4);
+});
+
+test('a measuring hour\'s end is CET all year, and hour 24 is the next midnight', () => {
+  // Summer: 09:00 CET is 08:00 UTC, i.e. 10:00 CEST, not 09:00 local.
+  assert.equal(new Date(cetEndToEpoch('2026-09-21 09:00:00')).toISOString(), '2026-09-21T08:00:00.000Z');
+  // Winter: still UTC+1.
+  assert.equal(new Date(cetEndToEpoch('2026-01-10 13:00:00')).toISOString(), '2026-01-10T12:00:00.000Z');
+  assert.equal(new Date(cetEndToEpoch('2026-09-21 24:00:00')).toISOString(), '2026-09-21T23:00:00.000Z');
+  for (const bad of ['', 'null', '2026-09-21T09:00:00', '2026-09-21 25:00:00', '2026-13-01 01:00:00', '2026-02-31 10:00:00', '2026-09-21 24:30:00', undefined]) {
+    assert.equal(cetEndToEpoch(bad), null, String(bad));
+  }
 });
 
 test('a window that reaches back over midnight asks the previous day, on a valid hour', () => {

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 import type { LiveLayer, PickDetail, WorldPlacement } from '../map/worldScene';
-import { clock, failure, fetchJson, type StatusReporter } from './source';
+import { failure, fetchJson, type StatusReporter } from './source';
 import { later, t, type Text } from '../i18n';
 import { colourForPm25, parseArea } from './luftParse.mjs';
 
@@ -165,6 +165,8 @@ export async function createLuftBuergerLayer(options: LuftBuergerOptions): Promi
     clearMarkers();
     let drawn = 0;
     let offMap = 0;
+    /** Newest reading time among the DRAWN sensors; an off-map reading says nothing about the map. */
+    let newestAt = -Infinity;
     const [minX, minZ, maxX, maxZ] = placement.worldBoundsM;
 
     for (const sensor of sensors) {
@@ -181,9 +183,10 @@ export async function createLuftBuergerLayer(options: LuftBuergerOptions): Promi
       mesh.userData.baseColour = colour;
       group.add(mesh);
       drawn++;
+      newestAt = Math.max(newestAt, sensor.at);
     }
     placement.invalidate();
-    return { drawn, offMap };
+    return { drawn, offMap, newestAt };
   };
 
   const loadOnce = async () => {
@@ -205,17 +208,18 @@ export async function createLuftBuergerLayer(options: LuftBuergerOptions): Promi
     if (abort.signal.aborted) return;
 
     const sensors = [...byId.values()];
-    const { drawn, offMap } = draw(sensors);
+    const { drawn, offMap, newestAt } = draw(sensors);
     const at = new Date();
     const text = () => {
       const parts = [t('sensors.count', drawn)];
       if (offMap > 0) parts.push(t('status.offMap', offMap));
       parts.push(t('status.notOfficial'));
-      parts.push(t('status.fetched', clock(at)));
       return parts.join(' · ');
     };
+    // The newest drawn reading's own time, which the feed stamps per sensor.
+    const observedAt = Number.isFinite(newestAt) ? new Date(newestAt) : null;
     if (visible) {
-      onStatus({ state: 'live', text, fetchedAt: at, count: drawn });
+      onStatus({ state: 'live', text, fetchedAt: at, observedAt, count: drawn });
     }
   };
 
