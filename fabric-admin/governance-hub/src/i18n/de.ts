@@ -7,6 +7,8 @@ import type { en } from './en';
  * search for "Users can create Fabric items" in the portal, not for a
  * translation of it.
  */
+import { umDe } from './um.de';
+
 export const de: Record<keyof typeof en, string> = {
   'app.name': 'Governance Hub',
   'app.tagline': 'Wer darf was erstellen, wo — und warum',
@@ -689,4 +691,6 @@ export const de: Record<keyof typeof en, string> = {
   'task.a365Registry.title': 'Agent-365-Registry-Aktion anwenden',
   'task.ppRouting.title': 'Routing der Default-Umgebung konfigurieren',
   'task.fabricItemPermission.title': 'Elementbezogene Berechtigung korrigieren',
+
+  ...umDe,
 };

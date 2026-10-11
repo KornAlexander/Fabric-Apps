@@ -1,0 +1,123 @@
+# Fabric User Manager: setup in a tenant
+
+How to bring the three-tab User Manager to a tenant. Written from a first real setup. What the app is and how it is built: [README](../README.md#fabric-user-manager).
+
+The app has no rights of its own. Everything it reads or changes happens with the signed-in person's own sign-in, so Entra and Fabric decide what each person may do. Setup therefore consists of five things: one app registration, a handful of build values, one deployment, one administrator consent, and naming the first app admin.
+
+## What you need
+
+| Thing | Why |
+| --- | --- |
+| A Fabric workspace on a running capacity | The Rayfin item (app, database, hosting) lives there |
+| The right to register an app in Entra | For the app's own sign-in |
+| An administrator who can grant consent for the tenant | Once, for the permissions marked below |
+| Node.js and this repository | To build and deploy |
+
+## 1. Register the app
+
+In Entra, App registrations, New registration:
+
+- Name: `Fabric User Manager`. Accounts in this organizational directory only.
+- Platform: **Single-page application**. Redirect URI: the address the app is hosted at (known after the first deployment; add `http://localhost:5173` for local development).
+- No client secret. No certificate.
+
+Under API permissions, add these **delegated** permissions:
+
+| API | Permission | Needs an administrator | Used for |
+| --- | --- | --- | --- |
+| Microsoft Graph | `GroupMember.Read.All` | Yes | Reading groups, owners and members |
+| Microsoft Graph | `User.ReadBasic.All` | No | Looking people up |
+| Microsoft Graph | `GroupMember.ReadWrite.All` | Yes | Adding and removing members |
+| Microsoft Graph | `User.Read.All` | Yes | Telling a guest or a disabled account from an ordinary one |
+| Power BI Service | `Tenant.Read.All` | Yes | Reading who an audience is shared with (works for Fabric administrators only) |
+
+Not listed on purpose, because every person can consent to them at the moment they are used: `User.Read`, `Workspace.Read.All`, `Workspace.ReadWrite.All`, `Mail.Send`.
+
+Note the **Application (client) ID** and the **Directory (tenant) ID**.
+
+## 2. Build values
+
+Copy `.env.example` to `.env` and fill in the values, or pass them as environment variables to the build. All of them are IDs, none is a secret.
+
+| Value | Meaning |
+| --- | --- |
+| `VITE_UM_CLIENT_ID` | The client ID from step 1 |
+| `VITE_UM_ADMIN_USER_IDS` | Object IDs of the first app admins, separated by commas |
+| `VITE_UM_ADMIN_GROUP_ID` | Alternatively: object ID of a security group whose members are app admins |
+| `VITE_UM_WRITES` | `true` puts member changes, requests and role bindings into the build. They still stay off until an app admin switches them on |
+| `VITE_UM_DEFAULT_PROFILE` | Leave empty for three tabs. `full` shows the other Governance Hub areas as well |
+| `VITE_UM_ADVANCED_AREAS` | `false` leaves the other Hub areas out of the build entirely |
+
+A guest of the tenant counts with their **guest object ID in this tenant**, not with the ID from their home tenant. The Setup page shows the acting identity.
+
+## 3. Deploy
+
+In `rayfin/rayfin.yml`:
+
+- `services.staticHosting.assetAccess: public` (or `protected`). Without it the front end is refused.
+- `auth.password.enabled: false`. Only the Fabric sign-in remains.
+
+Then, signed in with the Rayfin command line (`npx rayfin login`):
+
+```bash
+npx rayfin up --tenant <tenant id> --workspace-id <workspace id> --dry-run
+```
+
+Check that the dry run names the workspace and item you expect, then run it without `--dry-run`. The output ends with the hosting address. Add that address as redirect URI to the registration from step 1. The deployment also writes the address into `rayfin/rayfin.yml` as an allowed redirect; if the first sign-in is refused because of the redirect address, run the deployment once more.
+
+Later front-end changes only need:
+
+```bash
+npx rayfin up staticapp deploy
+```
+
+## 4. Administrator consent
+
+Open the registration in Entra, API permissions, and choose **Grant admin consent**. The app's Setup page links there and shows, per permission, whether the current browser tab holds it.
+
+This grants the listed permissions to the app for everyone who signs in. It does not give anyone new rights: an owner can still only change their own groups, and a person without a workspace role still sees no workspace.
+
+Decide at this point whether only named people may sign in to the app at all: in Entra, Enterprise applications, `Fabric User Manager`, Properties, **Assignment required**.
+
+## 5. First use
+
+1. Open the hosting address and sign in. You see three tabs.
+2. Choose Connect. The first window asks for the basic sign-in only.
+3. As app admin, open **Setup**. Check the status lines and the permissions list.
+4. Open **Workspaces**. Allow reading workspaces and groups. Discovery lists what your sign-in can read.
+5. Activate the groups people should manage, from the list or by object ID.
+6. In Setup, switch on member changes, and binding changes if app admins should manage workspace roles from the app.
+
+## Optional: creating groups from the app
+
+App admins can create a new, empty security group in Setup. This is off by default and needs three deliberate steps:
+
+1. Add the delegated Graph permission `Group.ReadWrite.All` to the registration and grant admin consent for it. Graph offers no narrower permission for creating a group. With it, the app can do with groups whatever the signed-in person may do in Entra. For an ordinary person that is little; for someone who holds a group administration role it is a lot.
+2. Therefore set **Assignment required** on the enterprise application first, and assign only the people who should use the app.
+3. In Setup, switch on "Creating new groups".
+
+A new group has no members and opens nothing. Give it a workspace role, an audience or a model role, then activate it.
+
+## Guided steps for audiences and model roles
+
+The app cannot share an audience or fill a model role itself. On the Audiences and RLS / OLS tabs it shows the steps and a link into Fabric, and records what an app admin confirms afterwards. Such an entry is marked as confirmed by an admin. For audiences a Fabric administrator can read the sharing again; what Fabric says then replaces the confirmation.
+
+## What to check afterwards
+
+| Check | Expected |
+| --- | --- |
+| Sign-in page | Only the Microsoft button |
+| Sign-in as a guest of the tenant | Works. The sign-in window opens in the app's tenant |
+| Setup, permissions | Everything granted that you consented to; the rest is offered with a button |
+| A member change on a test group | One entry in the app's log and one in Entra's audit log, with the same person and time |
+| Switches | Off until you switched them on |
+
+## Known limits
+
+- Who an audience is shared with can only be read by a Fabric administrator.
+- Roles of a semantic model and their members cannot be read. They are recorded by an app admin.
+- The app's own records (activated groups, requests, the log) are written from the browser. They help; they do not enforce. Entra and Fabric enforce.
+
+## Rollback
+
+The front end: deploy the previous build with `npx rayfin up staticapp deploy --skip-build` from a folder that holds it. The tables are additive and can stay. Consent can be withdrawn in Entra at any time; the app then falls back to offering the permission again.

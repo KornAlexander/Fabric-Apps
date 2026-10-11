@@ -36,6 +36,48 @@ Built as a **Fabric App** (Rayfin). Deployed into **your** tenant. Your data nev
 - Capacity and workspace posture in one view
 - Power Platform environments alongside Fabric, because nobody asks about only one
 - Collector notebooks that hold no secrets - everything resolves at run time
+- **Fabric User Manager**: a three-tab view for managing who is in the groups that open
+  workspaces, Org App audiences and semantic model roles (see below)
+
+## Fabric User Manager
+
+A deliberately small profile of the Hub, and its default view: three tabs, **Workspaces**,
+**Audiences** and **RLS / OLS**. The other Hub areas stay in the build and an app admin can
+switch them back on.
+
+Access in Fabric is given to groups, not to single people:
+
+**Person → Entra group → workspace role, Org App audience, or semantic model role**
+
+| Who | Can do |
+|---|---|
+| Group owners | See the members of their groups, add and remove people, decide requests |
+| Anyone signed in | See which groups are open for requests and what each one opens; ask for access with a reason |
+| App admins | Discover what exists, activate groups, bind a group to a workspace role, create a group, record audience and model-role access through guided steps |
+
+How it is built:
+
+- **No rights of its own.** No service principal, no stored token. Every read and every
+  change uses the signed-in person's own sign-in, so Entra and Fabric decide what each
+  person may do. The app's own records help; they do not enforce.
+- **One permission per click.** Each permission is asked for at the moment it is needed.
+  The Setup page lists them all with their state and says which ones an administrator has
+  to grant.
+- **Changes are off until switched on**, separately for member changes, role bindings and
+  creating groups. Each change is previewed, sent exactly once, logged before and after,
+  and read back. An unclear answer is never retried.
+- **Four files may send a change**, each limited to its own HTTP verbs. A structural test
+  over the syntax tree enforces that, and that everything else only reads.
+- **What it cannot read, it says.** Who an audience is shared with needs a Fabric
+  administrator. Members of semantic model roles cannot be read at all; those entries are
+  recorded by an admin and marked as such.
+
+Status: implemented with automated tests and an offline demo mode (`VITE_UM_MOCK=true`).
+Sign-in, the three tabs and discovery have run against a real tenant. The functions that
+change something have not yet been exercised against a real tenant.
+
+Guides: [setup in a tenant](docs/FABRIC-USER-MANAGER-SETUP.md) ·
+[for owners and requesters](docs/FABRIC-USER-MANAGER-GUIDE.md)
 
 ## Why this exists
 

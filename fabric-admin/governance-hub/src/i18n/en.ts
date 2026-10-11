@@ -10,6 +10,8 @@
  *   string the admin will search for in the portal.
  * - Placeholders use `{name}` and are substituted by `t(key, { name })`.
  */
+import { umEn } from './um.en';
+
 export const en = {
   'app.name': 'Governance Hub',
   'app.tagline': 'Who may create what, where — and why',
@@ -673,6 +675,8 @@ export const en = {
   'task.a365Registry.title': 'Apply an Agent 365 registry action',
   'task.ppRouting.title': 'Configure default-environment routing',
   'task.fabricItemPermission.title': 'Fix an item-level permission',
+
+  ...umEn,
 } as const;
 
 export type TranslationKey = keyof typeof en;

@@ -4,6 +4,12 @@ import { GovPersona } from './GovPersona.js';
 import { GovRequest } from './GovRequest.js';
 import { GovSchemaMigration } from './GovSchemaMigration.js';
 import { GovTask } from './GovTask.js';
+import { UmAudit } from './UmAudit.js';
+import { UmBinding } from './UmBinding.js';
+import { UmGroupContact } from './UmGroupContact.js';
+import { UmManagedGroup } from './UmManagedGroup.js';
+import { UmRequest } from './UmRequest.js';
+import { UmReviewDate } from './UmReviewDate.js';
 
 /**
  * Schema type definition for the Governance Hub app.
@@ -19,6 +25,12 @@ export type DataAppSchema = {
   GovRequest: GovRequest;
   GovSchemaMigration: GovSchemaMigration;
   GovTask: GovTask;
+  UmAudit: UmAudit;
+  UmBinding: UmBinding;
+  UmGroupContact: UmGroupContact;
+  UmManagedGroup: UmManagedGroup;
+  UmRequest: UmRequest;
+  UmReviewDate: UmReviewDate;
 };
 
 export const schema = [
@@ -28,4 +40,10 @@ export const schema = [
   GovRequest,
   GovSchemaMigration,
   GovTask,
+  UmAudit,
+  UmBinding,
+  UmGroupContact,
+  UmManagedGroup,
+  UmRequest,
+  UmReviewDate,
 ];

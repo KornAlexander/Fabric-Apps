@@ -14,6 +14,8 @@ import { moduleRoutes } from '@/modules';
  * than greyed out (PLAN.md §13).
  */
 const CORE_TABS: { to: string; labelKey: TranslationKey; end: boolean }[] = [
+  // The Fabric User Manager's three tabs, shown inside the Hub in the full profile.
+  { to: '/um', labelKey: 'um.nav.short', end: false },
   { to: '/', labelKey: 'nav.setup', end: true },
   { to: '/can-do', labelKey: 'nav.cando', end: false },
   { to: '/drift', labelKey: 'nav.drift', end: false },
