@@ -5,15 +5,60 @@ description: "Use when a Power BI report page should open inside a web app (a Ra
 
 # Power BI report window in an app
 
-Use this when someone wants a Power BI report page to open inside an app, filtered to an object
-picked in the app. The worked example is this app: every script named below is in this folder, and
-the runbook `docs/POWER-BI-EMBED.md` has the measured results, the exact commands and the failure
-table. Read the runbook first. This skill is the general method; the runbook is the proof.
+Click something in your app, and its Power BI report opens right there, filtered to what you
+clicked: a building, a station, a customer. This skill is the method for building that into a
+Fabric App, written so that a coding agent can follow it and a person can read it as a checklist.
+
+```
+click an object  ->  "Report"  ->  floating window inside the app
+                                    iframe: app.powerbi.com/reportEmbed
+                                    one report page, filtered to that object
+```
+
+## How to use it
+
+| You want to | Do this |
+|---|---|
+| Let a coding agent build it | Point the agent at this file, or copy the `pbi-embed` folder into your project's skills folder (`.agents/skills/` or `.claude/skills/`), and ask for a Power BI report window. |
+| Build it yourself | Work through sections 1 to 9 in order. Section 1 is the decisions, section 9 is the checks. |
+| See it working first | The worked example is this app. Start with the runbook, then the two files that hold the whole embed. |
+
+**The worked example, in this folder:**
+
+- [docs/POWER-BI-EMBED.md](../../../docs/POWER-BI-EMBED.md): the runbook, with what was measured, the exact commands and a table of everything that went wrong once.
+- [src/powerbi/embedUrl.ts](../../../src/powerbi/embedUrl.ts): the embed address, as one pure function.
+- [src/config/powerbi.ts](../../../src/config/powerbi.ts): which site and language open which report, and the gate that decides whether the button is offered.
+- [src/powerbi/BuildingReportWindow.tsx](../../../src/powerbi/BuildingReportWindow.tsx): the window.
+- [tools/fabric/](../../../tools/fabric/): lakehouse load, semantic model, generated report and publishing, as scripts.
+
+## What to expect
+
+| | |
+|---|---|
+| App registration, tokens in the app | None. Power BI signs the viewer in itself. |
+| Sign-in | One click on Power BI's own button on first use per browser. Measured in Chrome and Edge, inside the Fabric portal. |
+| Changing the object | The report page reloads, about 4 to 6 seconds. |
+| Languages | A second report over the same model per language; number formats follow the app. |
+| Security | The URL filter selects, it does not protect. Restricting data needs row-level security. |
+| Not measured | A viewer who is not an admin, blocked third-party cookies, sign-in after a browser restart, and the JavaScript SDK variant. |
+
+## Contents
+
+1. [Decide before building](#1-decide-before-building)
+2. [Spike first, in the real nesting](#2-spike-first-in-the-real-nesting)
+3. [The embed address](#3-the-embed-address)
+4. [Make the report say what it shows](#4-make-the-report-say-what-it-shows)
+5. [More than one site](#5-more-than-one-site)
+6. [More than one language](#6-more-than-one-language)
+7. [Publish reproducibly](#7-publish-reproducibly)
+8. [In the app](#8-in-the-app)
+9. [Check](#9-check)
+
+[Boundaries](#boundaries): what needs the owner's go.
 
 Put every fork in section 1 to the person you are building for before you build, with the
 recommended option first. Have somebody who did not write the change review plan and implementation
 before a deploy.
-
 ## 1. Decide before building
 
 | Fork | Recommended | Alternatives |
@@ -27,9 +72,10 @@ before a deploy.
 | Ids | Wherever the deployer wants them; ask | Untracked env file; shell variables |
 
 What the SDK would change: filter changes without a reload, and real loaded and error events. What
-it does to sign-in was NOT measured in this app. The PBI Fixer app in this repository
-(`fabric-admin/pbi-fixer`, `LiveReportPreview.tsx` and `fabricAuth.ts`) implements the SDK method
-and is the place to start if you need it.
+it does to sign-in was NOT measured in this app. The PBI Fixer app in this repository implements the
+SDK method and is the place to start if you need it:
+[LiveReportPreview.tsx](../../../../../../fabric-admin/pbi-fixer/src/components/explorer/LiveReportPreview.tsx)
+and [fabricAuth.ts](../../../../../../fabric-admin/pbi-fixer/src/services/fabricAuth.ts).
 
 ## 2. Spike first, in the real nesting
 
@@ -54,6 +100,19 @@ picture taken while the visuals are still painting. The app's direct hosting add
 own sign-in; test inside the portal instead.
 
 ## 3. The embed address
+
+```text
+https://app.powerbi.com/reportEmbed
+  ?reportId=<report id>
+  &autoAuth=true
+  &ctid=<tenant id>
+  &pageName=<page name>
+  &filter=Building/building_code eq '5606'
+  &filterPaneEnabled=false&navContentPaneEnabled=false
+  &language=en&formatLocale=en-GB
+```
+
+One line in practice; broken up here to be readable. The rules behind each part:
 
 - Always quote the value: `Table/column eq '5606'`. An unquoted numeric-looking code compares a
   number with a text column and matches nothing.
@@ -92,7 +151,7 @@ own sign-in; test inside the portal instead.
 - Give weekday and similar text columns a sort column.
 - Set table and matrix column widths; auto-size hands a long name column everything.
 
-## 4a. More than one site
+## 5. More than one site
 
 - One site, one lakehouse, one model, one report. Do not put sites into one model as a column:
   a URL filter is not a permission, and Direct Lake viewers need access to the data, so data that
@@ -115,7 +174,7 @@ own sign-in; test inside the portal instead.
   generated site never says its codes are a real institution's, and make the generator refuse a
   generated site whose descriptions still name real sources.
 
-## 4b. More than one language
+## 6. More than one language
 
 - A second language is a second report over the SAME model, with the same page name and the same
   filter column. Every number is the same measure under another header (`displayName`), so the two
@@ -133,7 +192,7 @@ own sign-in; test inside the portal instead.
 - Test that both languages read the same measures, that no word of the first language is left on
   the second page, and that every measure a page reads exists in the generated model.
 
-## 5. Publish reproducibly
+## 7. Publish reproducibly
 
 - Generate the PBIR folder from a script. Give visuals ASCII names and deterministic page names.
 - Publish through the Fabric REST API (`POST /v1/workspaces/{ws}/reports`, then
@@ -148,7 +207,7 @@ own sign-in; test inside the portal instead.
 - `az account get-access-token --tenant <tenant>`: `az` drifts to the home tenant.
 - Never keep tokens or print them.
 
-## 6. In the app
+## 8. In the app
 
 - A pure function builds the address; a pure gate decides whether the button is offered. Every
   unknown is "no": no report for the site, site not shipped, malformed ids, data posture differs.
@@ -173,7 +232,7 @@ own sign-in; test inside the portal instead.
 - Vite inlines the whole environment object into the bundle when any code reads
   `import.meta.env[name]` dynamically, so every `VITE_*` value is in every bundle.
 
-## 7. Check
+## 9. Check
 
 - Unit tests for the address builder and the gate, with a mirror test that the report IS offered
   where it should be, and sabotage each rule once to see a test fail. Run them in every release
