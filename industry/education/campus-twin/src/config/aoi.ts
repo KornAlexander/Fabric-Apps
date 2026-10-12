@@ -429,6 +429,9 @@ export function switchAoi(id: string): void {
   const url = new URL(window.location.href);
   if (id === DEFAULT_AOI) url.searchParams.delete('aoi');
   else url.searchParams.set('aoi', id);
+  // A report belongs to a building at the university being left. Two universities can share a
+  // building code, and `report=1` riding along would open another institution's report on arrival.
+  url.searchParams.delete('report');
   window.location.href = url.toString();
 }
 
@@ -482,6 +485,18 @@ export function activeLecturerId(): string | null {
 }
 
 /**
+ * `?report=1`: open the linked building's Power BI report window as well.
+ *
+ * ⚠️ IT MEANS NOTHING ON ITS OWN. A report belongs to a building, so this is honoured only together
+ * with a `?building=` that was itself honoured, and only where the site has a report this build may
+ * offer. The shell decides that; this only reads the flag. Anything but the literal `1` is "no".
+ */
+export function activeReportFlag(): boolean {
+  if (typeof window === 'undefined') return false;
+  return new URLSearchParams(window.location.search).get('report') === '1';
+}
+
+/**
  * Write a parameter back, or remove it when the thing it named is closed.
  *
  * ⚠️ `replaceState`, not `pushState`. Opening a panel is not somewhere you navigated to, and
@@ -500,3 +515,4 @@ function remember(key: string, value: string | null): void {
 export const rememberLens = (lens: LensId | null) => remember('lens', lens);
 export const rememberBuilding = (code: string | null) => remember('building', code);
 export const rememberLecturer = (id: string | null) => remember('teacher', id);
+export const rememberReport = (open: boolean) => remember('report', open ? '1' : null);

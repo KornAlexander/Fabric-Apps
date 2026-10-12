@@ -74,6 +74,8 @@ export function OccupancyPanel({
   playing = false,
   onTogglePlay,
   shuttle = null,
+  onOpenReport,
+  reportOpen = false,
 }: {
   layer: RoomLayer;
   state: OccupancyState;
@@ -84,6 +86,12 @@ export function OccupancyPanel({
   onTogglePlay?: () => void;
   /** The measured road journey between the campuses, when this AOI has two. */
   shuttle?: { distanceM: number; driveSeconds: number } | null;
+  /**
+   * Open the Power BI report for the open building. Absent when this site and build have none,
+   * and then the button is not rendered: see `buildingReport` in `src/config/powerbi.ts`.
+   */
+  onOpenReport?: () => void;
+  reportOpen?: boolean;
 }) {
   const { t, locale } = useI18n();
   const grid = layer.meta.occupancyGrid;
@@ -326,14 +334,32 @@ export function OccupancyPanel({
     <section data-testid="occupancy-panel" className="mt-4 space-y-4">
       <header className="flex items-baseline justify-between gap-2">
         <h3 className="text-sm font-semibold">{t('occupancy.building', { code: building.code })}</h3>
-        <button
-          type="button"
-          data-testid="collapse-building"
-          onClick={() => onExplode(null)}
-          className="rounded px-2 py-1 text-xs text-stone-400 transition hover:bg-stone-800 hover:text-stone-100"
-        >
-          {t('occupancy.close')}
-        </button>
+        <div className="flex shrink-0 items-baseline gap-1">
+          {onOpenReport && (
+            <button
+              type="button"
+              data-testid="open-building-report"
+              aria-pressed={reportOpen}
+              title={t('report.openTitle')}
+              onClick={onOpenReport}
+              className={`rounded border px-2 py-1 text-xs transition ${
+                reportOpen
+                  ? 'border-amber-500/60 bg-amber-500/15 text-amber-200'
+                  : 'border-stone-600 text-stone-200 hover:border-amber-500/50 hover:text-amber-300'
+              }`}
+            >
+              {t('report.open')}
+            </button>
+          )}
+          <button
+            type="button"
+            data-testid="collapse-building"
+            onClick={() => onExplode(null)}
+            className="rounded px-2 py-1 text-xs text-stone-400 transition hover:bg-stone-800 hover:text-stone-100"
+          >
+            {t('occupancy.close')}
+          </button>
+        </div>
       </header>
 
       {partial && (

@@ -17,6 +17,8 @@ rayfin/.deploy-in-progress.json
 rayfin/.temp/
 .env
 .env.local
+# One deployment's report ids and tenant id (docs/POWER-BI-EMBED.md). Not secrets, and not a template's.
+.env.production
 
 # Geodata caches and generated datasets — large, regenerable, never committed.
 # ⚠️ ANCHORED with a leading slash on purpose. Plain `data/` matches a directory called `data`

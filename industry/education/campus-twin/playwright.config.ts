@@ -1,5 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
+import { DEMO_REPORT, DEMO_REPORT_EN, REPORT, TENANT } from './e2e/reportSentinels';
+
 /**
  * The dev-server port for e2e.
  *
@@ -102,6 +104,21 @@ export default defineConfig({
     url: `${ORIGIN}/`,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
+    /*
+      ⚠️ SENTINEL IDS FOR THE POWER BI REPORT WINDOW, AND THEY ARE DELIBERATELY NOT REAL. The dev
+      server does not read `.env.production`, so without these the "Bericht" button never renders
+      and `building-report.spec.ts` would pass by finding nothing. With them it renders, and the
+      spec can assert the exact address the frame is given without any tenant's report id in the
+      test. Shell variables win over env files, so a developer's own values cannot leak in either.
+      A server ALREADY RUNNING on the port is reused as it is, without these: give the run its own
+      with `CS_E2E_PORT` if the spec skips itself for that reason.
+    */
+    env: {
+      VITE_PBI_TENANT_ID: TENANT,
+      VITE_PBI_REPORT_GARCHING: REPORT,
+      VITE_PBI_REPORT_DEMO: DEMO_REPORT,
+      VITE_PBI_REPORT_DEMO_EN: DEMO_REPORT_EN,
+    },
   },
   projects: [
     {

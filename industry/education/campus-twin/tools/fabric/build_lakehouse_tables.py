@@ -17,6 +17,19 @@ Tables (Delta, snake_case — the semantic model renames them to Title Case):
   time_slot    the 70 hours of the teaching week, as a dimension
   room_hour    SPARSE fact: one row per (room, slot) that was ever booked
   course       what is timetabled in each room, with how often
+  data_load    ONE row: what this load is made of: real or synthetic, which semester, which file
+
+⚠️ **`data_load` is what lets a report say what it is showing.** Everything above is the same
+shape whether the rooms file was built from real TUMonline bookings or from the synthetic
+generator, and a report over these tables cannot tell the difference: the numbers look equally
+plausible either way. The stamp is read from the rooms file itself (the same `semantics` rule
+`tools/check_release.mjs` applies), written here, shown on the report page, and compared with the
+app's release posture by `verify_model_agreement.py`.
+
+⚠️ **AND REAL DATA IS ONLY LOADED WHEN THE RELEASE SWITCH SAYS IT MAY SHIP.** A rooms file with
+real bookings and `navigatumData` set to anything but `include` is the half-flipped state
+docs/internal/deployment.md warns about; loading it would put the withheld data into a model that
+reports are built on. The loader refuses instead.
 
 Usage
   python tools/fabric/build_lakehouse_tables.py
@@ -27,16 +40,21 @@ from __future__ import annotations
 import json
 import shutil
 import subprocess
+import urllib.request
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pyarrow as pa
 from deltalake import write_deltalake
 
 ROOT = Path(__file__).resolve().parents[2]
-AOI = "garching"
 
-from fabric_ids import lakehouse_id, workspace_id
+from fabric_ids import lakehouse_id, tenant_id, workspace_id
+from provenance import problem_with, source_hash, source_semantics
+from sites import expect_lakehouse, site_from_cli
 
+SITE = site_from_cli("Write one site's room and booking data into its lakehouse as Delta tables.")
+AOI = SITE.aoi
 WORKSPACE_ID = workspace_id()
 LAKEHOUSE_ID = lakehouse_id()
 
@@ -44,6 +62,7 @@ AZ = shutil.which("az") or "az"
 
 DAY_NAMES_DE = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]
 DAY_NAMES_EN = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+MONTHS_EN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 TEACHING = (
     "hörsaal",
@@ -100,13 +119,32 @@ def classify(usage: str | None) -> str:
 
 
 def token(resource: str) -> str:
-    out = subprocess.run(  # noqa: S603
-        [AZ, "account", "get-access-token", "--resource", resource, "--query", "accessToken", "-o", "tsv"],
-        capture_output=True,
-        text=True,
-        check=True,
-    )
+    command = [AZ, "account", "get-access-token", "--resource", resource, "--query", "accessToken", "-o", "tsv"]
+    if tenant_id():
+        command += ["--tenant", tenant_id()]
+    out = subprocess.run(command, capture_output=True, text=True, check=True)  # noqa: S603
     return out.stdout.strip()
+
+
+def refuse_withheld(semantics: str) -> None:
+    """Stop before the model gets a data state other than the one the app shows."""
+    problem = problem_with(SITE, semantics)
+    if problem:
+        raise SystemExit(
+            f"refusing to load {AOI}/rooms.json: {problem}.\nThe rooms file and the switch must agree. "
+            f"Either rebuild the rooms file (python tools/geodata/build_rooms.py --aoi {AOI} "
+            '--semantics synthetic | navigatum) or set the switch ("synthetic" to publish, '
+            '"include" for the internal demo).'
+        )
+
+
+def lakehouse_name() -> str:
+    """The display name of the lakehouse the environment points at, asked of the service."""
+    request = urllib.request.Request(
+        f"https://api.fabric.microsoft.com/v1/workspaces/{WORKSPACE_ID}/lakehouses/{LAKEHOUSE_ID}",
+        headers={"Authorization": f"Bearer {token('https://api.fabric.microsoft.com')}"},
+    )
+    return json.loads(urllib.request.urlopen(request, timeout=120).read())["displayName"]  # noqa: S310
 
 
 def write(name: str, table: pa.Table, options: dict) -> None:
@@ -127,7 +165,12 @@ def main() -> None:
     source = ROOT / "public" / "terrain" / AOI / "rooms.json"
     if not source.exists():
         raise SystemExit(f"{source} not found — run tools/geodata/build_rooms.py first")
-    meta = json.loads(source.read_text(encoding="utf-8"))
+    source_bytes = source.read_bytes()
+    meta = json.loads(source_bytes.decode("utf-8"))
+    semantics = source_semantics(SITE, meta)
+    refuse_withheld(semantics)
+    # Before anything is read further or written: is this the lakehouse of the site asked for?
+    expect_lakehouse(SITE, lakehouse_name())
     rooms = meta["rooms"]
     grid = meta["occupancyGrid"]
     slots = int(grid["slots"])
@@ -136,6 +179,14 @@ def main() -> None:
 
     occupancy_path = ROOT / "public" / "terrain" / AOI / "occupancy.bin"
     occupancy = occupancy_path.read_bytes() if occupancy_path.exists() else b""
+    # ⚠️ ROOMS THAT CLAIM A CALENDAR, AND NO BOOKINGS FILE, IS A BROKEN BUILD, NOT AN EMPTY WEEK.
+    # Without this the fact table loads with zero rows, every calendared room reads "never
+    # booked", and the load still gets a fresh stamp saying the data is real.
+    if not occupancy and int(meta.get("withOccupancy") or 0) > 0:
+        raise SystemExit(
+            f"{occupancy_path} is missing, but {meta['withOccupancy']} rooms carry a calendar. "
+            "Run tools/geodata/build_rooms.py first."
+        )
 
     print(f"source: {source.name} — {len(rooms)} room polygons, {meta['withOccupancy']} with bookings")
 
@@ -314,6 +365,37 @@ def main() -> None:
         ),
     )
 
+    # ── data_load ───────────────────────────────────────────────────────────────────────
+    # One row, replaced on every load. The hash is of the rooms file as read, so "is the model
+    # still the load of THIS file" is a comparison rather than a belief.
+    loaded = datetime.now(timezone.utc)
+    stamp = {
+        "aoi": AOI,
+        "semantics": semantics,
+        "source_label": SITE.source_labels[semantics],
+        "semester": SITE.semester_label or str(grid.get("semester") or ""),
+        "source_sha256": source_hash(source_bytes, occupancy),
+        "loaded_at_utc": loaded.strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "loaded_on": loaded.strftime("%d.%m.%Y"),
+    }
+    if SITE.english:
+        # ⚠️ ONLY WHERE THE SITE HAS AN ENGLISH REPORT, AND THE MODEL ASKS FOR EXACTLY THESE. The
+        # model generator adds the same three columns under the same condition; a site without an
+        # English report keeps the table it has always had and needs no reload.
+        if semantics not in SITE.english.source_labels:
+            raise SystemExit(f"{SITE.label} has no English label for a {semantics!r} load (tools/fabric/sites.py)")
+        stamp |= {
+            "source_label_en": SITE.english.source_labels[semantics],
+            "semester_en": SITE.english.semester_label or stamp["semester"],
+            # Month by name, so the date cannot be read as the fifth of October where the German
+            # line beside it says the tenth of May. Not `%b`: that follows the machine's locale.
+            "loaded_on_en": f"{loaded.day} {MONTHS_EN[loaded.month - 1]} {loaded.year}",
+        }
+    load_table = pa.table(
+        {name: [value] for name, value in stamp.items()},
+        schema=pa.schema([(name, pa.string()) for name in stamp]),
+    )
+
     # ── publish ─────────────────────────────────────────────────────────────────────────
     options = {
         "bearer_token": token("https://storage.azure.com"),
@@ -326,6 +408,12 @@ def main() -> None:
     write("time_slot", slot_table, options)
     write("room_hour", room_hour_table, options)
     write("course", course_table, options)
+    # Last on purpose: a load that died half-way must not leave a fresh stamp over old tables.
+    write("data_load", load_table, options)
+    print(
+        f"\nstamp: {semantics}, semester {load_table['semester'][0].as_py()}, "
+        f"sha256 {load_table['source_sha256'][0].as_py()[:12]}…"
+    )
 
     print(
         f"\n{room_hour_table.num_rows:,} booked hours across {len(calendar_of)} rooms "
