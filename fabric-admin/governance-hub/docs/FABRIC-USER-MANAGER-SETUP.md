@@ -47,7 +47,7 @@ Copy `.env.example` to `.env` and fill in the values, or pass them as environmen
 | `VITE_UM_ADMIN_USER_IDS` | Object IDs of the first app admins, separated by commas |
 | `VITE_UM_ADMIN_GROUP_ID` | Alternatively: object ID of a security group whose members are app admins |
 | `VITE_UM_WRITES` | `true` puts member changes, requests and role bindings into the build. They still stay off until an app admin switches them on |
-| `VITE_UM_DEFAULT_PROFILE` | Leave empty for three tabs. `full` shows the other Governance Hub areas as well |
+| `VITE_UM_DEFAULT_PROFILE` | Leave empty for the User Manager tabs only. `full` shows the other Governance Hub areas as well |
 | `VITE_UM_ADVANCED_AREAS` | `false` leaves the other Hub areas out of the build entirely |
 
 A guest of the tenant counts with their **guest object ID in this tenant**, not with the ID from their home tenant. The Setup page shows the acting identity.
@@ -85,7 +85,7 @@ If you switch it on: assign the people first, then switch it on, and grant admin
 
 ## 5. First use
 
-1. Open the hosting address and sign in. You see three tabs.
+1. Open the hosting address and sign in. You see four tabs: three about access, and the Power BI Guidelines.
 2. Choose Connect. The first window asks for the basic sign-in only.
 3. As app admin, open **Setup**. Check the status lines and the permissions list.
 4. Open **Workspaces**. Allow reading workspaces and groups. Discovery lists what your sign-in can read.
@@ -101,6 +101,16 @@ App admins can create a new, empty security group in Setup. This is off by defau
 3. In Setup, switch on "Creating new groups".
 
 A new group has no members and opens nothing. Give it a workspace role, an audience or a model role, then activate it.
+
+## Optional: tailoring the Power BI Guidelines
+
+The fourth tab shows general best practices for Power BI. To make it yours, open **Setup**, Power BI Guidelines, **Open questionnaire**. Fifty optional questions in six groups cover naming, tables, calendar, columns, measures and reports. Answer what matters and choose **Save for everyone**. The answers are then filled into the guideline text for everybody who uses the app, and listed at the end of the tab.
+
+- Needs no permission in Entra or Fabric and no switch. The answers are stored in the app's own settings table, with who saved them and when.
+- They change what the guidelines say. They do not check or change any model or report.
+- Like the app's other settings, they are stored where any signed-in person could change them. The app accepts only the choices it offers and bounded free text.
+- If two admins edit at the same time, the second one is told and can load the other's answers or replace them.
+- The questions are asked in the language of the interface. What is stored is the same in both languages, so a German and an English reader see the same convention.
 
 ## Guided steps for audiences and model roles
 

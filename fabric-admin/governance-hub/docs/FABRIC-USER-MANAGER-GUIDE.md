@@ -12,7 +12,9 @@ The app shows the groups you may manage or request, and what each group opens. A
 
 The app has no rights of its own. Everything you do happens with your own sign-in, so you can only do what Entra and Fabric allow you to do anyway.
 
-## The three tabs
+## The tabs
+
+Three tabs are about access:
 
 | Tab | Shows groups that open |
 | --- | --- |
@@ -21,6 +23,8 @@ The app has no rights of its own. Everything you do happens with your own sign-i
 | **RLS / OLS** | a role inside a semantic model, for example "only the rows of one region" |
 
 Each tab has two lists: **Groups you manage** (you are an owner of the group) and **Available groups** (groups that are open for requests).
+
+A fourth tab, **Power BI Guidelines**, is a reference and has nothing to do with access. It holds best practices for building semantic models and reports: data integration, data modeling, report design, maintenance and the Tabular Style Guide, with drawings that show the rules. You can search it. Where your organization has recorded its own conventions, for example the casing of names or the name of the measure table, they are filled into the text and marked. An app admin records them in **Setup**, under Power BI Guidelines. The guide exists in English and German and follows the language of the interface.
 
 ## First time
 

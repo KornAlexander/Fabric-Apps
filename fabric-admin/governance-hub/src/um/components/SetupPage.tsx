@@ -15,6 +15,7 @@ import type { AuditEntry } from '@/um/services/store';
 import { ActivateById } from './ActivateById';
 import { GrantNotices } from './DiscoveredPanel';
 import { GroupCreate } from './GroupCreate';
+import { GuidelinesSetupCard } from './GuidelinesSetup';
 import { PermissionChecklist } from './Permissions';
 import { BindingList, Button, Card, Empty, Notice, Pill, Section } from './parts';
 import { failureText } from './text';
@@ -521,6 +522,7 @@ export function SetupPage() {
       <GroupCreate created={created} onDone={() => setLogTick((n) => n + 1)} />
       <ActivateById />
       <SheetSection bindingsOf={bindingsOf} />
+      <GuidelinesSetupCard />
       <ProfileSection />
 
       <Section title={t('um.setup.log.title')} intro={t('um.setup.log.advisory')}>

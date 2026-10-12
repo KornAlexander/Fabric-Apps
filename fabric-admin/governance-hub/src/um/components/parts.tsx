@@ -27,6 +27,22 @@ export function Pill({ tone = 'neutral', children, title }: { tone?: Tone; child
   );
 }
 
+/**
+ * A workspace role. Each role has its own colour, from quiet (Viewer) to
+ * strong (Admin), and always its name. Red stays reserved for errors and for
+ * findings; a role is neither.
+ */
+const ROLE_TONES: Record<string, string> = {
+  Admin: 'bg-violet-100 text-violet-900 ring-violet-600/30 font-semibold',
+  Member: 'bg-blue-50 text-blue-800 ring-blue-600/20',
+  Contributor: 'bg-teal-50 text-teal-800 ring-teal-600/20',
+  Viewer: 'bg-gray-100 text-gray-700 ring-gray-500/20',
+};
+
+export function RolePill({ role }: { role: string }) {
+  return <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset ${ROLE_TONES[role] ?? ROLE_TONES.Viewer}`}>{role}</span>;
+}
+
 export function Notice({ tone, children, action }: { tone: 'info' | 'warn' | 'alert'; children: ReactNode; action?: ReactNode }) {
   const style =
     tone === 'alert'

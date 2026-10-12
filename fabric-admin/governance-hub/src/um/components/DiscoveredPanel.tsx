@@ -9,7 +9,7 @@ import { activateGroup } from '@/um/services/operations';
 
 import { BindGroup, BindingRowActions } from './BindingChanges';
 import { GuidedStep } from './GuidedStep';
-import { Button, Card, Empty, Notice, Pill, Section } from './parts';
+import { Button, Card, Empty, Notice, Pill, RolePill, Section } from './parts';
 import { GrantRefusedNote } from './Permissions';
 import { failureText, reasonKey } from './text';
 
@@ -202,7 +202,14 @@ function WorkspaceRoles({ result }: { result: DiscoveryResult }) {
           {ws.roleAssignments.state !== 'ok' ? (
             <p className="mt-2 text-sm text-amber-900">{t('um.disc.ws.notReadable', { reason: t(reasonKey(ws.roleAssignments.reason)) })}</p>
           ) : (
-            <table className="mt-2 min-w-full text-sm">
+            <table className="mt-2 w-full table-fixed text-sm">
+              {/* The same columns in every workspace, so the eye can run down the page. */}
+              <colgroup>
+                <col className="w-[32%]" />
+                <col className="w-[18%]" />
+                <col className="w-[14%]" />
+                <col className="w-[36%]" />
+              </colgroup>
               <thead>
                 <tr className="border-b border-gray-100 text-left text-xs text-gray-500 uppercase">
                   <th className="px-2 py-1.5 font-medium">{t('um.disc.col.principal')}</th>
@@ -214,13 +221,12 @@ function WorkspaceRoles({ result }: { result: DiscoveryResult }) {
               <tbody>
                 {ws.roleAssignments.value.map((a) => {
                   const group = a.principalType === 'Group' ? groups.get(a.principalId.toLowerCase()) : undefined;
-                  const high = a.role === 'Admin' || a.role === 'Member';
                   return (
                     <tr key={a.id} className="border-b border-gray-50 align-top last:border-0">
-                      <td className="px-2 py-1.5 text-gray-800">{group?.name ?? (a.principalName || a.principalId)}</td>
+                      <td className="px-2 py-1.5 break-words text-gray-800">{group?.name ?? (a.principalName || a.principalId)}</td>
                       <td className="px-2 py-1.5 text-gray-600">{t(`um.disc.principal.${a.principalType}`)}</td>
                       <td className="px-2 py-1.5">
-                        <Pill tone={high ? 'alert' : 'neutral'}>{a.role}</Pill>
+                        <RolePill role={a.role} />
                       </td>
                       <td className="px-2 py-1.5">
                         {group ? <GroupActions group={group} /> : <Pill tone="warn">{t('um.disc.state.direct')}</Pill>}

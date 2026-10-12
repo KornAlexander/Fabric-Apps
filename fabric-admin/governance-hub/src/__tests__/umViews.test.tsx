@@ -9,7 +9,7 @@ import { UmLayout } from '@/um/components/UmLayout';
 import { UM_PATHS } from '@/um/domain/profile';
 import { UmProvider } from '@/um/hooks/UmContext';
 import { OfflineAuthService } from '@/um/services/offlineAuth';
-import { createUmServices } from '@/um/services/services';
+import { createUmServices, type UmServices } from '@/um/services/services';
 import { umRouteElements } from '@/um/UmRoutes';
 
 // The Excel worker cannot run in jsdom; the codec itself is tested in umServices.test.ts.
@@ -21,9 +21,9 @@ vi.mock('@/um/services/excelClient', () => ({
 
 type Persona = 'admin' | 'owner' | 'user';
 
-function renderApp(persona: Persona, path: string = UM_PATHS.workspaces, locale: 'en' | 'de' = 'en') {
+function renderApp(persona: Persona, path: string = UM_PATHS.workspaces, locale: 'en' | 'de' = 'en', change: (services: UmServices) => UmServices = (services) => services) {
   const search = `?as=${persona}`;
-  const services = createUmServices({ mock: true, adminUserIds: [], defaultProfile: 'simple' }, search);
+  const services = change(createUmServices({ mock: true, adminUserIds: [], defaultProfile: 'simple' }, search));
   return render(
     <I18nProvider initialLocale={locale}>
       <AuthProvider authService={new OfflineAuthService(search)}>
@@ -45,10 +45,24 @@ function renderApp(persona: Persona, path: string = UM_PATHS.workspaces, locale:
  * activation for app admins. All against the offline fixtures.
  */
 describe('Fabric User Manager shell', () => {
-  it('has exactly three tabs in the navigation', async () => {
+  it('asks for a reload when the page is older than the deployed version and cannot load its parts', async () => {
+    // What a page opened before a deployment runs into: the files it asks for are gone.
+    renderApp('owner', UM_PATHS.workspaces, 'en', (services) => ({ ...services, loadWriter: () => Promise.reject(new Error('Failed to fetch dynamically imported module')) }));
+    const notice = await screen.findByText('The app was updated and this page could not load its new parts. Please reload the page.');
+    expect(notice.closest('[role="alert"]')).not.toBeNull();
+    expect(screen.getByRole('button', { name: 'Reload the page' })).toBeInTheDocument();
+  });
+
+  it('does not ask for a reload when everything loaded', async () => {
+    renderApp('owner');
+    await screen.findByRole('heading', { name: 'FAB-Sales-Viewer' });
+    expect(screen.queryByRole('button', { name: 'Reload the page' })).not.toBeInTheDocument();
+  });
+
+  it('has exactly four tabs in the navigation: three about access, and the guidelines', async () => {
     renderApp('user');
     const nav = await screen.findByRole('navigation', { name: 'Fabric User Manager' });
-    expect(within(nav).getAllByRole('link').map((a) => a.textContent)).toEqual(['Workspaces', 'Audiences', 'RLS / OLS']);
+    expect(within(nav).getAllByRole('link').map((a) => a.textContent)).toEqual(['Workspaces', 'Audiences', 'RLS / OLS', 'Power BI Guidelines']);
     // No Hub area and, for a non-admin, no Setup entry.
     expect(screen.queryByText('Can-Do Explorer')).not.toBeInTheDocument();
     expect(screen.queryByRole('link', { name: 'Setup' })).not.toBeInTheDocument();

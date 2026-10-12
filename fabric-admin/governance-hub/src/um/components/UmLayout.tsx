@@ -10,10 +10,12 @@ import { useUm } from '@/um/hooks/UmContext';
 
 import { Button, Notice, Pill } from './parts';
 
-const TABS: { to: string; labelKey: TranslationKey; kind: TargetKind }[] = [
+/** A tab without `kind` is not about access and never carries a count of waiting requests. */
+const TABS: { to: string; labelKey: TranslationKey; kind?: TargetKind }[] = [
   { to: UM_PATHS.workspaces, labelKey: 'um.nav.workspaces', kind: 'Workspace' },
   { to: UM_PATHS.audiences, labelKey: 'um.nav.audiences', kind: 'Audience' },
   { to: UM_PATHS.modelRoles, labelKey: 'um.nav.modelRoles', kind: 'ModelRole' },
+  { to: UM_PATHS.guidelines, labelKey: 'um.nav.guidelines' },
 ];
 
 const tabClass = ({ isActive }: { isActive: boolean }) =>
@@ -24,12 +26,17 @@ const tabClass = ({ isActive }: { isActive: boolean }) =>
 /** The standing notices: demo data, sign-in state, identity mismatch, database. */
 export function UmNotices() {
   const t = useT();
-  const { services, graphStatus, graphMissing, identity, sessionMatch, connect, storeReachable, adminUnknown } = useUm();
+  const { services, graphStatus, graphMissing, identity, sessionMatch, connect, storeReachable, adminUnknown, partsFailed } = useUm();
   const { user } = useAuth();
 
   return (
     <div className="space-y-3">
       {services.mock && <Notice tone="info">{t('um.mock.banner')}</Notice>}
+      {partsFailed && (
+        <Notice tone="alert" action={<Button onClick={() => window.location.reload()}>{t('um.shell.reload')}</Button>}>
+          {t('um.shell.loadFailed')}
+        </Notice>
+      )}
       {graphStatus === 'connecting' && <p className="text-sm text-gray-500">{t('um.graph.connecting')}</p>}
       {graphStatus === 'not-configured' && <Notice tone="alert">{t('um.graph.notConfigured', { missing: graphMissing.join(', ') })}</Notice>}
       {(graphStatus === 'needs-sign-in' || graphStatus === 'error') && (
@@ -87,6 +94,7 @@ export function UmToolbar() {
       {isAppAdmin && (
         <NavLink
           to={UM_PATHS.setup}
+          end
           aria-label={t('um.nav.setup')}
           title={t('um.nav.setup')}
           className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
@@ -108,7 +116,7 @@ export function UmTabs() {
   return (
     <nav className="flex flex-wrap gap-1" aria-label={t('um.app.name')}>
       {TABS.map((tab) => {
-        const count = waiting(tab.kind);
+        const count = tab.kind ? waiting(tab.kind) : 0;
         return (
           <NavLink key={tab.to} to={tab.to} className={tabClass}>
             {t(tab.labelKey)}
@@ -124,7 +132,7 @@ export function UmTabs() {
   );
 }
 
-/** The simple profile's shell: three tabs, nothing else in the navigation. */
+/** The simple profile's shell: the three access tabs and the guidelines, nothing else in the navigation. */
 export function UmLayout() {
   const t = useT();
   const { user, signOut } = useAuth();

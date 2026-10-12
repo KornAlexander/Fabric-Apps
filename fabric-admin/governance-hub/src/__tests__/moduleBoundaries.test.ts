@@ -83,8 +83,18 @@ describe('no literal user-facing strings in components', () => {
     /(?<![=/])>\s*([A-Za-zÄÖÜäöüß][A-Za-zÄÖÜäöüß' ]{3,})\s*</g;
   const ALLOWLIST = new Set<string>([]);
 
+  // The drawings of the Power BI guidelines are part of the guideline content.
+  // Their labels are written in English in the file and looked up in
+  // `um/guidelines/figures.de.ts` for German; a test of their own
+  // (umGuidelines) fails when a German wording is missing.
+  const ENGLISH_CONTENT = /guidelines[\\/]figures(More)?\.tsx$/;
+
   const files = walk(SRC).filter(
-    (f) => f.endsWith('.tsx') && !f.includes('__tests__') && !f.includes('AuthPage')
+    (f) =>
+      f.endsWith('.tsx') &&
+      !f.includes('__tests__') &&
+      !f.includes('AuthPage') &&
+      !ENGLISH_CONTENT.test(f)
   );
 
   it.each(files.map((f) => relative(SRC, f)))('%s uses t() for visible text', (rel) => {

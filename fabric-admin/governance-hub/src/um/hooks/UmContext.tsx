@@ -59,6 +59,8 @@ interface UmContextValue {
   store: UmStore;
   /** Member changes exist in this build. */
   writesInBuild: boolean;
+  /** True when the functions that change things could not be loaded, typically after a new version was deployed. */
+  partsFailed: boolean;
   /** Member changes are switched on (advisory setting). */
   armed: boolean;
   setArmed: (next: boolean) => Promise<boolean>;
@@ -135,6 +137,7 @@ export function UmProvider({ children, services: injected }: { children: ReactNo
   const [armed, setArmedState] = useState(false);
   const [reviewDates, setReviewDates] = useState<ReviewDate[]>([]);
   const [writer, setWriter] = useState<MemberWriter | null>(null);
+  const [partsFailed, setPartsFailed] = useState(false);
   const [sender, setSender] = useState<NoticeSender | null>(null);
   const [bindingWriter, setBindingWriter] = useState<BindingWriter | null>(null);
   const [bindingsArmed, setBindingsArmedState] = useState(false);
@@ -168,18 +171,25 @@ export function UmProvider({ children, services: injected }: { children: ReactNo
 
   useEffect(() => {
     let cancelled = false;
-    void services.loadWriter().then((loaded) => {
+    // These parts are fetched after the page. A page that was opened before a
+    // new version was deployed asks for files that are gone: seen live on
+    // 2026-10-12, where it silently left the app read-only and hid a waiting
+    // request. The person is told to reload instead.
+    const failed = () => {
+      if (!cancelled) setPartsFailed(true);
+    };
+    services.loadWriter().then((loaded) => {
       if (!cancelled) setWriter(loaded);
-    });
-    void services.loadSender().then((loaded) => {
+    }, failed);
+    services.loadSender().then((loaded) => {
       if (!cancelled) setSender(loaded);
-    });
-    void services.loadBindingWriter().then((loaded) => {
+    }, failed);
+    services.loadBindingWriter().then((loaded) => {
       if (!cancelled) setBindingWriter(loaded);
-    });
-    void services.loadGroupCreator().then((loaded) => {
+    }, failed);
+    services.loadGroupCreator().then((loaded) => {
       if (!cancelled) setGroupCreator(loaded);
-    });
+    }, failed);
     return () => {
       cancelled = true;
     };
@@ -490,6 +500,7 @@ export function UmProvider({ children, services: injected }: { children: ReactNo
       storeReachable,
       store: services.store,
       writesInBuild: services.writesInBuild,
+      partsFailed,
       armed,
       setArmed,
       reviewDates,
@@ -519,7 +530,7 @@ export function UmProvider({ children, services: injected }: { children: ReactNo
       loadMembers,
       deps,
     }),
-    [services, graphStatus, graphMissing, identity, sessionEmail, isAppAdmin, adminUnknown, storeReachable, loading, managed, storedBindings, rows, discovery, members, establish, reload, discover, grants, grant, refused, checkGrants, consentUrl, loadMembers, deps, armed, setArmed, reviewDates, changeDeps, requests, requestDeps, bindingsArmed, setBindingsArmed, bindingDeps, groupsArmed, setGroupsArmed, groupDeps]
+    [services, graphStatus, graphMissing, identity, sessionEmail, isAppAdmin, adminUnknown, storeReachable, loading, managed, storedBindings, rows, discovery, members, establish, reload, discover, grants, grant, refused, checkGrants, consentUrl, loadMembers, deps, armed, setArmed, reviewDates, changeDeps, requests, requestDeps, bindingsArmed, setBindingsArmed, bindingDeps, groupsArmed, setGroupsArmed, groupDeps, partsFailed]
   );
 
   return <UmContext.Provider value={value}>{children}</UmContext.Provider>;

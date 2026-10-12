@@ -36,14 +36,16 @@ Built as a **Fabric App** (Rayfin). Deployed into **your** tenant. Your data nev
 - Capacity and workspace posture in one view
 - Power Platform environments alongside Fabric, because nobody asks about only one
 - Collector notebooks that hold no secrets - everything resolves at run time
-- **Fabric User Manager**: a three-tab view for managing who is in the groups that open
+- **Fabric User Manager**: a small view for managing who is in the groups that open
   workspaces, Org App audiences and semantic model roles (see below)
+- **Power BI Guidelines**: a fourth tab with best practices for models and reports, with
+  drawings, that an organization tailors through a questionnaire (see below)
 
 ## Fabric User Manager
 
-A deliberately small profile of the Hub, and its default view: three tabs, **Workspaces**,
-**Audiences** and **RLS / OLS**. The other Hub areas stay in the build and an app admin can
-switch them back on.
+A deliberately small profile of the Hub, and its default view: three tabs about access,
+**Workspaces**, **Audiences** and **RLS / OLS**, and a fourth with the Power BI Guidelines.
+The other Hub areas stay in the build and an app admin can switch them back on.
 
 Access in Fabric is given to groups, not to single people:
 
@@ -75,11 +77,31 @@ How it is built:
 Status: implemented with automated tests and an offline demo mode (`VITE_UM_MOCK=true`).
 Run against a real tenant and checked against Entra and Fabric directly: sign-in, discovery,
 activating a group, adding and removing a member, giving, changing and removing a workspace
-role, creating a group, and reading audience sharing. Not yet run against a real tenant:
-requests with approval and the request mail.
+role, creating a group, reading audience sharing, and a request filed by one person and
+approved by another. The request mail was accepted by Graph; its arrival was not checked.
 
 Guides: [setup in a tenant](docs/FABRIC-USER-MANAGER-SETUP.md) ·
 [for owners and requesters](docs/FABRIC-USER-MANAGER-GUIDE.md)
+
+## Power BI Guidelines
+
+A reference inside the app: data integration, data modeling, report design, maintenance and
+the Tabular Style Guide. Five areas, 23 topics, 216 rules, searchable, in English and German.
+
+- **26 drawings, each under the rule it shows**: the three connection modes ranked (Import
+  first, Direct Lake if needed, Direct Query almost never), star against snowflake, filter
+  direction, where logic belongs, DIVIDE, VAR and SWITCH, the three-line title, horizontal
+  for structure and vertical for time, plan / previous year / actual, deviations in red and
+  green only. Hand-built SVG, no chart library, made-up numbers.
+- **Tailored by a questionnaire.** Under Setup, app admins answer up to fifty optional
+  questions (casing, prefixes, name of the measure table, page size and more). The answers
+  are stored once for the organization and filled into the text for everyone.
+- **Stored answers are treated as untrusted.** The settings table can be written by any
+  signed-in person, so only known questions, offered choices and bounded free text are
+  accepted. The answers change what the guide says, never what anyone may do.
+
+The rules come from the Power BI Fixer in this repository and from the Tabular Style Guide
+by Michael Kovalsky (Elegant BI).
 
 ## Why this exists
 
