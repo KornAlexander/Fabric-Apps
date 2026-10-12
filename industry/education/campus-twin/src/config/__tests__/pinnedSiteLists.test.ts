@@ -1,9 +1,10 @@
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 import { describe, expect, it } from 'vitest';
 
 import { AOIS } from '@/config/aoi';
+import { EXCLUDED_AOIS } from '@/config/release';
 
 /**
  * A site list written out by hand in an end-to-end spec must still name every site that ships.
@@ -76,7 +77,16 @@ describe('a site list pinned by hand in an e2e spec', () => {
   });
 
   it('names every site the registry ships', () => {
-    const registry = Object.keys(AOIS).sort();
+    /*
+      ⚠️ SHIPPED PLUS EXCLUDED, NOT SHIPPED ALONE. The pin is a list of every site the product has;
+      `excludeAois` in config/release.json takes one out of a build without taking it out of the
+      product. Compared with the shipped registry only, this test failed in every posture that
+      excludes a site, for a list that was right: the browser spec handles an excluded Garching
+      itself. Only an excluded id that IS a site counts, so a typo in the switch cannot make a stale
+      pin look complete.
+    */
+    const excluded = EXCLUDED_AOIS.filter((id) => existsSync(resolve(process.cwd(), 'config', 'aoi', `${id}.json`)));
+    const registry = [...new Set([...Object.keys(AOIS), ...excluded])].sort();
     for (const { file, line, ids } of pinnedAoiLists()) {
       expect(
         [...ids].sort(),

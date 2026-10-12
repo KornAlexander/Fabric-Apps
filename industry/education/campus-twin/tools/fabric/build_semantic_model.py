@@ -21,6 +21,7 @@ Usage
 
 from __future__ import annotations
 
+import argparse
 import base64
 import json
 import shutil
@@ -32,19 +33,37 @@ import uuid
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-OUT = ROOT / "fabric" / "CampusScheduler.SemanticModel"
 
-from fabric_ids import lakehouse_id, workspace_id
+from fabric_ids import folder_id, lakehouse_id, tenant_id, workspace_id
+from sites import SITES, add_site_argument, expect_lakehouse
+
+_parser = argparse.ArgumentParser(description="Generate and publish one site's Direct Lake semantic model.")
+add_site_argument(_parser)
+_parser.add_argument("--write-only", action="store_true",
+                     help="write the TMDL to fabric/ and stop: nothing is published or reframed")
+ARGS = _parser.parse_args()
+SITE = SITES[ARGS.site]
+OUT = SITE.model_dir
 
 WORKSPACE_ID = workspace_id()
 LAKEHOUSE_ID = lakehouse_id()
-MODEL_NAME = "Campus Scheduler — Raum & Belegung"
+MODEL_NAME = SITE.model_name
 EXPRESSION = "DirectLake - campus_lh"
 
 AZ = shutil.which("az") or "az"
 
-#: Slots in a teaching week — Monday to Friday, 07:00-20:59. Mirrors OCC_SLOTS in build_rooms.py.
-WEEK_SLOTS = 70
+#: The site's teaching week, read from the same rooms file the loader reads.
+#:
+#: ⚠️ THIS WAS THE CONSTANT 70, AND 70 IS GARCHING'S WEEK (Monday to Friday, 07:00 to 20:59). The
+#: demo site's week is 60 hours (08:00 to 19:59). Every utilisation measure divides by this number,
+#: so the wrong one does not fail: it reports every room about 14 % emptier than the app does.
+if not (SITE.terrain / "rooms.json").exists():
+    raise SystemExit(f"{SITE.terrain / 'rooms.json'} not found: run tools/geodata/build_rooms.py for {SITE.aoi} first")
+_GRID = json.loads((SITE.terrain / "rooms.json").read_text(encoding="utf-8"))["occupancyGrid"]
+WEEK_SLOTS = int(_GRID["slots"])
+FIRST_HOUR = int(_GRID["firstHour"])
+LAST_HOUR = FIRST_HOUR + int(_GRID["hours"]) - 1
+WEEK_HOURS = f"Mo-Fr, {FIRST_HOUR:02d}:00-{LAST_HOUR:02d}:59"
 
 #: Deterministic lineage tags, so republishing does not churn the definition.
 NAMESPACE = uuid.UUID("6f1d1c4e-9f1a-4b7c-9c0e-2f7a5a1b8d33")
@@ -55,12 +74,10 @@ def tag(name: str) -> str:
 
 
 def token(resource: str) -> str:
-    out = subprocess.run(  # noqa: S603
-        [AZ, "account", "get-access-token", "--resource", resource, "--query", "accessToken", "-o", "tsv"],
-        capture_output=True,
-        text=True,
-        check=True,
-    )
+    command = [AZ, "account", "get-access-token", "--resource", resource, "--query", "accessToken", "-o", "tsv"]
+    if tenant_id():
+        command += ["--tenant", tenant_id()]
+    out = subprocess.run(command, capture_output=True, text=True, check=True)  # noqa: S603
     return out.stdout.strip()
 
 
@@ -111,11 +128,12 @@ TABLES: list[tuple[str, str, list[tuple[str, str, str, str]]]] = [
         "Time Slot",
         "time_slot",
         [
-            ("slot", "int64", "none", "0-69: Monday 07:00 through Friday 20:00."),
+            ("slot", "int64", "none",
+             f"0-{WEEK_SLOTS - 1}: Monday {FIRST_HOUR:02d}:00 through Friday {LAST_HOUR:02d}:00."),
             ("weekday", "int64", "none", "0 = Monday."),
             ("day_de", "string", "none", "Wochentag."),
             ("day_en", "string", "none", "Weekday."),
-            ("hour", "int64", "none", "Hour of day, 7-20."),
+            ("hour", "int64", "none", f"Hour of day, {FIRST_HOUR}-{LAST_HOUR}."),
             ("label", "string", "none", "Short label, e.g. 'Di 10:00'."),
         ],
     ),
@@ -143,7 +161,43 @@ TABLES: list[tuple[str, str, list[tuple[str, str, str, str]]]] = [
             ("bookings", "int64", "sum", "Bookings this course made in this room."),
         ],
     ),
+    (
+        # ⚠️ ONE ROW, NO RELATIONSHIPS, AND THAT IS THE DESIGN. It describes the load as a whole,
+        # so no building or time filter may change what it says. See build_lakehouse_tables.py.
+        "Data Load",
+        "data_load",
+        [
+            ("aoi", "string", "none", "The site this load is made of."),
+            ("semantics", "string", "none", "navigatum (real bookings) or synthetic."),
+            ("source_label", "string", "none", "What a report may call this load, in German."),
+            ("semester", "string", "none", "Reference semester of the bookings."),
+            ("source_sha256", "string", "none", "Hash of the rooms file that was loaded."),
+            ("loaded_at_utc", "string", "none", "When the load ran, ISO 8601 UTC."),
+            ("loaded_on", "string", "none", "The same moment as a German date, for display."),
+        ],
+    ),
 ]
+
+if SITE.english:
+    # ⚠️ ONLY FOR A SITE WITH AN ENGLISH REPORT, AND ITS LAKEHOUSE MUST HAVE BEEN RELOADED FIRST. The
+    # loader writes these three columns under the same condition. On a site without them the model
+    # must not name them: a Direct Lake table that lists a column its Delta table lacks fails to
+    # reframe, and then the German report stops answering too.
+    next(columns for display, _, columns in TABLES if display == "Data Load").extend(
+        [
+            ("source_label_en", "string", "none", "What a report may call this load, in English."),
+            ("semester_en", "string", "none", "Reference semester of the bookings, in English."),
+            ("loaded_on_en", "string", "none", "When the load ran, as an English date, for display."),
+        ]
+    )
+
+#: (table, column) -> the column it sorts by. Without it Power BI orders weekdays alphabetically,
+#: and a week that runs Dienstag, Donnerstag, Freitag, Mittwoch, Montag reads as a broken chart.
+SORT_BY = {
+    ("Time Slot", "day_de"): "weekday",
+    ("Time Slot", "day_en"): "weekday",
+    ("Time Slot", "label"): "slot",
+}
 
 RELATIONSHIPS = [
     ("Building", "building_code", "Room", "building_code"),
@@ -195,7 +249,7 @@ MEASURES: list[tuple[str, str, str, str]] = [
         "Verfügbare Stunden",
         f"[Räume mit Kalender] * {WEEK_SLOTS}",
         "#,0",
-        f"{WEEK_SLOTS} hours per week (Mo-Fr, 07:00-20:59) for every room with a calendar.",
+        f"{WEEK_SLOTS} hours per week ({WEEK_HOURS}) for every room with a calendar.",
     ),
     (
         "Zeitliche Auslastung %",
@@ -241,12 +295,177 @@ MEASURES: list[tuple[str, str, str, str]] = [
         "#,0",
         "Rooms that publish a calendar and were never booked in the reference semester.",
     ),
+    # ── For the building report (tools/fabric/build_report.py) ───────────────────────────
+    (
+        "Belegung im Zeitfenster %",
+        # ⚠️ NOT 'Zeitliche Auslastung %' IN A HEATMAP. That measure divides each room's hours by
+        # the whole 70-hour week, so inside one weekday-and-hour cell a fully booked room reads
+        # 1.4 %. This one divides by the hours actually in the filter: in a cell it is the share of
+        # calendared rooms booked in that hour.
+        #
+        # ⚠️ BLANK WITHOUT A CALENDAR, ZERO WITH ONE. No calendared room means nobody knows, and
+        # the report must not say 0 %. A calendared room with no booking in the hour is a known 0.
+        "VAR calendared = [Räume mit Kalender]\n"
+        "                RETURN\n"
+        "                    IF(\n"
+        "                        calendared > 0,\n"
+        "                        DIVIDE(COALESCE(COUNTROWS('Room Hour'), 0), calendared * COUNTROWS('Time Slot'))\n"
+        "                    )",
+        "0%",
+        "Share of calendared rooms booked in the hours in the filter. Blank where no room has a calendar.",
+    ),
+    (
+        "Belegung Farbe",
+        # Fixed steps rather than a min-max gradient, so the same colour means the same thing in
+        # every building. Grey is "unknown" and deliberately not on the scale.
+        "VAR v = [Belegung im Zeitfenster %]\n"
+        "                RETURN\n"
+        "                    SWITCH(\n"
+        "                        TRUE(),\n"
+        '                        ISBLANK(v), "#E6E6E6",\n'
+        '                        v = 0, "#FFFFFF",\n'
+        '                        v <= 0.2, "#D9EEF2",\n'
+        '                        v <= 0.4, "#A6D5DE",\n'
+        '                        v <= 0.6, "#5FAFC0",\n'
+        '                        v <= 0.8, "#1F7F99",\n'
+        '                        "#00557C"\n'
+        "                    )",
+        "",
+        "Cell colour for the week grid. Grey means no calendar, white means known and free.",
+    ),
+    (
+        "Belegung Schriftfarbe",
+        'IF([Belegung im Zeitfenster %] > 0.6, "#FFFFFF", "#000028")',
+        "",
+        "Text colour that stays readable on the cell colour.",
+    ),
+    (
+        "Belegte Stunden (Kalender)",
+        "IF([Räume mit Kalender] > 0, COALESCE(COUNTROWS('Room Hour'), 0))",
+        "#,0",
+        "Booked hours where a calendar exists: 0 for a calendared room never booked, blank for a "
+        "room without a calendar. 'Belegte Stunden' cannot tell those two apart.",
+    ),
+    (
+        "Lehrräume im Filter",
+        # ⚠️ 'Lehrräume' ALONE READS A KNOWN ZERO AS UNKNOWN. COUNTROWS over nothing is BLANK, so a
+        # building with fifteen rooms and no teaching room showed "(Leer)" in the report's tile:
+        # the same glyph the page uses for "no calendar, nobody knows". That count is known, and it
+        # is zero. Blank is kept for the case where the filter holds no rooms at all.
+        "IF([Räume] > 0, COALESCE([Lehrräume], 0))",
+        "#,0",
+        "Teaching rooms with a known zero: 0 where the filter holds rooms and none is a teaching room, "
+        "blank where it holds no rooms at all.",
+    ),
+    (
+        "Gebäude im Filter",
+        # The report is opened with a URL filter, and a filter that did not apply looks exactly
+        # like a correct page: plausible totals for the whole campus. This says which it is.
+        # Three answers, because "no filter" and "a filter that matches no building" are different
+        # mistakes: the first is the embed address, the second is a code the model does not hold.
+        "SWITCH(\n"
+        "                    TRUE(),\n"
+        "                    HASONEVALUE('Building'[building_code]),\n"
+        "                    \"Gebäude \" & SELECTEDVALUE('Building'[building_code]),\n"
+        "                    ISFILTERED('Building'[building_code]),\n"
+        '                    "Gebäude nicht im Datenbestand",\n'
+        '                    "Alle Gebäude (kein Gebäudefilter aktiv)"\n'
+        "                )",
+        "",
+        "Names the one building in the filter, says when the filter matches none, or that there is no filter.",
+    ),
+    (
+        "Datenstand",
+        "\"Datenquelle: \" & MAX('Data Load'[source_label]) & \" | Semester \" & MAX('Data Load'[semester])"
+        " & \" | geladen am \" & MAX('Data Load'[loaded_on])",
+        "",
+        "What the model was loaded from and when, from the stamp the loader writes.",
+    ),
 ]
+
+if SITE.english:
+    # ⚠️ ONLY THE TWO MEASURES THAT RETURN TEXT EXIST TWICE. A report can rename a column header or
+    # a tile by itself, but not what a measure answers, and these two answer in words. Every number
+    # on the English page is the SAME measure the German page shows, so the two cannot disagree.
+    # The three answers of the title are the same three, for the same reason (see 'Gebäude im Filter').
+    MEASURES += [
+        (
+            "Building in filter",
+            "SWITCH(\n"
+            "                    TRUE(),\n"
+            "                    HASONEVALUE('Building'[building_code]),\n"
+            "                    \"Building \" & SELECTEDVALUE('Building'[building_code]),\n"
+            "                    ISFILTERED('Building'[building_code]),\n"
+            '                    "Building not in the data",\n'
+            '                    "All buildings (no building filter active)"\n'
+            "                )",
+            "",
+            "'Gebäude im Filter' in English, for the English report.",
+        ),
+        (
+            "Data status",
+            "\"Data source: \" & MAX('Data Load'[source_label_en]) & \" | Semester: \" & MAX('Data Load'[semester_en])"
+            " & \" | loaded on \" & MAX('Data Load'[loaded_on_en])",
+            "",
+            "'Datenstand' in English, for the English report.",
+        ),
+    ]
+
+
+#: What the descriptions say about a site whose data is generated, keyed by the Garching wording.
+#:
+#: ⚠️ THE DESCRIPTIONS ARE CLAIMS, AND THEY TRAVEL. They show up as tooltips in Power BI and are what
+#: Copilot and Q&A read to decide what a column means. "Official TUM Gebäudekennung" on the demo
+#: site's building codes would tell every one of them that an invented code is a real university's.
+#: `wording()` refuses to generate a demo model in which any TUM claim survives.
+GENERATED_WORDING = {
+    # Says nothing about whether the LETTER is real: the outlines are real buildings, and which of
+    # their codes are kept and which are ours differs by building. What is certain is stated.
+    "Official TUM Gebäudekennung.":
+        "Building code as the app shows it for this site. The institution is invented and so is "
+        "everything inside the buildings; only the building outlines are real.",
+    "Storeys with at least one mapped room.": "Storeys with at least one generated room.",
+    "⚠️ Partly synthetic — the numerator is measured, the denominator is not.":
+        "⚠️ SYNTHETIC: a generated floor area over generated seats.",
+    "Rooms mapped indoors in OpenStreetMap.": "Rooms generated inside the real building outline.",
+    "Sum of room floor areas. Derived from the polygons.": "Sum of room floor areas, from the generated outlines.",
+    "Rooms TUMonline publishes a calendar for.": "Rooms the generated timetable uses.",
+    "Official TUM Raumkennung, e.g. 5606.EG.041.": "Room code, generated, e.g. AA 001.",
+    "Controlled usage type from NavigaTUM.": "Usage type, assigned by the generator.",
+    "Room name where TUMonline publishes one.": "Not filled for this site.",
+    "Floor area, computed from the surveyed outline.": "Floor area of the generated room outline.",
+    "Whether TUMonline publishes bookings for it.": "Whether the generated timetable uses the room.",
+    "Course title as TUMonline publishes it.": "Course label from the generated timetable.",
+    "Rooms mapped indoors and joined to a usage type.": "Rooms generated for this site.",
+    "Buildings with indoor mapping.": "Buildings with generated rooms.",
+    "Rooms TUMonline publishes bookings for. The rest are unknown, not empty.":
+        "Rooms the generated timetable uses. The rest are unknown, not empty.",
+    "Floor area, computed from surveyed outlines.": "Floor area of the generated room outlines.",
+    "Rooms that publish a calendar and were never booked in the reference semester.":
+        "Rooms in the generated timetable's pool that it never uses.",
+    "navigatum (real bookings) or synthetic.": "Always synthetic for this site.",
+}
+
+
+def wording(description: str) -> str:
+    """The description as it is true for this site."""
+    if SITE.fixed_semantics != "synthetic":
+        return description
+    text = GENERATED_WORDING.get(description, description)
+    # Seats are synthetic on every site; on a generated one the sentence explaining why they are
+    # the exception would itself be misleading.
+    if text.startswith("⚠️ SYNTHETIC."):
+        text = "⚠️ SYNTHETIC, like everything about this site's rooms."
+    for claim in ("TUM", "NavigaTUM", "surveyed", "OpenStreetMap", "measured", "mapped", "Official", "publishes"):
+        if claim in text:
+            raise SystemExit(f"a description still claims {claim!r} for a generated site: {text!r}")
+    return text
 
 
 def table_tmdl(display: str, delta: str, columns: list[tuple[str, str, str, str]]) -> str:
     lines = [f"table '{display}'", f"\tlineageTag: {tag(display)}", ""]
     for name, data_type, summarize, description in columns:
+        description = wording(description)
         for part in description.split("\n"):
             lines.append(f"\t/// {part}")
         lines.append(f"\tcolumn {name}")
@@ -254,6 +473,8 @@ def table_tmdl(display: str, delta: str, columns: list[tuple[str, str, str, str]
         lines.append(f"\t\tlineageTag: {tag(display + '.' + name)}")
         lines.append(f"\t\tsummarizeBy: {summarize}")
         lines.append(f"\t\tsourceColumn: {name}")
+        if (display, name) in SORT_BY:
+            lines.append(f"\t\tsortByColumn: {SORT_BY[(display, name)]}")
         lines.append("")
     # ⚠️ entityName is the DELTA table, not the display name.
     lines.append(f"\tpartition '{delta}' = entity")
@@ -277,6 +498,7 @@ def measure_tmdl() -> str:
     lines.append("\t\tsourceColumn: [Value]")
     lines.append("")
     for name, expression, fmt, description in MEASURES:
+        description = wording(description)
         for part in description.split("\n"):
             lines.append(f"\t/// {part}")
         if "\n" in expression:
@@ -287,7 +509,8 @@ def measure_tmdl() -> str:
                 lines.append(f"\t\t\t{part.strip() if part.strip().startswith(')') else part}")
         else:
             lines.append(f"\tmeasure '{name}' = {expression}")
-        lines.append(f"\t\tformatString: {fmt}")
+        if fmt:  # a text measure carries none
+            lines.append(f"\t\tformatString: {fmt}")
         lines.append(f"\t\tlineageTag: {tag('measure.' + name)}")
         lines.append("")
     lines.append("\tpartition 'Measure' = calculated")
@@ -304,7 +527,9 @@ def build_parts() -> dict[str, str]:
         {
             "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
             "metadata": {"type": "SemanticModel", "displayName": MODEL_NAME},
-            "config": {"version": "2.0", "logicalId": tag("model")},
+            # Garching keeps the id it has always had; every other site gets its own, because two
+            # items sharing a logicalId are one item as far as git integration is concerned.
+            "config": {"version": "2.0", "logicalId": tag("model" if SITE.key == "garching" else f"model:{SITE.key}")},
         },
         indent=2,
     )
@@ -315,6 +540,8 @@ def build_parts() -> dict[str, str]:
     parts["definition/model.tmdl"] = (
         "model Model\n"
         "\tculture: de-DE\n"
+        + (f"\tcollation: {SITE.collation}\n" if SITE.collation else "")
+        +
         "\tdefaultPowerBIDataSourceVersion: powerBI_V3\n"
         "\tdiscourageImplicitMeasures\n"
         "\tsourceQueryCulture: de-DE\n"
@@ -356,6 +583,18 @@ def publish(parts: dict[str, str]) -> str:
     fabric = token("https://api.fabric.microsoft.com")
     headers = {"Authorization": f"Bearer {fabric}", "Content-Type": "application/json"}
 
+    # The model binds to the lakehouse in the environment. Is that this site's lakehouse?
+    lakehouse = json.loads(
+        urllib.request.urlopen(  # noqa: S310
+            urllib.request.Request(
+                f"https://api.fabric.microsoft.com/v1/workspaces/{WORKSPACE_ID}/lakehouses/{LAKEHOUSE_ID}",
+                headers=headers,
+            ),
+            timeout=120,
+        ).read()
+    )
+    expect_lakehouse(SITE, lakehouse["displayName"])
+
     listing = json.loads(
         urllib.request.urlopen(  # noqa: S310
             urllib.request.Request(
@@ -389,6 +628,8 @@ def publish(parts: dict[str, str]) -> str:
         print("creating model")
         url = f"https://api.fabric.microsoft.com/v1/workspaces/{WORKSPACE_ID}/semanticModels"
         body = {"displayName": MODEL_NAME, "definition": definition}
+        if folder_id():
+            body["folderId"] = folder_id()
 
     try:
         response = urllib.request.urlopen(  # noqa: S310
@@ -432,22 +673,95 @@ def reframe(model_id: str) -> None:
     ⚠️ Not optional and not obvious. A model that has just deployed successfully will fail every
     query with "cannot find table" until it has been reframed once.
     """
+    """
+    ⚠️ AND THE REQUEST BEING ACCEPTED IS NOT THE REFRAME HAVING WORKED. This used to post the
+    request, sleep 20 seconds and return. On 2026-10-10 a table added to the lakehouse seconds
+    earlier (`data_load`) was not yet registered there (the Delta folder existed in OneLake, the
+    lakehouse's table list did not show it for about two minutes), and the reframe failed with
+    "source tables either do not exist or access was denied". The script printed "reframe
+    requested" and exited 0, leaving a model whose new table and every measure over it failed at
+    query time. So the outcome is read back, and a failure is retried while discovery catches up.
+    """
     powerbi = token("https://analysis.windows.net/powerbi/api")
     url = f"https://api.powerbi.com/v1.0/myorg/groups/{WORKSPACE_ID}/datasets/{model_id}/refreshes"
-    try:
-        urllib.request.urlopen(  # noqa: S310
-            urllib.request.Request(
-                url,
-                data=b'{"type":"full"}',
-                headers={"Authorization": f"Bearer {powerbi}", "Content-Type": "application/json"},
-                method="POST",
-            ),
-            timeout=120,
+    headers = {"Authorization": f"Bearer {powerbi}", "Content-Type": "application/json"}
+
+    def newest_id() -> str | None:
+        raw = urllib.request.urlopen(  # noqa: S310
+            urllib.request.Request(f"{url}?$top=1", headers=headers), timeout=120
+        ).read()
+        return ((json.loads(raw).get("value") or [{}])[0]).get("requestId")
+
+    def latest(before: str | None) -> dict:
+        # ⚠️ ONLY A REFRESH THAT WAS NOT THERE BEFORE THE REQUEST COUNTS. The history's newest
+        # entry, read a few seconds after asking, can still be the PREVIOUS refresh, and that one
+        # is usually "Completed". Taking it at its word reports success for a run that has not
+        # started.
+        raw = urllib.request.urlopen(  # noqa: S310
+            urllib.request.Request(f"{url}?$top=1", headers=headers), timeout=120
+        ).read()
+        entry = (json.loads(raw).get("value") or [{}])[0]
+        return entry if entry.get("requestId") and entry.get("requestId") != before else {"status": "Unknown"}
+
+    attempts = 6
+    for attempt in range(1, attempts + 1):
+        previous = newest_id()
+        try:
+            urllib.request.urlopen(  # noqa: S310
+                urllib.request.Request(url, data=b'{"type":"full"}', headers=headers, method="POST"),
+                timeout=120,
+            )
+        except urllib.error.HTTPError as exc:
+            raise SystemExit(f"reframe request refused: {exc.code} {exc.read().decode('utf-8', 'replace')[:300]}")
+
+        status: dict = {}
+        for _ in range(45):  # a reframe is seconds; six minutes is a hung service, not a slow one
+            time.sleep(8)
+            status = latest(previous)
+            if status.get("status") != "Unknown":
+                break
+        if status.get("status") == "Completed":
+            print(f"  reframed (attempt {attempt})")
+            return
+        reason = str(status.get("serviceExceptionJson") or status.get("status"))[:300]
+        if attempt == attempts:
+            raise SystemExit(f"reframe failed {attempts} times, the model cannot answer queries:\n{reason}")
+        print(f"  reframe attempt {attempt} failed, retrying in 45 s (a new table can take minutes to register)")
+        time.sleep(45)
+
+
+def require_collation(model_id: str) -> None:
+    """Ask the model itself whether it tells `a` from `A`, where the site needs it to.
+
+    ⚠️ A COLLATION ONLY TAKES EFFECT WHEN THE MODEL IS CREATED. Sending the property with an update
+    of a model that was created without it changes nothing that this script can see: the update
+    succeeds, and the model goes on merging `AA` and `aa`. So the definition is not trusted. One
+    DAX comparison says how the model really compares text.
+    """
+    if not SITE.collation:
+        return
+    # ⚠️ NOT `"a" = "A"`. That comparison is true in BOTH kinds of model: measured on 2026-10-10, the
+    # formula engine compares two literals without regard to case whatever the collation is, while
+    # the storage engine, which is what holds keys and applies report filters, does respect it. The
+    # first version of this probe therefore refused a model that was working correctly. Counting the
+    # distinct values of {"a", "A"} asks the part of the engine that matters: 1 without, 2 with.
+    probe = 'EVALUATE ROW("distinct", COUNTROWS(DISTINCT(UNION(ROW("x", "a"), ROW("x", "A")))))'
+    powerbi = token("https://analysis.windows.net/powerbi/api")
+    body = json.dumps({"queries": [{"query": probe}]}).encode("utf-8")
+    request = urllib.request.Request(
+        f"https://api.powerbi.com/v1.0/myorg/groups/{WORKSPACE_ID}/datasets/{model_id}/executeQueries",
+        data=body,
+        headers={"Authorization": f"Bearer {powerbi}", "Content-Type": "application/json"},
+        method="POST",
+    )
+    rows = json.loads(urllib.request.urlopen(request, timeout=180).read())["results"][0]["tables"][0]["rows"]  # noqa: S310
+    if list(rows[0].values())[0] != 2:
+        raise SystemExit(
+            f"the model {MODEL_NAME!r} ignores letter case, but {SITE.label} has codes that differ only by case.\n"
+            "It was created without the collation. Delete the model and its report in the workspace and run this "
+            "script again: the collation can only be set at creation."
         )
-        print("  reframe requested")
-    except urllib.error.HTTPError as exc:
-        print(f"  reframe returned {exc.code}: {exc.read().decode('utf-8', 'replace')[:200]}")
-    time.sleep(20)
+    print("  the model compares text with regard to case, as this site needs")
 
 
 def main() -> None:
@@ -460,10 +774,13 @@ def main() -> None:
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(content, encoding="utf-8")
     print(f"wrote {len(parts)} TMDL parts to {OUT.relative_to(ROOT)}")
+    if ARGS.write_only:
+        return
 
     model_id = publish(parts)
     print(f"model id: {model_id}")
     reframe(model_id)
+    require_collation(model_id)
     print(f"\nOpen it: https://app.fabric.microsoft.com/groups/{WORKSPACE_ID}/datasets/{model_id}")
 
 

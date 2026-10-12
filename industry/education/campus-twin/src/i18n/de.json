@@ -121,6 +121,18 @@
       "fri": "Fr"
     }
   },
+  "report": {
+    "open": "Bericht",
+    "openTitle": "Power-BI-Bericht zu diesem Gebäude öffnen",
+    "title": "Bericht Gebäude {{code}}",
+    "frameTitle": "Power-BI-Bericht, Gebäude {{code}}",
+    "hint": "Beim ersten Öffnen einmal bei Power BI anmelden. Der Bericht lädt für jedes Gebäude neu.",
+    "newTab": "In neuem Tab öffnen",
+    "close": "Schließen",
+    "maximise": "Maximieren",
+    "restore": "Verkleinern",
+    "reload": "Die Anwendung wurde aktualisiert. Bitte die Seite neu laden, dann lässt sich der Bericht öffnen."
+  },
   "rooms": {
     "heading": "Innenräume",
     "count": "Räume",

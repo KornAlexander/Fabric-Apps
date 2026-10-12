@@ -19,13 +19,15 @@ import time
 import urllib.error
 import urllib.request
 
-from fabric_ids import folder_id, workspace_id
+from fabric_ids import folder_id, tenant_id, workspace_id
+from sites import site_from_cli
 
 WORKSPACE_ID = workspace_id()
 #: ⚠️ NOT `campus_lh`. That name belongs to Campus-Insights' lakehouse, which lives in the same
 #: workspace; reusing it would make two items indistinguishable in every list and every error
-#: message while both existed. This repo owns its own.
-LAKEHOUSE_NAME = "campus_scheduler_lh"
+#: message while both existed. This repo owns its own, one per site (`sites.py`).
+SITE = site_from_cli("Create (or find) the lakehouse for one site.")
+LAKEHOUSE_NAME = SITE.lakehouse_name
 #: The workspace folder to create the item in, if any. Placed on creation rather than created at
 #: the root and moved, because a failed move would leave the item loose.
 FOLDER_ID = folder_id()
@@ -41,12 +43,10 @@ def token(resource: str) -> str:
     already signed in for everything else in this repo, and a second credential store is a second
     thing to get wrong.
     """
-    out = subprocess.run(  # noqa: S603
-        [AZ, "account", "get-access-token", "--resource", resource, "--query", "accessToken", "-o", "tsv"],
-        capture_output=True,
-        text=True,
-        check=True,
-    )
+    command = [AZ, "account", "get-access-token", "--resource", resource, "--query", "accessToken", "-o", "tsv"]
+    if tenant_id():
+        command += ["--tenant", tenant_id()]
+    out = subprocess.run(command, capture_output=True, text=True, check=True)  # noqa: S603
     return out.stdout.strip()
 
 
@@ -83,8 +83,9 @@ def main() -> None:
             f"/workspaces/{WORKSPACE_ID}/lakehouses",
             {
                 "displayName": LAKEHOUSE_NAME,
-                "description": "Campus Scheduler room and booking data",
-                "folderId": FOLDER_ID,
+                "description": f"Campus Scheduler room and booking data: {SITE.label}",
+                # Only sent when set: a null folder id is refused, an absent one means the root.
+                **({"folderId": FOLDER_ID} if FOLDER_ID else {}),
             },
         )
         if status == 202:
@@ -102,9 +103,8 @@ def main() -> None:
         lakehouse_id = created["id"]
         print(f"  created: {lakehouse_id}")
 
-    print("\nAdd these to tools/fabric/build_lakehouse_tables.py and build_semantic_model.py:")
-    print(f'  WORKSPACE_ID = "{WORKSPACE_ID}"')
-    print(f'  LAKEHOUSE_ID = "{lakehouse_id}"')
+    print(f"\nFor the other scripts, with --site {SITE.key}:")
+    print(f'  $env:FABRIC_LAKEHOUSE_ID = "{lakehouse_id}"')
 
 
 if __name__ == "__main__":

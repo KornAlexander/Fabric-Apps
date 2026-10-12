@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { Suspense, lazy, useCallback, useEffect, useRef, useState } from 'react';
 
 import { watchForCheat } from '@/cheats';
 import { createEngineSound, type EngineSound } from '@/twin3d/engineSound';
@@ -21,11 +21,13 @@ import {
   activeBuildingId,
   activeLecturerId,
   activeLensId,
+  activeReportFlag,
   hasPlanner,
   interiorProvenanceKey,
   rememberBuilding,
   rememberLecturer,
   rememberLens,
+  rememberReport,
   type LensId,
 } from '@/config/aoi';
 import { useI18n } from '@/i18n';
@@ -47,6 +49,11 @@ import { currentPlanMoves, planStoreIdentity, type RestoredMove } from '@/api/pl
 import { GuideOverlay } from '@/guide/GuideOverlay';
 import { guideSteps, type GuideContext } from '@/guide/guideSteps';
 import { usePaneSize } from './usePaneSize';
+import { buildingReport, buildingReportUrl } from '@/config/powerbi';
+import { ChunkBoundary } from '@/components/ChunkBoundary';
+
+// Lazy: the report window and everything Power BI are fetched only when "Bericht" is pressed.
+const BuildingReportWindow = lazy(() => import('@/powerbi/BuildingReportWindow'));
 
 /**
  * Panel drag limits. Below the minimum the chat is unreadable.
@@ -605,6 +612,35 @@ export function TwinShell() {
     []
   );
 
+  /**
+   * The Power BI report window for the open building.
+   *
+   * ⚠️ HELD HERE, NOT IN THE PANEL THAT HAS THE BUTTON. `OccupancyPanel` unmounts whenever another
+   * lens is chosen, and a window owned by it would vanish mid-read while the building it describes
+   * is still open in the scene.
+   *
+   * ⚠️ IT FOLLOWS THE OPEN BUILDING AND CLOSES WITH IT, so the window and the scene can never name
+   * two different buildings. `reportUrl` is derived from `occupancy.building` on every render, which
+   * is the "follows"; the effect below is the "closes". Without the effect the flag would survive
+   * the building, and the next building opened would bring a report nobody asked for.
+   */
+  const [reportOpen, setReportOpen] = useState(false);
+  // Stable, because the window subscribes a key listener per `onClose` identity and this shell
+  // re-renders on every tick while the week plays.
+  const closeReport = useCallback(() => setReportOpen(false), []);
+  const reportUrl = occupancy.building ? buildingReportUrl(aoi, occupancy.building, locale) : null;
+  useEffect(() => {
+    if (!occupancy.building) setReportOpen(false);
+  }, [occupancy.building]);
+  /*
+    `?report=1`, read ONCE for the same reason `linkedBuilding` is: it describes how the page was
+    opened, not what is on it now. It is acted on where the linked building is opened (below), so a
+    link whose building does not exist opens no report either, and written back as the window opens
+    and closes, so the address bar is always a link to what is on screen.
+  */
+  const [linkedReport] = useState(() => activeReportFlag());
+  useEffect(() => rememberReport(reportOpen && reportUrl !== null), [reportOpen, reportUrl]);
+
   useEffect(() => rememberLens(activeLens), [activeLens]);
   useEffect(() => rememberBuilding(occupancy.building), [occupancy.building]);
   useEffect(() => rememberLecturer(staffing.lecturerId), [staffing.lecturerId]);
@@ -683,7 +719,10 @@ export function TwinShell() {
     if (!handle.rooms.buildings.some((b) => b.code === linkedBuilding)) return;
     setActiveLens('occupancy');
     explode(linkedBuilding);
-  }, [handle, linkedBuilding, explode]);
+    // The report only ever follows a building that really opened; whether the site has one this
+    // build may offer is decided where the window is rendered (`reportUrl`).
+    if (linkedReport && buildingReport(aoi) !== null) setReportOpen(true);
+  }, [handle, linkedBuilding, linkedReport, explode]);
 
   const selectRoom = useCallback(
     (room: RoomView | null) => {
@@ -1088,6 +1127,34 @@ export function TwinShell() {
           {handle && <Compass handle={handle} />}
 
           {/*
+            The report for the open building, reachable from the scene itself.
+
+            ⚠️ BECAUSE THE OTHER BUTTON LIVES IN A PANEL THAT GOES AWAY. "Bericht" in the occupancy
+            panel disappears the moment another lens is chosen or the column shows the assistant,
+            while the building stays open in front of you. This one is tied to the building, not to
+            a panel: it is there exactly while a building with a report is open. Beside the compass,
+            clear of the place note (top centre) and the flying hint (top right).
+          */}
+          {/* Only over the campus: under the Auswertung or the Regelwerk it would be a button
+              nobody can see and the keyboard can still reach. */}
+          {reportUrl && occupancy.building && mainView === 'campus' && (
+            <button
+              type="button"
+              data-testid="scene-building-report"
+              aria-pressed={reportOpen}
+              title={t('report.openTitle')}
+              onClick={() => setReportOpen((was) => !was)}
+              className={`absolute left-[4.75rem] top-4 z-20 rounded border px-3 py-1.5 text-xs backdrop-blur transition ${
+                reportOpen
+                  ? 'border-amber-500/60 bg-amber-500/15 text-amber-200'
+                  : 'border-stone-600 bg-stone-900/85 text-stone-200 hover:bg-stone-800 hover:text-stone-50'
+              }`}
+            >
+              {t('report.title', { code: occupancy.building })}
+            </button>
+          )}
+
+          {/*
             The build state, stated plainly. A fresh clone has no terrain because the pipeline
             output is tens of megabytes and is not committed — that is expected, not a failure, so
             it is explained in place rather than thrown as a fetch error. Sits at the bottom so the
@@ -1490,6 +1557,8 @@ export function TwinShell() {
               playing={playing}
               onTogglePlay={togglePlay}
               shuttle={handle.shuttleLeg()}
+              onOpenReport={reportUrl ? () => setReportOpen((was) => !was) : undefined}
+              reportOpen={reportOpen}
             />
           )}
 
@@ -1606,6 +1675,29 @@ export function TwinShell() {
           </>
         )}
       </div>
+
+      {reportOpen && reportUrl && occupancy.building && (
+        // No fallback: the chunk is a few kB, and a flash of "loading" before a frame that then
+        // shows Power BI's own loading screen would be two spinners for one wait.
+        <ChunkBoundary
+          // The window's code could not be fetched, which after a deploy is permanent for this tab:
+          // `lazy` remembers the failure. Closing silently would leave a button that does nothing,
+          // so the place where the window would be says what to do instead.
+          fallback={
+            <p
+              role="alert"
+              data-testid="building-report-stale"
+              className="fixed left-24 top-[8.5rem] z-[35] max-w-xs rounded border border-amber-500/50 bg-stone-900 px-3 py-2 text-xs leading-relaxed text-amber-200 shadow-lg"
+            >
+              {t('report.reload')}
+            </p>
+          }
+        >
+          <Suspense fallback={null}>
+            <BuildingReportWindow url={reportUrl} buildingCode={occupancy.building} onClose={closeReport} />
+          </Suspense>
+        </ChunkBoundary>
+      )}
     </div>
   );
 }

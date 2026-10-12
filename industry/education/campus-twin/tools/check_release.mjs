@@ -14,6 +14,8 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { governedReportIds } from './report_ids.mjs';
+
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const p = (rel) => resolve(ROOT, rel);
 
@@ -188,6 +190,67 @@ for (const [site, dir, why] of CUSTOMER_SITES) {
       // hand and then wonders why the internal demo lost its real week.
       say(`· ${AOI_DIR}/${f} declares "${site}"; the release switch substitutes the generated site.`);
     }
+  }
+}
+say();
+
+/*
+  THE POWER BI REPORT WINDOW (docs/POWER-BI-EMBED.md): the same question, asked of a pointer
+  instead of a file. Garching's report is loaded from real TUMonline bookings; the app offers it
+  only where `navigatumData` is "include" (`src/config/powerbi.ts`).
+
+  ⚠️ BOTH DIRECTIONS ARE WRONG, AND ONLY ONE OF THEM IS VISIBLE. A build that withholds the TUM
+  data and still carries the report id has hidden the button and kept the address of the real-data
+  report in a bundle anyone can read. A build that ships the data and LACKS the id simply has no
+  button, and nothing on screen says a feature is missing, which is what a deploy from a stale
+  `dist/` looks like.
+*/
+const envLine = (name) => {
+  if (!existsSync(p('.env.production'))) return '';
+  const m = new RegExp(`^${name}=(.*)$`, 'm').exec(readFileSync(p('.env.production'), 'utf-8'));
+  // Quotes are legal in an env file, and a quoted id read as "not configured" would skip the check.
+  return (m?.[1] ?? '').trim().replace(/^(['"])(.*)\1$/, '$2');
+};
+const GUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const garchingReport = (process.env.VITE_PBI_REPORT_GARCHING ?? envLine('VITE_PBI_REPORT_GARCHING')).trim();
+const pbiTenant = (process.env.VITE_PBI_TENANT_ID ?? envLine('VITE_PBI_TENANT_ID')).trim();
+const configured = GUID.test(garchingReport) && GUID.test(pbiTenant);
+say(`  Power BI report window : ${configured ? 'configured for garching' : 'not configured'}`);
+/*
+  ⚠️ THE BUNDLE IS ASKED WHAT IT CARRIES, NOT WHETHER IT CARRIES WHAT THE ENV FILE NAMES TODAY. The
+  first version looked for the configured id only, and so said nothing at all once the id had been
+  taken out of the configuration: a `dist/` built yesterday with the id, checked today in a withheld
+  posture with the two lines deleted, passed unread. Vite inlines the whole environment object, so
+  any report id a bundle was built with is findable by shape, whatever the configuration says now.
+*/
+// Which ids count as governed, and why every unknown one does: tools/report_ids.mjs.
+if (!existsSync(p('dist/assets'))) {
+  // Said out loud, so an "OK." below is never read as "the bundle was looked at".
+  say('· no dist/ to check for a report id: build first, then run this again before deploying.');
+} else {
+  const carried = new Set();
+  for (const f of readdirSync(p('dist/assets')).filter((x) => x.endsWith('.js'))) {
+    const text = readFileSync(p(`dist/assets/${f}`), 'utf-8');
+    // The configured Garching id is governed wherever it stands, also in another site's slot.
+    for (const id of governedReportIds(text, GUID.test(garchingReport) ? garchingReport : '')) carried.add(id);
+  }
+  if (tumWithheld && carried.size > 0) {
+    bad += 1;
+    say('✗ dist/ carries a Power BI report id while the TUM data is withheld.');
+    say('  Rebuild without VITE_PBI_REPORT_GARCHING: the real-data report must not be addressable from this build.');
+  } else if (!tumWithheld && configured && !carried.has(garchingReport.toLowerCase())) {
+    bad += 1;
+    say(
+      carried.size
+        ? '✗ dist/ carries a DIFFERENT report id than the configuration names: it was built before the id changed.'
+        : '✗ dist/ does not carry the configured Garching report id: the "Bericht" button will be missing.'
+    );
+    say('  dist/ is older than the configuration: rebuild before deploying.');
+  } else if (!tumWithheld && !configured && carried.size > 0) {
+    bad += 1;
+    say('✗ dist/ carries a report id that the configuration no longer names: rebuild before deploying.');
+  } else {
+    say(carried.size ? '✓ dist/ carries the configured Garching report id.' : '✓ dist/ carries no report id.');
   }
 }
 say();

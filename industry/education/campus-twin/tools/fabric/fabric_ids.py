@@ -53,6 +53,21 @@ def folder_id() -> str | None:
     return os.getenv("FABRIC_FOLDER_ID", "").strip() or None
 
 
+def semantic_model_id() -> str:
+    """The model a report is bound to. By id, never by name: names repeat and get renamed."""
+    return _required("FABRIC_SEMANTIC_MODEL_ID", "the semantic model the report reads from")
+
+
+def tenant_id() -> str | None:
+    """Optional. Set it when the workspace is NOT in the tenant `az` defaults to.
+
+    ⚠️ `az` drifts to the home tenant. A token asked for without `--tenant` is then issued by the
+    wrong directory, and Fabric answers 401 or an empty workspace list, which reads as "the item
+    is gone" rather than "you asked the wrong tenant".
+    """
+    return os.getenv("FABRIC_TENANT_ID", "").strip() or None
+
+
 def sql_server() -> str:
     """The Fabric SQL endpoint, `<host>.database.fabric.microsoft.com,1433`.
 

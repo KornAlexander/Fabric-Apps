@@ -22,6 +22,7 @@ Usage
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -30,13 +31,19 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-AOI = "garching"
 
-from fabric_ids import workspace_id
+from fabric_ids import tenant_id, workspace_id
+from provenance import problem_with, source_hash, source_semantics
+from sites import site_from_cli
 
+SITE = site_from_cli("Prove the app and one site's semantic model agree.")
+AOI = SITE.aoi
 WORKSPACE_ID = workspace_id()
-MODEL_NAME = "Campus Scheduler — Raum & Belegung"
-WEEK_SLOTS = 70
+MODEL_NAME = SITE.model_name
+#: The site's teaching week, from the rooms file: 70 hours at Garching, 60 at the demo site.
+WEEK_SLOTS = int(json.loads((SITE.terrain / "rooms.json").read_text(encoding="utf-8"))["occupancyGrid"]["slots"])
+#: A building to compare on its own, so an error that cancels out over the campus still shows.
+HERO = SITE.hero_building()
 
 #: Absolute tolerance. Counts must match exactly; shares are compared at four decimals, which is
 #: far tighter than anything the UI displays.
@@ -51,12 +58,10 @@ TEACHING = (
 
 
 def token(resource: str) -> str:
-    out = subprocess.run(  # noqa: S603
-        [AZ, "account", "get-access-token", "--resource", resource, "--query", "accessToken", "-o", "tsv"],
-        capture_output=True,
-        text=True,
-        check=True,
-    )
+    command = [AZ, "account", "get-access-token", "--resource", resource, "--query", "accessToken", "-o", "tsv"]
+    if tenant_id():
+        command += ["--tenant", tenant_id()]
+    out = subprocess.run(command, capture_output=True, text=True, check=True)  # noqa: S603
     return out.stdout.strip()
 
 
@@ -136,7 +141,7 @@ def from_app() -> dict[str, float]:
 
     utilisation = [b / WEEK_SLOTS for _, b in with_calendar]
     teaching_utilisation = [b / WEEK_SLOTS for _, b in teaching_with_calendar]
-    hero = [b / WEEK_SLOTS for r, b in teaching_with_calendar if r["building"] == "5506"]
+    hero = [b / WEEK_SLOTS for r, b in teaching_with_calendar if r["building"] == HERO]
 
     return {
         "Räume": len(rooms),
@@ -150,11 +155,34 @@ def from_app() -> dict[str, float]:
             sum(teaching_utilisation) / len(teaching_utilisation) if teaching_utilisation else 0.0
         ),
         "Räume ohne Belegung": sum(1 for _, b in with_calendar if b == 0),
-        "5506 Lehrräume %": sum(hero) / len(hero) if hero else 0.0,
+        f"{HERO} Lehrräume %": sum(hero) / len(hero) if hero else None,
+        # The building report's own measures. Over the whole week and every room they must come
+        # out as the figures above; if one stops doing so, the report and the app have parted.
+        "Belegung im Zeitfenster %": sum(utilisation) / len(utilisation) if utilisation else 0.0,
+        "Belegte Stunden (Kalender)": sum(b for _, b in with_calendar),
+        **known_zero(rooms),
     }
 
 
-def from_model(dataset: str) -> dict[str, float]:
+#: Suffix of the key for the "known zero" spot check; the building code is in front of it.
+KNOWN_ZERO = " Lehrräume im Filter"
+
+
+def known_zero(rooms: list[dict]) -> dict[str, float]:
+    """A building that has rooms and no teaching room, if the site has one: its tile must read 0.
+
+    ⚠️ FOUND IN THE DATA, NOT NAMED. The datasets are regenerated, and a building pinned here by
+    code would fail the day it gains a seminar room. Where no such building exists there is nothing
+    to check, and the row is simply absent.
+    """
+    teaching: dict[str, int] = {}
+    for room in rooms:
+        teaching[room["building"]] = teaching.get(room["building"], 0) + (1 if is_teaching(room["usage"]) else 0)
+    without = sorted(code for code, count in teaching.items() if count == 0)
+    return {f"{without[0]}{KNOWN_ZERO}": 0.0} if without else {}
+
+
+def from_model(dataset: str, zero_building: str | None) -> dict[str, float]:
     rows = dax(
         dataset,
         """
@@ -167,7 +195,9 @@ def from_model(dataset: str) -> dict[str, float]:
             "Belegte Stunden", [Belegte Stunden],
             "Zeitliche Auslastung %", [Zeitliche Auslastung %],
             "Zeitliche Auslastung Lehrräume %", [Zeitliche Auslastung Lehrräume %],
-            "Räume ohne Belegung", [Räume ohne Belegung]
+            "Räume ohne Belegung", [Räume ohne Belegung],
+            "Belegung im Zeitfenster %", [Belegung im Zeitfenster %],
+            "Belegte Stunden (Kalender)", [Belegte Stunden (Kalender)]
         )
         """,
     )
@@ -175,30 +205,137 @@ def from_model(dataset: str) -> dict[str, float]:
 
     hero = dax(
         dataset,
-        """
+        f"""
         EVALUATE
         CALCULATETABLE(
             ROW("v", [Zeitliche Auslastung Lehrräume %]),
-            'Building'[building_code] = "5506"
+            'Building'[building_code] = "{HERO}"
         )
         """,
     )
-    values["5506 Lehrräume %"] = list(hero[0].values())[0]
+    values[f"{HERO} Lehrräume %"] = list(hero[0].values())[0]
+    if zero_building is not None:
+        zero = dax(
+            dataset,
+            f"""
+            EVALUATE
+            CALCULATETABLE(
+                ROW("v", [Lehrräume im Filter]),
+                'Building'[building_code] = "{zero_building}"
+            )
+            """,
+        )
+        values[f"{zero_building}{KNOWN_ZERO}"] = list(zero[0].values())[0]
     return values
+
+
+def stamp_problems(dataset: str) -> list[str]:
+    """Is the model the load of THIS rooms file, and may that file be in a model at all?
+
+    ⚠️ THE FIGURES BELOW CANNOT ANSWER THIS. They prove the model equals the rooms file the last
+    time it was loaded; a rooms file rebuilt since (real swapped for synthetic, or back) usually
+    still has the same room count and a plausible utilisation. The hash is what notices, and the
+    posture check is what stops a report from showing a data state the app claims to withhold.
+    """
+    folder = ROOT / "public" / "terrain" / AOI
+    missing = [name for name in ("rooms.json", "occupancy.bin") if not (folder / name).exists()]
+    if missing:
+        return [f"{folder} lacks {' and '.join(missing)}: run tools/geodata/build_rooms.py first"]
+    raw = (folder / "rooms.json").read_bytes()
+    occupancy = (folder / "occupancy.bin").read_bytes()
+    local = source_semantics(SITE, json.loads(raw.decode("utf-8")))
+    rows = dax(dataset, "EVALUATE 'Data Load'")
+    if len(rows) != 1:
+        return [f"'Data Load' holds {len(rows)} rows, expected exactly one: rerun build_lakehouse_tables.py"]
+    stamp = {key.split("[")[-1].rstrip("]"): value for key, value in rows[0].items()}
+    print(f"stamp: {stamp.get('semantics')}, semester {stamp.get('semester')}, loaded {stamp.get('loaded_at_utc')}")
+
+    problems: list[str] = []
+    if stamp.get("source_sha256") != source_hash(raw, occupancy):
+        problems.append(
+            "the model was loaded from a different rooms.json or occupancy.bin than the ones on disk: "
+            "rerun build_lakehouse_tables.py"
+        )
+    if stamp.get("semantics") != local:
+        problems.append(f"the model is stamped {stamp.get('semantics')!r}, the rooms file on disk is {local!r}")
+    if stamp.get("aoi") != AOI:
+        problems.append(f"the model is a load of {stamp.get('aoi')!r}, not of {AOI!r}: wrong lakehouse behind this model")
+    posture = problem_with(SITE, str(stamp.get("semantics")))
+    if posture:
+        problems.append(f"the model must not carry this load: {posture}")
+    problems += served_problems(str(stamp.get("source_sha256")))
+    return problems
+
+
+def production_env(name: str) -> str:
+    """A build-time setting: the shell first, then `.env.production`, exactly as `vite build` reads it."""
+    if os.getenv(name):
+        return os.environ[name].strip()
+    path = ROOT / ".env.production"
+    if not path.exists():
+        return ""
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith(f"{name}="):
+            return line.split("=", 1)[1].strip().strip("'\"")
+    return ""
+
+
+def served_problems(stamped_hash: str) -> list[str]:
+    """Is the model the load of the files the DEPLOYED app is actually served?
+
+    ⚠️ THE FILES ON THIS DISK ARE NOT THE FILES A VISITOR GETS. `public/terrain/` is gitignored and
+    the production build loads it from a separate map server (`VITE_TERRAIN_BASE`), which is
+    deployed on its own. So the lakehouse can be loaded from a rooms file rebuilt here this morning
+    while the map server still serves last week's: every local check passes, and the report in the
+    window shows other bookings than the scene behind it. Comparing the stamp with what the map
+    server hands out is the only check that looks at both ends.
+    """
+    base = production_env("VITE_TERRAIN_BASE").rstrip("/")
+    if not base.lower().startswith("http"):
+        print("served files: not checked (no remote VITE_TERRAIN_BASE; the app ships public/terrain itself)")
+        return []
+    version = production_env("VITE_TERRAIN_VERSION")
+    if version and all(ch.isalnum() or ch in "._-" for ch in version):
+        scheme, rest = base.split("://", 1)
+        host, _, path = rest.partition("/")
+        base = f"{scheme}://{host}/_v/{version}/{path}".rstrip("/")
+    try:
+        served = [
+            urllib.request.urlopen(f"{base}/{AOI}/{name}", timeout=180).read()  # noqa: S310
+            for name in ("rooms.json", "occupancy.bin")
+        ]
+    except (urllib.error.URLError, OSError) as exc:
+        return [f"could not fetch {AOI}'s rooms from the map server ({exc}): the served state is unknown"]
+    if source_hash(served[0], served[1]) != stamped_hash:
+        return [
+            "the map server serves a different rooms.json or occupancy.bin than the model was loaded "
+            "from: publish the map assets, or reload the lakehouse from what is served"
+        ]
+    print("served files: the map server serves exactly what the model was loaded from")
+    return []
 
 
 def main() -> None:
     dataset = model_id()
     print(f"model: {dataset}\n")
 
+    failures: list[str] = stamp_problems(dataset)
     app = from_app()
-    model = from_model(dataset)
+    zero_building = next((key[: -len(KNOWN_ZERO)] for key in app if key.endswith(KNOWN_ZERO)), None)
+    model = from_model(dataset, zero_building)
 
-    print(f"{'measure':<36} {'app':>14} {'model':>14}   verdict")
+    print(f"\n{'measure':<36} {'app':>14} {'model':>14}   verdict")
     print("-" * 84)
-    failures: list[str] = []
     for key, expected in app.items():
         actual = model.get(key)
+        if expected is None:
+            # Nothing to average on the app side (no calendared teaching room): the model must say
+            # "unknown" too, which in DAX is blank. A number here would be an invented one.
+            ok = actual is None
+            if not ok:
+                failures.append(f"{key}: the app has no value, the model says {actual}")
+            print(f"{key:<36} {'(none)':>14} {str(actual if actual is not None else '(blank)'):>14}   {'ok' if ok else 'MISMATCH'}")
+            continue
         if actual is None:
             failures.append(f"{key}: the model returned nothing")
             print(f"{key:<36} {expected:>14.4f} {'—':>14}   MISSING")

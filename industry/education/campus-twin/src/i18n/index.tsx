@@ -21,6 +21,14 @@ export const VOICE_BY_LOCALE: Record<Locale, string> = {
   en: 'en-US-AndrewMultilingualNeural',
 };
 
+/** BCP 47 tag for number and date formatting. */
+export const INTL_TAG: Record<Locale, string> = {
+  de: 'de-DE',
+  en: 'en-GB',
+};
+
+export const intlTag = (locale: Locale): string => INTL_TAG[locale] ?? 'en-GB';
+
 const BUNDLES = { de, en } as const;
 
 type Bundle = typeof de;

@@ -121,6 +121,18 @@
       "fri": "Fri"
     }
   },
+  "report": {
+    "open": "Report",
+    "openTitle": "Open the Power BI report for this building",
+    "title": "Report, building {{code}}",
+    "frameTitle": "Power BI report, building {{code}}",
+    "hint": "Sign in to Power BI once on first use. The report reloads for each building.",
+    "newTab": "Open in new tab",
+    "close": "Close",
+    "maximise": "Maximise",
+    "restore": "Restore",
+    "reload": "The app has been updated. Reload the page, then the report can be opened."
+  },
   "rooms": {
     "heading": "Indoor rooms",
     "count": "Rooms",
