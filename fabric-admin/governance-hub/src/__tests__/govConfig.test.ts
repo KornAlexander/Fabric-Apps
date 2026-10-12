@@ -1,15 +1,19 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-const findMany = vi.fn();
+import { createFakeData } from './helpers/fakeRayfinData';
 
-vi.mock('@/services/rayfinClient', () => ({
-  getRayfinClient: () => ({ data: { GovConfig: { findMany, create: vi.fn(), update: vi.fn() } } }),
-}));
+// A client that answers like the real one: only the fields that were asked
+// for, and "true" as a boolean. A mock that returned whole rows from
+// `findMany` let a read pass here that returned nothing in production.
+const fake = createFakeData();
+vi.mock('@/services/rayfinClient', () => ({ getRayfinClient: () => ({ data: fake.data }) }));
 
 const { DEFAULT_CONFIG, loadConfig } = await import('@/services/govConfig');
 
+const stored = (rows: { config_key: string; config_value: string }[]) => rows.forEach((row) => fake.seed('GovConfig', row));
+
 beforeEach(() => {
-  findMany.mockReset();
+  fake.reset();
 });
 
 /**
@@ -25,7 +29,7 @@ beforeEach(() => {
  */
 describe('loadConfig reachability', () => {
   it('reports the backend as unreachable when the read fails', async () => {
-    findMany.mockRejectedValue(new Error('ECONNREFUSED'));
+    fake.state.unreachable = true;
 
     const result = await loadConfig();
 
@@ -37,7 +41,6 @@ describe('loadConfig reachability', () => {
   it('reports it as reachable when the read succeeds, even with no rows', async () => {
     // An empty table is a real, valid state: a fresh deployment. It must not be
     // confused with an unreachable backend.
-    findMany.mockResolvedValue([]);
 
     const result = await loadConfig();
 
@@ -46,7 +49,7 @@ describe('loadConfig reachability', () => {
   });
 
   it('decodes stored values and still reports reachable', async () => {
-    findMany.mockResolvedValue([
+    stored([
       { config_key: 'modules.enabled', config_value: '["fabric","entra"]' },
       { config_key: 'writes.enabled', config_value: 'true' },
       { config_key: 'locale.default', config_value: '"de"' },
@@ -63,7 +66,7 @@ describe('loadConfig reachability', () => {
   it('never reports telemetry as enabled, whatever is stored', async () => {
     // The key exists so that "we send nothing" is auditable rather than
     // asserted — it is not a setting a deployment can turn on.
-    findMany.mockResolvedValue([
+    stored([
       { config_key: 'telemetry.enabled', config_value: 'true' },
     ]);
 
@@ -73,7 +76,7 @@ describe('loadConfig reachability', () => {
   });
 
   it('ignores an unknown module id rather than trusting the stored value', async () => {
-    findMany.mockResolvedValue([
+    stored([
       { config_key: 'modules.enabled', config_value: '["fabric","not-a-module"]' },
     ]);
 
@@ -83,7 +86,7 @@ describe('loadConfig reachability', () => {
   });
 
   it('falls back per key when a stored value is corrupt', async () => {
-    findMany.mockResolvedValue([
+    stored([
       { config_key: 'writes.kinds', config_value: '{not json' },
     ]);
 

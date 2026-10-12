@@ -70,6 +70,7 @@ export const umDe: Record<keyof typeof umEn, string> = {
   'um.members.show': 'Mitglieder anzeigen',
   'um.members.hide': 'Mitglieder ausblenden',
   'um.members.reload': 'Erneut versuchen',
+  'um.members.refresh': 'Erneut lesen',
   'um.members.loading': 'Mitglieder werden gelesen…',
   'um.members.notReadable': 'Die Mitglieder konnten nicht gelesen werden: {reason}.',
   'um.members.empty': 'Diese Gruppe hat keine direkten Mitglieder.',
@@ -264,7 +265,8 @@ export const umDe: Record<keyof typeof umEn, string> = {
   'um.grant.hint.admin':
     'Entra hat sie nicht erteilt. {permissions} braucht normalerweise die Genehmigung eines Administrators, einmal für die ganze Organisation. Bitten Sie einen Administrator, sie für diese App in Entra zu erteilen.',
   'um.grant.hint.closed': 'Das Anmeldefenster wurde geschlossen, bevor {permissions} erteilt wurde. Sie können es erneut versuchen.',
-  'um.grant.hint.user': 'Entra hat {permissions} nicht erteilt, oder das Anmeldefenster wurde geschlossen. Sie können es erneut versuchen.',
+  'um.grant.hint.user':
+    'Entra hat {permissions} nicht erteilt, oder das Anmeldefenster wurde geschlossen. Sie können es erneut versuchen. Ist die Anmeldung an dieser App auf zugewiesene Personen beschränkt, kann niemand eine Berechtigung für sich selbst erteilen: Dann muss ein Administrator auch diese erteilen.',
   'um.perm.title': 'Berechtigungen',
   'um.perm.intro':
     'Was die App in diesem Browser-Tab mit Ihrer Anmeldung tun darf. Jede Berechtigung wird erst angefragt, wenn sie gebraucht wird, und Entra und Fabric entscheiden weiterhin, was Sie persönlich dürfen. Die für einen Administrator markierten werden einmal für die Organisation in Entra erteilt. Berechtigungen, die etwas ändern, werden hier nicht geprüft; sie werden in dem Moment angefragt, in dem eine Änderung beginnt.',
@@ -284,7 +286,7 @@ export const umDe: Record<keyof typeof umEn, string> = {
   'um.perm.set.fabricWrite': 'Ändern, welche Gruppe welche Workspace-Rolle hält',
   'um.perm.set.mail': 'Die Benachrichtigung zur Anfrage aus dem eigenen Postfach senden',
   'um.perm.adminNote':
-    'Einige dieser Berechtigungen brauchen normalerweise einen Administrator, einmal für die Organisation. Ein Administrator öffnet die App in Entra unter API-Berechtigungen und wählt „Administratorzustimmung erteilen“. Danach hier ab- und wieder anmelden.',
+    'Einige dieser Berechtigungen brauchen normalerweise einen Administrator, einmal für die Organisation. Ist die Anmeldung an dieser App auf zugewiesene Personen beschränkt („Zuweisung erforderlich“), gilt das für alle, weil dann niemand eine Berechtigung für sich selbst erteilen kann. Ein Administrator öffnet die App in Entra unter API-Berechtigungen und wählt „Administratorzustimmung erteilen“. Danach hier ab- und wieder anmelden.',
   'um.perm.adminLink': 'Berechtigungen der App in Entra öffnen',
   'um.perm.set.groupCreate': 'Eine neue Sicherheitsgruppe anlegen',
   'um.log.action.group-create': 'Gruppe angelegt',

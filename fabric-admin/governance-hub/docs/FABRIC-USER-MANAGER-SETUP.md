@@ -31,7 +31,9 @@ Under API permissions, add these **delegated** permissions:
 | Microsoft Graph | `User.Read.All` | Yes | Telling a guest or a disabled account from an ordinary one |
 | Power BI Service | `Tenant.Read.All` | Yes | Reading who an audience is shared with (works for Fabric administrators only) |
 
-Not listed on purpose, because every person can consent to them at the moment they are used: `User.Read`, `Workspace.Read.All`, `Workspace.ReadWrite.All`, `Mail.Send`.
+Four more are asked for at the moment they are used: `User.Read`, `Workspace.Read.All` and `Workspace.ReadWrite.All` (Power BI Service), `Mail.Send`. By default every person can consent to these for themselves, so they need not be listed.
+
+**That changes with "Assignment required"** (step 4). Once sign-in to the app is limited to assigned people, nobody can consent for themselves any more, and Entra answers "administrator approval required" for every permission. Then list these four as well and include them in the admin consent. Seen in the first real setup.
 
 Note the **Application (client) ID** and the **Directory (tenant) ID**.
 
@@ -78,6 +80,8 @@ Open the registration in Entra, API permissions, and choose **Grant admin consen
 This grants the listed permissions to the app for everyone who signs in. It does not give anyone new rights: an owner can still only change their own groups, and a person without a workspace role still sees no workspace.
 
 Decide at this point whether only named people may sign in to the app at all: in Entra, Enterprise applications, `Fabric User Manager`, Properties, **Assignment required**.
+
+If you switch it on: assign the people first, then switch it on, and grant admin consent for all permissions the app uses, including the four from step 1 that are normally left to each person.
 
 ## 5. First use
 

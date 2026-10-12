@@ -7,6 +7,7 @@
  */
 import type { Assignment } from '@/domain/drift';
 
+import { plainText, readRows } from './dataRows';
 import { getRayfinClient } from './rayfinClient';
 
 interface GovAssignmentRow {
@@ -26,6 +27,24 @@ interface GovAssignmentRow {
   request_id?: string;
 }
 
+/** Named on purpose: a plain findMany returns only the id (see dataRows.ts). */
+const ASSIGNMENT_FIELDS = [
+  'id',
+  'principal_id',
+  'principal_name',
+  'principal_type',
+  'persona_id',
+  'scope_type',
+  'scope_id',
+  'scope_name',
+  'granted_via',
+  'granted_by',
+  'granted_at',
+  'valid_until',
+  'is_active',
+  'request_id',
+] as const;
+
 type Db = ReturnType<typeof getRayfinClient>['data'];
 function rows(): Db['GovAssignment'] {
   return getRayfinClient().data.GovAssignment;
@@ -38,17 +57,17 @@ export interface LoadAssignmentsResult {
 
 export async function loadAssignments(): Promise<LoadAssignmentsResult> {
   try {
-    const stored = (await rows().findMany({})) as GovAssignmentRow[];
+    const stored = await readRows<GovAssignmentRow>(rows(), ASSIGNMENT_FIELDS);
     return {
       assignments: stored.map((row) => ({
         id: row.id,
         principalId: row.principal_id,
-        principalName: row.principal_name,
+        principalName: plainText(row.principal_name) ?? '',
         principalType: row.principal_type,
         personaId: row.persona_id,
         scopeType: row.scope_type,
         scopeId: row.scope_id,
-        scopeName: row.scope_name,
+        scopeName: plainText(row.scope_name) ?? '',
         validUntil: row.valid_until ? new Date(row.valid_until).toISOString() : undefined,
         isActive: row.is_active,
       })),

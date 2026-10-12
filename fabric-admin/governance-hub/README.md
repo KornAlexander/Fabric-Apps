@@ -73,8 +73,10 @@ How it is built:
   recorded by an admin and marked as such.
 
 Status: implemented with automated tests and an offline demo mode (`VITE_UM_MOCK=true`).
-Sign-in, the three tabs and discovery have run against a real tenant. The functions that
-change something have not yet been exercised against a real tenant.
+Run against a real tenant and checked against Entra and Fabric directly: sign-in, discovery,
+activating a group, adding and removing a member, giving, changing and removing a workspace
+role, creating a group, and reading audience sharing. Not yet run against a real tenant:
+requests with approval and the request mail.
 
 Guides: [setup in a tenant](docs/FABRIC-USER-MANAGER-SETUP.md) ·
 [for owners and requesters](docs/FABRIC-USER-MANAGER-GUIDE.md)

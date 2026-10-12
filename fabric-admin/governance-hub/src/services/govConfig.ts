@@ -12,6 +12,7 @@
 import type { WriteConfig } from '@/domain/writeGates';
 import { MODULE_IDS, type ModuleId } from '@/modules/types';
 
+import { jsonText, readRows } from './dataRows';
 import { getRayfinClient } from './rayfinClient';
 
 export const GOV_CONFIG_KEYS = {
@@ -93,14 +94,16 @@ export interface LoadConfigResult {
 export async function loadConfig(): Promise<LoadConfigResult> {
   let all: GovConfigRow[] = [];
   try {
-    all = (await rows().findMany({})) as GovConfigRow[];
+    // Fields named on purpose: a plain findMany returns only the id (see dataRows.ts).
+    all = await readRows<GovConfigRow>(rows(), ['id', 'config_key', 'config_value']);
   } catch {
     // Backend not reachable yet (fresh deployment, or T0 without the data
     // service). Defaults are correct and safe — and the caller is told.
     return { config: { ...DEFAULT_CONFIG }, reachable: false };
   }
 
-  const byKey = new Map(all.map((r) => [r.config_key, r.config_value]));
+  // A stored `true` arrives as a boolean; `jsonText` makes it JSON text again.
+  const byKey = new Map(all.map((r) => [r.config_key, jsonText(r.config_value)]));
   const modules = decode<string[]>(
     byKey.get(GOV_CONFIG_KEYS.modulesEnabled),
     DEFAULT_CONFIG.modulesEnabled

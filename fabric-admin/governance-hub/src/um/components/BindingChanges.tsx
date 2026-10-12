@@ -53,6 +53,8 @@ function BindingDialog({
     // One permission, one sign-in window, asked for by this click.
     if (!grants.fabricWrite && !(await grant('fabricWrite'))) {
       setBusy(false);
+      // Back to the start, so the button to look again is there once the permission is granted.
+      setStarted(false);
       return setMessage({ tone: 'alert', text: `${t('um.bind.grantRefused')} ${grantHint(t, 'fabricWrite')}` });
     }
     setPreview(await previewBinding(bindingDeps, request));

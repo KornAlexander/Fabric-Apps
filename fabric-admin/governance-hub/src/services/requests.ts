@@ -9,6 +9,7 @@
  */
 import type { AccessRequest, RequestStatus } from '@/domain/requests';
 
+import { plainText, readRows } from './dataRows';
 import { getRayfinClient } from './rayfinClient';
 
 interface GovRequestRow {
@@ -29,6 +30,25 @@ interface GovRequestRow {
   assignment_id?: string;
 }
 
+/** Named on purpose: a plain findMany returns only the id (see dataRows.ts). */
+const REQUEST_FIELDS = [
+  'id',
+  'requester_id',
+  'requester_name',
+  'persona_id',
+  'scope_type',
+  'scope_id',
+  'scope_name',
+  'justification',
+  'status',
+  'created_at',
+  'decided_by',
+  'decided_at',
+  'decision_note',
+  'valid_until',
+  'assignment_id',
+] as const;
+
 type Db = ReturnType<typeof getRayfinClient>['data'];
 function rows(): Db['GovRequest'] {
   return getRayfinClient().data.GovRequest;
@@ -38,17 +58,17 @@ function toRequest(row: GovRequestRow): AccessRequest {
   return {
     id: row.id,
     requesterId: row.requester_id,
-    requesterName: row.requester_name,
+    requesterName: plainText(row.requester_name) ?? '',
     personaId: row.persona_id,
     scopeType: row.scope_type,
     scopeId: row.scope_id,
-    scopeName: row.scope_name,
-    justification: row.justification,
+    scopeName: plainText(row.scope_name) ?? '',
+    justification: plainText(row.justification) ?? '',
     status: row.status as RequestStatus,
     createdAt: new Date(row.created_at).toISOString(),
     decidedBy: row.decided_by,
     decidedAt: row.decided_at ? new Date(row.decided_at).toISOString() : undefined,
-    decisionNote: row.decision_note,
+    decisionNote: plainText(row.decision_note),
     validUntil: row.valid_until ? new Date(row.valid_until).toISOString() : undefined,
     assignmentId: row.assignment_id,
   };
@@ -61,7 +81,7 @@ export interface LoadRequestsResult {
 
 export async function loadRequests(): Promise<LoadRequestsResult> {
   try {
-    const stored = (await rows().findMany({})) as GovRequestRow[];
+    const stored = await readRows<GovRequestRow>(rows(), REQUEST_FIELDS);
     return { requests: stored.map(toRequest), backendReachable: true };
   } catch {
     return { requests: [], backendReachable: false };

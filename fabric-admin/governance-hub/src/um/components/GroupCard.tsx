@@ -108,7 +108,7 @@ export function GroupCard({ row }: { row: RowView }) {
                     other: counts.servicePrincipals + counts.other,
                   })}
                 </p>
-                <Button onClick={() => void reload()}>{t('um.members.reload')}</Button>
+                <Button onClick={() => void reload()}>{t('um.members.refresh')}</Button>
               </div>
               {counts.nestedGroups > 0 && <Notice tone="warn">{t('um.members.nestedHint')}</Notice>}
               {list.value.length === 0 ? (

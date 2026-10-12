@@ -8,6 +8,7 @@
  */
 import type { GovernanceTask, TaskDraft, TaskStatus } from '@/domain/tasks';
 
+import { plainText, readRows } from './dataRows';
 import { getRayfinClient } from './rayfinClient';
 
 interface GovTaskRow {
@@ -31,6 +32,28 @@ interface GovTaskRow {
   request_id?: string;
 }
 
+/** Named on purpose: a plain findMany returns only the id (see dataRows.ts). */
+const TASK_FIELDS = [
+  'id',
+  'source',
+  'binding_kind',
+  'module',
+  'detail',
+  'scope_type',
+  'scope_id',
+  'scope_name',
+  'principal_id',
+  'principal_name',
+  'status',
+  'created_at',
+  'assignee',
+  'due_date',
+  'completed_by',
+  'completed_at',
+  'evidence',
+  'request_id',
+] as const;
+
 type Db = ReturnType<typeof getRayfinClient>['data'];
 function rows(): Db['GovTask'] {
   return getRayfinClient().data.GovTask;
@@ -42,19 +65,19 @@ function toTask(row: GovTaskRow): GovernanceTask {
     source: row.source as GovernanceTask['source'],
     bindingKind: row.binding_kind,
     module: row.module,
-    detail: row.detail,
+    detail: plainText(row.detail) ?? '',
     scopeType: row.scope_type,
     scopeId: row.scope_id,
-    scopeName: row.scope_name,
+    scopeName: plainText(row.scope_name) ?? '',
     principalId: row.principal_id,
-    principalName: row.principal_name,
+    principalName: plainText(row.principal_name),
     status: row.status as TaskStatus,
     createdAt: new Date(row.created_at).toISOString(),
     assignee: row.assignee,
     dueDate: row.due_date ? new Date(row.due_date).toISOString() : undefined,
     completedBy: row.completed_by,
     completedAt: row.completed_at ? new Date(row.completed_at).toISOString() : undefined,
-    evidence: row.evidence,
+    evidence: plainText(row.evidence),
     requestId: row.request_id,
   };
 }
@@ -66,7 +89,7 @@ export interface LoadTasksResult {
 
 export async function loadTasks(): Promise<LoadTasksResult> {
   try {
-    const stored = (await rows().findMany({})) as GovTaskRow[];
+    const stored = await readRows<GovTaskRow>(rows(), TASK_FIELDS);
     return { tasks: stored.map(toTask), backendReachable: true };
   } catch {
     return { tasks: [], backendReachable: false };

@@ -344,13 +344,32 @@ interface AuditRow {
 
 const iso = (value: Date | string): string => (value instanceof Date ? value.toISOString() : String(value));
 
+/**
+ * A text field as text. The data client converts stored texts on the way
+ * out: "true" and "false" become booleans, and anything shaped like an ISO
+ * date becomes a `Date`. A description that reads "true" or a review date
+ * must still arrive here as the text that was stored.
+ */
+function text(value: unknown): string {
+  if (typeof value === 'string') return value;
+  if (value === null || value === undefined) return '';
+  if (value instanceof Date) return Number.isNaN(value.getTime()) ? '' : value.toISOString();
+  return String(value);
+}
+
+/** A stored `YYYY-MM-DD`, whether it arrives as text or was turned into a date. */
+function dayText(value: unknown): string | undefined {
+  if (value === null || value === undefined || value === '') return undefined;
+  return text(value).slice(0, 10);
+}
+
 function toGroup(row: GroupRow): ManagedGroup {
   return {
     id: row.id,
     groupId: row.group_id.toLowerCase(),
-    nameSnapshot: row.name_snapshot,
+    nameSnapshot: text(row.name_snapshot),
     requestable: !!row.requestable,
-    description: row.description ?? '',
+    description: text(row.description),
     maxDays: Number(row.max_days) || 0,
     active: !!row.active,
     version: Number(row.version) || 1,
@@ -388,9 +407,9 @@ function toRequest(row: RequestRow): AccessRequest {
     groupId: row.group_id.toLowerCase(),
     requesterOid: row.requester_oid.toLowerCase(),
     requesterUpn: row.requester_upn,
-    requesterName: row.requester_name,
-    reason: row.reason,
-    reviewOn: row.review_on ?? undefined,
+    requesterName: text(row.requester_name),
+    reason: text(row.reason),
+    reviewOn: dayText(row.review_on),
     rowVersion: Number(row.row_version) || 0,
     accessFingerprint: row.access_fingerprint,
     // An unknown status is treated as closed, never as open.
@@ -398,7 +417,7 @@ function toRequest(row: RequestRow): AccessRequest {
     createdAt: iso(row.created_at),
     decidedByOid: row.decided_by_oid ?? undefined,
     decidedAt: row.decided_at ? iso(row.decided_at) : undefined,
-    decisionNote: row.decision_note ?? undefined,
+    decisionNote: row.decision_note === null || row.decision_note === undefined ? undefined : text(row.decision_note),
   };
 }
 
@@ -461,8 +480,8 @@ function toBinding(row: BindingRow): Binding | null {
     groupId: row.group_id.toLowerCase(),
     kind: row.target_kind as TargetKind,
     scopeId: row.scope_id ?? undefined,
-    scopeName: row.scope_name,
-    label: row.label,
+    scopeName: text(row.scope_name),
+    label: text(row.label),
     // Anything unknown is the weakest claim, never the strongest.
     provenance: row.provenance === 'read' ? 'read' : row.provenance === 'inferred' ? 'inferred' : 'attested',
   };
@@ -482,6 +501,15 @@ export class RayfinUmStore implements UmStore {
       if (cursor) query = query.after(cursor);
       return (await query.executePaginated()) as Page<R>;
     });
+  }
+
+  /**
+   * One row with all its fields, or `null`. The data client's own `findById`
+   * returns only the id, and the answer to a write only what was written, so
+   * neither can be used to look at a row.
+   */
+  private async byId<R>(entity: keyof typeof FIELDS, id: string): Promise<R | null> {
+    return (await this.all<R>(entity, { id: { eq: id } }))[0] ?? null;
   }
 
   async load() {
@@ -517,13 +545,15 @@ export class RayfinUmStore implements UmStore {
       activated_at: at,
       updated_at: at,
     });
-    return toGroup(created as unknown as GroupRow);
+    const stored = await this.byId<GroupRow>('UmManagedGroup', (created as unknown as { id: string }).id);
+    if (!stored) throw new Error('activated-not-readable');
+    return toGroup(stored);
   }
 
   async updateFields(group: ManagedGroup, fields: EditableFields, rollbackPoint?: { previousJson: string; importId: string } | 'clear') {
     // Read-then-write, not atomic: two admins saving at the same moment can
     // still overwrite each other. The version only catches the common case.
-    const current = (await this.data().UmManagedGroup.findById(group.id)) as unknown as GroupRow | null;
+    const current = await this.byId<GroupRow>('UmManagedGroup', group.id);
     if (!current || Number(current.version) !== group.version) throw new VersionConflictError();
     const patch: Record<string, unknown> = {
       requestable: fields.requestable,
@@ -540,8 +570,10 @@ export class RayfinUmStore implements UmStore {
       patch.previous_json = rollbackPoint.previousJson;
       patch.import_id = rollbackPoint.importId;
     }
-    const updated = await this.data().UmManagedGroup.update({ id: group.id }, patch as never);
-    return toGroup(updated as unknown as GroupRow);
+    await this.data().UmManagedGroup.update({ id: group.id }, patch as never);
+    const stored = await this.byId<GroupRow>('UmManagedGroup', group.id);
+    if (!stored) throw new Error('updated-not-readable');
+    return toGroup(stored);
   }
 
   async setBindings(groupId: string, provenance: Binding['provenance'], next: readonly Binding[], actor: GraphIdentity) {
@@ -621,22 +653,26 @@ export class RayfinUmStore implements UmStore {
       status: 'Pending',
       created_at: new Date(),
     });
-    return toRequest(created as unknown as RequestRow);
+    const stored = await this.byId<RequestRow>('UmRequest', (created as unknown as { id: string }).id);
+    if (!stored) throw new Error('request-not-readable');
+    return toRequest(stored);
   }
 
   async decideRequest(id: string, status: Exclude<RequestStatus, 'Pending'>, actor: GraphIdentity, note?: string) {
     // Read-then-write, not atomic: two people deciding in the same second can
     // both pass. The member change underneath is idempotent, so the effect is
     // at most one membership and two log lines.
-    const current = (await this.data().UmRequest.findById(id)) as unknown as RequestRow | null;
+    const current = await this.byId<RequestRow>('UmRequest', id);
     if (!current || current.status !== 'Pending') throw new RequestStateError('not-pending');
-    const updated = await this.data().UmRequest.update({ id }, {
+    await this.data().UmRequest.update({ id }, {
       status,
       decided_by_oid: actor.objectId,
       decided_at: new Date(),
       decision_note: note ? note.slice(0, 500) : undefined,
     } as never);
-    return toRequest(updated as unknown as RequestRow);
+    const stored = await this.byId<RequestRow>('UmRequest', id);
+    if (!stored) throw new Error('request-not-readable');
+    return toRequest(stored);
   }
 
   async getContact(groupId: string) {

@@ -66,6 +66,7 @@ export const umEn = {
   'um.members.show': 'Show members',
   'um.members.hide': 'Hide members',
   'um.members.reload': 'Try again',
+  'um.members.refresh': 'Read again',
   'um.members.loading': 'Reading members…',
   'um.members.notReadable': 'The members could not be read: {reason}.',
   'um.members.empty': 'This group has no direct members.',
@@ -254,7 +255,8 @@ export const umEn = {
   'um.grant.hint.admin':
     'Entra did not grant it. {permissions} normally needs the approval of an administrator, once for the whole organization. Ask an administrator to grant it for this app in Entra.',
   'um.grant.hint.closed': 'The sign-in window was closed before {permissions} was granted. You can try again.',
-  'um.grant.hint.user': 'Entra did not grant {permissions}, or the sign-in window was closed. You can try again.',
+  'um.grant.hint.user':
+    'Entra did not grant {permissions}, or the sign-in window was closed. You can try again. If sign-in to this app is limited to assigned people, nobody can grant a permission for themselves: an administrator then has to grant this one as well.',
   'um.perm.title': 'Permissions',
   'um.perm.intro':
     'What the app may do with your sign-in in this browser tab. Each permission is asked for only when it is needed, and Entra and Fabric still decide what you personally may do. Those marked for an administrator are granted once for the organization, in Entra. Permissions that change something are not checked here; they are asked for at the moment a change starts.',
@@ -274,7 +276,7 @@ export const umEn = {
   'um.perm.set.fabricWrite': 'Change which group holds which workspace role',
   'um.perm.set.mail': 'Send the request notice from your own mailbox',
   'um.perm.adminNote':
-    'Some of these permissions normally need an administrator, once for the organization. An administrator opens the app in Entra under API permissions and chooses "Grant admin consent". Afterwards, sign out here and in again.',
+    'Some of these permissions normally need an administrator, once for the organization. If sign-in to this app is limited to assigned people ("assignment required"), all of them do, because nobody can then grant a permission for themselves. An administrator opens the app in Entra under API permissions and chooses "Grant admin consent". Afterwards, sign out here and in again.',
   'um.perm.adminLink': 'Open the app\u2019s permissions in Entra',
   'um.perm.set.groupCreate': 'Create a new security group',
   'um.log.action.group-create': 'Group created',

@@ -16,6 +16,7 @@ import {
   type RiskTier,
 } from '@/domain/personas';
 
+import { plainText, readRows } from './dataRows';
 import { getRayfinClient } from './rayfinClient';
 
 interface GovPersonaRow {
@@ -30,6 +31,9 @@ interface GovPersonaRow {
   updated_by: string;
   updated_at: Date;
 }
+
+/** Named on purpose: a plain findMany returns only the id (see dataRows.ts). */
+const PERSONA_FIELDS = ['id', 'persona_id', 'name', 'description', 'risk_tier', 'capability_ids_json', 'is_active', 'is_custom', 'updated_by', 'updated_at'] as const;
 
 type Db = ReturnType<typeof getRayfinClient>['data'];
 function rows(): Db['GovPersona'] {
@@ -49,8 +53,8 @@ function toOverride(row: GovPersonaRow): PersonaOverride {
   }
   return {
     id: row.persona_id,
-    name: row.name,
-    description: row.description,
+    name: plainText(row.name),
+    description: plainText(row.description),
     riskTier: row.risk_tier as RiskTier | undefined,
     capabilityIds,
     isActive: row.is_active,
@@ -66,7 +70,7 @@ export interface LoadPersonasResult {
 
 export async function loadPersonas(): Promise<LoadPersonasResult> {
   try {
-    const stored = (await rows().findMany({})) as GovPersonaRow[];
+    const stored = await readRows<GovPersonaRow>(rows(), PERSONA_FIELDS);
     return { personas: mergePersonas(stored.map(toOverride)), backendReachable: true };
   } catch {
     return { personas: mergePersonas([]), backendReachable: false };
