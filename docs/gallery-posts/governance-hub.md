@@ -2,8 +2,8 @@
 app: fabric-admin/governance-hub
 slug: governance-hub
 title: "Fabric User Manager: access to Fabric without a ticket"
-galleryUrl:            # filled in by Phase 5a once the post is live
-status: draft
+galleryUrl: https://community.fabric.microsoft.com/discussions/pbi_fabricappsgallery/fabric-user-manager-access-to-fabric-without-a-ticket/5374410
+status: published
 assetsReady: true
 assets:
   - docs/previews/governance-hub.webp
