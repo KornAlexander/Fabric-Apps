@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 import { useT, type Translate } from '@/i18n';
 import { sameRequester, type AccessRequest } from '@/um/domain/accessRequest';
 import type { DirectoryMember } from '@/um/domain/types';
+import { UM_PATHS } from '@/um/domain/profile';
 import type { RowView } from '@/um/domain/views';
 import { useUm } from '@/um/hooks/UmContext';
 import { approveRequest, denyRequest, submitRequest, withdrawRequest, type DecisionResult } from '@/um/services/accessRequests';
@@ -24,6 +26,7 @@ function changeText(t: Translate, change: ChangeResult): string {
 export function RequestBox({ row }: { row: RowView }) {
   const t = useT();
   const { requestDeps, requests, armed, writesInBuild, reload, grant, grants } = useUm();
+  const { search } = useLocation();
   const [open, setOpen] = useState(false);
   const [reason, setReason] = useState('');
   const [reviewOn, setReviewOn] = useState('');
@@ -90,6 +93,16 @@ export function RequestBox({ row }: { row: RowView }) {
             {t('um.request.reviewDate')}
             <input type="date" value={reviewOn} onChange={(e) => setReviewOn(e.target.value)} className="mt-1 block rounded-lg border border-gray-200 bg-white px-2 py-1.5 text-sm" />
           </label>
+          {/* A statement, not a check: nothing is stored with the request. The guide opens beside the form so the reason is not lost. */}
+          <p className="text-sm text-gray-700">
+            {t('um.request.confirm.before')}{' '}
+            <Link to={{ pathname: UM_PATHS.guidelines, search }} target="_blank" rel="noreferrer" className="font-medium text-blue-700 underline">
+              {t('um.request.confirm.link')}
+              <span aria-hidden="true">{' ↗'}</span>
+              <span className="sr-only">{` (${t('um.gl.external')})`}</span>
+            </Link>
+            {t('um.request.confirm.after')}
+          </p>
           <div className="flex gap-2">
             <Button primary onClick={() => void submit()} disabled={busy}>
               {t('um.request.submit')}

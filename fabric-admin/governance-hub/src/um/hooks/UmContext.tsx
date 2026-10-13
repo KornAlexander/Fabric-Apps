@@ -116,8 +116,17 @@ const UmContext = createContext<UmContextValue | null>(null);
 
 const EMPTY: Readable<string[]> = { state: 'not-readable', reason: 'no-route' };
 
+/** Where the offline demo keeps its state. A browser that blocks storage gives none, and the demo then forgets on reload. */
+function tabStorage(): Storage | undefined {
+  try {
+    return window.sessionStorage;
+  } catch {
+    return undefined;
+  }
+}
+
 export function UmProvider({ children, services: injected }: { children: ReactNode; services?: UmServices }) {
-  const services = useMemo(() => injected ?? createUmServices(), [injected]);
+  const services = useMemo(() => injected ?? createUmServices(undefined, undefined, tabStorage()), [injected]);
   const { user } = useAuth();
   const sessionEmail = user?.email;
 

@@ -271,6 +271,43 @@ export class MemoryUmStore implements UmStore {
     if (isoDate === null) this.reviews.delete(key);
     else this.reviews.set(key, { groupId: groupId.toLowerCase(), userId: userId.toLowerCase(), reviewOn: isoDate });
   }
+
+  /** Offline demo only: everything this store holds, as plain data that survives JSON. */
+  snapshot(): MemorySnapshot {
+    return {
+      groups: this.groups,
+      bindings: this.bindings,
+      log: this.log,
+      counter: this.counter,
+      requests: this.requests,
+      contacts: [...this.contacts],
+      settings: [...this.settings],
+      reviews: [...this.reviews],
+    };
+  }
+
+  /** Offline demo only: takes over what `snapshot` gave. Made-up data from the same tab, so it is not checked field by field. */
+  restore(saved: MemorySnapshot) {
+    this.groups = [...saved.groups];
+    this.bindings = [...saved.bindings];
+    this.log = [...saved.log];
+    this.counter = saved.counter;
+    this.requests = [...saved.requests];
+    this.contacts = new Map(saved.contacts);
+    this.settings = new Map(saved.settings);
+    this.reviews = new Map(saved.reviews);
+  }
+}
+
+export interface MemorySnapshot {
+  groups: ManagedGroup[];
+  bindings: Binding[];
+  log: AuditEntry[];
+  counter: number;
+  requests: AccessRequest[];
+  contacts: [string, string][];
+  settings: [string, unknown][];
+  reviews: [string, ReviewDate][];
 }
 
 /* ───────────────────────────── Rayfin ───────────────────────────── */

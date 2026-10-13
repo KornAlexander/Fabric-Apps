@@ -18,7 +18,7 @@ export const umEn = {
   'um.search.placeholder': 'name@company.com',
   'um.search.go': 'Look up',
 
-  'um.mock.banner': 'Demo data. Nothing here comes from a tenant and nothing is changed.',
+  'um.mock.banner': 'Demo data. Nothing here comes from a tenant and nothing is changed. What you do here stays in this browser tab.',
   'um.graph.connecting': 'Checking your Microsoft sign-in…',
   'um.graph.needsSignIn': 'Connect to Microsoft Graph to see your groups.',
   'um.graph.connect': 'Connect',
@@ -154,6 +154,10 @@ export const umEn = {
   'um.request.reason': 'Why do you need this access?',
   'um.request.reviewDate': 'Suggested review date (optional)',
   'um.request.submit': 'Send request',
+  // Joined as: before, a space, the link, after. The German 'after' starts with a space of its own.
+  'um.request.confirm.before': 'By sending this request you confirm that you have read the',
+  'um.request.confirm.link': 'Power BI Guidelines',
+  'um.request.confirm.after': '.',
   'um.request.submitted': 'Your request was sent.',
   'um.request.notice.sent': 'The owners were told by mail.',
   'um.request.notice.not-sent': 'The mail to the owners could not be sent. They will see the request in the app.',

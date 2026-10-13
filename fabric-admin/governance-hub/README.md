@@ -75,6 +75,8 @@ How it is built:
   recorded by an admin and marked as such.
 
 Status: implemented with automated tests and an offline demo mode (`VITE_UM_MOCK=true`).
+The demo picks its person with `?as=admin`, `?as=owner` or `?as=user` and keeps what you do
+in the browser tab, so a request filed as one person can be approved as another.
 Run against a real tenant and checked against Entra and Fabric directly: sign-in, discovery,
 activating a group, adding and removing a member, giving, changing and removing a workspace
 role, creating a group, reading audience sharing, and a request filed by one person and
@@ -97,6 +99,8 @@ English and German. Inside a topic the most important rule comes first.
 - **Tailored by a questionnaire.** Under Setup, app admins answer up to fifty optional
   questions (casing, prefixes, name of the measure table, page size and more). The answers
   are stored once for the organization and filled into the text for everyone.
+- **A request states that the guidelines were read.** The request form says so above the
+  Send button and links the guide. A statement only: no checkbox, nothing stored.
 - **Stored answers are treated as untrusted.** The settings table can be written by any
   signed-in person, so only known questions, offered choices and bounded free text are
   accepted. The answers change what the guide says, never what anyone may do.

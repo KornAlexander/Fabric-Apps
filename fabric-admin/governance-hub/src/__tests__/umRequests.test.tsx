@@ -298,13 +298,17 @@ describe('request flow', () => {
   });
 });
 
-function renderApp(persona: 'owner' | 'user', services = createUmServices({ mock: true, adminUserIds: [], defaultProfile: 'simple' }, `?as=${persona}`)) {
+function renderApp(
+  persona: 'owner' | 'user',
+  services = createUmServices({ mock: true, adminUserIds: [], defaultProfile: 'simple' }, `?as=${persona}`),
+  locale: 'en' | 'de' = 'en'
+) {
   const search = `?as=${persona}`;
   void services.store.setSetting(SETTING_MEMBER_CHANGES, true, 'test');
   render(
-    <I18nProvider initialLocale="en">
+    <I18nProvider initialLocale={locale}>
       <AuthProvider authService={new OfflineAuthService(search)}>
-        <MemoryRouter initialEntries={[UM_PATHS.workspaces]}>
+        <MemoryRouter initialEntries={[`${UM_PATHS.workspaces}${search}`]}>
           <UmProvider services={services}>
             <Routes>
               <Route element={<UmLayout />}>{umRouteElements()}</Route>
@@ -318,10 +322,25 @@ function renderApp(persona: 'owner' | 'user', services = createUmServices({ mock
 }
 
 describe('requests in the views', () => {
+  it('states the confirmation in German as one sentence', async () => {
+    renderApp('user', undefined, 'de');
+    await screen.findByRole('heading', { name: 'FAB-Sales-Viewer' });
+    await userEvent.click(screen.getByRole('button', { name: 'Zugriff anfragen' }));
+    const guide = screen.getByRole('link', { name: 'Power BI-Leitfaden (öffnet in einem neuen Tab)' });
+    expect(guide.closest('p')).toHaveTextContent('Mit dem Senden dieser Anfrage bestätigen Sie, den Power BI-Leitfaden ↗ (öffnet in einem neuen Tab) gelesen zu haben.');
+  });
+
   it('lets a user ask for a requestable group and withdraw again', async () => {
     const services = renderApp('user');
     await screen.findByRole('heading', { name: 'FAB-Sales-Viewer' });
     await userEvent.click(screen.getByRole('button', { name: 'Request access' }));
+    // Sending is the confirmation: the form says so and links the guide in a tab of its own.
+    const guide = screen.getByRole('link', { name: 'Power BI Guidelines (opens in a new tab)' });
+    expect(guide.closest('p')).toHaveTextContent('By sending this request you confirm that you have read the Power BI Guidelines ↗ (opens in a new tab).');
+    // The demo person travels with the link, or the new tab would open as somebody else.
+    expect(guide).toHaveAttribute('href', `${UM_PATHS.guidelines}?as=user`);
+    expect(guide).toHaveAttribute('target', '_blank');
+    expect(guide).toHaveAttribute('rel', 'noreferrer');
     await userEvent.click(screen.getByRole('button', { name: 'Send request' }));
     expect(await screen.findByText('Please give a reason of at least 10 characters.')).toBeInTheDocument();
     await userEvent.type(screen.getByLabelText('Why do you need this access?'), 'I work on the sales reports.');

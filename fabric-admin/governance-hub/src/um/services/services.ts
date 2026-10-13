@@ -13,6 +13,7 @@ import type { GroupCreator } from './groupCreation';
 import type { MemberWriter } from './memberChanges';
 import {
   createMockStore,
+  createTabMockStore,
   MOCK_ADMIN_GROUP_ID,
   MockBindingWriter,
   MockDirectoryGateway,
@@ -60,7 +61,12 @@ async function invokeFabric(request: FabricOpRequest): Promise<FabricOpResult> {
   return runFabricOp(token, request, (url, init) => fetch(url, init));
 }
 
-export function createUmServices(env: UmEnv = getUmEnv(), search = typeof window !== 'undefined' ? window.location.search : ''): UmServices {
+export function createUmServices(
+  env: UmEnv = getUmEnv(),
+  search = typeof window !== 'undefined' ? window.location.search : '',
+  /** Offline demo only: where the demo keeps its state across a reload. Without it, memory only. */
+  demoStorage?: Pick<Storage, 'getItem' | 'setItem'>
+): UmServices {
   if (env.mock) {
     return {
       env,
@@ -69,7 +75,7 @@ export function createUmServices(env: UmEnv = getUmEnv(), search = typeof window
       adminUserIds: [],
       directory: new MockDirectoryGateway(readMockPersona(search)),
       fabric: new MockFabricGateway(),
-      store: createMockStore(),
+      store: demoStorage ? createTabMockStore(demoStorage) : createMockStore(),
       writesInBuild: true,
       loadWriter: async () => new MockMemberWriter(),
       loadSender: async () => new MockNoticeSender(),

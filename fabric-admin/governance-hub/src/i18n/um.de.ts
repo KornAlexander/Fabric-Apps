@@ -20,7 +20,7 @@ export const umDe: Record<keyof typeof umEn, string> = {
   'um.search.placeholder': 'name@firma.de',
   'um.search.go': 'Nachschlagen',
 
-  'um.mock.banner': 'Demodaten. Nichts hier stammt aus einem Mandanten und nichts wird geändert.',
+  'um.mock.banner': 'Demodaten. Nichts hier stammt aus einem Mandanten und nichts wird geändert. Was Sie hier tun, bleibt in diesem Browser-Tab.',
   'um.graph.connecting': 'Microsoft-Anmeldung wird geprüft…',
   'um.graph.needsSignIn': 'Mit Microsoft Graph verbinden, um Ihre Gruppen zu sehen.',
   'um.graph.connect': 'Verbinden',
@@ -160,6 +160,10 @@ export const umDe: Record<keyof typeof umEn, string> = {
   'um.request.reason': 'Wofür benötigen Sie diesen Zugriff?',
   'um.request.reviewDate': 'Vorgeschlagenes Überprüfungsdatum (optional)',
   'um.request.submit': 'Anfrage senden',
+  // Zusammengesetzt als: before, Leerzeichen, Link, after. 'after' beginnt hier mit einem eigenen Leerzeichen.
+  'um.request.confirm.before': 'Mit dem Senden dieser Anfrage bestätigen Sie, den',
+  'um.request.confirm.link': 'Power BI-Leitfaden',
+  'um.request.confirm.after': ' gelesen zu haben.',
   'um.request.submitted': 'Ihre Anfrage wurde gesendet.',
   'um.request.notice.sent': 'Die Besitzer wurden per E-Mail informiert.',
   'um.request.notice.not-sent': 'Die E-Mail an die Besitzer konnte nicht gesendet werden. Sie sehen die Anfrage in der App.',

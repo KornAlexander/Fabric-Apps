@@ -24,7 +24,7 @@ Three tabs are about access:
 
 Each tab has two lists: **Groups you manage** (you are an owner of the group) and **Available groups** (groups that are open for requests).
 
-A fourth tab, **Power BI Guidelines**, is a reference and has nothing to do with access. It holds best practices for building semantic models and reports: data integration, data modeling and data visualization, with the Tabular Style Guide as part of data modeling, and drawings that show the rules. Inside a topic the most important rule comes first. You can search it. Where your organization has recorded its own conventions, for example the casing of names or the name of the measure table, they are filled into the text and marked. An app admin records them in **Setup**, under Power BI Guidelines. The guide exists in English and German and follows the language of the interface.
+A fourth tab, **Power BI Guidelines**, is a reference. It grants nothing and blocks nothing; a request for access only states that you have read it. It holds best practices for building semantic models and reports: data integration, data modeling and data visualization, with the Tabular Style Guide as part of data modeling, and drawings that show the rules. Inside a topic the most important rule comes first. You can search it. Where your organization has recorded its own conventions, for example the casing of names or the name of the measure table, they are filled into the text and marked. An app admin records them in **Setup**, under Power BI Guidelines. The guide exists in English and German and follows the language of the interface.
 
 ## First time
 
@@ -68,7 +68,7 @@ After a change the app reads the group again and tells you "confirmed" or "accep
 1. Open the tab that fits and look under **Available groups**.
 2. Read what the group opens. Choose **Request access**.
 3. Say **why you need this access**, in at least a few words. Optionally suggest a review date.
-4. Choose **Send request**. The owners see your request in the app. If you allow it, they also get a mail sent from your own mailbox.
+4. Choose **Send request**. By sending you confirm that you have read the **Power BI Guidelines**; the form says so and links them, and they open in a tab of their own. The owners see your request in the app. If you allow it, they also get a mail sent from your own mailbox.
 
 You can **Withdraw** a request as long as nobody has decided it.
 

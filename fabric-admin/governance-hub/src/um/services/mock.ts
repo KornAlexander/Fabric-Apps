@@ -48,6 +48,8 @@ const USERS = {
   anna: { id: id('11111111', 4), name: 'Anna Analyst', upn: 'anna.analyst@contoso.example' },
   ben: { id: id('11111111', 5), name: 'Ben Berater', upn: 'ben.berater@contoso.example' },
   guest: { id: id('11111111', 6), name: 'Gina Guest', upn: 'gina_partner.example#EXT#@contoso.example' },
+  // In no group at the start: someone an owner can add in the demo.
+  carla: { id: id('11111111', 7), name: 'Carla Controller', upn: 'carla.controller@contoso.example' },
 } as const;
 
 export type MockPersona = 'admin' | 'owner' | 'user';
@@ -248,9 +250,11 @@ const MOCK_ALIASES = new Map<string, string>();
 export class MockGroupCreator implements GroupCreator {
   private count = 0;
   async create(group: NewGroup, actorObjectId: string): Promise<CreateOutcome> {
-    this.count += 1;
-    // A range of its own: the fixtures use other first blocks.
-    const id = `99999999-0000-4000-8000-${String(this.count).padStart(12, '0')}`;
+    // A range of its own: the fixtures use other first blocks. The demo may have kept groups from before a reload.
+    const idOf = (n: number) => `99999999-0000-4000-8000-${String(n).padStart(12, '0')}`;
+    do this.count += 1;
+    while (GROUPS[idOf(this.count)]);
+    const id = idOf(this.count);
     const people = Object.values(USERS);
     const owners = [actorObjectId, ...group.ownerIds]
       .map((oid) => people.find((u) => u.id === oid.toLowerCase()))
@@ -258,6 +262,7 @@ export class MockGroupCreator implements GroupCreator {
       .map((u) => user(u));
     GROUPS[id] = { facts: securityGroup(id, group.displayName, group.description), owners, members: [] };
     MOCK_ALIASES.set(id, group.mailNickname);
+    saveDemoState();
     return { ok: true, id };
   }
 }
@@ -276,6 +281,7 @@ export class MockMemberWriter implements MemberWriter {
       if (!isMember) return { ok: false, code: 'not-member' };
       group.members = group.members.filter((m) => m.id !== person.id);
     }
+    saveDemoState();
     return { ok: true };
   }
 }
@@ -341,6 +347,69 @@ export function createMockStore(): MemoryUmStore {
   return new MemoryUmStore({ groups, bindings });
 }
 
+/* ───────────────── keeping the demo across a reload ───────────────── */
+
+const DEMO_STATE_KEY = 'um.demo.state';
+const DEMO_STATE_VERSION = 1;
+let saveDemoState: () => void = () => {};
+
+/** A short mark of a text. Only to tell two fixture sets apart, nothing depends on it being unguessable. */
+function markOf(text: string): string {
+  let hash = 5381;
+  for (let i = 0; i < text.length; i += 1) hash = ((hash << 5) + hash + text.charCodeAt(i)) | 0;
+  return `${text.length}.${hash >>> 0}`;
+}
+
+/**
+ * Offline demo only. The demo picks its person with `?as=`, which loads the page
+ * again, and a fresh page would forget every request and change. With this the
+ * state lives in the browser tab (session storage), so one person can file a
+ * request and another can decide it. Closing the tab starts over. Tests and a
+ * deployment never come here.
+ */
+export function createTabMockStore(storage: Pick<Storage, 'getItem' | 'setItem'>): MemoryUmStore {
+  const store = createMockStore();
+  // What the fixtures look like in THIS build, before anything is restored. A tab that still holds
+  // the state of an older build would otherwise hide every fixture added since.
+  const fixtures = markOf(JSON.stringify([GROUPS, ROLES, store.snapshot()]));
+  try {
+    const saved = JSON.parse(storage.getItem(DEMO_STATE_KEY) ?? 'null');
+    if (saved?.version === DEMO_STATE_VERSION && saved.fixtures === fixtures) {
+      store.restore(saved.store);
+      Object.assign(GROUPS, saved.groups);
+      Object.assign(ROLES, saved.roles);
+      for (const [id, alias] of saved.aliases as [string, string][]) MOCK_ALIASES.set(id, alias);
+    }
+  } catch {
+    // A missing or broken snapshot: the demo starts from the fixtures.
+  }
+  saveDemoState = () => {
+    try {
+      storage.setItem(
+        DEMO_STATE_KEY,
+        JSON.stringify({ version: DEMO_STATE_VERSION, fixtures, store: store.snapshot(), groups: GROUPS, roles: ROLES, aliases: [...MOCK_ALIASES] })
+      );
+    } catch {
+      // Storage full or blocked: the demo works on, it just forgets on reload.
+    }
+  };
+  // Every call that may have changed the store is followed by a save. Reads are cheap to save after, too.
+  return new Proxy(store, {
+    get(target, prop) {
+      const value = Reflect.get(target, prop, target);
+      if (typeof value !== 'function') return value;
+      return (...args: unknown[]) => {
+        const result = (value as (...a: unknown[]) => unknown).apply(target, args);
+        if (!(result instanceof Promise)) return result;
+        return result.then((settled) => {
+          saveDemoState();
+          return settled;
+        });
+      };
+    },
+  });
+}
+
 export const MOCK_SESSION_USER = (persona: MockPersona) => ({
   id: USERS[persona].id,
   email: USERS[persona].upn,
@@ -364,6 +433,7 @@ export class MockBindingWriter implements BindingWriter {
     if (change.action === 'add') {
       const name = GROUPS[change.groupId]?.facts.displayName ?? change.groupId;
       ROLES[change.workspaceId] = ok([...roles.value, { id: change.groupId, principalId: change.groupId, principalType: 'Group', principalName: name, role: change.role }]);
+      saveDemoState();
       return { ok: true };
     }
     if (!roles.value.some((a) => a.id === change.assignmentId)) return { ok: false, code: 'not-found' };
@@ -372,6 +442,7 @@ export class MockBindingWriter implements BindingWriter {
         ? roles.value.filter((a) => a.id !== change.assignmentId)
         : roles.value.map((a) => (a.id === change.assignmentId ? { ...a, role: change.role } : a))
     );
+    saveDemoState();
     return { ok: true };
   }
 }
