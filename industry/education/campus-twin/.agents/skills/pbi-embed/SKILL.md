@@ -1,6 +1,6 @@
 ---
 name: pbi-embed
-description: "Use when a Power BI report page should open inside a web app (a Rayfin or Fabric app) as a floating window or panel, filtered to the thing the user clicked: a building, a station, a customer. Triggers: embed a Power BI report, report window, reportEmbed, secure embed, autoAuth, filter a report by URL, pageName, open the report for this building, report in an iframe, sign-in inside the frame, second language for a report, formatLocale, publish a PBIR report by script, Direct Lake report next to a 3D scene."
+description: "Use when a Power BI report page should open inside a Fabric App as a floating window or panel, filtered to the thing the user clicked: a building, a station, a customer. Triggers: embed a Power BI report, report window, reportEmbed, secure embed, autoAuth, filter a report by URL, pageName, open the report for this building, report in an iframe, sign-in inside the frame, second language for a report, formatLocale, publish a PBIR report by script, Direct Lake report next to a 3D scene."
 ---
 
 # Power BI report window in an app
