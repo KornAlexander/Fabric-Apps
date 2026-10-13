@@ -621,7 +621,7 @@ export const umDe: Record<keyof typeof umEn, string> = {
   'um.gl.kicker': 'Bewährte Methoden',
   'um.gl.title': 'Power BI-Leitfaden',
   'um.gl.tagline':
-    'Ein Nachschlagewerk für Power BI-Lösungen: Datenintegration, Datenmodellierung, Berichtsdesign und Wartung. Nutzen Sie es als Checkliste, wenn Sie ein semantisches Modell oder einen Bericht entwerfen.',
+    'Ein Nachschlagewerk für Power BI-Lösungen: Datenintegration, Datenmodellierung und Datenvisualisierung. In jedem Thema steht die wichtigste Regel zuerst. Nutzen Sie es als Checkliste, wenn Sie ein semantisches Modell oder einen Bericht entwerfen.',
   'um.gl.stat.areas': 'Bereiche',
   'um.gl.stat.topics': 'Themen',
   'um.gl.stat.rules': 'Regeln',

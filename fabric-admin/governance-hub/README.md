@@ -85,10 +85,11 @@ Guides: [setup in a tenant](docs/FABRIC-USER-MANAGER-SETUP.md) ·
 
 ## Power BI Guidelines
 
-A reference inside the app: data integration, data modeling, report design, maintenance and
-the Tabular Style Guide. Five areas, 23 topics, 216 rules, searchable, in English and German.
+A reference inside the app in three areas: data integration, data modeling (with the Tabular
+Style Guide as its last topic) and data visualization. 19 topics, 169 rules, searchable, in
+English and German. Inside a topic the most important rule comes first.
 
-- **26 drawings, each under the rule it shows**: the three connection modes ranked (Import
+- **26 drawings, next to the rule or topic they show**: the three connection modes ranked (Import
   first, Direct Lake if needed, Direct Query almost never), star against snowflake, filter
   direction, where logic belongs, DIVIDE, VAR and SWITCH, the three-line title, horizontal
   for structure and vertical for time, plan / previous year / actual, deviations in red and

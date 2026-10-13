@@ -606,7 +606,7 @@ export const umEn = {
   'um.gl.kicker': 'Best practices',
   'um.gl.title': 'Power BI Guidelines',
   'um.gl.tagline':
-    'One reference for building Power BI solutions: data integration, data modeling, report design and maintenance. Use it as a checklist when you design a semantic model or a report.',
+    'One reference for building Power BI solutions: data integration, data modeling and data visualization. Inside every topic the most important rule comes first. Use it as a checklist when you design a semantic model or a report.',
   'um.gl.stat.areas': 'Areas',
   'um.gl.stat.topics': 'Topics',
   'um.gl.stat.rules': 'Rules',

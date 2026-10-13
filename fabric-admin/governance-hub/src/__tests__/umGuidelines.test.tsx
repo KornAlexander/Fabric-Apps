@@ -95,8 +95,11 @@ function shape(sections: GuideSection[]): unknown {
 }
 
 describe('guideline content', () => {
-  it('has five areas with unique ids and topic numbers', () => {
-    expect(SECTIONS.map((s) => s.num)).toEqual(['1', '2', '3', '4', '5']);
+  it('has three areas with unique ids and topic numbers', () => {
+    expect(SECTIONS.map((s) => s.title)).toEqual(['Data Integration', 'Data Modeling', 'Data Visualization']);
+    expect(SECTIONS.map((s) => s.num)).toEqual(['1', '2', '3']);
+    // The style guide is the last topic of the model area, not an area of its own.
+    expect(SECTIONS[1].subs[SECTIONS[1].subs.length - 1].title).toBe('Tabular Style Guide');
     expect(new Set(SECTIONS.map((s) => s.id)).size).toBe(SECTIONS.length);
     const nums = SECTIONS.flatMap((s) => s.subs.map((sub) => sub.num));
     expect(new Set(nums).size).toBe(nums.length);
@@ -118,11 +121,11 @@ describe('guideline content', () => {
       for (const place of Object.keys(FIGURE_PLACES)) expect(places.has(place), place).toBe(true);
     }
     // A rule keeps its place when a search narrows the list around it.
-    const found = searchGuide(sectionsFor('en'), 'SWITCH', {}).flatMap((s) => s.subs.flatMap((sub) => sub.items.map((item) => item.place)));
-    expect(found).toEqual(['2.2/3']);
+    const found = searchGuide(sectionsFor('en'), 'nested IF', {}).flatMap((s) => s.subs.flatMap((sub) => sub.items.map((item) => item.place)));
+    expect(found).toEqual(['2.6/3']);
     // Also when only something below the rule matches.
-    const below = searchGuide(sectionsFor('en'), 'galaxy schema', {}).flatMap((s) => s.subs.flatMap((sub) => sub.items.map((item) => item.place)));
-    expect(below).toEqual(['2.1/7']);
+    const below = searchGuide(sectionsFor('en'), 'Outlined bar', {}).flatMap((s) => s.subs.flatMap((sub) => sub.items.map((item) => item.place)));
+    expect(below).toEqual(['3.3/3']);
   });
 
   it('links only to https addresses', () => {
@@ -137,7 +140,7 @@ describe('guideline content', () => {
     expect(sectionsFor('de').map((s) => s.title)).toEqual(SECTIONS_DE.map((s) => s.title));
     expect(sectionsFor('en').map((s) => s.title)).toEqual(SECTIONS.map((s) => s.title));
     // Translated, not copied: the area titles differ, and most of the prose does.
-    for (let i = 0; i < SECTIONS.length - 1; i += 1) expect(SECTIONS_DE[i].title).not.toBe(SECTIONS[i].title);
+    for (let i = 0; i < SECTIONS.length; i += 1) expect(SECTIONS_DE[i].title).not.toBe(SECTIONS[i].title);
     const en = textsOf(SECTIONS);
     const same = textsOf(SECTIONS_DE).filter((text, i) => text !== '' && text === en[i]);
     expect(same.length).toBeLessThan(25);
@@ -288,10 +291,14 @@ describe('filling in and searching', () => {
   it('narrows the guide to what mentions the query, including filled-in answers', () => {
     expect(searchGuide(SECTIONS, '  ', answers)).toHaveLength(SECTIONS.length);
     const divide = searchGuide(SECTIONS, 'divide', answers);
-    expect(divide.flatMap((s) => s.subs.map((sub) => sub.num))).toEqual(['2.2']);
+    expect(divide.flatMap((s) => s.subs.map((sub) => sub.num))).toEqual(['2.6']);
     // A match on the topic title keeps the whole topic.
-    expect(searchGuide(SECTIONS, 'Hierarchies', answers).flatMap((s) => s.subs.map((sub) => sub.num))).toContain('5.6');
-    expect(searchGuide(SECTIONS, 'kennzahlen', answers).flatMap((s) => s.subs.map((sub) => sub.num))).toEqual(['2.3']);
+    // A match on a group inside the style guide keeps that group, not the whole topic.
+    const hierarchies = searchGuide(SECTIONS, 'Hierarchies', answers);
+    expect(hierarchies.flatMap((s) => s.subs.map((sub) => sub.num))).toEqual(['2.11']);
+    expect(hierarchies[0].subs[0].items.map((item) => item.title)).toEqual(['Hierarchies']);
+    expect(searchGuide(SECTIONS, 'Tabular Style Guide', answers).flatMap((s) => s.subs).find((sub) => sub.num === '2.11')?.items.length).toBe(9);
+    expect(searchGuide(SECTIONS, 'kennzahlen', answers).flatMap((s) => s.subs.map((sub) => sub.num))).toEqual(['2.5']);
     expect(searchGuide(SECTIONS, 'kennzahlen', {})).toEqual([]);
     expect(searchGuide(SECTIONS, 'no such thing anywhere', answers)).toEqual([]);
   });
@@ -321,13 +328,13 @@ describe('the Power BI Guidelines tab', () => {
     renderApp('user', UM_PATHS.guidelines);
     await user.type(await screen.findByRole('searchbox', { name: 'Search the guidelines' }), 'treatas');
     expect(screen.getByText('1 topics mention this.')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 4, name: 'DAX: Data Analysis Expressions' })).toBeInTheDocument();
-    expect(screen.queryByRole('heading', { level: 3, name: 'Report Design' })).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 4, name: 'DAX' })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { level: 3, name: 'Data Visualization' })).not.toBeInTheDocument();
     await user.clear(screen.getByRole('searchbox', { name: 'Search the guidelines' }));
     await user.type(screen.getByRole('searchbox', { name: 'Search the guidelines' }), 'zzzz');
     expect(screen.getByText('Nothing in the guidelines mentions this.')).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Show everything' }));
-    expect(screen.getByRole('heading', { level: 3, name: 'Report Design' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 3, name: 'Data Visualization' })).toBeInTheDocument();
   });
 
   it('shows stored conventions in the text, and ignores what does not belong there', async () => {
@@ -362,7 +369,7 @@ describe('the Power BI Guidelines tab', () => {
     renderApp('user', UM_PATHS.guidelines, { locale: 'de', services });
     expect(await screen.findByRole('heading', { level: 2, name: 'Power BI-Leitfaden' })).toBeInTheDocument();
     for (const section of SECTIONS_DE) expect(screen.getByRole('heading', { level: 3, name: section.title })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 4, name: 'Namenskonventionen' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 4, name: 'Benennung: das Wichtigste' })).toBeInTheDocument();
     expect(screen.queryByRole('heading', { level: 3, name: 'Data Modeling' })).not.toBeInTheDocument();
     // The drawings: words and numbers.
     expect(screen.getByRole('img', { name: /Sternschema: eine Faktentabelle, direkt mit vier Dimensionen verbunden/ })).toBeInTheDocument();
@@ -380,8 +387,8 @@ describe('the Power BI Guidelines tab', () => {
     expect(within(summary).getByText('Nein')).toBeInTheDocument();
     // Search runs over the German text.
     await user.type(screen.getByRole('searchbox', { name: 'Leitfaden durchsuchen' }), 'Sternschema');
-    expect(screen.getByRole('heading', { level: 4, name: 'Allgemeine Datenmodellierung' })).toBeInTheDocument();
-    expect(screen.queryByRole('heading', { level: 3, name: 'Berichtsdesign' })).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 4, name: 'Schema' })).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { level: 3, name: 'Datenvisualisierung' })).not.toBeInTheDocument();
   });
 });
 

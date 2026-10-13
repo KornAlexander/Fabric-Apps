@@ -31,15 +31,6 @@ const ICONS: Record<SectionIcon, ReactElement> = {
     </>
   ),
   report: <path d="M4 20V4M4 20h16M8 17v-6M12 17V7M16 17v-4" />,
-  other: (
-    <>
-      <path d="M4 7h10M18 7h2M4 12h3M11 12h9M4 17h12M20 17h0" />
-      <circle cx="16" cy="7" r="2" />
-      <circle cx="9" cy="12" r="2" />
-      <circle cx="18" cy="17" r="2" />
-    </>
-  ),
-  style: <path d="M3 17 7.5 6 12 17M4.7 13h5.6M14 17v-5.5a2.5 2.5 0 0 1 5 0V17M14 14.5c0-1.4 1.1-2.5 2.5-2.5H19" />,
 };
 
 function Icon({ name }: { name: SectionIcon }) {

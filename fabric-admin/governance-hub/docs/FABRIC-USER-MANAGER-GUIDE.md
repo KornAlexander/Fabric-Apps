@@ -24,7 +24,7 @@ Three tabs are about access:
 
 Each tab has two lists: **Groups you manage** (you are an owner of the group) and **Available groups** (groups that are open for requests).
 
-A fourth tab, **Power BI Guidelines**, is a reference and has nothing to do with access. It holds best practices for building semantic models and reports: data integration, data modeling, report design, maintenance and the Tabular Style Guide, with drawings that show the rules. You can search it. Where your organization has recorded its own conventions, for example the casing of names or the name of the measure table, they are filled into the text and marked. An app admin records them in **Setup**, under Power BI Guidelines. The guide exists in English and German and follows the language of the interface.
+A fourth tab, **Power BI Guidelines**, is a reference and has nothing to do with access. It holds best practices for building semantic models and reports: data integration, data modeling and data visualization, with the Tabular Style Guide as part of data modeling, and drawings that show the rules. Inside a topic the most important rule comes first. You can search it. Where your organization has recorded its own conventions, for example the casing of names or the name of the measure table, they are filled into the text and marked. An app admin records them in **Setup**, under Power BI Guidelines. The guide exists in English and German and follows the language of the interface.
 
 ## First time
 
