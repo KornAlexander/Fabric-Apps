@@ -60,6 +60,10 @@ npx rayfin up --workspace-id <your-workspace-guid> --tenant <your-tenant-guid>
 
 Before the first sign-in it needs an app registration and an administrator's consent. The setup guide in the repository walks through both.
 
+**Three-minute video:** https://youtu.be/1NQXngCOqIw
+
+**The longer story:** https://actionablereporting.com/2026/10/13/fabric-user-manager-access-to-fabric-without-a-ticket/
+
 **Source, and always the latest version:** https://github.com/KornAlexander/Fabric-Apps/tree/main/fabric-admin/governance-hub
 
 **How it is built:** https://kornalexander.github.io/Fabric-Apps/apps/governance-hub/
