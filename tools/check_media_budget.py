@@ -41,6 +41,10 @@ ACCEPTED_CHURN: dict[str, tuple[int, str]] = {
     # Accepted so the gate job stops blocking every app build in CI.
     "docs/media/paragliding-insights-demo.gif": (6, "paragliding re-records up to 2026-10-02"),
     "docs/media/paragliding-insights-demo.mp4": (6, "paragliding re-records up to 2026-10-02"),
+    # 2026-10-13: the preview was replaced a second time when the app was re-presented as Fabric User
+    # Manager ("feat(governance-hub): ... gallery entry as Fabric User Manager"). That push ran this
+    # check before counting the new replacement. Accepted; the demo media of this app stays as it is now.
+    "docs/previews/governance-hub.webp": (2, "Fabric User Manager re-presentation, 2026-10-13"),
 }
 
 

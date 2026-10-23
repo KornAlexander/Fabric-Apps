@@ -40,6 +40,7 @@ Apps that inspect, document or administer the data platform itself.
 | | App | What it does |
 |---|---|---|
 | <img src="docs/previews/data-catalog.webp" width="220" alt="Data Catalog preview"> | **[Data Catalog](fabric-admin/data-catalog/)** | A browsable catalogue of every item in your Fabric tenant, with lineage and ownership. |
+| <img src="fabric-admin/fabric-user-manager/docs/preview.webp" width="220" alt="Fabric User Manager preview"> | **[Fabric User Manager](fabric-admin/fabric-user-manager/)** | Owners manage the Entra groups behind workspace roles, app audiences and RLS/OLS; colleagues request access with a reason the owner approves. Runs as the signed-in person. |
 | <img src="docs/previews/governance-hub.webp" width="220" alt="Governance Hub preview"> | **[Governance Hub](fabric-admin/governance-hub/)** | Tenant settings, capacity and access posture in one place, collected on a schedule. |
 | <img src="docs/previews/pbi-fixer.webp" width="220" alt="Power BI Fixer preview"> | **[Power BI Fixer](fabric-admin/pbi-fixer/)** | A whole Power BI toolbench in the browser: model and report explorers, BPA with one-click fixes, memory analysis, AI translations, PBIR prototyping and workspace automation. |
 

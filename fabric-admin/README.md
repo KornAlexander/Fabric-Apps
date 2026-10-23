@@ -6,6 +6,7 @@ is broken in a Power BI report.
 | App | What it is |
 |---|---|
 | [data-catalog](data-catalog/) | see its README |
+| [fabric-user-manager](fabric-user-manager/) | see its README |
 | [governance-hub](governance-hub/) | see its README |
 | [pbi-fixer](pbi-fixer/) | see its README |
 
