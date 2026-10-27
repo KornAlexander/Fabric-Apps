@@ -1,0 +1,32 @@
+id: power-bi-guidelines
+name: Power BI Guidelines
+version: 0.1.0
+services:
+  # The app reads and writes nothing on the server. Fabric sign-in stays on as
+  # the platform expects; the page itself never asks for it.
+  auth:
+    enabled: true
+    fabric:
+      enabled: true
+    password:
+      enabled: false
+    # ⚠️ `rayfin up` rewrites this file and will re-add whatever host it just deployed to.
+    # That host is tenant- and item-specific, so it must not travel into a public repo — check
+    # this list before publishing. Whoever deploys adds their own `https://<their-app-host>`.
+    allowedRedirectUris:
+      - http://localhost:5173
+      - <your-app-host>.webapp.fabricapps.net
+  data:
+    enabled: false
+  staticHosting:
+    enabled: true
+    folder: dist
+    buildCommand: npm run build:fabric
+    indexDocument: index.html
+    # `public`: anyone with the link gets the files. They hold the guide and
+    # nothing else; a team's answers stay in each browser.
+    assetAccess: public
+  storage:
+    enabled: false
+  functions:
+    enabled: false

@@ -9,5 +9,6 @@ is broken in a Power BI report.
 | [fabric-user-manager](fabric-user-manager/) | see its README |
 | [governance-hub](governance-hub/) | see its README |
 | [pbi-fixer](pbi-fixer/) | see its README |
+| [power-bi-guidelines](power-bi-guidelines/) | see its README |
 
 Every app deploys with `npx rayfin up`. See the [repository README](../README.md) for the full index.
