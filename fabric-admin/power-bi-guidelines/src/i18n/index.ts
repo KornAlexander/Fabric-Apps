@@ -38,7 +38,7 @@ function substitute(template: string, params?: Record<string, string | number>):
   );
 }
 
-/** Translate without React — for services, tests and error paths. */
+/** Translate without React, for services, tests and error paths. */
 export function translate(
   locale: Locale,
   key: TranslationKey,

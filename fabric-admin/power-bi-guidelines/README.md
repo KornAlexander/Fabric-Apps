@@ -46,7 +46,7 @@ src/guidelines/   content (EN and DE), questions, drawings, the answer sanitizer
 src/html/         the plain HTML page and its renderer
 src/i18n/         the two string catalogues
 tools/            build-html.mjs, which writes the plain HTML files
-rayfin/           deployment config; redirect URIs are loopback only
+rayfin/           deployment config; redirect URIs: loopback plus your own app host
 ```
 
 ## Scripts

@@ -10,12 +10,12 @@ services:
       enabled: true
     password:
       enabled: false
-    # ⚠️ `rayfin up` rewrites this file and will re-add whatever host it just deployed to.
-    # That host is tenant- and item-specific, so it must not travel into a public repo — check
+    # Note: `rayfin up` rewrites this file and will re-add whatever host it just deployed to.
+    # That host is tenant- and item-specific, so it must not travel into a public repo. Check
     # this list before publishing. Whoever deploys adds their own `https://<their-app-host>`.
     allowedRedirectUris:
       - http://localhost:5173
-      - <your-app-host>.webapp.fabricapps.net
+      - https://<your-app-host>.webapp.fabricapps.net
   data:
     enabled: false
   staticHosting:
