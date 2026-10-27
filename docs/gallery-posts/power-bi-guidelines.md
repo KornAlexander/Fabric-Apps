@@ -2,15 +2,15 @@
 app: fabric-admin/power-bi-guidelines
 slug: power-bi-guidelines
 title: "Power BI Guidelines: one reference, tailored to your team"
-galleryUrl:            # filled in once the post is live
-status: draft
+galleryUrl: https://community.fabric.microsoft.com/discussions/pbi_fabricappsgallery/power-bi-guidelines-one-reference-tailored-to-your-team/5377650
+status: published
 assetsReady: true
 assets:
   - docs/previews/power-bi-guidelines.webp
   - docs/media/power-bi-guidelines-demo.gif
 ---
 
-<!-- Demo recorded on 2026-10-27 from the deployed app.
+<!-- Demo recorded on 2026-10-27 from the deployed app. Published to the gallery on 2026-10-27.
      To stage it: python tools/build_submissions.py power-bi-guidelines  -> submissions/power-bi-guidelines/ -->
 
 # Power BI Guidelines: one reference, tailored to your team
