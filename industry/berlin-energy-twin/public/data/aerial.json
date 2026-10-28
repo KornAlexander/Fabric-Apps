@@ -1,0 +1,710 @@
+{
+  "source": "Geoportal Berlin, Digitale farbige TrueOrthophotos Sommer 2025 (TrueDOP20RGB), WMS truedop_2025_sommer",
+  "attribution": "Geoportal Berlin / TrueDOP Sommer 2025",
+  "licence": "Datenlizenz Deutschland - Zero - Version 2.0",
+  "url": "https://www.govdata.de/dl-de/zero-2-0",
+  "patches": [
+    {
+      "id": "base",
+      "file": "aerial-base.webp",
+      "bounds": {
+        "west": 13.08,
+        "east": 13.77,
+        "south": 52.33,
+        "north": 52.68
+      },
+      "zoom": 12,
+      "fullPx": [
+        4251,
+        3543
+      ],
+      "shippedPx": [
+        4096,
+        3414
+      ],
+      "sourceMetresPerPixel": 11.0,
+      "metresPerPixel": 11.416,
+      "imageryOnly": true,
+      "tiles": {
+        "ok": 6,
+        "total": 6
+      }
+    },
+    {
+      "id": "marienfelde",
+      "file": "aerial-marienfelde.webp",
+      "bounds": {
+        "west": 13.34023,
+        "east": 13.36233,
+        "south": 52.40246,
+        "north": 52.41596
+      },
+      "zoom": 18,
+      "fullPx": [
+        7504,
+        7515
+      ],
+      "shippedPx": [
+        4090,
+        4096
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.367,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 16,
+        "total": 16
+      }
+    },
+    {
+      "id": "gropiusstadt",
+      "file": "aerial-gropiusstadt.webp",
+      "bounds": {
+        "west": 13.44395,
+        "east": 13.48741,
+        "south": 52.41765,
+        "north": 52.43858
+      },
+      "zoom": 17,
+      "fullPx": [
+        14750,
+        11650
+      ],
+      "shippedPx": [
+        4096,
+        3235
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.72,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 48,
+        "total": 48
+      }
+    },
+    {
+      "id": "marzahn_bvg-marzahn",
+      "file": "aerial-marzahn_bvg-marzahn.webp",
+      "bounds": {
+        "west": 13.53795,
+        "east": 13.58693,
+        "south": 52.53504,
+        "north": 52.55796
+      },
+      "zoom": 17,
+      "fullPx": [
+        16579,
+        12758
+      ],
+      "shippedPx": [
+        4096,
+        3152
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.81,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 63,
+        "total": 63
+      }
+    },
+    {
+      "id": "brunnenviertel_bvg-usedomer",
+      "file": "aerial-brunnenviertel_bvg-usedomer.webp",
+      "bounds": {
+        "west": 13.37705,
+        "east": 13.40421,
+        "south": 52.53169,
+        "north": 52.55036
+      },
+      "zoom": 17,
+      "fullPx": [
+        9195,
+        10392
+      ],
+      "shippedPx": [
+        3624,
+        4096
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.507,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 30,
+        "total": 30
+      }
+    },
+    {
+      "id": "bvg-muellerstrasse",
+      "file": "aerial-bvg-muellerstrasse.webp",
+      "bounds": {
+        "west": 13.33282,
+        "east": 13.3431,
+        "south": 52.55744,
+        "north": 52.56401
+      },
+      "zoom": 18,
+      "fullPx": [
+        3479,
+        3657
+      ],
+      "shippedPx": [
+        3479,
+        3657
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.2,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 4,
+        "total": 4
+      }
+    },
+    {
+      "id": "bvg-machandelweg",
+      "file": "aerial-bvg-machandelweg.webp",
+      "bounds": {
+        "west": 13.248,
+        "east": 13.25519,
+        "south": 52.51736,
+        "north": 52.52196
+      },
+      "zoom": 18,
+      "fullPx": [
+        2436,
+        2561
+      ],
+      "shippedPx": [
+        2436,
+        2561
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.2,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 4,
+        "total": 4
+      }
+    },
+    {
+      "id": "bvg-indira",
+      "file": "aerial-bvg-indira.webp",
+      "bounds": {
+        "west": 13.46552,
+        "east": 13.47746,
+        "south": 52.54075,
+        "north": 52.54851
+      },
+      "zoom": 18,
+      "fullPx": [
+        4042,
+        4320
+      ],
+      "shippedPx": [
+        3832,
+        4096
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.211,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 6,
+        "total": 6
+      }
+    },
+    {
+      "id": "bvg-koepenick",
+      "file": "aerial-bvg-koepenick.webp",
+      "bounds": {
+        "west": 13.5767,
+        "east": 13.58469,
+        "south": 52.43706,
+        "north": 52.4416
+      },
+      "zoom": 18,
+      "fullPx": [
+        2712,
+        2527
+      ],
+      "shippedPx": [
+        2712,
+        2527
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.2,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 4,
+        "total": 4
+      }
+    },
+    {
+      "id": "bvg-trebbiner",
+      "file": "aerial-bvg-trebbiner.webp",
+      "bounds": {
+        "west": 13.37297,
+        "east": 13.38063,
+        "south": 52.49676,
+        "north": 52.50118
+      },
+      "zoom": 18,
+      "fullPx": [
+        2596,
+        2461
+      ],
+      "shippedPx": [
+        2596,
+        2461
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.2,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 4,
+        "total": 4
+      }
+    },
+    {
+      "id": "bvg-friedrichsfelde",
+      "file": "aerial-bvg-friedrichsfelde.webp",
+      "bounds": {
+        "west": 13.51118,
+        "east": 13.52309,
+        "south": 52.49755,
+        "north": 52.50686
+      },
+      "zoom": 18,
+      "fullPx": [
+        4036,
+        5182
+      ],
+      "shippedPx": [
+        3190,
+        4096
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.253,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 6,
+        "total": 6
+      }
+    },
+    {
+      "id": "bvg-lichtenberg",
+      "file": "aerial-bvg-lichtenberg.webp",
+      "bounds": {
+        "west": 13.49657,
+        "east": 13.50788,
+        "south": 52.51643,
+        "north": 52.52411
+      },
+      "zoom": 18,
+      "fullPx": [
+        3831,
+        4275
+      ],
+      "shippedPx": [
+        3671,
+        4096
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.209,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 6,
+        "total": 6
+      }
+    },
+    {
+      "id": "bvg-cicerostrasse",
+      "file": "aerial-bvg-cicerostrasse.webp",
+      "bounds": {
+        "west": 13.29862,
+        "east": 13.30708,
+        "south": 52.48925,
+        "north": 52.49617
+      },
+      "zoom": 18,
+      "fullPx": [
+        2868,
+        3852
+      ],
+      "shippedPx": [
+        2868,
+        3852
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.2,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 4,
+        "total": 4
+      }
+    },
+    {
+      "id": "bvg-schoeneweide_bvg-treptow_bvg-rummelsburger",
+      "file": "aerial-bvg-schoeneweide_bvg-treptow_bvg-rummelsburger.webp",
+      "bounds": {
+        "west": 13.49343,
+        "east": 13.51289,
+        "south": 52.46234,
+        "north": 52.47502
+      },
+      "zoom": 18,
+      "fullPx": [
+        6599,
+        7058
+      ],
+      "shippedPx": [
+        3830,
+        4096
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.345,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 16,
+        "total": 16
+      }
+    },
+    {
+      "id": "bvg-conrad-blenkle",
+      "file": "aerial-bvg-conrad-blenkle.webp",
+      "bounds": {
+        "west": 13.44268,
+        "east": 13.44989,
+        "south": 52.53124,
+        "north": 52.53583
+      },
+      "zoom": 18,
+      "fullPx": [
+        2442,
+        2555
+      ],
+      "shippedPx": [
+        2442,
+        2555
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.2,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 4,
+        "total": 4
+      }
+    },
+    {
+      "id": "bvg-puccini",
+      "file": "aerial-bvg-puccini.webp",
+      "bounds": {
+        "west": 13.45178,
+        "east": 13.45899,
+        "south": 52.54251,
+        "north": 52.54709
+      },
+      "zoom": 18,
+      "fullPx": [
+        2441,
+        2550
+      ],
+      "shippedPx": [
+        2441,
+        2550
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.2,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 4,
+        "total": 4
+      }
+    },
+    {
+      "id": "bvg-saentis",
+      "file": "aerial-bvg-saentis.webp",
+      "bounds": {
+        "west": 13.37886,
+        "east": 13.39099,
+        "south": 52.41206,
+        "north": 52.41882
+      },
+      "zoom": 18,
+      "fullPx": [
+        4118,
+        3763
+      ],
+      "shippedPx": [
+        4096,
+        3743
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.201,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 6,
+        "total": 6
+      }
+    },
+    {
+      "id": "degewo-3649",
+      "file": "aerial-degewo-3649.webp",
+      "bounds": {
+        "west": 13.33999,
+        "east": 13.34573,
+        "south": 52.43033,
+        "north": 52.43401
+      },
+      "zoom": 18,
+      "fullPx": [
+        1948,
+        2049
+      ],
+      "shippedPx": [
+        1948,
+        2049
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.2,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 2,
+        "total": 2
+      }
+    },
+    {
+      "id": "degewo-22862",
+      "file": "aerial-degewo-22862.webp",
+      "bounds": {
+        "west": 13.33404,
+        "east": 13.33979,
+        "south": 52.5157,
+        "north": 52.51937
+      },
+      "zoom": 18,
+      "fullPx": [
+        1948,
+        2043
+      ],
+      "shippedPx": [
+        1948,
+        2043
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.2,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "degewo-119822",
+      "file": "aerial-degewo-119822.webp",
+      "bounds": {
+        "west": 13.30462,
+        "east": 13.31037,
+        "south": 52.46878,
+        "north": 52.47246
+      },
+      "zoom": 18,
+      "fullPx": [
+        1950,
+        2049
+      ],
+      "shippedPx": [
+        1950,
+        2049
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.2,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 2,
+        "total": 2
+      }
+    },
+    {
+      "id": "degewo-148604",
+      "file": "aerial-degewo-148604.webp",
+      "bounds": {
+        "west": 13.19811,
+        "east": 13.20385,
+        "south": 52.54155,
+        "north": 52.54523
+      },
+      "zoom": 18,
+      "fullPx": [
+        1943,
+        2049
+      ],
+      "shippedPx": [
+        1943,
+        2049
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.2,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 2,
+        "total": 2
+      }
+    },
+    {
+      "id": "degewo-190130",
+      "file": "aerial-degewo-190130.webp",
+      "bounds": {
+        "west": 13.21461,
+        "east": 13.22034,
+        "south": 52.42347,
+        "north": 52.42715
+      },
+      "zoom": 18,
+      "fullPx": [
+        1945,
+        2049
+      ],
+      "shippedPx": [
+        1945,
+        2049
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.2,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 2,
+        "total": 2
+      }
+    },
+    {
+      "id": "degewo-290439",
+      "file": "aerial-degewo-290439.webp",
+      "bounds": {
+        "west": 13.43451,
+        "east": 13.44027,
+        "south": 52.46109,
+        "north": 52.46476
+      },
+      "zoom": 18,
+      "fullPx": [
+        1954,
+        2043
+      ],
+      "shippedPx": [
+        1954,
+        2043
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.2,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "degewo-304306",
+      "file": "aerial-degewo-304306.webp",
+      "bounds": {
+        "west": 13.44521,
+        "east": 13.45097,
+        "south": 52.45431,
+        "north": 52.45799
+      },
+      "zoom": 18,
+      "fullPx": [
+        1954,
+        2049
+      ],
+      "shippedPx": [
+        1954,
+        2049
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.2,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 2,
+        "total": 2
+      }
+    },
+    {
+      "id": "degewo-332133",
+      "file": "aerial-degewo-332133.webp",
+      "bounds": {
+        "west": 13.58921,
+        "east": 13.59497,
+        "south": 52.42378,
+        "north": 52.42744
+      },
+      "zoom": 18,
+      "fullPx": [
+        1955,
+        2038
+      ],
+      "shippedPx": [
+        1955,
+        2038
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.2,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "degewo-355390",
+      "file": "aerial-degewo-355390.webp",
+      "bounds": {
+        "west": 13.56626,
+        "east": 13.57202,
+        "south": 52.41155,
+        "north": 52.41522
+      },
+      "zoom": 18,
+      "fullPx": [
+        1956,
+        2043
+      ],
+      "shippedPx": [
+        1956,
+        2043
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.2,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 1,
+        "total": 1
+      }
+    },
+    {
+      "id": "degewo-372931",
+      "file": "aerial-degewo-372931.webp",
+      "bounds": {
+        "west": 13.56967,
+        "east": 13.57543,
+        "south": 52.45177,
+        "north": 52.45543
+      },
+      "zoom": 18,
+      "fullPx": [
+        1954,
+        2038
+      ],
+      "shippedPx": [
+        1954,
+        2038
+      ],
+      "sourceMetresPerPixel": 0.2,
+      "metresPerPixel": 0.2,
+      "imageryOnly": false,
+      "tiles": {
+        "ok": 1,
+        "total": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "aoi": "bvg-muellerstrasse",
+  "source": "Geoportal Berlin, 3D-Gebäudemodelle im Level of Detail 2 (LoD2, CityGML 1.0), Atom a_lod2; DL-DE-Zero 2.0",
+  "attribution": "Geoportal Berlin / 3D-Gebäudemodelle LoD2",
+  "buildings": 477,
+  "vertexCount": 55095,
+  "origin": {
+    "lon": 13.337959999999999,
+    "lat": 52.560725000000005
+  },
+  "quantisation": {
+    "xyScaleM": 0.25,
+    "zScaleM": 0.25,
+    "zBaseM": 35.0
+  },
+  "encoding": "interleaved int16 x,y,z in 0.25 m units; x/y are Web Mercator metres from origin, z is height above zBaseM (DHHN2016)",
+  "index": "per building: uint32 start, uint32 roofStart, uint32 end, uint8 wall, uint8 r,g,b (16 bytes)",
+  "indexStride": 16,
+  "wallClasses": [
+    "render",
+    "utility",
+    "civic",
+    "commercial",
+    "sacred"
+  ],
+  "wallSpread": {
+    "render": 428,
+    "utility": 40,
+    "civic": 4,
+    "commercial": 3,
+    "sacred": 2
+  },
+  "roofColour": {
+    "measured": 473,
+    "total": 477,
+    "method": "median of TrueDOP 2025 pixels (0.2 m) inside each LoD2 roof polygon, vegetation rejected, sun normalised"
+  },
+  "topCodes": [
+    [
+      "31001_1010",
+      307
+    ],
+    [
+      "51009_1610",
+      89
+    ],
+    [
+      "31001_2463",
+      29
+    ],
+    [
+      "31001_2621",
+      12
+    ],
+    [
+      "31001_2054",
+      9
+    ],
+    [
+      "31001_3080",
+      6
+    ],
+    [
+      "31001_2120",
+      3
+    ],
+    [
+      "31001_2143",
+      3
+    ],
+    [
+      "31001_1022",
+      3
+    ],
+    [
+      "31001_3043",
+      2
+    ],
+    [
+      "31001_2523",
+      2
+    ],
+    [
+      "31001_3020",
+      2
+    ]
+  ]
+}

@@ -1,0 +1,13 @@
+// Monatsverlauf je GuV-Hauptzeile und Vorzeichen, für den Zeitverlauf im Kopf.
+EVALUATE
+SUMMARIZECOLUMNS (
+    'fact-guv'[Monat],
+    'dim-konten'[L1],
+    'dim-konten'[SignConvention],
+    TREATAS ( { {{YEAR}} }, Calender[Year] ),
+    "AC", [GuV AC],
+    "FC", [GuV FC],
+    "PL", [GuV PL],
+    "PY", [GuV PY]
+)
+ORDER BY 'fact-guv'[Monat]

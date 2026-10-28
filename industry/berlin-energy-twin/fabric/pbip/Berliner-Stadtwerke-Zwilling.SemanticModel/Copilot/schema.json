@@ -1,0 +1,933 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/semanticModel/copilot/schema/1.0.0/schema.json",
+  "tables": [
+    {
+      "name": "Partner",
+      "visibility": "Visible",
+      "synonyms": [
+        "Unternehmen",
+        "Landesunternehmen",
+        "Gesellschaft",
+        "partner company"
+      ],
+      "columns": [
+        {
+          "name": "Partner-Schlüssel",
+          "visibility": "Hidden"
+        },
+        {
+          "name": "Partner",
+          "visibility": "Visible",
+          "synonyms": [
+            "Unternehmen",
+            "Stadtwerke",
+            "degewo",
+            "BVG"
+          ]
+        },
+        {
+          "name": "Rolle",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Partner-Sortierung",
+          "visibility": "Hidden"
+        }
+      ]
+    },
+    {
+      "name": "Bezirk",
+      "visibility": "Visible",
+      "synonyms": [
+        "Stadtbezirk",
+        "Bezirke",
+        "district",
+        "borough"
+      ],
+      "columns": [
+        {
+          "name": "Bezirk-Nr",
+          "visibility": "Hidden"
+        },
+        {
+          "name": "Bezirk",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Einwohner",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Ladepunkte Register gesamt",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Ladeleistung Register gesamt kW",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Stand Ladepunkte Register",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Längengrad",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Breitengrad",
+          "visibility": "Visible"
+        }
+      ]
+    },
+    {
+      "name": "Jahr",
+      "visibility": "Visible",
+      "synonyms": [
+        "Inbetriebnahmejahr",
+        "year"
+      ],
+      "columns": [
+        {
+          "name": "Jahr",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Jahrzehnt",
+          "visibility": "Visible"
+        }
+      ]
+    },
+    {
+      "name": "Anlage",
+      "visibility": "Visible",
+      "synonyms": [
+        "Erzeugungsanlage",
+        "Einheit",
+        "MaStR-Einheit",
+        "PV-Anlage",
+        "Solaranlage",
+        "Kraftwerk",
+        "unit",
+        "plant"
+      ],
+      "columns": [
+        {
+          "name": "MaStR-Nummer",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Anlagenname",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Partner-Schlüssel",
+          "visibility": "Hidden"
+        },
+        {
+          "name": "Betreiber",
+          "visibility": "Visible",
+          "synonyms": [
+            "Anlagenbetreiber",
+            "Eigentümer",
+            "operator"
+          ]
+        },
+        {
+          "name": "Energieträger",
+          "visibility": "Visible",
+          "synonyms": [
+            "Energiequelle",
+            "Technologie",
+            "Brennstoff",
+            "energy source"
+          ]
+        },
+        {
+          "name": "Energieträger MaStR",
+          "visibility": "Hidden"
+        },
+        {
+          "name": "Bruttoleistung kW",
+          "visibility": "Visible",
+          "synonyms": [
+            "Leistung",
+            "Nennleistung",
+            "kWp",
+            "capacity"
+          ]
+        },
+        {
+          "name": "Nettoleistung kW",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Speicherkapazität kWh",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Betriebsstatus",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Inbetriebnahme",
+          "visibility": "Visible",
+          "synonyms": [
+            "Inbetriebnahmedatum",
+            "seit wann in Betrieb",
+            "commissioning date"
+          ]
+        },
+        {
+          "name": "Inbetriebnahmejahr",
+          "visibility": "Visible"
+        },
+        {
+          "name": "PLZ",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Ort",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Straße",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Hausnummer",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Mieterstrom",
+          "visibility": "Visible",
+          "synonyms": [
+            "Mieterstromanlage",
+            "tenant electricity"
+          ]
+        },
+        {
+          "name": "Anlagenart",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Einspeiseart",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Verortung",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Genau verortet",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Betriebshof",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Bezirk",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Längengrad",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Breitengrad",
+          "visibility": "Visible"
+        }
+      ]
+    },
+    {
+      "name": "Ladestation",
+      "visibility": "Visible",
+      "synonyms": [
+        "Ladesäule",
+        "Ladepunkt",
+        "Ladeinfrastruktur",
+        "E-Ladesäule",
+        "charging station",
+        "charger"
+      ],
+      "columns": [
+        {
+          "name": "Ladestation-ID",
+          "visibility": "Hidden"
+        },
+        {
+          "name": "Betreiber",
+          "visibility": "Visible",
+          "synonyms": [
+            "Ladepunktbetreiber",
+            "Anbieter",
+            "operator"
+          ]
+        },
+        {
+          "name": "Stadtwerke",
+          "visibility": "Visible",
+          "synonyms": [
+            "von den Stadtwerken",
+            "Stadtwerke-Ladestation",
+            "BSW"
+          ]
+        },
+        {
+          "name": "Adresse",
+          "visibility": "Visible"
+        },
+        {
+          "name": "PLZ",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Bezirk",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Ladepunkte",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Höchstleistung kW",
+          "visibility": "Visible",
+          "synonyms": [
+            "Ladeleistung",
+            "kW",
+            "power"
+          ]
+        },
+        {
+          "name": "Leistungsklasse",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Schnellladen DC",
+          "visibility": "Visible",
+          "synonyms": [
+            "Schnelllader",
+            "DC",
+            "HPC",
+            "fast charging"
+          ]
+        },
+        {
+          "name": "Inbetriebnahmejahr",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Im öffentlichen Straßenland",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Längengrad",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Breitengrad",
+          "visibility": "Visible"
+        }
+      ]
+    },
+    {
+      "name": "Ladestrom",
+      "visibility": "Visible",
+      "synonyms": [
+        "Ladeenergie",
+        "geladene Energie",
+        "charged energy"
+      ],
+      "columns": [
+        {
+          "name": "Bezirk",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Jahr",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Ladestrom öffentlich kWh",
+          "visibility": "Visible"
+        }
+      ]
+    },
+    {
+      "name": "Quartier",
+      "visibility": "Visible",
+      "synonyms": [
+        "Siedlung",
+        "Wohnquartier",
+        "Kiez",
+        "degewo-Quartier",
+        "Wohnanlage",
+        "estate"
+      ],
+      "columns": [
+        {
+          "name": "Quartier-ID",
+          "visibility": "Hidden"
+        },
+        {
+          "name": "Quartier",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Quartiersart",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Bezirk",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Einwohner",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Eigenständiges Quartier",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Teil von",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Quelle",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Ladestationen bis 300 m",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Ladepunkte bis 300 m",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Stadtwerke-Ladepunkte bis 300 m",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Stadtwerke-Ladelücke 300 m",
+          "visibility": "Visible",
+          "synonyms": [
+            "Ladelücke",
+            "ohne Stadtwerke-Ladepunkt",
+            "Versorgungslücke"
+          ]
+        },
+        {
+          "name": "Ladepunkte bis 500 m",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Stadtwerke-Ladepunkte bis 500 m",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Längengrad",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Breitengrad",
+          "visibility": "Visible"
+        }
+      ]
+    },
+    {
+      "name": "Quartier Ladestation",
+      "visibility": "Hidden",
+      "columns": [
+        {
+          "name": "Quartier-ID",
+          "visibility": "Hidden"
+        },
+        {
+          "name": "Ladestation-ID",
+          "visibility": "Hidden"
+        },
+        {
+          "name": "Abstand m",
+          "visibility": "Hidden"
+        },
+        {
+          "name": "Bis 300 m",
+          "visibility": "Hidden"
+        }
+      ]
+    },
+    {
+      "name": "Betriebshof",
+      "visibility": "Visible",
+      "synonyms": [
+        "Depot",
+        "Betriebsbahnhof",
+        "BVG-Standort",
+        "Busdepot",
+        "depot"
+      ],
+      "columns": [
+        {
+          "name": "Betriebshof-ID",
+          "visibility": "Hidden"
+        },
+        {
+          "name": "Betriebshof",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Art",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Status",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Solarvereinbarung 2025",
+          "visibility": "Visible",
+          "synonyms": [
+            "Solarvertrag",
+            "Vereinbarung mit den Stadtwerken"
+          ]
+        },
+        {
+          "name": "Solarleistung kWp",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Solaranlagen",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Bezirk",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Quelle",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Längengrad",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Breitengrad",
+          "visibility": "Visible"
+        }
+      ]
+    },
+    {
+      "name": "Fokusdach",
+      "visibility": "Visible",
+      "synonyms": [
+        "Dach",
+        "Dachfläche",
+        "Gebäude",
+        "Fokusgebäude",
+        "roof"
+      ],
+      "columns": [
+        {
+          "name": "Gebäude-ID",
+          "visibility": "Hidden"
+        },
+        {
+          "name": "Adresse",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Gebäudefunktion",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Dachfläche m²",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Solarpotenzial kWp",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Installiert kWp",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Offenes Potenzial kWp",
+          "visibility": "Visible",
+          "synonyms": [
+            "freies Potenzial",
+            "ungenutztes Potenzial",
+            "noch möglich"
+          ]
+        },
+        {
+          "name": "Ausschöpfung",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Anlagen auf dem Dach",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Quartier-ID",
+          "visibility": "Hidden"
+        },
+        {
+          "name": "Quartier",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Bezirk",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Gebäudehöhe m",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Geländehöhe m",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Längengrad",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Breitengrad",
+          "visibility": "Visible"
+        }
+      ]
+    },
+    {
+      "name": "Gebäude im Quartier",
+      "visibility": "Visible",
+      "synonyms": [
+        "Gebäude",
+        "Häuser",
+        "buildings in estate"
+      ],
+      "columns": [
+        {
+          "name": "Gebäude-ID",
+          "visibility": "Hidden"
+        },
+        {
+          "name": "Quartier-ID",
+          "visibility": "Hidden"
+        },
+        {
+          "name": "Gebäudefunktion",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Dachfläche m²",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Solarpotenzial kWp",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Längengrad",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Breitengrad",
+          "visibility": "Visible"
+        }
+      ]
+    },
+    {
+      "name": "Datenquelle",
+      "visibility": "Visible",
+      "synonyms": [
+        "Quelle",
+        "Lizenz",
+        "source"
+      ],
+      "columns": [
+        {
+          "name": "Tabellen",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Quelle",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Namensnennung",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Lizenz",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Lizenz-URL",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Stand",
+          "visibility": "Visible"
+        }
+      ]
+    },
+    {
+      "name": "Measure",
+      "visibility": "Visible",
+      "measures": [
+        {
+          "name": "Solarleistung kWp",
+          "visibility": "Visible",
+          "synonyms": [
+            "PV-Leistung",
+            "Photovoltaikleistung",
+            "Solarkapazität",
+            "installierte Solarleistung",
+            "solar capacity"
+          ]
+        },
+        {
+          "name": "Solarleistung in Betrieb kWp",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Solarleistung MWp",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Solaranlagen",
+          "visibility": "Visible",
+          "synonyms": [
+            "Anzahl PV-Anlagen",
+            "Photovoltaikanlagen",
+            "number of solar plants"
+          ]
+        },
+        {
+          "name": "Anlagen",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Installierte Leistung kW",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Leistung andere Energieträger kW",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Mieterstrom-Solaranlagen",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Mieterstrom-Solarleistung kWp",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Solaranlagen nur nach PLZ verortet",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Mittlere Solaranlagengröße kWp",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Solarleistung je 1.000 Einwohner kWp",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Solarleistung erwartet nach Einwohnern kWp",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Solarleistung Vorjahr kWp",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Solarleistung kumuliert kWp",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Ladestationen",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Ladepunkte",
+          "visibility": "Visible",
+          "synonyms": [
+            "Anzahl Ladepunkte",
+            "öffentliche Ladepunkte",
+            "charge points"
+          ]
+        },
+        {
+          "name": "Ladepunkte Stadtwerke",
+          "visibility": "Visible",
+          "synonyms": [
+            "Stadtwerke-Ladepunkte",
+            "BSW-Ladepunkte"
+          ]
+        },
+        {
+          "name": "Ladepunkte andere Betreiber",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Anteil Stadtwerke an Ladepunkten",
+          "visibility": "Visible",
+          "synonyms": [
+            "Marktanteil Stadtwerke",
+            "Stadtwerke-Anteil"
+          ]
+        },
+        {
+          "name": "Schnellladepunkte",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Ladepunkte je 1.000 Einwohner",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Ladepunkte erwartet nach Einwohnern",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Ladepunkte Stadtwerke erwartet nach Einwohnern",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Ladepunkte Vorjahr",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Ladepunkte Register gesamt",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Ladestrom öffentlich kWh",
+          "visibility": "Visible",
+          "synonyms": [
+            "Ladestrom",
+            "geladene Energie",
+            "Ladeenergie"
+          ]
+        },
+        {
+          "name": "Ladestrom öffentlich MWh",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Ladestrom öffentlich Vorjahr MWh",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Quartiere",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Einwohner Quartiere",
+          "visibility": "Visible",
+          "synonyms": [
+            "Einwohner im Quartier",
+            "Bewohner des Quartiers",
+            "Bevölkerung Quartier"
+          ]
+        },
+        {
+          "name": "Ladepunkte bis 300 m um Quartiere",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Stadtwerke-Ladepunkte bis 300 m um Quartiere",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Anteil Stadtwerke bis 300 m um Quartiere",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Ladepunkte bis 500 m um Quartiere",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Stadtwerke-Ladepunkte bis 500 m um Quartiere",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Quartiere ohne Stadtwerke-Ladepunkt",
+          "visibility": "Visible",
+          "synonyms": [
+            "Ladelücken",
+            "Quartiere mit Ladelücke"
+          ]
+        },
+        {
+          "name": "Fokusdächer",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Solarpotenzial Fokusdächer kWp",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Installiert Fokusdächer kWp",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Offenes Potenzial Fokusdächer kWp",
+          "visibility": "Visible",
+          "synonyms": [
+            "Dachpotenzial",
+            "freies Solarpotenzial"
+          ]
+        },
+        {
+          "name": "Ausschöpfung Fokusdächer",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Fokusdächer mit offenem Potenzial",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Gebäude im Quartier",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Solarpotenzial Gebäude im Quartier kWp",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Betriebshöfe",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Betriebshöfe im Bau",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Betriebshöfe mit Solarvereinbarung 2025",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Solarleistung Betriebshöfe kWp",
+          "visibility": "Visible"
+        },
+        {
+          "name": "Einwohner",
+          "visibility": "Visible",
+          "synonyms": [
+            "Bevölkerung Bezirk",
+            "Einwohner Berlin",
+            "population"
+          ]
+        }
+      ]
+    }
+  ]
+}

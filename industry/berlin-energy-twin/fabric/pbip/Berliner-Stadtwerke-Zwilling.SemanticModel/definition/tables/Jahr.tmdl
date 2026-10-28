@@ -1,0 +1,29 @@
+/// Kalenderjahr für Inbetriebnahme von Anlagen und Ladestationen sowie für den öffentlichen Ladestrom.
+table Jahr
+
+	column Jahr
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: Jahr
+
+		annotation SummarizationSetBy = Automatic
+
+	column Jahrzehnt
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Jahrzehnt
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Jahr = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(Binary.Decompress(Binary.FromText("Tc27DYAwDADRnmli52tlA7agQEpFgaiYnkQEcc3pdbdu7axrz72341rELNcet5/DBbbP6pyrI68FVtjDAY5wgjNcYPst4yvTAivs4QBHOMEZLrD91vHVaYEV9nCAI5w+Pw==", BinaryEncoding.Base64), Compression.Deflate), [Delimiter=";", Columns=2, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Kopfzeilen = Table.PromoteHeaders(Quelle, [PromoteAllScalars=true]),
+				    Typisiert = Table.TransformColumnTypes(Kopfzeilen, {{"Jahr", Int64.Type}, {"Jahrzehnt", type text}}, "en-US")
+				in
+				    Typisiert
+
+	annotation PBI_ResultType = Table

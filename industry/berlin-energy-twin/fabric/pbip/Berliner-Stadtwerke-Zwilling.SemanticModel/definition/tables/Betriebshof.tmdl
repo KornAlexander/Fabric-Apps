@@ -1,0 +1,99 @@
+/// BVG-Standorte (Bus-, Straßenbahn-, U-Bahn-Betriebshöfe und weitere) mit Status, Solarvereinbarung 2025 von BVG und Berliner Stadtwerken und der zugeordneten Photovoltaik-Leistung. Auch: Depot, Betriebsbahnhof.
+table Betriebshof
+
+	column 'Betriebshof-ID'
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: Betriebshof-ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Betriebshof
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Betriebshof
+
+		annotation SummarizationSetBy = Automatic
+
+	column Art
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Art
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Solarvereinbarung 2025'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Solarvereinbarung 2025
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Solarleistung kWp'
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: sum
+		sourceColumn: Solarleistung kWp
+
+		annotation SummarizationSetBy = Automatic
+
+	column Solaranlagen
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: Solaranlagen
+
+		annotation SummarizationSetBy = Automatic
+
+	column Bezirk
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Bezirk
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quelle
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Quelle
+		dataCategory: WebUrl
+
+		annotation SummarizationSetBy = Automatic
+
+	column Längengrad
+		dataType: double
+		formatString: 0.000000
+		summarizeBy: none
+		sourceColumn: Längengrad
+		dataCategory: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+	column Breitengrad
+		dataType: double
+		formatString: 0.000000
+		summarizeBy: none
+		sourceColumn: Breitengrad
+		dataCategory: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Betriebshof = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(Binary.Decompress(Binary.FromText("xZfNkto4EIDvfgofyUHGlvy7Og2zSTaVIZsNyc5Z4AYr2LJLlkPVvEwu+ww57Y0X27YNjJkJE7JVQwqqgG5Z6q/Vf0zAaAnzOiuX5M3vfHL/k19pw2dGmKbmszIX+gtokGoudKNWNnVp0ItzkLVpRevbqpcIlYsVKNzsTuo1/6uBPAd+s/1HoXSlRconuJPpv1tFp9a10aKugU+aen5vhD3d/rvXbr8+1HKp7J3F/LPgnkcdP+SUT6UxwDNjqvq38Xiz2TjzLysnhTG+G2VAK8gKUOMCUgmqKrUR+bjSgOcX7aMyb1pTxy0kcSNCfVIVpB6wkdqI1GxAr4F7zGEsSqKQB9QJQjfyEqupIS0L0Hzy92uCTlQpHmJ/2knt2Q5nr3kAEoZOFPwSjjihSdRxsCQMPasQiwxNhHwDq2OW6VBzgsP3XCdpL+Q6wzgp0SI1b/SK3MocvVDjE8tL0tHACxLa0XlI51tSpVKLYdDbbzoReY08mSSzc8Iu8GInQcgbuchaQtCrS1L5kccY66h8P8Ab03ciU0dQ015mj24Qq24NxBi8wryCFy0asRuV7mMSEzxTp2FdfO22I3/0iXvpawyiJIn9HjhMEs9al1CBkos1HzKQoQfebr/1S+zRLWDUqnqR5eX2666uvODn03/UUJlyQw5bXpQ9dsOe3WcJpb5lNMznUj2sNB/34h+VGho5iY/B+woFqcYIrjMhFXmrobm7dCSzKAzdpINL4iSi1vJg1BLyFPgnMhlebPsg7mCM/erphd+/yF+Ur4EXUS/owtelXhRa+cCOYcwO7LNHMwmrzh2HiP2ZxFXYuDmLYseNuH8SHEvH2qCxRZEK1GtYYWcH3TpjKmbmw/ilVBk27v0nUv8JyyUo0yLAQdoAbl23h3S8LqWs743UZbG1kAvQ5Yl2f31QPl12OyA/dGjMvXO7y/PgMZe5YZ+RCY3C2MLKUoKCDcgUThek2SLbftutskfvRA6V+Jli1DnAiwLHbz3wdE16rnuNo6S7Vz/0kyC0FqXCeY7Mc1BrnPeO6tF1r5v0OvJUUerJmN+TvRdqXW4ugOP7IY37tGQsYL5VNYuFVPKY430vrH9oP9ZV76LmBwGL91NAbInckKIUc2mO7b9C+bSXn7Qd92g9/3j4fAbLuVUL1MuavyRtQTtKEfzDgJq9rx8t4LKwJ6Lpje46MxQV5O0/mV12nVnaM9B3OBFUuvwMawNjIHM86T7xYLkbjtG13fjoexgjXe9ts+47pu/y0R4dEhI7cTd87VP8DJr/MWecSYLtlbG+0YYhDQJLN0UBed2WT5wkHvN8GOqHIM/EcV6zZcRjREEDmgyrZFebQq+f9P2ItmPSfw==", BinaryEncoding.Base64), Compression.Deflate), [Delimiter=";", Columns=11, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Kopfzeilen = Table.PromoteHeaders(Quelle, [PromoteAllScalars=true]),
+				    Typisiert = Table.TransformColumnTypes(Kopfzeilen, {{"Betriebshof-ID", type text}, {"Betriebshof", type text}, {"Art", type text}, {"Status", type text}, {"Solarvereinbarung 2025", type text}, {"Solarleistung kWp", type number}, {"Solaranlagen", Int64.Type}, {"Bezirk", type text}, {"Quelle", type text}, {"Längengrad", type number}, {"Breitengrad", type number}}, "en-US")
+				in
+				    Typisiert
+
+	annotation PBI_ResultType = Table

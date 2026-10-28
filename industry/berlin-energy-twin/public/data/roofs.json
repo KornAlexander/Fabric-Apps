@@ -1,0 +1,147 @@
+{
+  "source": "Geoportal Berlin, 3D-Gebäudemodelle im Level of Detail 2 (LoD2, CityGML 1.0), Atom a_lod2; DL-DE-Zero 2.0",
+  "method": "tallest LoD2 building whose centre lies inside the solar atlas footprint, else nearest within 15 m; roofM is the height of the roof's highest point above the building's own ground",
+  "unmatched": [],
+  "roofs": {
+    "3649": {
+      "site": "degewo-3649",
+      "groundM": 41.34,
+      "roofM": 23.14
+    },
+    "5663": {
+      "site": "marzahn_bvg-marzahn",
+      "groundM": 57.16,
+      "roofM": 27.57
+    },
+    "9193": {
+      "site": "marienfelde",
+      "groundM": 46.04,
+      "roofM": 15.64
+    },
+    "10112": {
+      "site": "gropiusstadt",
+      "groundM": 39.93,
+      "roofM": 16.34
+    },
+    "22862": {
+      "site": "degewo-22862",
+      "groundM": 31.68,
+      "roofM": 25.5
+    },
+    "119822": {
+      "site": "degewo-119822",
+      "groundM": 44.04,
+      "roofM": 20.73
+    },
+    "148604": {
+      "site": "degewo-148604",
+      "groundM": 32.25,
+      "roofM": 20.37
+    },
+    "190130": {
+      "site": "degewo-190130",
+      "groundM": 44.78,
+      "roofM": 12.44
+    },
+    "199300": {
+      "site": "degewo-190130",
+      "groundM": 43.44,
+      "roofM": 13.21
+    },
+    "207843": {
+      "site": "degewo-190130",
+      "groundM": 44.94,
+      "roofM": 12.62
+    },
+    "246936": {
+      "site": "marienfelde",
+      "groundM": 46.43,
+      "roofM": 9.16
+    },
+    "263010": {
+      "site": "marienfelde",
+      "groundM": 45.13,
+      "roofM": 41.07
+    },
+    "265975": {
+      "site": "marienfelde",
+      "groundM": 45.44,
+      "roofM": 12.26
+    },
+    "266511": {
+      "site": "marienfelde",
+      "groundM": 45.56,
+      "roofM": 12.88
+    },
+    "269022": {
+      "site": "marienfelde",
+      "groundM": 46.87,
+      "roofM": 10.72
+    },
+    "271003": {
+      "site": "marienfelde",
+      "groundM": 45.29,
+      "roofM": 12.76
+    },
+    "290439": {
+      "site": "degewo-290439",
+      "groundM": 44.23,
+      "roofM": 17.71
+    },
+    "304306": {
+      "site": "degewo-304306",
+      "groundM": 41.36,
+      "roofM": 13.91
+    },
+    "316910": {
+      "site": "gropiusstadt",
+      "groundM": 43.48,
+      "roofM": 13.04
+    },
+    "318298": {
+      "site": "gropiusstadt",
+      "groundM": 43.52,
+      "roofM": 12.95
+    },
+    "318362": {
+      "site": "gropiusstadt",
+      "groundM": 43.55,
+      "roofM": 12.88
+    },
+    "319396": {
+      "site": "gropiusstadt",
+      "groundM": 43.55,
+      "roofM": 12.89
+    },
+    "332133": {
+      "site": "degewo-332133",
+      "groundM": 34.08,
+      "roofM": 15.95
+    },
+    "355390": {
+      "site": "degewo-355390",
+      "groundM": 34.96,
+      "roofM": 17.43
+    },
+    "356202": {
+      "site": "degewo-355390",
+      "groundM": 35.37,
+      "roofM": 17.1
+    },
+    "372931": {
+      "site": "degewo-372931",
+      "groundM": 35.39,
+      "roofM": 11.91
+    },
+    "375037": {
+      "site": "degewo-372931",
+      "groundM": 35.41,
+      "roofM": 11.98
+    },
+    "416273": {
+      "site": "marzahn_bvg-marzahn",
+      "groundM": 55.05,
+      "roofM": 6.52
+    }
+  }
+}

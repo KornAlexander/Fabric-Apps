@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Berliner Stadtwerke Zwilling",
+    "description": "Digitaler Zwilling Berlin: Solaranlagen (MaStR) von Berliner Stadtwerken, degewo und BVG, öffentliche Ladepunkte, degewo-Quartiere, BVG-Betriebshöfe und Solarkataster. Offene Daten, vollständig im Modell abgelegt (Import)."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e202a8fb-6cfc-5668-8d9d-ed96f347b774"
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "aoi": "degewo-22862",
+  "source": "Geoportal Berlin, 3D-Gebäudemodelle im Level of Detail 2 (LoD2, CityGML 1.0), Atom a_lod2; DL-DE-Zero 2.0",
+  "attribution": "Geoportal Berlin / 3D-Gebäudemodelle LoD2",
+  "buildings": 170,
+  "vertexCount": 29526,
+  "origin": {
+    "lon": 13.336915000000001,
+    "lat": 52.517535
+  },
+  "quantisation": {
+    "xyScaleM": 0.25,
+    "zScaleM": 0.25,
+    "zBaseM": 31.0
+  },
+  "encoding": "interleaved int16 x,y,z in 0.25 m units; x/y are Web Mercator metres from origin, z is height above zBaseM (DHHN2016)",
+  "index": "per building: uint32 start, uint32 roofStart, uint32 end, uint8 wall, uint8 r,g,b (16 bytes)",
+  "indexStride": 16,
+  "wallClasses": [
+    "render",
+    "utility",
+    "civic",
+    "commercial",
+    "sacred"
+  ],
+  "wallSpread": {
+    "render": 147,
+    "utility": 20,
+    "civic": 1,
+    "commercial": 2
+  },
+  "roofColour": {
+    "measured": 169,
+    "total": 170,
+    "method": "median of TrueDOP 2025 pixels (0.2 m) inside each LoD2 roof polygon, vegetation rejected, sun normalised"
+  },
+  "topCodes": [
+    [
+      "51009_1610",
+      97
+    ],
+    [
+      "31001_1010",
+      64
+    ],
+    [
+      "31001_2463",
+      2
+    ],
+    [
+      "31001_2523",
+      2
+    ],
+    [
+      "31001_2020",
+      1
+    ],
+    [
+      "31001_2010",
+      1
+    ],
+    [
+      "31001_1110",
+      1
+    ],
+    [
+      "31001_1022",
+      1
+    ],
+    [
+      "53001_1800",
+      1
+    ]
+  ]
+}

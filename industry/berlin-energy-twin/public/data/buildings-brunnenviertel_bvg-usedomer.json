@@ -1,0 +1,88 @@
+{
+  "aoi": "brunnenviertel_bvg-usedomer",
+  "source": "Geoportal Berlin, 3D-Gebäudemodelle im Level of Detail 2 (LoD2, CityGML 1.0), Atom a_lod2; DL-DE-Zero 2.0",
+  "attribution": "Geoportal Berlin / 3D-Gebäudemodelle LoD2",
+  "buildings": 3388,
+  "vertexCount": 560262,
+  "origin": {
+    "lon": 13.390630000000002,
+    "lat": 52.541025
+  },
+  "quantisation": {
+    "xyScaleM": 0.25,
+    "zScaleM": 0.25,
+    "zBaseM": 31.0
+  },
+  "encoding": "interleaved int16 x,y,z in 0.25 m units; x/y are Web Mercator metres from origin, z is height above zBaseM (DHHN2016)",
+  "index": "per building: uint32 start, uint32 roofStart, uint32 end, uint8 wall, uint8 r,g,b (16 bytes)",
+  "indexStride": 16,
+  "wallClasses": [
+    "render",
+    "utility",
+    "civic",
+    "commercial",
+    "sacred"
+  ],
+  "wallSpread": {
+    "render": 2829,
+    "utility": 385,
+    "civic": 115,
+    "commercial": 44,
+    "sacred": 15
+  },
+  "roofColour": {
+    "measured": 3369,
+    "total": 3388,
+    "method": "median of TrueDOP 2025 pixels (0.2 m) inside each LoD2 roof polygon, vegetation rejected, sun normalised"
+  },
+  "topCodes": [
+    [
+      "31001_1010",
+      1375
+    ],
+    [
+      "51009_1610",
+      1188
+    ],
+    [
+      "31001_2000",
+      148
+    ],
+    [
+      "31001_1120",
+      104
+    ],
+    [
+      "31001_2463",
+      74
+    ],
+    [
+      "31001_2020",
+      41
+    ],
+    [
+      "31001_3021",
+      40
+    ],
+    [
+      "31001_2100",
+      33
+    ],
+    [
+      "31001_2143",
+      28
+    ],
+    [
+      "31001_2523",
+      21
+    ],
+    [
+      "31001_2120",
+      20
+    ],
+    [
+      "31001_2054",
+      19
+    ]
+  ]
+}

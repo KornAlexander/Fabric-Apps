@@ -1,0 +1,88 @@
+{
+  "aoi": "marzahn_bvg-marzahn",
+  "source": "Geoportal Berlin, 3D-Gebäudemodelle im Level of Detail 2 (LoD2, CityGML 1.0), Atom a_lod2; DL-DE-Zero 2.0",
+  "attribution": "Geoportal Berlin / 3D-Gebäudemodelle LoD2",
+  "buildings": 3207,
+  "vertexCount": 448848,
+  "origin": {
+    "lon": 13.56244,
+    "lat": 52.5465
+  },
+  "quantisation": {
+    "xyScaleM": 0.25,
+    "zScaleM": 0.25,
+    "zBaseM": 46.0
+  },
+  "encoding": "interleaved int16 x,y,z in 0.25 m units; x/y are Web Mercator metres from origin, z is height above zBaseM (DHHN2016)",
+  "index": "per building: uint32 start, uint32 roofStart, uint32 end, uint8 wall, uint8 r,g,b (16 bytes)",
+  "indexStride": 16,
+  "wallClasses": [
+    "render",
+    "utility",
+    "civic",
+    "commercial",
+    "sacred"
+  ],
+  "wallSpread": {
+    "render": 2093,
+    "utility": 950,
+    "civic": 93,
+    "commercial": 68,
+    "sacred": 3
+  },
+  "roofColour": {
+    "measured": 3194,
+    "total": 3207,
+    "method": "median of TrueDOP 2025 pixels (0.2 m) inside each LoD2 roof polygon, vegetation rejected, sun normalised"
+  },
+  "topCodes": [
+    [
+      "31001_1010",
+      1538
+    ],
+    [
+      "51009_1610",
+      486
+    ],
+    [
+      "31001_2000",
+      423
+    ],
+    [
+      "31001_2463",
+      145
+    ],
+    [
+      "31001_2523",
+      95
+    ],
+    [
+      "31001_2723",
+      80
+    ],
+    [
+      "51009_1611",
+      37
+    ],
+    [
+      "31001_2010",
+      36
+    ],
+    [
+      "31001_3021",
+      33
+    ],
+    [
+      "31001_2100",
+      27
+    ],
+    [
+      "31001_1120",
+      26
+    ],
+    [
+      "31001_3065",
+      23
+    ]
+  ]
+}

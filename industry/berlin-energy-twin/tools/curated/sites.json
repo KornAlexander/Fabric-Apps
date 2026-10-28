@@ -1,0 +1,307 @@
+{
+  "_about": "Hand-curated partner sites (PLAN D19, D22-D24). Every entry names its public source. Estates: degewo's own Kiez pages; register clusters are derived by tools/bake_sites.py from degewo's MaStR units. Depots: BVG sites with registered plants (MaStR), the 8 sites of the BVG/BSW solar agreement of July 2025, and the e-bus depots under construction. OSM ids give the footprint; sites without one are placed from their registered plants only. `osm` lists one or more [type, id] whose outlines form the footprint.",
+  "sources": {
+    "degewo-gropiusstadt": "https://www.degewo.de/unsere-kieze/bezirke/neukoelln/von-der-schlafstadt-zum-aufgeweckten-quartier-gropiusstadt-mal-anders",
+    "degewo-marzahn": "https://www.degewo.de/unsere-kieze/bezirke/marzahn-hellersdorf/marzahn-gruen-und-lebenswert-statt-trist-und-grau",
+    "degewo-brunnenviertel": "https://degewo.de/wachstum/gewerbe/brunnenviertel",
+    "senat-solar-2025": "https://pardok.parlament-berlin.de/starweb/adis/citat/VT/19/SchrAnfr/S19-25107.pdf",
+    "bvg-bsw-solar-2025": "https://www.bvg.de/de/unternehmen/medienportal/pressemitteilungen/2025-07-24-pm-solaranlagen-stadtwerke",
+    "bvg-ebus-depots": "https://www.bvg.de/de/unternehmen/herzensprojekte/e-bus-betriebshoefe",
+    "bvg-new-depots-2025": "https://www.bvg.de/de/unternehmen/medienportal/pressemitteilungen/2025-03-13-neuer-betriebshof",
+    "mastr": "https://www.marktstammdatenregister.de/MaStR/Einheit/Einheiten/OeffentlicheEinheitenuebersicht"
+  },
+  "estates": [
+    {
+      "id": "gropiusstadt",
+      "name": "Gropiusstadt",
+      "bezirk": "Neukölln",
+      "area": {
+        "osm": "relation",
+        "query": "rel[\"boundary\"=\"administrative\"][\"admin_level\"=\"10\"][\"name\"=\"Gropiusstadt\"]"
+      },
+      "claim": {
+        "de": "Rund ein Viertel der 36.000 Einwohner wohnt bei degewo.",
+        "en": "About a quarter of the 36,000 residents live in degewo flats."
+      },
+      "source": "degewo-gropiusstadt"
+    },
+    {
+      "id": "marzahn",
+      "name": "Marzahn",
+      "bezirk": "Marzahn-Hellersdorf",
+      "area": {
+        "osm": "relation",
+        "query": "rel[\"boundary\"=\"administrative\"][\"admin_level\"=\"10\"][\"name\"=\"Marzahn\"]"
+      },
+      "claim": {
+        "de": "degewo ist hier größter Vermieter mit rund 18.000 Wohnungen.",
+        "en": "degewo is the largest landlord here, with about 18,000 flats."
+      },
+      "source": "degewo-marzahn"
+    },
+    {
+      "id": "brunnenviertel",
+      "name": "Brunnenviertel",
+      "bezirk": "Mitte",
+      "area": {
+        "osm": "any",
+        "query": "nwr[\"name\"=\"Brunnenviertel\"][\"place\"]"
+      },
+      "claim": {
+        "de": "degewo-Quartier nördlich der Bernauer Straße.",
+        "en": "degewo neighbourhood north of Bernauer Straße."
+      },
+      "source": "degewo-brunnenviertel"
+    }
+  ],
+  "depots": [
+    {
+      "id": "muellerstrasse",
+      "name": "Busbetriebshof Müllerstraße",
+      "kind": "bus",
+      "status": "operating",
+      "osm": [
+        [
+          "relation",
+          20417938
+        ]
+      ],
+      "unitPrefixes": [
+        "BFM"
+      ],
+      "deal2025": true
+    },
+    {
+      "id": "usedomer",
+      "name": "BVG-Standort Usedomer Straße",
+      "kind": "site",
+      "status": "operating",
+      "osm": null,
+      "unitPrefixes": [
+        "USE24",
+        "KWK USE24"
+      ],
+      "deal2025": true
+    },
+    {
+      "id": "machandelweg",
+      "name": "BVG-Standort Machandelweg",
+      "kind": "site",
+      "status": "operating",
+      "osm": null,
+      "unitPrefixes": [
+        "Mach"
+      ],
+      "deal2025": true
+    },
+    {
+      "id": "indira",
+      "name": "Betriebshof Indira-Gandhi-Straße",
+      "kind": "bus",
+      "status": "operating",
+      "osm": [
+        [
+          "way",
+          156582306
+        ]
+      ],
+      "unitPrefixes": [
+        "BFI"
+      ],
+      "deal2025": true
+    },
+    {
+      "id": "marzahn",
+      "name": "Betriebshof Marzahn (Landsberger Allee)",
+      "kind": "bus+tram",
+      "status": "operating",
+      "osm": [
+        [
+          "way",
+          31985319
+        ]
+      ],
+      "unitPrefixes": [],
+      "deal2025": true
+    },
+    {
+      "id": "koepenick",
+      "name": "Straßenbahn-Betriebshof Köpenick (Wendenschloßstraße)",
+      "kind": "tram",
+      "status": "operating",
+      "osm": [
+        [
+          "way",
+          110978811
+        ]
+      ],
+      "unitPrefixes": [],
+      "deal2025": true
+    },
+    {
+      "id": "trebbiner",
+      "name": "BVG-Standort Trebbiner Straße",
+      "kind": "site",
+      "status": "operating",
+      "osm": [
+        [
+          "way",
+          26477644
+        ],
+        [
+          "way",
+          26477643
+        ],
+        [
+          "way",
+          26491339
+        ]
+      ],
+      "unitPrefixes": [
+        "Trebb"
+      ],
+      "deal2025": true
+    },
+    {
+      "id": "friedrichsfelde",
+      "name": "U-Bahn-Betriebswerkstatt Friedrichsfelde",
+      "kind": "metro",
+      "status": "operating",
+      "osm": [
+        [
+          "relation",
+          2428220
+        ]
+      ],
+      "unitPrefixes": [],
+      "deal2025": true
+    },
+    {
+      "id": "lichtenberg",
+      "name": "Betriebshof Lichtenberg (Siegfriedstraße)",
+      "kind": "bus+tram",
+      "status": "operating",
+      "osm": [
+        [
+          "way",
+          51426530
+        ]
+      ],
+      "unitPrefixes": [
+        "BFLi",
+        "BFLI"
+      ],
+      "deal2025": false
+    },
+    {
+      "id": "cicerostrasse",
+      "name": "Busbetriebshof Cicerostraße",
+      "kind": "bus",
+      "status": "operating",
+      "osm": [
+        [
+          "way",
+          4937364
+        ]
+      ],
+      "unitPrefixes": [
+        "BFC"
+      ],
+      "deal2025": false
+    },
+    {
+      "id": "schoeneweide",
+      "name": "Straßenbahn-Betriebshof Schöneweide (Nalepastraße)",
+      "kind": "tram",
+      "status": "operating",
+      "osm": [
+        [
+          "way",
+          93126705
+        ]
+      ],
+      "unitPrefixes": [
+        "BFSW"
+      ],
+      "deal2025": false
+    },
+    {
+      "id": "conrad-blenkle",
+      "name": "BVG-Standort Conrad-Blenkle-Straße",
+      "kind": "site",
+      "status": "operating",
+      "osm": null,
+      "unitPrefixes": [
+        "KNIP"
+      ],
+      "deal2025": false
+    },
+    {
+      "id": "puccini",
+      "name": "BVG-Standort Puccinistraße",
+      "kind": "site",
+      "status": "operating",
+      "osm": null,
+      "unitPrefixes": [
+        "PUCC"
+      ],
+      "deal2025": false
+    },
+    {
+      "id": "alt-moabit",
+      "name": "BVG-Standort Alt-Moabit",
+      "kind": "site",
+      "status": "operating",
+      "osm": null,
+      "unitPrefixes": [
+        "AltMo"
+      ],
+      "deal2025": false
+    },
+    {
+      "id": "saentis",
+      "name": "E-Bus-Betriebshof Säntisstraße",
+      "kind": "ebus",
+      "status": "construction",
+      "osm": [
+        [
+          "way",
+          951211591
+        ]
+      ],
+      "unitPrefixes": [],
+      "deal2025": false,
+      "source": "bvg-ebus-depots"
+    },
+    {
+      "id": "treptow",
+      "name": "E-Bus-Betriebshof Treptow (Köpenicker Landstraße)",
+      "kind": "ebus",
+      "status": "construction",
+      "osm": [
+        [
+          "way",
+          216169538
+        ]
+      ],
+      "unitPrefixes": [],
+      "deal2025": false,
+      "source": "bvg-ebus-depots"
+    },
+    {
+      "id": "rummelsburger",
+      "name": "E-Bus-Betriebshof Rummelsburger Landstraße",
+      "kind": "ebus",
+      "status": "construction",
+      "osm": [
+        [
+          "way",
+          25018032
+        ]
+      ],
+      "unitPrefixes": [],
+      "deal2025": false,
+      "source": "bvg-new-depots-2025"
+    }
+  ]
+}

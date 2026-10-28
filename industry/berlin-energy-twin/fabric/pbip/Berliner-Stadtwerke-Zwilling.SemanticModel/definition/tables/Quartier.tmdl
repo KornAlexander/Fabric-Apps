@@ -1,0 +1,138 @@
+/// degewo-Quartiere: drei benannte (Gropiusstadt, Marzahn, Brunnenviertel) und Cluster nach Postleitzahl. Feuchtwangerweg (12353) liegt in der Gropiusstadt: Eigenständiges Quartier = nein, für Summen immer die Measures verwenden. Die Ladepunkt-Spalten sind je Quartier gezählt; über mehrere Quartiere nicht addieren, dafür die Measures nutzen. Auch: Siedlung, Wohnquartier, Kiez.
+table Quartier
+
+	column 'Quartier-ID'
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: Quartier-ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quartier
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Quartier
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quartiersart
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Quartiersart
+
+		annotation SummarizationSetBy = Automatic
+
+	column Bezirk
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Bezirk
+
+		annotation SummarizationSetBy = Automatic
+
+	column Einwohner
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: Einwohner
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Eigenständiges Quartier'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Eigenständiges Quartier
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Teil von'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Teil von
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quelle
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Quelle
+		dataCategory: WebUrl
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ladestationen bis 300 m'
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: Ladestationen bis 300 m
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ladepunkte bis 300 m'
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: Ladepunkte bis 300 m
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Stadtwerke-Ladepunkte bis 300 m'
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: Stadtwerke-Ladepunkte bis 300 m
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Stadtwerke-Ladelücke 300 m'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Stadtwerke-Ladelücke 300 m
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ladepunkte bis 500 m'
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: Ladepunkte bis 500 m
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Stadtwerke-Ladepunkte bis 500 m'
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: Stadtwerke-Ladepunkte bis 500 m
+
+		annotation SummarizationSetBy = Automatic
+
+	column Längengrad
+		dataType: double
+		formatString: 0.000000
+		summarizeBy: none
+		sourceColumn: Längengrad
+		dataCategory: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+	column Breitengrad
+		dataType: double
+		formatString: 0.000000
+		summarizeBy: none
+		sourceColumn: Breitengrad
+		dataCategory: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Quartier = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(Binary.Decompress(Binary.FromText("vVZLcuM2EN37FDyAaZHgP1iNE3smmfEkYzs1VdlBYktkBIIKAJpVWuUm2aRyBGeTVXSTnCQPJCXLFZczk6pYC3yJRr/3Gt360Alta9L+11/xD9P4MDDo+Dlta73mF7Xq20ph96JekTJ296sqMTLe4dgt1dK7axXOk5TE34mSjBW2bhUpb14bLwoCrxnWN51aWzpavLGitD3pNfmfsi93fyzW9LTB5F8MjvvvAABAVlqU/FxTbcfxyUq3m7ozxh3nr48nc1JCKXsM+T116929lIpHRcJC/qPgvLJ2Y76Yzfq+PytpRX2LbtYpQ5r8dU1bms0HTmmmcLwFV2oG2vwSMphFJcVyuM/fdo0vuiUs0AK+K/+nvVjHPvqNkL5QOGx4FvI85SHjimrFwyBw4zA6i9M4imOesLOY5VmanDRCb0Wl+NXUPwFt2vLfOC21KVu9hLUgyePPRTld5lcPlg5rK90BWKdKXxKcMBDM+i5orG91beywBV06HiYZZ6CYBSM6lgU8yh26JCkCVjh0SRznaXoy151CyN0BhiUJdR9Nn8JaW0ucITCKR+AegPViURnbNTOnhp4D3GOjCeNZAf8m5qOUxwPzURGA8NG3KAzCk4XsjIWEIWNxwYfW+/N37424c48Kh43VYvcLnXrXZLdtf5h+r00nxTTlX45mPAW/vO9aYyUiGIxKxD2tJMb+D1RJUqNuaRz8QzVIsLagumlKgejStKqdSYf2StzY6xmefAWr+57U7FtaLklZWS8qOqx2EE4bLFkA5mHM9yQUPBooiFkSJWPwFVHAjinIBgqygYLXeIRbQLrZI76tNZ6D86yzFTaua7U69T4KWRphDKmHb5+h45aaDcmqXfo3i2p3r5yzKzhTsJcgJOUZSBjoOLCRRrjbsREGRVAcsREl+MK1jo1L6mCgF8hRuifgvtRO1AuNJ+S/wkN6DvRDWkpx33j/o1T2P8Mefy7xZGmaZaP2IcZHaBMW86F1aF813qWQa1JOnVPvHJVmyBNA99GBfwu8c4msMMW/99fPvz0nuqaNbXv/7e5+Q6perBGWrHgJwRlU3sc/4/v0FIfppDiLjuM/SRI+tBMH50iJJdw59b5pAapuDq//CpduSf5n+Hn0IvEOnCzi8UgAsnM8EJCxaCIgYY+CIEpyEOBaR8B5beDSYv0JOW6DgoeaUKTZi4gaoDbwdF9Vc7cAXAzlosin3I5H/YArDhFtQzvk9rqZE2whuyOU8ecIxVpOM5fN9FD53Pwz03qa5C8BPwL0oXy4zuEOs3x80kkQxyd/Aw==", BinaryEncoding.Base64), Compression.Deflate), [Delimiter=";", Columns=16, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Kopfzeilen = Table.PromoteHeaders(Quelle, [PromoteAllScalars=true]),
+				    Typisiert = Table.TransformColumnTypes(Kopfzeilen, {{"Quartier-ID", type text}, {"Quartier", type text}, {"Quartiersart", type text}, {"Bezirk", type text}, {"Einwohner", Int64.Type}, {"Eigenständiges Quartier", type text}, {"Teil von", type text}, {"Quelle", type text}, {"Ladestationen bis 300 m", Int64.Type}, {"Ladepunkte bis 300 m", Int64.Type}, {"Stadtwerke-Ladepunkte bis 300 m", Int64.Type}, {"Stadtwerke-Ladelücke 300 m", type text}, {"Ladepunkte bis 500 m", Int64.Type}, {"Stadtwerke-Ladepunkte bis 500 m", Int64.Type}, {"Längengrad", type number}, {"Breitengrad", type number}}, "en-US")
+				in
+				    Typisiert
+
+	annotation PBI_ResultType = Table

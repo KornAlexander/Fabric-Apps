@@ -1,0 +1,46 @@
+/// Die drei Landesunternehmen des Zwillings: Berliner Stadtwerke (Energie, Laden), degewo (Wohnen) und BVG (Verkehr). Jede Anlage gehört genau einem Partner.
+table Partner
+
+	column 'Partner-Schlüssel'
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: Partner-Schlüssel
+
+		annotation SummarizationSetBy = Automatic
+
+	column Partner
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Partner
+		sortByColumn: 'Partner-Sortierung'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Rolle
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Rolle
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Partner-Sortierung'
+		dataType: int64
+		isHidden
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: Partner-Sortierung
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Partner = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(Binary.Decompress(Binary.FromText("bU27DoIwFN37FfwAgzrejcS4OBBJYG7h2DY2bXJvgZ9z88csQTemk/NuNecIrrvRhc9bBIHaXaJHCgF/VneJswfP0SojKzXg4ItedVlPeQW/QNfCrccClsS2eBOkuuu4wZ6nk5pgsSb6wZBcLJNi9GxRzoOMTj/zQfOszGKp6W/Ub2eOxSCzhznIXtQX", BinaryEncoding.Base64), Compression.Deflate), [Delimiter=";", Columns=4, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Kopfzeilen = Table.PromoteHeaders(Quelle, [PromoteAllScalars=true]),
+				    Typisiert = Table.TransformColumnTypes(Kopfzeilen, {{"Partner-Schlüssel", type text}, {"Partner", type text}, {"Rolle", type text}, {"Partner-Sortierung", Int64.Type}}, "en-US")
+				in
+				    Typisiert
+
+	annotation PBI_ResultType = Table

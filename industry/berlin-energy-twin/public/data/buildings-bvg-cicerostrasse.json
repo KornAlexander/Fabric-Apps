@@ -1,0 +1,88 @@
+{
+  "aoi": "bvg-cicerostrasse",
+  "source": "Geoportal Berlin, 3D-Gebäudemodelle im Level of Detail 2 (LoD2, CityGML 1.0), Atom a_lod2; DL-DE-Zero 2.0",
+  "attribution": "Geoportal Berlin / 3D-Gebäudemodelle LoD2",
+  "buildings": 413,
+  "vertexCount": 70938,
+  "origin": {
+    "lon": 13.30285,
+    "lat": 52.49271
+  },
+  "quantisation": {
+    "xyScaleM": 0.25,
+    "zScaleM": 0.25,
+    "zBaseM": 33.0
+  },
+  "encoding": "interleaved int16 x,y,z in 0.25 m units; x/y are Web Mercator metres from origin, z is height above zBaseM (DHHN2016)",
+  "index": "per building: uint32 start, uint32 roofStart, uint32 end, uint8 wall, uint8 r,g,b (16 bytes)",
+  "indexStride": 16,
+  "wallClasses": [
+    "render",
+    "utility",
+    "civic",
+    "commercial",
+    "sacred"
+  ],
+  "wallSpread": {
+    "render": 278,
+    "utility": 67,
+    "civic": 20,
+    "commercial": 46,
+    "sacred": 2
+  },
+  "roofColour": {
+    "measured": 412,
+    "total": 413,
+    "method": "median of TrueDOP 2025 pixels (0.2 m) inside each LoD2 roof polygon, vegetation rejected, sun normalised"
+  },
+  "topCodes": [
+    [
+      "31001_1010",
+      203
+    ],
+    [
+      "51009_1610",
+      56
+    ],
+    [
+      "31001_2120",
+      46
+    ],
+    [
+      "31001_2463",
+      34
+    ],
+    [
+      "31001_2020",
+      14
+    ],
+    [
+      "31001_2143",
+      8
+    ],
+    [
+      "31001_2621",
+      7
+    ],
+    [
+      "31001_2142",
+      6
+    ],
+    [
+      "31001_2040",
+      5
+    ],
+    [
+      "31001_2111",
+      5
+    ],
+    [
+      "31001_3021",
+      4
+    ],
+    [
+      "51009_1611",
+      3
+    ]
+  ]
+}

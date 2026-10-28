@@ -1,0 +1,87 @@
+{
+  "aoi": "bvg-lichtenberg",
+  "source": "Geoportal Berlin, 3D-Gebäudemodelle im Level of Detail 2 (LoD2, CityGML 1.0), Atom a_lod2; DL-DE-Zero 2.0",
+  "attribution": "Geoportal Berlin / 3D-Gebäudemodelle LoD2",
+  "buildings": 344,
+  "vertexCount": 28188,
+  "origin": {
+    "lon": 13.502225,
+    "lat": 52.52027
+  },
+  "quantisation": {
+    "xyScaleM": 0.25,
+    "zScaleM": 0.25,
+    "zBaseM": 46.0
+  },
+  "encoding": "interleaved int16 x,y,z in 0.25 m units; x/y are Web Mercator metres from origin, z is height above zBaseM (DHHN2016)",
+  "index": "per building: uint32 start, uint32 roofStart, uint32 end, uint8 wall, uint8 r,g,b (16 bytes)",
+  "indexStride": 16,
+  "wallClasses": [
+    "render",
+    "utility",
+    "civic",
+    "commercial",
+    "sacred"
+  ],
+  "wallSpread": {
+    "render": 184,
+    "utility": 136,
+    "civic": 17,
+    "commercial": 7
+  },
+  "roofColour": {
+    "measured": 337,
+    "total": 344,
+    "method": "median of TrueDOP 2025 pixels (0.2 m) inside each LoD2 roof polygon, vegetation rejected, sun normalised"
+  },
+  "topCodes": [
+    [
+      "31001_2463",
+      116
+    ],
+    [
+      "31001_1010",
+      62
+    ],
+    [
+      "51009_1610",
+      58
+    ],
+    [
+      "31001_2400",
+      17
+    ],
+    [
+      "31001_2200",
+      16
+    ],
+    [
+      "31001_2143",
+      14
+    ],
+    [
+      "31001_2020",
+      11
+    ],
+    [
+      "31001_1120",
+      7
+    ],
+    [
+      "31001_2520",
+      5
+    ],
+    [
+      "31001_2000",
+      5
+    ],
+    [
+      "31001_3065",
+      4
+    ],
+    [
+      "31001_2120",
+      4
+    ]
+  ]
+}

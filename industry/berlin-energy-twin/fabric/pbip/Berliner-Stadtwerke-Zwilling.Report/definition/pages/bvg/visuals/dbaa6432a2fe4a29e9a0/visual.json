@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "dbaa6432a2fe4a29e9a0",
+  "position": {
+    "x": 24,
+    "y": 70,
+    "z": 1030,
+    "height": 40,
+    "width": 1600,
+    "tabOrder": 1030
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Für die BVG · Betriebshöfe, Solarvereinbarung 2025 mit den Berliner Stadtwerken und Solaranlagen im Marktstammdatenregister.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "11.5pt",
+                      "color": "#1F4F45"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

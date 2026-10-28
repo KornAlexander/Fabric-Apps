@@ -1,0 +1,47 @@
+relationship Anlage_Partner_Schlüssel__Partner_Partner_Schlüssel
+	fromColumn: Anlage.'Partner-Schlüssel'
+	toColumn: Partner.'Partner-Schlüssel'
+
+relationship Anlage_Bezirk__Bezirk_Bezirk
+	fromColumn: Anlage.Bezirk
+	toColumn: Bezirk.Bezirk
+
+relationship Anlage_Inbetriebnahmejahr__Jahr_Jahr
+	fromColumn: Anlage.Inbetriebnahmejahr
+	toColumn: Jahr.Jahr
+
+relationship Ladestation_Bezirk__Bezirk_Bezirk
+	fromColumn: Ladestation.Bezirk
+	toColumn: Bezirk.Bezirk
+
+relationship Ladestation_Inbetriebnahmejahr__Jahr_Jahr
+	fromColumn: Ladestation.Inbetriebnahmejahr
+	toColumn: Jahr.Jahr
+
+relationship Ladestrom_Bezirk__Bezirk_Bezirk
+	fromColumn: Ladestrom.Bezirk
+	toColumn: Bezirk.Bezirk
+
+relationship Ladestrom_Jahr__Jahr_Jahr
+	fromColumn: Ladestrom.Jahr
+	toColumn: Jahr.Jahr
+
+relationship Quartier_Bezirk__Bezirk_Bezirk
+	fromColumn: Quartier.Bezirk
+	toColumn: Bezirk.Bezirk
+
+relationship Quartier_Ladestation_Quartier_ID__Quartier_Quartier_ID
+	fromColumn: 'Quartier Ladestation'.'Quartier-ID'
+	toColumn: Quartier.'Quartier-ID'
+
+relationship Betriebshof_Bezirk__Bezirk_Bezirk
+	fromColumn: Betriebshof.Bezirk
+	toColumn: Bezirk.Bezirk
+
+relationship Fokusdach_Bezirk__Bezirk_Bezirk
+	fromColumn: Fokusdach.Bezirk
+	toColumn: Bezirk.Bezirk
+
+relationship Gebäude_im_Quartier_Quartier_ID__Quartier_Quartier_ID
+	fromColumn: 'Gebäude im Quartier'.'Quartier-ID'
+	toColumn: Quartier.'Quartier-ID'

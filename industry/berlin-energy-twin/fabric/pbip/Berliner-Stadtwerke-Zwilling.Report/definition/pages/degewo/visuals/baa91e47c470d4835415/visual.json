@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "baa91e47c470d4835415",
+  "position": {
+    "x": 24,
+    "y": 70,
+    "z": 1017,
+    "height": 40,
+    "width": 1600,
+    "tabOrder": 1017
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Für die degewo · Solaranlagen, Dachpotenzial (Schätzung des Solarkatasters Berlin) und die Quartiere.",
+                    "textStyle": {
+                      "fontFamily": "Segoe UI",
+                      "fontSize": "11.5pt",
+                      "color": "#1F4F45"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

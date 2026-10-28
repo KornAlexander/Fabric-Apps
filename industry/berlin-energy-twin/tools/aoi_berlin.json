@@ -1,0 +1,41 @@
+{
+  "$comment": "Nested patches (PLAN D26-D28). base = TrueDOP 2025 over the whole city, imagery only, the overview for fly-overs. Site patches carry LoD2 and lend their photo to the roofs. Boxes are lon/lat, so they are axis-aligned in Web Mercator, which is what the WMS serves and MapLibre draws.",
+  "id": "berlin",
+  "patches": [
+    {
+      "id": "base",
+      "$comment": "Whole of Berlin, about 47 x 39 km ground. At 4096 px that is about 11 m/px: enough for the overview, and the screen at that zoom is coarser still.",
+      "imageryOnly": true,
+      "west": 13.08,
+      "east": 13.77,
+      "south": 52.33,
+      "north": 52.68,
+      "zoom": 12,
+      "shipPx": 4096,
+      "sourceM": 11
+    },
+    {
+      "id": "marienfelde",
+      "$comment": "Hero (D28): degewo car park Waldsassener Strasse 31 and the surrounding degewo estate, 1.5 x 1.5 km. Shipped at about 0.37 m/px; roof colours measured from the 0.2 m source.",
+      "west": 13.34023,
+      "east": 13.36233,
+      "south": 52.40246,
+      "north": 52.41596,
+      "zoom": 18,
+      "shipPx": 4096,
+      "minFootprint": 0,
+      "sourceM": 0.2
+    }
+  ],
+  "sites": {
+    "$comment": "D29: every named degewo estate and every positioned BVG site, generated from the sites bake by aoi.site_patches(); overlapping boxes merge. Marzahn: central 2.5 km only (its outline is the whole Ortsteil).",
+    "from": "public/data/sites.json",
+    "estateMarginM": 150,
+    "depotMarginM": 200,
+    "pointHalfM": 250,
+    "roofHalfM": 200,
+    "overrides": {
+      "marzahn": { "centre": [13.556, 52.5465], "halfM": 1250 }
+    }
+  }
+}

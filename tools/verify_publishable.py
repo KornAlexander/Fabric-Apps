@@ -327,6 +327,12 @@ ALLOWLIST: dict[str, tuple[set[str], str]] = {
     "industry/education/campus-twin/config/buildings-lmu.json": ({"customer_people"},
         'OSM tag values of the form "operator": "<utility name>" on six buildings, copied '
         'verbatim from OpenStreetMap'),
+    "industry/berlin-energy-twin/fabric/pbip/Berliner-Stadtwerke-Zwilling.SemanticModel/definition/tables/Ladestation.tmdl": ({"customer_people"},
+        "".join(['a chance three-letter run inside the deflate+base64 table data embedded in the M partition: "OrrOfSS', 'W',
+                 'm+ZT2yBVO8" - compressed bytes, no name'])),
+    "industry/berlin-energy-twin/fabric/pbip/Berliner-Stadtwerke-Zwilling.SemanticModel/definition/tables/Gebäude im Quartier.tmdl": ({"customer_people"},
+        "".join(['a chance three-letter run inside the deflate+base64 table data embedded in the M partition: "GPCNs', 'W',
+                 'mHJM4qKuA6" - compressed bytes, no name'])),
     "industry/maritime-insights/src/auth/fabricAuth.test.ts": ({"internal"},
         'a made-up host in the deployed shape for the fail-closed test: '
         '"https://example-app-host-swedencentral.webapp.fabricapps.net/" - no real deployment uses it'),

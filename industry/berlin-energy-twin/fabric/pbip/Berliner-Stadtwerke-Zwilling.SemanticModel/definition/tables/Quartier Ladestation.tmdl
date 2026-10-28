@@ -1,0 +1,48 @@
+/// Hilfstabelle: jede Ladestation höchstens 500 m Luftlinie vom Umriss eines eigenständigen Quartiers, mit Abstand (0 = im Quartier).
+table 'Quartier Ladestation'
+	isHidden
+
+	column 'Quartier-ID'
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: Quartier-ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ladestation-ID'
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: Ladestation-ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Abstand m'
+		dataType: double
+		isHidden
+		formatString: #,0.0
+		summarizeBy: none
+		sourceColumn: Abstand m
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bis 300 m'
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: Bis 300 m
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Quartier Ladestation' = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(Binary.Decompress(Binary.FromText("hZpLbiS5EYb3PkVfYATGgy9wZcObAbzxETTTgi1jWmOo1bPw6f1HVmV1TUUEeyNA8SWZjGC8yKx/fnt+/3h9ef/p57+vfzx/fvn68fzx+vub/fvXX/DP2+dPX9bfXr9+klI+ffnLv95//+/rt68Anz/Wr1/rpFXWf54f5a30WM4aywcn8r60PrUAdZrhEKEui0oJBwlNWTOeULg0DKQniqAUWrPFAzHrkqcaIi6LoQHHkHaQl4gAvr28vgVY9liBTZcEt4UXPGmG+5L61ON1jQ1L9gTmg2lj4wkB1SeJIR8wfpvIAWPziR6bmcC65nyaMWvmIbETSDcnSNhYkxIvkGksHqdlTc4Y5XMqr9ETy6gYi02qaizeC63GYptpW0MSm2nfsGEs0WEai9dZyxqc6FdpjdjRKq8+E2tWWX1kM+rqCakpaatnKaH21evTiNkwloybYCFpZfXMjo1W58SODRahZCVN8n1rulpmyVZXG9la2mo1m7MbS8aN1VL9prFYv15Wo2RXOxmL5+y8WuZfKCEYF+vQddWZjaurjmRne0tyY7dkWzBjnIu75VtNM/kYlsri7Z26+MjyHqoiX0Xr0TpmAlA7Fe+KiwbwXNx7aDVtyLjIWNnYhqSryNYtwdjjcEkDiU4ObwvHDfg+dwkTmk659hxfnt//9/zvN8jO7uS7ROajhIobRkg6WOO5+nugAOXU+h6gr+HuxIg51X7u9T2w528+cgdGRQuhF3e8F7dD3B70QxND2IXxKHZ6c6lOxM4WLMWLyIu8ocVPL91vh3hR86JgoF9q9XNhd7heouNe6peGRC/z1mvdA/9qJHAlDZ5t3lZI2zyL2w54LVpDpC03BaJEyXsBN69v96/rfmu6t0r3ztC9Sbrfhz6caPhFDL+I4f1juoFC5EXiRT6EqXuRs5c16k7EXlS9yE/Pw4v8G33wWEfrRF4hHzzWSMnRLT14hnVK2psXo6go+URj3cLj3M0vqvkVNOcQVmGFivdjK4Whg1spdJN4W/Z5DPdawbcMeCvAw7jVx0CTIYg/vVSse7Ee07CfBkWMI4WQbrEFPs8Lzq+WjB7mh/ERGY/Pwufp7GTuxX5Hpt+RGZQuv0nTb9L0Jp9j0bWbvJfOQKrFOTHquBeJF7l9VboUc3m0jPqgVgqGuxBTH9Tqg1pR9pGDHt1Ard3p7GOk+rRT/burj/iK4oW2K5jR16vqyxCxjzG6dWv3zUL1OTYqVdx8xq7IcGjH/BpBWkp6SkZKZkaQFzNCGcEh2vJfUKFhCxQFH5ognBKJCc6CPo3XoFbd7sX+JONAJoFMA1kNZC2Q9UA2ApnXo/lQhowCWVAiSlAjfFcJWVA4SgtkPZCNQBboQYEeQfPQKNAj6Cha0FI0CvSgQI+g92gU6BE0JC3oSBoHegRtSuNAj+B004J+pnGgR9DktKDLaUGb04I+p0mgh0StR6BH0BG1oCWyM6WXBXrUSBboFsR+a4FuLdAtaquivqoFukXNFmJfxgw6nQ4N5XrV+CfxWEzj8UAI+YzlSKixHCdIao+HJsg5kmtU+dUnBq3+uAKZbyQ6EuZdC/bL+7e3t5e3P15f3j9efjs6e5yH6VrLHZ2K4obuKx47rTxvaN/SsaMVJW3SWVA8t+N9qWdh8/zoeOdZ3jy3xrT2s3MKOJxCc6tNlCbpJZ2fSrHtpUv3F2HMP+tuvN0NXW/VA4yUvcWo+8fbs+mRommOS38f4Ws0RwhtCCw30qnPDBQg3aCWo56jmaLKOcpHnakjQAg4BOdGcUQf1ZpuOQ53douVwLbs1ieGdjdF1yurCPc9RqBR5shkH5nk+0Vi9EBqLaKao3lc5OXv5fKjB6z334QYIUNbjKcbQnYLRalijNYAFaGGCrBdzmwozsc7KluqW4qM2zXdDzxgN78zjW080H/0wPjBA2jQlUeaXfEAbR/A8V5Wv34XC+h5YxahmqOWo56jkaOZovMeLkKUI86R5Ci3hjnDlNQZ8IBVYD3bmugBuwfXHA8kpZHUETRMts8tLcMqqVp6XNpUSsMTD8zjuiBzQ7Q92a7q7TIkQHZHzJxBzmHlXVHUypn/6XE237QjascLqZwbw84acmSF9AEksz52D4zjq1i6V3as4N6SoNTW0DKVzfhBmeMDcY5SD8nDRSc6hVtX+utv375+vLz/hIyNem+ZG4cNnbdvY543+7ykp608ty+E43aZ67ldi1ZOqKBDR+GScGmCVj2H58HYEza/vF5lBhRnEW0pRavY5uXk4SnaMW7ZWDtZ2A1iT3RVdAdcJNZH+DykBURSoimpMdF5HjjvSL96AnTXS/rysJUcHr/Y6Zcq7KEkL4RXIZ9qDVynX5fK6TsBJYCWduwyFott4xKdHuK4ItNv04n7/WnEYSQfCweNMdn3QJkjGy52ryuFvc43rjuurdun7Ef/tPtawEc7X8Q07ep0Bks+MNvpavDj7p1Q7hOhx3beb4G2V4zcQPXM1A6zHZf7Y2I64aVRDzVltKvKdH55dxguwpJNjBYhhYIGnVpJ7Iu/1MZj+F8hyjuiJB5ZqcZ7U+n4XVM4Y0VXP7tz4gtD1s6Y9XYzRmKfCuR7E+I53olwzkajy99RVIpRAtc9ufyA647rMT7wY6njcPNuX7DmQ3q9wlrQ/BVfxU6MxC6znL2hnxrO2B4T3BUiBvpx/8HxYAQBmqjzZ4QBRaPUOZsbPSkpPVj8Ru2jnVx/RBBQnKsohQJ3HenE8HTVbFH2Ma5mCtlPVKhnxqJiP+O5fWYLuK5e0sF4MTr0EVNkfWHJ/AOcf8DFNjnRChFMo6avxjZVjX2P7fRt1wIze7F1m99PgJ6LtVAzH2/ey5w6IMmlptSU9/vDf8DRkWP+lnG1X5JIZhtFWlDOd9wuPo/ftSa8wrZTsn3p9qsUzW1zfh8LiKWbma9r2m9pUqtoOc4pnL1Zi/20uCahqxZ/9q06GWtr29C6pW1L+5aOLZ0bSqVsKW0pb6lsqW5p3dK2pX1Lx5ZubUVbW9HWVrS1FW1tRVtb0dZWtLUVbW1FW1vR1la8tRVvbcVbW/HWVry1FW9txVtb8dZWvLUVb20lW1vJ1laytZVsbSVbW8nWVrK1lWxtJVtbydZWurWVbm2lW1vp1la6tZXubKX2e5K8TwXnkB9uY9eEyCy3X3kFlLdUvtP/Aw==", BinaryEncoding.Base64), Compression.Deflate), [Delimiter=";", Columns=4, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Kopfzeilen = Table.PromoteHeaders(Quelle, [PromoteAllScalars=true]),
+				    Typisiert = Table.TransformColumnTypes(Kopfzeilen, {{"Quartier-ID", type text}, {"Ladestation-ID", type text}, {"Abstand m", type number}, {"Bis 300 m", type text}}, "en-US")
+				in
+				    Typisiert
+
+	annotation PBI_ResultType = Table

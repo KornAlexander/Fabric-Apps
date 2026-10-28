@@ -1,0 +1,26 @@
+// Forecast der offenen Monate je Konto eines GuV-Blocks (L1), Vorlage für den Excel-Abgleich.
+// Nur Buchungskonten; offene Monate = nach dem letzten Ist-Monat des Jahres.
+DEFINE
+    VAR _yr = {{YEAR}}
+    VAR _last =
+        CALCULATE (
+            MAX ( 'fact-guv'[Monat] ),
+            NOT ISBLANK ( 'fact-guv'[AC Wert] ),
+            Calender[Year] = _yr
+        )
+EVALUATE
+CALCULATETABLE (
+    SUMMARIZECOLUMNS (
+        'dim-konten'[AccountID],
+        'dim-konten'[Name],
+        'dim-konten'[L2],
+        'dim-konten'[L3],
+        'fact-guv'[Monat],
+        "FC", [GuV FC]
+    ),
+    TREATAS ( { _yr }, Calender[Year] ),
+    'dim-konten'[L1] = "{{L1}}",
+    'dim-konten'[RowType] = "Account",
+    'fact-guv'[Monat] > _last
+)
+ORDER BY 'dim-konten'[AccountID], 'fact-guv'[Monat]

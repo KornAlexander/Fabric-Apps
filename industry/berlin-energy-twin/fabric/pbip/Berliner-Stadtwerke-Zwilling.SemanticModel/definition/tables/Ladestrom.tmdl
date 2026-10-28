@@ -1,0 +1,37 @@
+/// An öffentlichen Ladepunkten abgegebene Energie je Bezirk und Jahr laut Land Berlin, in kWh. 2017 bis 2019 fehlen in der Quelle.
+table Ladestrom
+
+	column Bezirk
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Bezirk
+
+		annotation SummarizationSetBy = Automatic
+
+	column Jahr
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: Jahr
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ladestrom öffentlich kWh'
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: Ladestrom öffentlich kWh
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Ladestrom = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(Binary.Decompress(Binary.FromText("hVZbatxAEPzfU+QCC9PT82T+EgghL0IcCORPsceWWFlr5DUBH8wX8MVSrQ1ZabUj/VbXSN1VPd3zNj83/S59rOo+fa5u8uOh39+/eX25vc3doW2u6ze7n/XmXV317f5wyN3vp/5u+7Np73P/eLPvb5NWpJOmENQKi5OOepVlEqlIcY1mE5FRZo3mEgXl/QpNqxTjOosSKxS7RtPJRafdGk3kQG52jWeSiZ5R7OZ93+SbHpY81lXTbT/1+en5d+7v/llgwjKFoQUKWORAfcd+mQPpfYzLHOiuY1zOGapbr5cplMg4w8sk1O6MccukY/W0rBHE1prhitp8BkEcOekb5ig+ahXPYJNYWzODLfJ0c9jBYEvnMNRhT7NfQhEd2Yc5H21nCb7MAkiSLKqa5SnVWnZQRW2+VP1zVXfbD7ltJzfb+GKQk9GxGDXJqfJZm7wrn5X2UcUwpCFxqRSm5MPCaY2eUqFYs1xMGnq3EDcJnUBQ80uDO3tUySoZWf8BTp7E6f8AlGaKdoSgGcj58SGH8ULWnxCp05gw+pO4j9HiRghsN8qNvjMMFheYRhBmiIIZyOhrftq9vrRt9y9vz2cYTgdpoglokkWnnIE2mWGeTEAHX52egoNfhs5AStFyPANxzTjI7JygnBzxeVIoCiaQDNBvVbfb/zlW5MSZE8DJBjMGzPDvMTI4MTkkRSg1QgYneIIgfbLj7yB3EwcnThCuXjRaRtMJk0uHAQqfv+ema653uRvtUVmQM1wctRdw2OLoAg5npPtmuBuW5jwgsybqCzja7eKfpetkcMwDcnkUdJhHTPIW1anN1UPV3VRPx4JZuCMEfkH7MSKGxekxm5ybHnNwQ48RlBS0nyDYJXgK0ASTlwtFnmCiNvPk+5I8BwMlrg75rm0Oz9tfuW7HzmEiFaPoX1cMmiSzphC0MqvKH5bVoXQpPKyQYs7ynLGDjJfD8qJAUxTjslYwaMoE2aV62Jo/8v1Dbuv97fbqun596fJpq9pIC3FYodgtELBkZFyVCdgzhvUCQe4EM5cZUBHPC7tAGIayzIsiA3WiY5e+Ic8T78zSR6Cnj4FEjj4/HPZ/tp9eXx6y3LKjlsHrUpBxP2R+XQzKk1sVj8p4ZBn+F6MOXeJ84ayMTWV1IUgYza6QExSLrEtBtIUPg5yXorIXYsATYPMX", BinaryEncoding.Base64), Compression.Deflate), [Delimiter=";", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Kopfzeilen = Table.PromoteHeaders(Quelle, [PromoteAllScalars=true]),
+				    Typisiert = Table.TransformColumnTypes(Kopfzeilen, {{"Bezirk", type text}, {"Jahr", Int64.Type}, {"Ladestrom öffentlich kWh", Int64.Type}}, "en-US")
+				in
+				    Typisiert
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,128 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.2.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "Fluent2-CY26SU04",
+      "reportVersionAtImport": {
+        "visual": "2.8.0",
+        "report": "3.2.0",
+        "page": "2.3.1"
+      },
+      "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "MS_Default_Theme_Korn5610309886308295.json",
+      "reportVersionAtImport": {
+        "visual": "2.8.0",
+        "report": "3.2.0",
+        "page": "2.3.1"
+      },
+      "type": "RegisteredResources"
+    }
+  },
+  "objects": {
+    "section": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          },
+          "visible": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "Fluent2-CY26SU04",
+          "path": "BaseThemes/Fluent2-CY26SU04.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "actionablereportinglogo42073863795969413.png",
+          "path": "actionablereportinglogo42073863795969413.png",
+          "type": "Image"
+        },
+        {
+          "name": "hochschul_bg4504259618932576.png",
+          "path": "hochschul_bg4504259618932576.png",
+          "type": "Image"
+        },
+        {
+          "name": "MS_Default_Theme_Korn5610309886308295.json",
+          "path": "MS_Default_Theme_Korn5610309886308295.json",
+          "type": "CustomTheme"
+        }
+      ]
+    },
+    {
+      "name": "ibcsMultiTierBarECA4F65BFFB141198B7A6391AFFC946A",
+      "type": "CustomVisual",
+      "items": [
+        {
+          "name": "ibcsMultiTierBarECA4F65BFFB141198B7A6391AFFC946A.pbiviz.json",
+          "path": "ibcsMultiTierBarECA4F65BFFB141198B7A6391AFFC946A.pbiviz.json",
+          "type": "CustomVisualMetadata"
+        }
+      ]
+    },
+    {
+      "name": "ibcsMultiTierColumnB84BA14B8B6A4201A7F698B3B38DD148",
+      "type": "CustomVisual",
+      "items": [
+        {
+          "name": "ibcsMultiTierColumnB84BA14B8B6A4201A7F698B3B38DD148.pbiviz.json",
+          "path": "ibcsMultiTierColumnB84BA14B8B6A4201A7F698B3B38DD148.pbiviz.json",
+          "type": "CustomVisualMetadata"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "exportDataMode": "AllowSummarized",
+    "defaultFilterActionIsDataFilter": true,
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "allowInlineExploration": true,
+    "useEnhancedTooltips": true,
+    "useDefaultAggregateDisplayName": true,
+    "enableDeveloperMode": true,
+    "queryLimitOption": "None",
+    "customMemoryLimit": "1048576",
+    "customTimeoutLimit": "225"
+  }
+}

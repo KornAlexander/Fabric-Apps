@@ -1,0 +1,142 @@
+/// degewo-Fokusdächer: Gebäude mit Solarkataster-Potenzial, auf denen eine degewo-Anlage verortet ist, mit installierter Leistung und offenem Potenzial. Keine Dächer der Stadtwerke oder der BVG; kein Partnerfilter wirkt hier. Nicht mit der Tabelle Quartier verbunden: je Quartier über die Spalte Quartier gruppieren. Potenzial ist eine Schätzung des Solarkatasters Berlin. Gebäudehöhe aus dem 3D-Gebäudemodell LoD2.
+table Fokusdach
+
+	column 'Gebäude-ID'
+		dataType: int64
+		isHidden
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: Gebäude-ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Adresse
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Adresse
+		dataCategory: Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gebäudefunktion
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Gebäudefunktion
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dachfläche m²'
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: sum
+		sourceColumn: Dachfläche m²
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Solarpotenzial kWp'
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: sum
+		sourceColumn: Solarpotenzial kWp
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Installiert kWp'
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: sum
+		sourceColumn: Installiert kWp
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Offenes Potenzial kWp'
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: sum
+		sourceColumn: Offenes Potenzial kWp
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ausschöpfung
+		dataType: double
+		formatString: 0.0 %
+		summarizeBy: none
+		sourceColumn: Ausschöpfung
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Anlagen auf dem Dach'
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: Anlagen auf dem Dach
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Quartier-ID'
+		dataType: string
+		isHidden
+		summarizeBy: none
+		sourceColumn: Quartier-ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quartier
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Quartier
+
+		annotation SummarizationSetBy = Automatic
+
+	column Bezirk
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Bezirk
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Gebäudehöhe m'
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: none
+		sourceColumn: Gebäudehöhe m
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Geländehöhe m'
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: none
+		sourceColumn: Geländehöhe m
+
+		annotation SummarizationSetBy = Automatic
+
+	column Längengrad
+		dataType: double
+		formatString: 0.000000
+		summarizeBy: none
+		sourceColumn: Längengrad
+		dataCategory: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+	column Breitengrad
+		dataType: double
+		formatString: 0.000000
+		summarizeBy: none
+		sourceColumn: Breitengrad
+		dataCategory: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fokusdach = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(Binary.Decompress(Binary.FromText("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", BinaryEncoding.Base64), Compression.Deflate), [Delimiter=";", Columns=16, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Kopfzeilen = Table.PromoteHeaders(Quelle, [PromoteAllScalars=true]),
+				    Typisiert = Table.TransformColumnTypes(Kopfzeilen, {{"Gebäude-ID", Int64.Type}, {"Adresse", type text}, {"Gebäudefunktion", type text}, {"Dachfläche m²", type number}, {"Solarpotenzial kWp", type number}, {"Installiert kWp", type number}, {"Offenes Potenzial kWp", type number}, {"Ausschöpfung", type number}, {"Anlagen auf dem Dach", Int64.Type}, {"Quartier-ID", type text}, {"Quartier", type text}, {"Bezirk", type text}, {"Gebäudehöhe m", type number}, {"Geländehöhe m", type number}, {"Längengrad", type number}, {"Breitengrad", type number}}, "en-US")
+				in
+				    Typisiert
+
+	annotation PBI_ResultType = Table

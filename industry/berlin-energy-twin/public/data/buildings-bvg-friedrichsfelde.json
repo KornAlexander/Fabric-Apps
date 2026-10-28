@@ -1,0 +1,88 @@
+{
+  "aoi": "bvg-friedrichsfelde",
+  "source": "Geoportal Berlin, 3D-Gebäudemodelle im Level of Detail 2 (LoD2, CityGML 1.0), Atom a_lod2; DL-DE-Zero 2.0",
+  "attribution": "Geoportal Berlin / 3D-Gebäudemodelle LoD2",
+  "buildings": 401,
+  "vertexCount": 50106,
+  "origin": {
+    "lon": 13.517135,
+    "lat": 52.502205000000004
+  },
+  "quantisation": {
+    "xyScaleM": 0.25,
+    "zScaleM": 0.25,
+    "zBaseM": 35.0
+  },
+  "encoding": "interleaved int16 x,y,z in 0.25 m units; x/y are Web Mercator metres from origin, z is height above zBaseM (DHHN2016)",
+  "index": "per building: uint32 start, uint32 roofStart, uint32 end, uint8 wall, uint8 r,g,b (16 bytes)",
+  "indexStride": 16,
+  "wallClasses": [
+    "render",
+    "utility",
+    "civic",
+    "commercial",
+    "sacred"
+  ],
+  "wallSpread": {
+    "render": 249,
+    "utility": 122,
+    "civic": 19,
+    "commercial": 9,
+    "sacred": 2
+  },
+  "roofColour": {
+    "measured": 399,
+    "total": 401,
+    "method": "median of TrueDOP 2025 pixels (0.2 m) inside each LoD2 roof polygon, vegetation rejected, sun normalised"
+  },
+  "topCodes": [
+    [
+      "51009_1610",
+      136
+    ],
+    [
+      "31001_1010",
+      119
+    ],
+    [
+      "31001_2463",
+      39
+    ],
+    [
+      "31001_2520",
+      15
+    ],
+    [
+      "31001_3260",
+      14
+    ],
+    [
+      "31001_2420",
+      10
+    ],
+    [
+      "31001_2143",
+      7
+    ],
+    [
+      "31001_2054",
+      7
+    ],
+    [
+      "31001_1120",
+      7
+    ],
+    [
+      "31001_3024",
+      6
+    ],
+    [
+      "31001_2523",
+      4
+    ],
+    [
+      "31001_3044",
+      4
+    ]
+  ]
+}

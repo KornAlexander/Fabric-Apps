@@ -1,0 +1,57 @@
+/// Herkunft, Namensnennung und Lizenz der Daten je Tabelle. Bei Weitergabe die Namensnennung mitgeben.
+table Datenquelle
+
+	column Tabellen
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Tabellen
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quelle
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Quelle
+
+		annotation SummarizationSetBy = Automatic
+
+	column Namensnennung
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Namensnennung
+
+		annotation SummarizationSetBy = Automatic
+
+	column Lizenz
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Lizenz
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Lizenz-URL'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Lizenz-URL
+		dataCategory: WebUrl
+
+		annotation SummarizationSetBy = Automatic
+
+	column Stand
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Stand
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Datenquelle = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(Binary.Decompress(Binary.FromText("tVTNbtNAEL7zFKOcHMmOQ1BBYk/NT3tJW0ooiF6qtT2xF693rf1JRJ6HC+/Aib4Ys07SNgQqceCQWLsz38w338zsB56hlKjYtQ9fdskbVFahUl6VbC42qDa7T3Lzfs4WjqvixamSvMQYxuiMwMxWegnRQktuJArrCNpnF9zUzjreNAV3qAyWZEED0fgS3ea0H0PrMyly8Eo40Cs0K4HrGHSLhjttYClk8G/Djxun0LCxVwUSO7eh9Mp5E8Nf0rBpOMmOOEzRO5tXkqhDAgcl0vkjGiu0gtFgyCrnWvs2Tdfr9aDUKwrJBwWmhUzoP/uajJIhGw1Hr5OXw2T05sWcEx3HHcFj2B6MboIuG2FqiMJV61XtsM/OUbfaOC7JaqQgwKezBaAMKI6eegBRd7izQWNyJYHDRVu7uww320OwUgpSKzPh9jgupDCTWJNX0jG6/9bFJuXgkc4z8tyi0f+iyob8f9fl2lPDBJqDCYnhTNfeFjyvYjjHjIgVCKKBvTfrXbWoFs4gugveQtRpixB4EXFNU+IdVYi2z+CobBvGD7iT3HaIVluXa8rADXLLIPc0VliQnzc52m6urKDwkdNa2nRnT8OdHXyxWvV7x+Jup7wmBcKUxfBufkuT/PM7HFLPtaK6M09zbCG6mmbz/n+WfD9yM6HWuqJlIVp7YZ/est5xTQWtjBH5o74xTOfJdJYEYqT1jIClwK22R6CKDII2qdMZhMrlAEYnQ2gg88tlEOkg2E2zRum2sR5oFSKvqBVUzwlEkwmMP8OrwRCmMwIcKmt9ttu4vbA91jttHCzvfxhYBJN1ot7RTMaGJEaVeVOGxfhjvieMKN2zveyxiQnlrhAmumkCicPnpGP92NyHPuY7WL5FDbQpU3r8CImWHpaUcCl19mlHfwE=", BinaryEncoding.Base64), Compression.Deflate), [Delimiter=";", Columns=6, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Kopfzeilen = Table.PromoteHeaders(Quelle, [PromoteAllScalars=true]),
+				    Typisiert = Table.TransformColumnTypes(Kopfzeilen, {{"Tabellen", type text}, {"Quelle", type text}, {"Namensnennung", type text}, {"Lizenz", type text}, {"Lizenz-URL", type text}, {"Stand", type text}}, "en-US")
+				in
+				    Typisiert
+
+	annotation PBI_ResultType = Table

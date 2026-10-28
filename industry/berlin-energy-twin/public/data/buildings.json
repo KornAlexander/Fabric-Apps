@@ -1,0 +1,371 @@
+{
+  "source": "Geoportal Berlin, 3D-Gebäudemodelle im Level of Detail 2 (LoD2, CityGML 1.0), Atom a_lod2; DL-DE-Zero 2.0",
+  "attribution": "Geoportal Berlin / 3D-Gebäudemodelle LoD2",
+  "encoding": "one payload per site: buildings-<id>.json / .bin / _index.bin, each with its own origin",
+  "sites": [
+    {
+      "id": "marienfelde",
+      "trees": 2266,
+      "bounds": {
+        "west": 13.34023,
+        "east": 13.36233,
+        "south": 52.40246,
+        "north": 52.41596
+      },
+      "buildings": 1948,
+      "vertexCount": 210438,
+      "bytes": 1293796,
+      "roofMeasured": 1943
+    },
+    {
+      "id": "gropiusstadt",
+      "trees": 9598,
+      "bounds": {
+        "west": 13.44395,
+        "east": 13.48741,
+        "south": 52.41765,
+        "north": 52.43858
+      },
+      "buildings": 8593,
+      "vertexCount": 817806,
+      "bytes": 5044324,
+      "roofMeasured": 8582
+    },
+    {
+      "id": "marzahn_bvg-marzahn",
+      "trees": 22399,
+      "bounds": {
+        "west": 13.53795,
+        "east": 13.58693,
+        "south": 52.53504,
+        "north": 52.55796
+      },
+      "buildings": 3207,
+      "vertexCount": 448848,
+      "bytes": 2744400,
+      "roofMeasured": 3194
+    },
+    {
+      "id": "brunnenviertel_bvg-usedomer",
+      "trees": 8050,
+      "bounds": {
+        "west": 13.37705,
+        "east": 13.40421,
+        "south": 52.53169,
+        "north": 52.55036
+      },
+      "buildings": 3388,
+      "vertexCount": 560262,
+      "bytes": 3415780,
+      "roofMeasured": 3369
+    },
+    {
+      "id": "bvg-muellerstrasse",
+      "trees": 526,
+      "bounds": {
+        "west": 13.33282,
+        "east": 13.3431,
+        "south": 52.55744,
+        "north": 52.56401
+      },
+      "buildings": 477,
+      "vertexCount": 55095,
+      "bytes": 338202,
+      "roofMeasured": 473
+    },
+    {
+      "id": "bvg-machandelweg",
+      "trees": 434,
+      "bounds": {
+        "west": 13.248,
+        "east": 13.25519,
+        "south": 52.51736,
+        "north": 52.52196
+      },
+      "buildings": 75,
+      "vertexCount": 15696,
+      "bytes": 95376,
+      "roofMeasured": 74
+    },
+    {
+      "id": "bvg-indira",
+      "trees": 358,
+      "bounds": {
+        "west": 13.46552,
+        "east": 13.47746,
+        "south": 52.54075,
+        "north": 52.54851
+      },
+      "buildings": 170,
+      "vertexCount": 28596,
+      "bytes": 174296,
+      "roofMeasured": 169
+    },
+    {
+      "id": "bvg-koepenick",
+      "trees": 128,
+      "bounds": {
+        "west": 13.5767,
+        "east": 13.58469,
+        "south": 52.43706,
+        "north": 52.4416
+      },
+      "buildings": 297,
+      "vertexCount": 32355,
+      "bytes": 198882,
+      "roofMeasured": 297
+    },
+    {
+      "id": "bvg-trebbiner",
+      "trees": 538,
+      "bounds": {
+        "west": 13.37297,
+        "east": 13.38063,
+        "south": 52.49676,
+        "north": 52.50118
+      },
+      "buildings": 107,
+      "vertexCount": 30858,
+      "bytes": 186860,
+      "roofMeasured": 104
+    },
+    {
+      "id": "bvg-friedrichsfelde",
+      "trees": 1680,
+      "bounds": {
+        "west": 13.51118,
+        "east": 13.52309,
+        "south": 52.49755,
+        "north": 52.50686
+      },
+      "buildings": 401,
+      "vertexCount": 50106,
+      "bytes": 307052,
+      "roofMeasured": 399
+    },
+    {
+      "id": "bvg-lichtenberg",
+      "trees": 1524,
+      "bounds": {
+        "west": 13.49657,
+        "east": 13.50788,
+        "south": 52.51643,
+        "north": 52.52411
+      },
+      "buildings": 344,
+      "vertexCount": 28188,
+      "bytes": 174632,
+      "roofMeasured": 337
+    },
+    {
+      "id": "bvg-cicerostrasse",
+      "trees": 873,
+      "bounds": {
+        "west": 13.29862,
+        "east": 13.30708,
+        "south": 52.48925,
+        "north": 52.49617
+      },
+      "buildings": 413,
+      "vertexCount": 70938,
+      "bytes": 432236,
+      "roofMeasured": 412
+    },
+    {
+      "id": "bvg-schoeneweide_bvg-treptow_bvg-rummelsburger",
+      "trees": 1635,
+      "bounds": {
+        "west": 13.49343,
+        "east": 13.51289,
+        "south": 52.46234,
+        "north": 52.47502
+      },
+      "buildings": 834,
+      "vertexCount": 94875,
+      "bytes": 582594,
+      "roofMeasured": 796
+    },
+    {
+      "id": "bvg-conrad-blenkle",
+      "trees": 408,
+      "bounds": {
+        "west": 13.44268,
+        "east": 13.44989,
+        "south": 52.53124,
+        "north": 52.53583
+      },
+      "buildings": 48,
+      "vertexCount": 7326,
+      "bytes": 44724,
+      "roofMeasured": 48
+    },
+    {
+      "id": "bvg-puccini",
+      "trees": 389,
+      "bounds": {
+        "west": 13.45178,
+        "east": 13.45899,
+        "south": 52.54251,
+        "north": 52.54709
+      },
+      "buildings": 229,
+      "vertexCount": 26199,
+      "bytes": 160858,
+      "roofMeasured": 229
+    },
+    {
+      "id": "bvg-saentis",
+      "trees": 133,
+      "bounds": {
+        "west": 13.37886,
+        "east": 13.39099,
+        "south": 52.41206,
+        "north": 52.41882
+      },
+      "buildings": 511,
+      "vertexCount": 39639,
+      "bytes": 246010,
+      "roofMeasured": 503
+    },
+    {
+      "id": "degewo-3649",
+      "trees": 221,
+      "bounds": {
+        "west": 13.33999,
+        "east": 13.34573,
+        "south": 52.43033,
+        "north": 52.43401
+      },
+      "buildings": 136,
+      "vertexCount": 18474,
+      "bytes": 113020,
+      "roofMeasured": 136
+    },
+    {
+      "id": "degewo-22862",
+      "trees": 196,
+      "bounds": {
+        "west": 13.33404,
+        "east": 13.33979,
+        "south": 52.5157,
+        "north": 52.51937
+      },
+      "buildings": 170,
+      "vertexCount": 29526,
+      "bytes": 179876,
+      "roofMeasured": 169
+    },
+    {
+      "id": "degewo-119822",
+      "trees": 199,
+      "bounds": {
+        "west": 13.30462,
+        "east": 13.31037,
+        "south": 52.46878,
+        "north": 52.47246
+      },
+      "buildings": 153,
+      "vertexCount": 23487,
+      "bytes": 143370,
+      "roofMeasured": 153
+    },
+    {
+      "id": "degewo-148604",
+      "trees": 352,
+      "bounds": {
+        "west": 13.19811,
+        "east": 13.20385,
+        "south": 52.54155,
+        "north": 52.54523
+      },
+      "buildings": 315,
+      "vertexCount": 38925,
+      "bytes": 238590,
+      "roofMeasured": 315
+    },
+    {
+      "id": "degewo-190130",
+      "trees": 920,
+      "bounds": {
+        "west": 13.21461,
+        "east": 13.22034,
+        "south": 52.42347,
+        "north": 52.42715
+      },
+      "buildings": 212,
+      "vertexCount": 19539,
+      "bytes": 120626,
+      "roofMeasured": 212
+    },
+    {
+      "id": "degewo-290439",
+      "trees": 225,
+      "bounds": {
+        "west": 13.43451,
+        "east": 13.44027,
+        "south": 52.46109,
+        "north": 52.46476
+      },
+      "buildings": 230,
+      "vertexCount": 34035,
+      "bytes": 207890,
+      "roofMeasured": 229
+    },
+    {
+      "id": "degewo-304306",
+      "trees": 416,
+      "bounds": {
+        "west": 13.44521,
+        "east": 13.45097,
+        "south": 52.45431,
+        "north": 52.45799
+      },
+      "buildings": 92,
+      "vertexCount": 13362,
+      "bytes": 81644,
+      "roofMeasured": 92
+    },
+    {
+      "id": "degewo-332133",
+      "trees": 39,
+      "bounds": {
+        "west": 13.58921,
+        "east": 13.59497,
+        "south": 52.42378,
+        "north": 52.42744
+      },
+      "buildings": 96,
+      "vertexCount": 5373,
+      "bytes": 33774,
+      "roofMeasured": 96
+    },
+    {
+      "id": "degewo-355390",
+      "trees": 81,
+      "bounds": {
+        "west": 13.56626,
+        "east": 13.57202,
+        "south": 52.41155,
+        "north": 52.41522
+      },
+      "buildings": 106,
+      "vertexCount": 8586,
+      "bytes": 53212,
+      "roofMeasured": 106
+    },
+    {
+      "id": "degewo-372931",
+      "trees": 208,
+      "bounds": {
+        "west": 13.56967,
+        "east": 13.57543,
+        "south": 52.45177,
+        "north": 52.45543
+      },
+      "buildings": 122,
+      "vertexCount": 19083,
+      "bytes": 116450,
+      "roofMeasured": 121
+    }
+  ]
+}

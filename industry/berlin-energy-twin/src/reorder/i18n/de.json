@@ -1,0 +1,100 @@
+{
+  "reorder": {
+    "signingIn": "Anmeldung bei Fabric läuft …",
+    "readOnly": {
+      "not-embedded": "Nur Lesen: Nachbestellen geht nur in Fabric angemeldet.",
+      "offline": "Nur Lesen: offline, Nachbestellen braucht eine Verbindung.",
+      "not-deployed": "Nur Lesen: dieser Build ist mit keiner Fabric-App verbunden.",
+      "failed": "Nur Lesen: die Anmeldung bei Fabric ist fehlgeschlagen."
+    },
+    "noData": "Keine Daten",
+    "days": "Tage",
+    "units": "Stück",
+    "sending": "Wird gesendet …",
+    "notSent": "Nicht gesendet. {{detail}}",
+    "provenance": "Bestand, Abverkauf und Vorschläge sind die Antworten des Fabric-Modells „caldova-koeln-betrieb“ zum Stand {{date}}, beim Deploy gegen das Modell geprüft. Nachbestellungen sind live. Alle Apotheken und Mengen sind fiktiv.",
+    "header": {
+      "title": "Nachbestellung",
+      "region": "Stadtbezirk {{region}}",
+      "allDistricts": "Alle Kölner Stadtbezirke",
+      "asOf": "Datenstand"
+    },
+    "tiles": {
+      "error": "Die Kennzahlen konnten nicht geladen werden. {{detail}}",
+      "stores": "Partner-Apotheken",
+      "storesCaption": "In allen Stadtbezirken",
+      "low": "Knapp",
+      "lowCaption": "Apotheke × Produkt, unter einer Woche Reichweite",
+      "lowTrend": "Knappe Paare aus Apotheke und Produkt an jedem der letzten sieben Tage",
+      "today": "Nachbestellungen heute",
+      "todayReadOnly": "nur in Fabric angemeldet",
+      "todayJustSent": "Gerade von Ihnen gesendet",
+      "todayCaption": "Seit Mitternacht (UTC)"
+    },
+    "queue": {
+      "title": "Was knapp wird",
+      "note": "Dringendstes zuerst. Was „knapp“ heißt, legt das semantische Modell fest.",
+      "daysHeading": "Reichweite",
+      "error": "Die Liste konnte nicht geladen werden. {{detail}}",
+      "empty": "Gerade ist in keiner Apotheke etwas knapp.",
+      "openDetail": "Details zu {{product}} in {{store}}",
+      "demandLabel": "Tagesabsatz von {{product}} in {{store}}",
+      "onHand": "Bestand",
+      "onOrder": "Bestellt · {{units}} Stück",
+      "unitsLabel": "Nachbestellmenge für {{product}} in {{store}}",
+      "send": "Nachbestellen"
+    },
+    "status": {
+      "critical": "Kritisch",
+      "low": "Knapp",
+      "healthy": "Ausreichend"
+    },
+    "detail": {
+      "label": "{{product}} in {{store}}",
+      "close": "Schließen",
+      "source": "Werte aus dem semantischen Modell.",
+      "rateError": "Die Abverkaufsraten konnten nicht geladen werden. {{detail}}",
+      "soldHere": "Verkauft hier",
+      "soldRegion": "Verkauft in ganz Köln",
+      "perDay": "pro Tag",
+      "coverHere": "Reichweite hier",
+      "suggested": "Bestellvorschlag",
+      "toReach": "für {{days}} Tage Reichweite",
+      "stockTitle": "Bestand in den Apotheken, letzte 7 Tage",
+      "stockNote": "Kürzeste Reichweite zuerst · diese Apotheke hervorgehoben",
+      "stockError": "Der Bestandsverlauf konnte nicht geladen werden. {{detail}}",
+      "stockChart": "Geschätzter Bestand von {{product}} je Apotheke in den letzten sieben Tagen",
+      "coverShort": "{{days}} T.",
+      "estimated": "Der Bestandsverlauf ist geschätzt: vom heutigen Bestand über die Verkäufe seitdem zurückgerechnet, also ohne Lieferungen im Zeitraum.",
+      "alreadyOnOrder": "{{units}} Stück für diese Apotheke bereits bestellt.",
+      "unitsToOrder": "Bestellmenge",
+      "send": "Nachbestellung senden",
+      "last7": "Letzte 7 Tage",
+      "last28": "Letzte 28 Tage"
+    },
+    "recent": {
+      "title": "Letzte Nachbestellungen",
+      "note": "In Fabric erfasst, mit Absender und Zeitpunkt.",
+      "error": "Die Nachbestellungen konnten nicht geladen werden. {{detail}}",
+      "loading": "Wird geladen …",
+      "empty": "Noch keine Nachbestellungen.",
+      "justNow": "gerade eben"
+    },
+    "reset": {
+      "done": "Demo zurückgesetzt: {{count}} Nachbestellungen entfernt.",
+      "label": "Demo zurücksetzen",
+      "question": "Demo zurücksetzen?",
+      "body": "Entfernt die Nachbestellungen, die Sie gesendet haben. Der ältere Verlauf anderer Personen bleibt.",
+      "failed": "Zurücksetzen fehlgeschlagen. {{detail}}",
+      "cancel": "Abbrechen",
+      "running": "Wird zurückgesetzt …",
+      "confirm": "Zurücksetzen"
+    },
+    "demand": {
+      "title": "Abverkauf in Köln",
+      "note": "Verkaufte Stück pro Tag, letzte 14 Tage.",
+      "label": "Verkaufte Stück pro Tag in allen Partner-Apotheken, letzte 14 Tage"
+    },
+    "invalidUnits": "Bitte eine ganze Stückzahl ab 1 eingeben."
+  }
+}

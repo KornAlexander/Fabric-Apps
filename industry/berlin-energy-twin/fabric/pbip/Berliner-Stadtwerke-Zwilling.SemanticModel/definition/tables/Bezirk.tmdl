@@ -1,0 +1,81 @@
+/// Die zwölf Berliner Bezirke mit Einwohnern (Einwohnerregister 31.12.2025) und allen Ladepunkten laut Land Berlin inklusive privater. Auch: Stadtbezirk.
+table Bezirk
+
+	column 'Bezirk-Nr'
+		dataType: int64
+		isHidden
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: Bezirk-Nr
+
+		annotation SummarizationSetBy = Automatic
+
+	column Bezirk
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Bezirk
+		sortByColumn: 'Bezirk-Nr'
+		dataCategory: County
+
+		annotation SummarizationSetBy = Automatic
+
+	column Einwohner
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: Einwohner
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ladepunkte Register gesamt'
+		dataType: int64
+		formatString: #,0
+		summarizeBy: sum
+		sourceColumn: Ladepunkte Register gesamt
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ladeleistung Register gesamt kW'
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: sum
+		sourceColumn: Ladeleistung Register gesamt kW
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Stand Ladepunkte Register'
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Stand Ladepunkte Register
+
+		annotation SummarizationSetBy = Automatic
+
+	column Längengrad
+		dataType: double
+		formatString: 0.000000
+		summarizeBy: none
+		sourceColumn: Längengrad
+		dataCategory: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+	column Breitengrad
+		dataType: double
+		formatString: 0.000000
+		summarizeBy: none
+		sourceColumn: Breitengrad
+		dataCategory: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Bezirk = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(Binary.Decompress(Binary.FromText("bVNLbtswEN3zFL6ABM4Mv5hdihYF4gRFEiBAd0rMSIIV2qBlGPB5eoZcwBfrSE43SjckMeS8mffe8Cad+7Kt7gvfzCf+3ufTrsup8LrZpP0xb8e0ekhtfxhTWbXp0LyP89WQJHTM7fJytX3mx7HJm9V/AHh9+ZPblNvSbPimpH68nhXwXT+OiSn64KNsaNigdsQItaYaNToGqsnGEA1brC0ROVTIP0qfNqV/7Q5d0+fqtqTj+SWVljGi95IVraBowFDbBZqx2mg/o2lnLSriX03e7k5SO8x1pocmeq1rXOaSM3jtJProQRn+1jVl2AmN/HIsbfXcD++pHDa78sYkz9EyBYuyYPS1X+ChR2F97cUboyw/7kXF5sjoAJ1m0ghM3nr7pRcI4OyVB0RjnHJiQWqHfjxXv1M3pHxtQkeSBPKR2EAgU8OyCQOWZlKGtLekPD+l930aut1b9fjaXT5ymrUlGwIJH+2M4IVga7d0SoL+EyrqEFTg+3TcXj6GITMROG0YjTBGgYLaLOU1ZDHM6cYaAhX5qaT9uDtVt5ePfcr963aSxOkoLllZpAp9cdihIzejgHfeK9B815Rz0+XqZxqGf/ZgdC54JtnZaGlrAWODROMsMAIBKABey8hNVs9yQEArtWWgRBqZtS/2mjjpeR1cED0UID+kfqLx6Q568BPGNPpE8gvqsHQnBJQhEgynLWqj/gI=", BinaryEncoding.Base64), Compression.Deflate), [Delimiter=";", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Kopfzeilen = Table.PromoteHeaders(Quelle, [PromoteAllScalars=true]),
+				    Typisiert = Table.TransformColumnTypes(Kopfzeilen, {{"Bezirk-Nr", Int64.Type}, {"Bezirk", type text}, {"Einwohner", Int64.Type}, {"Ladepunkte Register gesamt", Int64.Type}, {"Ladeleistung Register gesamt kW", type number}, {"Stand Ladepunkte Register", type text}, {"Längengrad", type number}, {"Breitengrad", type number}}, "en-US")
+				in
+				    Typisiert
+
+	annotation PBI_ResultType = Table

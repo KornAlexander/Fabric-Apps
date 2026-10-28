@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Berliner Stadtwerke Zwilling",
+    "description": "Vier Seiten zu Berliner Stadtwerken, degewo, BVG und öffentlichem Laden."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "8b9a0527-0000-0000-0000-8b9a0527f2a9"
+  }
+}

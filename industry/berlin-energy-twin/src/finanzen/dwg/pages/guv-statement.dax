@@ -1,0 +1,25 @@
+// Abfragen der Seite „GuV Statement“ ohne Querfilter, zum Prüfen in der DAX-Abfrageansicht.
+// erzeugt von `dwg app page`, nicht von Hand ändern.
+
+// Kachel statement (pnl)
+EVALUATE
+    SUMMARIZECOLUMNS(
+        'dim-konten'[AccountID],
+        'dim-konten'[Name],
+        'dim-konten'[L1],
+        'dim-konten'[L2],
+        'dim-konten'[L3],
+        'dim-konten'[SortOrder],
+        'dim-konten'[RowType],
+        'dim-konten'[FormulaDef],
+        'dim-konten'[SignConvention],
+        'dim-konten'[DisplayInvert],
+        'dim-konten'[VarianceInvert],
+        'dim-konten'[Kommentar],
+        TREATAS({2026}, 'Calender'[Year]),
+        TREATAS({1, 2, 3, 4, 5, 6, 7, 8, 9}, 'Calender'[Month]),
+        "ac", 'fact-guv'[GuV AC],
+        "py", 'fact-guv'[GuV PY],
+        "pl", 'fact-guv'[GuV PL]
+    )
+ORDER BY 'dim-konten'[AccountID], 'dim-konten'[Name], 'dim-konten'[L1], 'dim-konten'[L2], 'dim-konten'[L3], 'dim-konten'[SortOrder], 'dim-konten'[RowType], 'dim-konten'[FormulaDef], 'dim-konten'[SignConvention], 'dim-konten'[DisplayInvert], 'dim-konten'[VarianceInvert], 'dim-konten'[Kommentar]

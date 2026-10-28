@@ -1,0 +1,87 @@
+{
+  "aoi": "bvg-puccini",
+  "source": "Geoportal Berlin, 3D-Gebäudemodelle im Level of Detail 2 (LoD2, CityGML 1.0), Atom a_lod2; DL-DE-Zero 2.0",
+  "attribution": "Geoportal Berlin / 3D-Gebäudemodelle LoD2",
+  "buildings": 229,
+  "vertexCount": 26199,
+  "origin": {
+    "lon": 13.455385,
+    "lat": 52.544799999999995
+  },
+  "quantisation": {
+    "xyScaleM": 0.25,
+    "zScaleM": 0.25,
+    "zBaseM": 47.0
+  },
+  "encoding": "interleaved int16 x,y,z in 0.25 m units; x/y are Web Mercator metres from origin, z is height above zBaseM (DHHN2016)",
+  "index": "per building: uint32 start, uint32 roofStart, uint32 end, uint8 wall, uint8 r,g,b (16 bytes)",
+  "indexStride": 16,
+  "wallClasses": [
+    "render",
+    "utility",
+    "civic",
+    "commercial",
+    "sacred"
+  ],
+  "wallSpread": {
+    "render": 190,
+    "utility": 27,
+    "civic": 9,
+    "commercial": 3
+  },
+  "roofColour": {
+    "measured": 229,
+    "total": 229,
+    "method": "median of TrueDOP 2025 pixels (0.2 m) inside each LoD2 roof polygon, vegetation rejected, sun normalised"
+  },
+  "topCodes": [
+    [
+      "31001_1010",
+      126
+    ],
+    [
+      "51009_1610",
+      37
+    ],
+    [
+      "31001_2143",
+      12
+    ],
+    [
+      "31001_2020",
+      7
+    ],
+    [
+      "31001_1120",
+      6
+    ],
+    [
+      "31001_3080",
+      6
+    ],
+    [
+      "31001_2463",
+      6
+    ],
+    [
+      "31001_2723",
+      5
+    ],
+    [
+      "31001_2120",
+      3
+    ],
+    [
+      "31001_1130",
+      3
+    ],
+    [
+      "31001_2621",
+      3
+    ],
+    [
+      "31001_1313",
+      1
+    ]
+  ]
+}

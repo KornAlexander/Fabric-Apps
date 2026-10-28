@@ -1,0 +1,16 @@
+{
+  "source": "Geoportal Berlin, Baumbestand (Straßen- und Anlagenbäume), WFS baumbestand; DL-DE-Zero 2.0",
+  "count": 416,
+  "stride": 12,
+  "heightStats": {
+    "min": 7.0,
+    "median": 15.0,
+    "max": 18.0
+  },
+  "estimated": {
+    "crown": 416,
+    "height": 258,
+    "method": "crown 0.45 x height (broadleaf) or 0.3 x height (conifer) where the register has none; missing height = median of the species group in this site; ground from the DGM1 1 m cell under the trunk (nearest LoD2 ground heights where it has none)",
+    "groundFromBuildings": 0
+  }
+}

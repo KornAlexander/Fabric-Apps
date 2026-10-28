@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/semanticModel/copilot/examplePrompts/1.0.0/schema.json",
+  "prompts": [
+    "Wie viel Solarleistung haben die Berliner Stadtwerke, die degewo und die BVG jeweils installiert?",
+    "In welchem Bezirk betreiben die Stadtwerke die meisten öffentlichen Ladepunkte, und wie hoch ist ihr Anteil dort?",
+    "Welche degewo-Quartiere haben keinen Ladepunkt der Stadtwerke im Umkreis von 300 Metern?",
+    "Auf welchen Dächern ist noch das meiste Solarpotenzial frei?",
+    "Wie hat sich der Solarzubau der Partner seit 2015 je Jahr entwickelt?",
+    "Welche BVG-Betriebshöfe gehören zur Solarvereinbarung 2025 und wie viel kWp haben sie?",
+    "How many public charge points per 1,000 residents does each district have?"
+  ]
+}

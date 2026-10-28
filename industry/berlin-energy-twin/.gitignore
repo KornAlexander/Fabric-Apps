@@ -1,0 +1,36 @@
+node_modules/
+dist/
+.env
+.env.local
+rayfin/.env
+rayfin/.deployments.json
+*.tsbuildinfo
+test-results/
+.playwright-mcp/
+
+# Raw GTFS feeds are large (97 MB zipped, 353 MB shapes.txt) and reproducible
+# via tools/extract_network.py. The extracted public/data/network.json IS committed.
+data/raw/
+*.zip
+
+# Python bytecode from the RTI recorder
+__pycache__/
+
+rayfin/.temp/
+
+# Guard lists and Fabric target ids: MCAPS-specific, local only (tools/guard_items.py)
+tools/fabric/protected-items.json
+tools/fabric/allowed-items.json
+tools/fabric/fabric.json
+rayfin/.deployments.json
+rayfin/.lockfile.json
+logs/
+
+# Bake caches (reproducible from the sources)
+cache/
+
+# Import model (fabric/): CSVs are reproducible via npm run export:model; Desktop cache and screenshots stay local
+fabric/build/
+fabric/shots/
+fabric/pbip/**/.pbi/
+

@@ -1,0 +1,18 @@
+// Kontenbaum der GuV inklusive Formel-, KPI- und Trennzeilen.
+EVALUATE
+SELECTCOLUMNS (
+    'dim-konten',
+    "id", 'dim-konten'[AccountID],
+    "parent", 'dim-konten'[ParentAccountID],
+    "name", 'dim-konten'[Name],
+    "l1", 'dim-konten'[L1],
+    "l2", 'dim-konten'[L2],
+    "l3", 'dim-konten'[L3],
+    "rowType", 'dim-konten'[RowType],
+    "formula", 'dim-konten'[FormulaDef],
+    "sign", 'dim-konten'[SignConvention],
+    "displayInvert", 'dim-konten'[DisplayInvert],
+    "varianceInvert", 'dim-konten'[VarianceInvert],
+    "sort", 'dim-konten'[SortOrder]
+)
+ORDER BY [sort]

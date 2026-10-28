@@ -1,0 +1,100 @@
+{
+  "reorder": {
+    "signingIn": "Signing in to Fabric …",
+    "readOnly": {
+      "not-embedded": "Read-only: reordering works only signed in inside Fabric.",
+      "offline": "Read-only: offline, reordering needs a connection.",
+      "not-deployed": "Read-only: this build is not connected to a Fabric app.",
+      "failed": "Read-only: signing in to Fabric failed."
+    },
+    "noData": "No data",
+    "days": "days",
+    "units": "units",
+    "sending": "Sending …",
+    "notSent": "Not sent. {{detail}}",
+    "provenance": "Stock, sales and suggestions are the answers of the Fabric model “caldova-koeln-betrieb” as of {{date}}, checked against the model at deploy. Reorders are live. All pharmacies and quantities are fictional.",
+    "header": {
+      "title": "Restock",
+      "region": "{{region}} district",
+      "allDistricts": "All Köln districts",
+      "asOf": "Data as of"
+    },
+    "tiles": {
+      "error": "Could not load the headline numbers. {{detail}}",
+      "stores": "Partner pharmacies",
+      "storesCaption": "Across all districts",
+      "low": "Running low",
+      "lowCaption": "Pharmacy × product, under a week of stock",
+      "lowTrend": "Pharmacy and product pairs running low on each of the last seven days",
+      "today": "Reorders sent today",
+      "todayReadOnly": "signed in inside Fabric only",
+      "todayJustSent": "Just sent by you",
+      "todayCaption": "Since midnight, UTC"
+    },
+    "queue": {
+      "title": "Running low",
+      "note": "Worst first. “Running low” is defined in the semantic model.",
+      "daysHeading": "Days of stock",
+      "error": "Could not load the low-stock queue. {{detail}}",
+      "empty": "Nothing is running low in any pharmacy right now.",
+      "openDetail": "Show detail for {{product}} at {{store}}",
+      "demandLabel": "Daily demand for {{product}} at {{store}}",
+      "onHand": "on hand",
+      "onOrder": "On order · {{units}} units",
+      "unitsLabel": "Units to reorder for {{product}} at {{store}}",
+      "send": "Reorder"
+    },
+    "status": {
+      "critical": "Critical",
+      "low": "Low",
+      "healthy": "Healthy"
+    },
+    "detail": {
+      "label": "{{product}} at {{store}}",
+      "close": "Close",
+      "source": "Rates from the semantic model.",
+      "rateError": "Could not load the sales rates. {{detail}}",
+      "soldHere": "Sold here",
+      "soldRegion": "Sold across Köln",
+      "perDay": "per day",
+      "coverHere": "Cover left here",
+      "suggested": "Suggested order",
+      "toReach": "to reach {{days}} days",
+      "stockTitle": "Stock across the pharmacies, last 7 days",
+      "stockNote": "Worst cover first · this pharmacy highlighted",
+      "stockError": "Could not load stock history. {{detail}}",
+      "stockChart": "Estimated stock of {{product}} in each pharmacy over the last seven days",
+      "coverShort": "{{days}} d",
+      "estimated": "Stock history is estimated: worked back from today's count using sales since, so it assumes no deliveries arrived in the window.",
+      "alreadyOnOrder": "{{units}} units already on order for this pharmacy.",
+      "unitsToOrder": "Units to order",
+      "send": "Send reorder",
+      "last7": "Last 7 days",
+      "last28": "Last 28 days"
+    },
+    "recent": {
+      "title": "Recent reorders",
+      "note": "Recorded in Fabric, with who asked and when.",
+      "error": "Could not load recent reorders. {{detail}}",
+      "loading": "Loading …",
+      "empty": "No reorders sent yet.",
+      "justNow": "just now"
+    },
+    "reset": {
+      "done": "Demo reset: {{count}} reorders removed.",
+      "label": "Reset the demo",
+      "question": "Reset the demo?",
+      "body": "Removes the reorders you sent. The earlier history, raised by other people, is left alone.",
+      "failed": "Could not reset. {{detail}}",
+      "cancel": "Cancel",
+      "running": "Resetting …",
+      "confirm": "Reset"
+    },
+    "demand": {
+      "title": "Sales across Köln",
+      "note": "Units sold per day, last fortnight.",
+      "label": "Units sold per day across all partner pharmacies over the last fortnight"
+    },
+    "invalidUnits": "Enter a whole number of units, 1 or more."
+  }
+}

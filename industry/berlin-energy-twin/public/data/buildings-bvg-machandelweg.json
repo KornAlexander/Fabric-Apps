@@ -1,0 +1,86 @@
+{
+  "aoi": "bvg-machandelweg",
+  "source": "Geoportal Berlin, 3D-Gebäudemodelle im Level of Detail 2 (LoD2, CityGML 1.0), Atom a_lod2; DL-DE-Zero 2.0",
+  "attribution": "Geoportal Berlin / 3D-Gebäudemodelle LoD2",
+  "buildings": 75,
+  "vertexCount": 15696,
+  "origin": {
+    "lon": 13.251595,
+    "lat": 52.51966
+  },
+  "quantisation": {
+    "xyScaleM": 0.25,
+    "zScaleM": 0.25,
+    "zBaseM": 40.0
+  },
+  "encoding": "interleaved int16 x,y,z in 0.25 m units; x/y are Web Mercator metres from origin, z is height above zBaseM (DHHN2016)",
+  "index": "per building: uint32 start, uint32 roofStart, uint32 end, uint8 wall, uint8 r,g,b (16 bytes)",
+  "indexStride": 16,
+  "wallClasses": [
+    "render",
+    "utility",
+    "civic",
+    "commercial",
+    "sacred"
+  ],
+  "wallSpread": {
+    "render": 62,
+    "utility": 8,
+    "civic": 5
+  },
+  "roofColour": {
+    "measured": 74,
+    "total": 75,
+    "method": "median of TrueDOP 2025 pixels (0.2 m) inside each LoD2 roof polygon, vegetation rejected, sun normalised"
+  },
+  "topCodes": [
+    [
+      "31001_1010",
+      26
+    ],
+    [
+      "31001_2420",
+      8
+    ],
+    [
+      "51009_1610",
+      8
+    ],
+    [
+      "31001_2460",
+      7
+    ],
+    [
+      "31001_2422",
+      4
+    ],
+    [
+      "31001_2142",
+      4
+    ],
+    [
+      "31001_2500",
+      3
+    ],
+    [
+      "31001_2143",
+      2
+    ],
+    [
+      "31001_3010",
+      2
+    ],
+    [
+      "31001_3065",
+      2
+    ],
+    [
+      "31001_2020",
+      2
+    ],
+    [
+      "31001_1000",
+      2
+    ]
+  ]
+}

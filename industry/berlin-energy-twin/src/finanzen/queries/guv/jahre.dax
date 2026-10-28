@@ -1,0 +1,8 @@
+// Rahmendaten: verfügbare Jahre und letzter Ist-Monat je Jahr.
+EVALUATE
+ADDCOLUMNS (
+    SUMMARIZECOLUMNS ( Calender[Year], "rows", COUNTROWS ( 'fact-guv' ) ),
+    "lastActual",
+        CALCULATE ( MAX ( 'fact-guv'[Monat] ), 'fact-guv'[AC Wert] <> 0 )
+)
+ORDER BY Calender[Year]

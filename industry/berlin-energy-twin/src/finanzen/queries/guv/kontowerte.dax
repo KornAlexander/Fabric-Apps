@@ -1,0 +1,21 @@
+// Kontowerte eines Geschäftsjahres. AC = Ist (nur abgeschlossene Monate gefüllt),
+// FC = Ist + Forecast (Rolling Forecast), PL/PY volles Jahr und YTD bis zum letzten Ist-Monat.
+DEFINE
+    VAR _yr = {{YEAR}}
+    VAR _last =
+        CALCULATE (
+            MAX ( 'fact-guv'[Datum] ),
+            'fact-guv'[AC Wert] <> 0,
+            Calender[Year] = _yr
+        )
+EVALUATE
+SUMMARIZECOLUMNS (
+    'fact-guv'[AccountID],
+    TREATAS ( { _yr }, Calender[Year] ),
+    "AC", [GuV AC],
+    "FC", [GuV FC],
+    "PL", [GuV PL],
+    "PY", [GuV PY],
+    "PLYTD", CALCULATE ( [GuV PL], 'fact-guv'[Datum] <= _last ),
+    "PYYTD", CALCULATE ( [GuV PY], 'fact-guv'[Datum] <= _last )
+)

@@ -1,0 +1,24 @@
+model Model
+	culture: de-DE
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: de-DE
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_ProTooling = ["TMDLView_Desktop"]
+
+ref table Partner
+ref table Bezirk
+ref table Jahr
+ref table Anlage
+ref table Ladestation
+ref table Ladestrom
+ref table Quartier
+ref table 'Quartier Ladestation'
+ref table Betriebshof
+ref table Fokusdach
+ref table 'Gebäude im Quartier'
+ref table Datenquelle
+ref table Measure

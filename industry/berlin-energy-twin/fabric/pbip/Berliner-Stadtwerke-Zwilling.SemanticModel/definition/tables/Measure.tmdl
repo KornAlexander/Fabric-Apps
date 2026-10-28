@@ -1,0 +1,327 @@
+/// Alle Kennzahlen des Modells. Für Fragen immer zuerst diese Measures verwenden, nicht Spalten summieren.
+table Measure
+
+	/// Registrierte Photovoltaik-Leistung in kWp (Bruttoleistung laut Marktstammdatenregister), nur Energieträger Solar, alle Betriebsstatus inklusive vorübergehend oder endgültig stillgelegter Anlagen (wie in der App). Nur laufende Anlagen: [Solarleistung in Betrieb kWp]. Nach Partner filtern für Berliner Stadtwerke, degewo oder BVG. Auch: PV-Leistung, Solarkapazität.
+	measure 'Solarleistung kWp' = CALCULATE ( SUM ( Anlage[Bruttoleistung kW] ), KEEPFILTERS ( Anlage[Energieträger] = "Solar" ) )
+		formatString: #,0.0
+		displayFolder: Solar und Anlagen
+
+	/// Photovoltaik-Leistung in kWp nur der Anlagen mit Betriebsstatus In Betrieb, ohne vorübergehend oder endgültig stillgelegte.
+	measure 'Solarleistung in Betrieb kWp' = CALCULATE ( [Solarleistung kWp], KEEPFILTERS ( Anlage[Betriebsstatus] = "In Betrieb" ) )
+		formatString: #,0.0
+		displayFolder: Solar und Anlagen
+
+	/// Wie Solarleistung kWp, in Megawatt peak (1 MWp = 1.000 kWp).
+	measure 'Solarleistung MWp' = DIVIDE ( [Solarleistung kWp], 1000 )
+		formatString: #,0.0
+		displayFolder: Solar und Anlagen
+
+	/// Anzahl Photovoltaikanlagen (MaStR-Einheiten mit Energieträger Solar). Eine Zeile je MaStR-Nummer, keine Doppelzählung.
+	measure Solaranlagen = CALCULATE ( COUNTROWS ( Anlage ), KEEPFILTERS ( Anlage[Energieträger] = "Solar" ) )
+		formatString: #,0
+		displayFolder: Solar und Anlagen
+
+	/// Anzahl aller Erzeugungs- und Speichereinheiten der Partner im Marktstammdatenregister, alle Energieträger.
+	measure Anlagen = COUNTROWS ( Anlage )
+		formatString: #,0
+		displayFolder: Solar und Anlagen
+
+	/// Bruttoleistung aller Energieträger in kW (Solar, Wind, Erdgas, andere Gase, Speicher, Biomasse). Für Photovoltaik allein [Solarleistung kWp] verwenden.
+	measure 'Installierte Leistung kW' = SUM ( Anlage[Bruttoleistung kW] )
+		formatString: #,0.0
+		displayFolder: Solar und Anlagen
+
+	/// Bruttoleistung aller Energieträger außer Solar in kW (Wind, Erdgas, andere Gase, Speicher, Biomasse).
+	measure 'Leistung andere Energieträger kW' = CALCULATE ( SUM ( Anlage[Bruttoleistung kW] ), KEEPFILTERS ( Anlage[Energieträger] <> "Solar" ) )
+		formatString: #,0.0
+		displayFolder: Solar und Anlagen
+
+	/// Photovoltaikanlagen, die laut Marktstammdatenregister Mieterstrom liefern.
+	measure 'Mieterstrom-Solaranlagen' = CALCULATE ( [Solaranlagen], KEEPFILTERS ( Anlage[Mieterstrom] = "ja" ) )
+		formatString: #,0
+		displayFolder: Solar und Anlagen
+
+	/// Photovoltaik-Leistung der Mieterstromanlagen in kWp.
+	measure 'Mieterstrom-Solarleistung kWp' = CALCULATE ( [Solarleistung kWp], KEEPFILTERS ( Anlage[Mieterstrom] = "ja" ) )
+		formatString: #,0.0
+		displayFolder: Solar und Anlagen
+
+	/// Photovoltaikanlagen ohne öffentliche Adresse oder Koordinate (kleine Anlagen); sie sind nur der Postleitzahl zugeordnet.
+	measure 'Solaranlagen nur nach PLZ verortet' = CALCULATE ( [Solaranlagen], KEEPFILTERS ( Anlage[Verortung] = "nur Postleitzahl" ) )
+		formatString: #,0
+		displayFolder: Solar und Anlagen
+
+	/// Durchschnittliche Leistung einer Photovoltaikanlage in kWp.
+	measure 'Mittlere Solaranlagengröße kWp' = DIVIDE ( [Solarleistung kWp], [Solaranlagen] )
+		formatString: #,0.0
+		displayFolder: Solar und Anlagen
+
+	/// Photovoltaik-Leistung in kWp je 1.000 Einwohner des Bezirks (Einwohnerregister 31.12.2025).
+	measure 'Solarleistung je 1.000 Einwohner kWp' = DIVIDE ( [Solarleistung kWp], [Einwohner] ) * 1000
+		formatString: #,0.0
+		displayFolder: Solar und Anlagen
+
+	/// Rechenwert, kein Ziel: die stadtweite Solarleistung (im aktuellen Partnerfilter) auf den Bezirk nach seinem Einwohneranteil verteilt. Nur je Bezirk definiert.
+	measure 'Solarleistung erwartet nach Einwohnern kWp' =
+			VAR stadt = CALCULATE ( [Solarleistung kWp], REMOVEFILTERS ( Bezirk ) )
+			VAR einwohnerStadt = CALCULATE ( [Einwohner], REMOVEFILTERS ( Bezirk ) )
+			RETURN
+			    IF ( HASONEVALUE ( Bezirk[Bezirk] ), DIVIDE ( stadt, einwohnerStadt ) * [Einwohner] )
+		formatString: #,0.0
+		displayFolder: Solar und Anlagen
+
+	/// Im Vorjahr in Betrieb genommene Photovoltaik-Leistung in kWp, für den Vergleich je Inbetriebnahmejahr. Nur je Jahr definiert.
+	measure 'Solarleistung Vorjahr kWp' =
+			VAR y = MAX ( Jahr[Jahr] )
+			RETURN
+			    IF ( HASONEVALUE ( Jahr[Jahr] ), CALCULATE ( [Solarleistung kWp], REMOVEFILTERS ( Jahr ), Jahr[Jahr] = y - 1 ) )
+		formatString: #,0.0
+		displayFolder: Solar und Anlagen
+
+	/// Photovoltaik-Leistung aller bis einschließlich zum Jahr in Betrieb genommenen Anlagen in kWp (Bestand heute registrierter Anlagen).
+	measure 'Solarleistung kumuliert kWp' =
+			VAR y = MAX ( Jahr[Jahr] )
+			RETURN
+			    CALCULATE ( [Solarleistung kWp], REMOVEFILTERS ( Jahr ), Jahr[Jahr] <= y )
+		formatString: #,0.0
+		displayFolder: Solar und Anlagen
+
+	/// Anzahl öffentlicher Ladestationen im Ladesäulenregister Berlin (Geoportal), ohne Live-Status.
+	measure Ladestationen = COUNTROWS ( Ladestation )
+		formatString: #,0
+		displayFolder: Laden
+
+	/// Anzahl öffentlicher Ladepunkte im Ladesäulenregister Berlin. Private Ladepunkte zählt [Ladepunkte Register gesamt].
+	measure Ladepunkte = SUM ( Ladestation[Ladepunkte] )
+		formatString: #,0
+		displayFolder: Laden
+
+	/// Öffentliche Ladepunkte, die die Berliner Stadtwerke betreiben (inklusive Berliner Stadtwerke EnergiePartner).
+	measure 'Ladepunkte Stadtwerke' = CALCULATE ( [Ladepunkte], KEEPFILTERS ( Ladestation[Stadtwerke] = "ja" ) )
+		formatString: #,0
+		displayFolder: Laden
+
+	/// Öffentliche Ladepunkte aller anderen Betreiber.
+	measure 'Ladepunkte andere Betreiber' = CALCULATE ( [Ladepunkte], KEEPFILTERS ( Ladestation[Stadtwerke] = "nein" ) )
+		formatString: #,0
+		displayFolder: Laden
+
+	/// Anteil der Berliner Stadtwerke an den öffentlichen Ladepunkten.
+	measure 'Anteil Stadtwerke an Ladepunkten' = DIVIDE ( [Ladepunkte Stadtwerke], [Ladepunkte] )
+		formatString: 0.0 %
+		displayFolder: Laden
+
+	/// Öffentliche Ladepunkte an Stationen mit Gleichstrom-Schnellladen (DC).
+	measure Schnellladepunkte = CALCULATE ( [Ladepunkte], KEEPFILTERS ( Ladestation[Schnellladen DC] = "ja" ) )
+		formatString: #,0
+		displayFolder: Laden
+
+	/// Öffentliche Ladepunkte je 1.000 Einwohner.
+	measure 'Ladepunkte je 1.000 Einwohner' = DIVIDE ( [Ladepunkte], [Einwohner] ) * 1000
+		formatString: #,0.00
+		displayFolder: Laden
+
+	/// Rechenwert, kein Ziel: die stadtweiten öffentlichen Ladepunkte auf den Bezirk nach seinem Einwohneranteil verteilt. Nur je Bezirk definiert.
+	measure 'Ladepunkte erwartet nach Einwohnern' =
+			VAR stadt = CALCULATE ( [Ladepunkte], REMOVEFILTERS ( Bezirk ) )
+			VAR einwohnerStadt = CALCULATE ( [Einwohner], REMOVEFILTERS ( Bezirk ) )
+			RETURN
+			    IF ( HASONEVALUE ( Bezirk[Bezirk] ), DIVIDE ( stadt, einwohnerStadt ) * [Einwohner] )
+		formatString: #,0
+		displayFolder: Laden
+
+	/// Rechenwert, kein Ziel: die stadtweiten Ladepunkte der Berliner Stadtwerke auf den Bezirk nach seinem Einwohneranteil verteilt. Nur je Bezirk definiert.
+	measure 'Ladepunkte Stadtwerke erwartet nach Einwohnern' =
+			VAR stadt = CALCULATE ( [Ladepunkte Stadtwerke], REMOVEFILTERS ( Bezirk ) )
+			VAR einwohnerStadt = CALCULATE ( [Einwohner], REMOVEFILTERS ( Bezirk ) )
+			RETURN
+			    IF ( HASONEVALUE ( Bezirk[Bezirk] ), DIVIDE ( stadt, einwohnerStadt ) * [Einwohner] )
+		formatString: #,0
+		displayFolder: Laden
+
+	/// Im Vorjahr in Betrieb genommene öffentliche Ladepunkte, für den Vergleich je Inbetriebnahmejahr. Nur je Jahr definiert.
+	measure 'Ladepunkte Vorjahr' =
+			VAR y = MAX ( Jahr[Jahr] )
+			RETURN
+			    IF ( HASONEVALUE ( Jahr[Jahr] ), CALCULATE ( [Ladepunkte], REMOVEFILTERS ( Jahr ), Jahr[Jahr] = y - 1 ) )
+		formatString: #,0
+		displayFolder: Laden
+
+	/// Alle Ladepunkte je Bezirk laut Land Berlin, inklusive privater Ladepunkte. Nicht mit [Ladepunkte] addieren.
+	measure 'Ladepunkte Register gesamt' = SUM ( Bezirk[Ladepunkte Register gesamt] )
+		formatString: #,0
+		displayFolder: Laden
+
+	/// An öffentlichen Ladepunkten abgegebene Energie in kWh je Bezirk und Jahr (Land Berlin). Jahre 2017 bis 2019 fehlen in der Quelle.
+	measure 'Ladestrom öffentlich kWh' = SUM ( Ladestrom[Ladestrom öffentlich kWh] )
+		formatString: #,0
+		displayFolder: Laden
+
+	/// Wie Ladestrom öffentlich kWh, in MWh.
+	measure 'Ladestrom öffentlich MWh' = DIVIDE ( [Ladestrom öffentlich kWh], 1000 )
+		formatString: #,0.0
+		displayFolder: Laden
+
+	/// Öffentlicher Ladestrom des Vorjahres in MWh. Nur je Jahr definiert.
+	measure 'Ladestrom öffentlich Vorjahr MWh' =
+			VAR y = MAX ( Jahr[Jahr] )
+			RETURN
+			    IF ( HASONEVALUE ( Jahr[Jahr] ), CALCULATE ( [Ladestrom öffentlich MWh], REMOVEFILTERS ( Jahr ), Jahr[Jahr] = y - 1 ) )
+		formatString: #,0.0
+		displayFolder: Laden
+
+	/// Anzahl degewo-Quartiere. Feuchtwangerweg (12353) liegt in der Gropiusstadt und zählt dort mit, nicht als eigenes Quartier.
+	measure Quartiere = CALCULATE ( COUNTROWS ( Quartier ), KEEPFILTERS ( Quartier[Eigenständiges Quartier] = "ja" ) )
+		formatString: #,0
+		displayFolder: Quartiere
+
+	/// Einwohner in den Umrissen der degewo-Quartiere (Einwohnerregister 31.12.2025, alle Mieter, nicht nur degewo).
+	measure 'Einwohner Quartiere' = CALCULATE ( SUM ( Quartier[Einwohner] ), KEEPFILTERS ( Quartier[Eigenständiges Quartier] = "ja" ) )
+		formatString: #,0
+		displayFolder: Quartiere
+
+	/// Öffentliche Ladepunkte im Quartier oder höchstens 300 m Luftlinie vom Quartiersumriss. Jeder Ladepunkt zählt einmal, auch wenn er nahe zwei Quartieren liegt.
+	measure 'Ladepunkte bis 300 m um Quartiere' =
+			VAR ids =
+			    CALCULATETABLE (
+			        VALUES ( 'Quartier Ladestation'[Ladestation-ID] ),
+			        KEEPFILTERS ( 'Quartier Ladestation'[Bis 300 m] = "ja" ),
+			        KEEPFILTERS ( Quartier[Eigenständiges Quartier] = "ja" )
+			    )
+			RETURN
+			    IF (
+			        NOT ISEMPTY ( ids ),
+			        CALCULATE ( [Ladepunkte], TREATAS ( ids, Ladestation[Ladestation-ID] ), REMOVEFILTERS ( Bezirk ), REMOVEFILTERS ( Ladestation[Bezirk] ) )
+			    )
+		formatString: #,0
+		displayFolder: Quartiere
+
+	/// Ladepunkte der Berliner Stadtwerke im Quartier oder höchstens 300 m Luftlinie vom Umriss, jeder einmal.
+	measure 'Stadtwerke-Ladepunkte bis 300 m um Quartiere' =
+			VAR ids =
+			    CALCULATETABLE (
+			        VALUES ( 'Quartier Ladestation'[Ladestation-ID] ),
+			        KEEPFILTERS ( 'Quartier Ladestation'[Bis 300 m] = "ja" ),
+			        KEEPFILTERS ( Quartier[Eigenständiges Quartier] = "ja" )
+			    )
+			RETURN
+			    IF (
+			        NOT ISEMPTY ( ids ),
+			        CALCULATE ( [Ladepunkte Stadtwerke], TREATAS ( ids, Ladestation[Ladestation-ID] ), REMOVEFILTERS ( Bezirk ), REMOVEFILTERS ( Ladestation[Bezirk] ) )
+			    )
+		formatString: #,0
+		displayFolder: Quartiere
+
+	/// Anteil der Berliner Stadtwerke an den Ladepunkten bis 300 m um die degewo-Quartiere (zum Vergleich mit [Anteil Stadtwerke an Ladepunkten] stadtweit).
+	measure 'Anteil Stadtwerke bis 300 m um Quartiere' = DIVIDE ( [Stadtwerke-Ladepunkte bis 300 m um Quartiere], [Ladepunkte bis 300 m um Quartiere] )
+		formatString: 0.0 %
+		displayFolder: Quartiere
+
+	/// Öffentliche Ladepunkte im Quartier oder höchstens 500 m Luftlinie vom Quartiersumriss, jeder einmal.
+	measure 'Ladepunkte bis 500 m um Quartiere' =
+			VAR ids =
+			    CALCULATETABLE (
+			        VALUES ( 'Quartier Ladestation'[Ladestation-ID] ),
+			        KEEPFILTERS ( Quartier[Eigenständiges Quartier] = "ja" )
+			    )
+			RETURN
+			    IF (
+			        NOT ISEMPTY ( ids ),
+			        CALCULATE ( [Ladepunkte], TREATAS ( ids, Ladestation[Ladestation-ID] ), REMOVEFILTERS ( Bezirk ), REMOVEFILTERS ( Ladestation[Bezirk] ) )
+			    )
+		formatString: #,0
+		displayFolder: Quartiere
+
+	/// Ladepunkte der Berliner Stadtwerke bis 500 m Luftlinie um die degewo-Quartiere, jeder einmal.
+	measure 'Stadtwerke-Ladepunkte bis 500 m um Quartiere' =
+			VAR ids =
+			    CALCULATETABLE (
+			        VALUES ( 'Quartier Ladestation'[Ladestation-ID] ),
+			        KEEPFILTERS ( Quartier[Eigenständiges Quartier] = "ja" )
+			    )
+			RETURN
+			    IF (
+			        NOT ISEMPTY ( ids ),
+			        CALCULATE ( [Ladepunkte Stadtwerke], TREATAS ( ids, Ladestation[Ladestation-ID] ), REMOVEFILTERS ( Bezirk ), REMOVEFILTERS ( Ladestation[Bezirk] ) )
+			    )
+		formatString: #,0
+		displayFolder: Quartiere
+
+	/// degewo-Quartiere ohne Ladepunkt der Berliner Stadtwerke bis 300 m Luftlinie (Ladelücke). Öffentliche Ladepunkte anderer Betreiber gibt es bei allen Quartieren.
+	measure 'Quartiere ohne Stadtwerke-Ladepunkt' = CALCULATE ( COUNTROWS ( Quartier ), KEEPFILTERS ( Quartier[Stadtwerke-Ladelücke 300 m] = "ja" ), KEEPFILTERS ( Quartier[Eigenständiges Quartier] = "ja" ) ) + 0
+		formatString: #,0
+		displayFolder: Quartiere
+
+	/// Anzahl der degewo-Fokusdächer: Gebäude, auf denen eine degewo-Anlage verortet ist. Dächer der Stadtwerke und der BVG sind nicht enthalten. Je Quartier über Fokusdach[Quartier] gruppieren, nicht über die Tabelle Quartier.
+	measure Fokusdächer = COUNTROWS ( Fokusdach )
+		formatString: #,0
+		displayFolder: Dächer
+
+	/// Geschätztes Photovoltaik-Potenzial der degewo-Fokusdächer laut Solarkataster Berlin in kWp. Schätzung, kein Messwert.
+	measure 'Solarpotenzial Fokusdächer kWp' = SUM ( Fokusdach[Solarpotenzial kWp] )
+		formatString: #,0.0
+		displayFolder: Dächer
+
+	/// Auf den degewo-Fokusdächern bereits installierte Photovoltaik-Leistung in kWp (MaStR-Anlagen, die dem Dach zugeordnet sind).
+	measure 'Installiert Fokusdächer kWp' = SUM ( Fokusdach[Installiert kWp] )
+		formatString: #,0.0
+		displayFolder: Dächer
+
+	/// Noch nicht genutztes Potenzial der degewo-Fokusdächer in kWp: Potenzial minus installiert, je Dach nie negativ. Schätzung.
+	measure 'Offenes Potenzial Fokusdächer kWp' = SUM ( Fokusdach[Offenes Potenzial kWp] )
+		formatString: #,0.0
+		displayFolder: Dächer
+
+	/// Installierte Leistung im Verhältnis zum geschätzten Potenzial der degewo-Fokusdächer.
+	measure 'Ausschöpfung Fokusdächer' = DIVIDE ( [Installiert Fokusdächer kWp], [Solarpotenzial Fokusdächer kWp] )
+		formatString: 0.0 %
+		displayFolder: Dächer
+
+	/// degewo-Fokusdächer, auf denen noch Potenzial frei ist.
+	measure 'Fokusdächer mit offenem Potenzial' = CALCULATE ( COUNTROWS ( Fokusdach ), KEEPFILTERS ( Fokusdach[Offenes Potenzial kWp] > 0 ) ) + 0
+		formatString: #,0
+		displayFolder: Dächer
+
+	/// Gebäude mit Solarkataster-Eintrag in den Umrissen von Gropiusstadt, Marzahn und Brunnenviertel, unabhängig vom Eigentümer.
+	measure 'Gebäude im Quartier' = COUNTROWS ( 'Gebäude im Quartier' )
+		formatString: #,0
+		displayFolder: Dächer
+
+	/// Geschätztes Photovoltaik-Potenzial aller Gebäude in den Quartiersumrissen laut Solarkataster in kWp, unabhängig vom Eigentümer.
+	measure 'Solarpotenzial Gebäude im Quartier kWp' = SUM ( 'Gebäude im Quartier'[Solarpotenzial kWp] )
+		formatString: #,0.0
+		displayFolder: Dächer
+
+	/// Anzahl der BVG-Standorte im Modell (Bus-, Straßenbahn- und U-Bahn-Betriebshöfe sowie weitere Standorte).
+	measure Betriebshöfe = COUNTROWS ( Betriebshof )
+		formatString: #,0
+		displayFolder: BVG
+
+	/// BVG-Standorte, die gerade gebaut werden.
+	measure 'Betriebshöfe im Bau' = CALCULATE ( COUNTROWS ( Betriebshof ), KEEPFILTERS ( Betriebshof[Status] = "im Bau" ) )
+		formatString: #,0
+		displayFolder: BVG
+
+	/// BVG-Standorte aus der Solarvereinbarung von BVG und Berliner Stadtwerken vom Juli 2025.
+	measure 'Betriebshöfe mit Solarvereinbarung 2025' = CALCULATE ( COUNTROWS ( Betriebshof ), KEEPFILTERS ( Betriebshof[Solarvereinbarung 2025] = "ja" ) )
+		formatString: #,0
+		displayFolder: BVG
+
+	/// Photovoltaik-Leistung der MaStR-Anlagen, die einem BVG-Standort zugeordnet sind, in kWp.
+	measure 'Solarleistung Betriebshöfe kWp' = SUM ( Betriebshof[Solarleistung kWp] )
+		formatString: #,0.0
+		displayFolder: BVG
+
+	/// Einwohner der Bezirke mit Hauptwohnsitz laut Einwohnerregister am 31.12.2025 (höher als die amtliche Zensuszahl). Nur für Berlin oder je Bezirk; leer, sobald nach Quartier gefiltert wird. Für Quartiere [Einwohner Quartiere] verwenden.
+	measure Einwohner = IF ( NOT ISFILTERED ( Quartier ), SUM ( Bezirk[Einwohner] ) )
+		formatString: #,0
+		displayFolder: Bezirk
+
+	column Value
+		isHidden
+		isNameInferred
+		sourceColumn: [Value]
+
+	partition Measure = calculated
+		mode: import
+		source = {0}

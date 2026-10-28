@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": ".temp/compiled",
+    "lib": ["ES2022", "ESNext.Decorators"],
+    "rootDir": ".",
+    "declaration": true,
+    "composite": true,
+    "noEmit": false,
+    "allowImportingTsExtensions": false,
+    "module": "nodenext",
+    "moduleResolution": "nodenext"
+  },
+  "include": ["**/*"],
+  "exclude": [".temp/**/*"]
+}

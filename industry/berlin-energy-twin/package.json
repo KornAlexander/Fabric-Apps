@@ -1,0 +1,61 @@
+{
+  "name": "berlin-energy-twin",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Solar, public charging and housing estates of Berlin's state-owned companies on one 1:1 map.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build && node tools/gzip_data.mjs && node tools/gzip_bundle.mjs",
+    "build:fabric": "tsc -b && vite build && node tools/gzip_data.mjs && node tools/gzip_bundle.mjs",
+    "preview": "vite preview",
+    "typecheck": "tsc -b --pretty false",
+    "test": "vitest run && vitest run -c vitest.tabs.config.ts",
+    "test:watch": "vitest",
+    "bake:charging": "..\\.venv\\Scripts\\python.exe -X utf8 tools/bake_charging.py",
+    "bake:mastr": "..\\.venv\\Scripts\\python.exe -X utf8 tools/bake_mastr.py",
+    "bake:sites": "..\\.venv\\Scripts\\python.exe -X utf8 tools/bake_sites.py",
+    "bake:context": "..\\.venv\\Scripts\\python.exe -X utf8 tools/bake_context.py",
+    "bake:aerial": "..\\.venv\\Scripts\\python.exe -X utf8 tools/bake_aerial.py",
+    "fetch:dgm1": "..\\.venv\\Scripts\\python.exe -X utf8 tools/fetch_dgm1.py",
+    "bake:terrain": "..\\.venv\\Scripts\\python.exe -X utf8 tools/bake_terrain.py",
+    "bake:buildings": "..\\.venv\\Scripts\\python.exe -X utf8 tools/build_buildings.py",
+    "test:tools": "..\\.venv\\Scripts\\python.exe -m pytest -q tools/tests",
+    "probe": "node tools/probe_app.mjs",
+    "probe:tour": "node tools/probe_tour.mjs",
+    "export:model": "vite-node tools/export_model_data.ts"
+  },
+  "dependencies": {
+    "@microsoft/rayfin-auth-provider-fabric": "^1.36.2",
+    "@microsoft/rayfin-client": "^1.36.2",
+    "@microsoft/rayfin-core": "^1.36.2",
+    "clsx": "^2.1.1",
+    "exceljs": "^4.4.0",
+    "framer-motion": "^12.40.0",
+    "lucide-react": "^1.52.0",
+    "maplibre-gl": "^5.6.0",
+    "pptxgenjs": "^3.12.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@microsoft/rayfin-cli": "^1.36.2",
+    "@tailwindcss/vite": "^4.1.11",
+    "@types/node": "^26.2.0",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^5.0.0",
+    "jsdom": "^24.1.0",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5.8.3",
+    "vite": "^7.0.0",
+    "vitest": "^3.2.7"
+  },
+  "template": {
+    "name": "berlin-energy-twin",
+    "displayName": "Berlin Energy Twin",
+    "description": "Solar, public charging and housing estates of Berlin's state-owned companies on one 1:1 map, plus a Caldova order app and IBCS charts.",
+    "category": "digital-twins"
+  }
+}
