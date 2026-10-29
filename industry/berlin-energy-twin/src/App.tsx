@@ -82,6 +82,9 @@ export default function App() {
   // D61: charging per district, shaded by public points per 1,000 residents
   const [showDistricts, setShowDistricts] = useState(false)
   const [contextDistricts, setContextDistricts] = useState<ContextDistrict[] | null>(null)
+  // D62: the tour shades the districts at its district stop, whatever the toggle says
+  const [tourOverlay, setTourOverlay] = useState<'districts' | null>(null)
+  const reportByTour = useRef(false)
   // degewo is the focus partner, so its lens is on from the first second (D36)
   const [lens, setLens] = useState<Lens>('degewo')
   const [partners, setPartners] = useState<PartnerData | null>(null)
@@ -116,6 +119,8 @@ export default function App() {
   const solarNow = useSolarNow(clock)
   // D57: the Power BI report in a window over the map; its page follows the lens until picked by hand.
   const [reportOpen, setReportOpen] = useState(false)
+  const reportOpenRef = useRef(reportOpen)
+  reportOpenRef.current = reportOpen
   const [reportPage, setReportPage] = useState<ReportPage | null>(null)
   const [reportMax, setReportMax] = useState(false)
   const page: ReportPage = reportPage ?? LENS_PAGE[lens]
@@ -192,7 +197,7 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    if (!showDistricts || contextDistricts) return
+    if (contextDistricts) return
     let alive = true
     fetchBakedJson<{ districts: ContextDistrict[] }>('data/context.json')
       .then((c) => alive && setContextDistricts(c.districts))
@@ -203,7 +208,7 @@ export default function App() {
     return () => {
       alive = false
     }
-  }, [showDistricts, contextDistricts])
+  }, [contextDistricts])
   const dStats = useMemo(
     () => (charging && contextDistricts ? districtStats(charging.stations, charging.districts, contextDistricts) : null),
     [charging, contextDistricts],
@@ -236,7 +241,7 @@ export default function App() {
   const fmt = (n: number) => n.toLocaleString(loc)
   const dec1 = (n: number) => n.toLocaleString(loc, { minimumFractionDigits: 1, maximumFractionDigits: 1 })
   const districtLayer = useMemo(() => {
-    if (!showDistricts || !dStats || !contextDistricts) return null
+    if (!(showDistricts || tourOverlay === 'districts') || !dStats || !contextDistricts) return null
     const row = (k: string, v: string) => `<div class="veh-pop-row"><span>${k}</span><b>${v}</b></div>`
     const popupHtml = (s: DistrictStats) => {
       const last = s.kwhByYear[s.kwhByYear.length - 1]
@@ -259,7 +264,7 @@ export default function App() {
       range: [Math.min(...values), Math.max(...values)] as [number, number],
     }
     // t, fmt and dec1 only depend on lang / loc
-  }, [showDistricts, dStats, contextDistricts, lang, loc])
+  }, [showDistricts, tourOverlay, dStats, contextDistricts, lang, loc])
 
   const fly = (v: Omit<Viewpoint, 'id' | 'label'> & { duration?: number }) => {
     if (v.pitch > 0) setThreeD(true)
@@ -271,14 +276,28 @@ export default function App() {
     if (!partners || !charging) return null
     const pct = (x: number) => `${(x * 100).toLocaleString(loc, { maximumFractionDigits: 0 })} %`
     const carrier = (c: string) => (CARRIERS.includes(c) ? t(`carrier.${c}` as StringKey) : c)
-    return buildTour({ units: partners.units, sites: partners.sites, stations: charging.stations }, { n: fmt, kw, pct, carrier }, lang)
+    return buildTour(
+      { units: partners.units, sites: partners.sites, stations: charging.stations, districts: dStats, hasReport: Boolean(PBI.reportId && PBI.tenantId) },
+      { n: fmt, kw, pct, carrier, dec1 },
+      lang,
+    )
     // fmt and kw only depend on loc
-  }, [partners, charging, lang, loc])
+  }, [partners, charging, dStats, lang, loc])
   const gapGeo = useMemo(
     () => (partners && charging ? gapFeatures(partners.sites.estates, estateReach(mergeNested(partners.sites.estates), charging.stations)) : null),
     [partners, charging],
   )
-  const stop = tour !== null && tourStops ? tourStops[tour] : null
+  // D62: the two live stops get their figure at render time (solar estimate, vehicle count).
+  const bswKw = useMemo(() => (partners ? lensSummary('bsw', partners.units, partners.sites).kw : 0), [partners])
+  const shownStops = useMemo(() => {
+    if (!tourStops) return null
+    const solarFig =
+      solarNow.kind === 'ok' ? `≈ ${kw(estimateKw(solarNow.wm2, bswKw))}` : solarNow.kind === 'loading' ? '…' : t('kpi.nowNone')
+    const vehFig = bvgLive.kind === 'ok' ? fmt(bvgLive.vehicles.length) : bvgLive.kind === 'error' ? '-' : '…'
+    return tourStops.map((s) => (s.live === 'solar' ? { ...s, figure: solarFig } : s.live === 'vehicles' ? { ...s, figure: vehFig } : s))
+    // kw, fmt and t only depend on loc / lang
+  }, [tourStops, solarNow, bvgLive, bswKw, loc, lang])
+  const stop = tour !== null && shownStops ? shownStops[tour] : null
   // Fly, then hold still (decided 2026-10-28). The lens and the 3D buildings
   // follow the stop; nothing else the presenter set is touched.
   // ⚠️ Keyed on the stop INDEX, not the stop object: a DE/EN switch rebuilds
@@ -296,7 +315,18 @@ export default function App() {
     }
     setLens(s.lens)
     setRealism(s.realism)
-    autoBvg(s.id === 'bvg')
+    autoBvg(Boolean(s.bvgLive))
+    setTourOverlay(s.overlay === 'districts' ? 'districts' : null)
+    // A window the presenter opened by hand stays theirs; only a window the tour opened is closed again.
+    if (s.report && !reportOpenRef.current) {
+      reportByTour.current = true
+      setReportPage(s.report)
+      setReportOpen(true)
+    } else if (!s.report && reportByTour.current) {
+      reportByTour.current = false
+      setReportOpen(false)
+      setReportPage(null)
+    }
     fly({ ...s.camera, duration: flightMs(lastStopCamera.current, s.camera) })
     lastStopCamera.current = s.camera
     // fly is recreated every render; the index alone decides
@@ -308,6 +338,12 @@ export default function App() {
   }
   const endTour = useCallback(() => {
     setTour(null)
+    setTourOverlay(null)
+    if (reportByTour.current) {
+      reportByTour.current = false
+      setReportOpen(false)
+      setReportPage(null)
+    }
     setPanelOpen(panelBeforeTour.current)
   }, [])
   const goTo = useCallback((i: number) => setTour(i), [])
@@ -705,8 +741,8 @@ export default function App() {
             </>
           )}
         </div>
-        {stop && tourStops && tour !== null && <TourCard stops={tourStops} index={tour} onIndex={goTo} onEnd={endTour} t={t} />}
-        {reportOpen && reportUrl && tab === 'twin' && tour === null && (
+        {stop && shownStops && tour !== null && <TourCard stops={shownStops} index={tour} onIndex={goTo} onEnd={endTour} t={t} />}
+        {reportOpen && reportUrl && tab === 'twin' && (tour === null || Boolean(stop?.report)) && (
           <ReportWindow
             url={reportUrl}
             page={page}

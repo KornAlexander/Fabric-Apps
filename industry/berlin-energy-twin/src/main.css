@@ -2272,3 +2272,10 @@ body {
   stroke-width: 2;
   stroke-linejoin: round;
 }
+
+/* D62: at the tour's report stop the window ends above the caption card */
+.app[data-tour='on'] .report-window {
+  top: 128px;
+  height: calc(100% - 128px - 250px);
+  min-height: 220px;
+}

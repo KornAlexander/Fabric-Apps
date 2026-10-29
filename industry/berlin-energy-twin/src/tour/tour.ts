@@ -1,31 +1,41 @@
 /**
- * The guided tour (PLAN §5, Phase 4; decided 2026-10-28, five stops since
- * 2026-10-29, D54): the presenter clicks Next, the camera flies and holds
- * still, a caption card at the bottom says what is on screen.
+ * The guided tour (PLAN §5, Phase 4; decided 2026-10-28; five stops D54, ten
+ * stops with the new features D62, 2026-10-29): the presenter clicks Next, the
+ * camera flies and holds still, a caption card at the bottom says what is on
+ * screen. Story: who > what the sun gives now > charging per district > charging
+ * at the estates > the largest open roof at true size > an estate's roofs > BVG
+ * depot solar > BVG live > the same figures in Power BI > today and next.
  *
  * Every number in a caption is computed here from the baked files, never typed
  * into a string, so the tour cannot drift from the lenses or the report. The
  * stops pick their subject from the data too (the largest open roof, the named
  * estate with most open potential, the largest BVG site), so a re-bake keeps
- * the story true. BVG live vehicles and the report window slot in as stops once
- * they exist (Phase 3, Phase 5).
+ * the story true. Two stops show LIVE figures (solar now, vehicles on the map):
+ * their `figure` is filled by the app at render time, marked by `live`.
  */
 import type { Station } from '../charging/charging'
+import type { DistrictStats } from '../charging/districts'
 import type { StringKey } from '../i18n/strings'
 import { estateReach, mergeNested, reachSummary, type EstateReach } from '../partners/chargingGap'
 import { lensSummary, openKw, rankRoofs, type Estate, type Lens, type SitesData, type Unit } from '../partners/partners'
 
 export type TourCamera = { center: [number, number]; zoom: number; pitch: number; bearing: number }
-export type Badge = 'estimate' | 'aggregated' | 'airline'
+export type Badge = 'estimate' | 'aggregated' | 'airline' | 'unofficial'
 
 export type TourStop = {
-  id: 'overview' | 'roofs' | 'charging' | 'bvg' | 'close'
+  id: 'overview' | 'now' | 'districts' | 'charging' | 'hero' | 'roofs' | 'bvg' | 'live' | 'report' | 'close'
   lens: Lens
   /** buildings and aerial photo on (D26) */
   realism: boolean
   camera: TourCamera
-  /** the charging-gap outlines (stop 4) */
-  overlay: 'gap' | null
+  /** the charging-gap outlines, or the districts shaded by charge points per 1,000 residents */
+  overlay: 'gap' | 'districts' | null
+  /** BVG vehicles on the map at this stop */
+  bvgLive?: boolean
+  /** opens the report window on this page */
+  report?: 'stadtwerke' | 'degewo' | 'bvg' | 'laden'
+  /** the figure is live and filled by the app: the solar estimate or the vehicle count */
+  live?: 'solar' | 'vehicles'
   title: StringKey
   body: StringKey
   figureLabel: StringKey
@@ -36,14 +46,35 @@ export type TourStop = {
   source: StringKey
 }
 
-export type TourData = { units: readonly Unit[]; sites: SitesData; stations: readonly Station[] }
-export type TourFormat = { n: (v: number) => string; kw: (v: number) => string; pct: (share: number) => string; carrier: (c: string) => string }
+export type TourData = {
+  units: readonly Unit[]
+  sites: SitesData
+  stations: readonly Station[]
+  /** charging per district (D61); without it the district stop is left out */
+  districts?: readonly DistrictStats[] | null
+  /** a published report is configured; without it the report stop is left out */
+  hasReport?: boolean
+}
+export type TourFormat = {
+  n: (v: number) => string
+  kw: (v: number) => string
+  pct: (share: number) => string
+  carrier: (c: string) => string
+  dec1: (v: number) => string
+}
+
+/** The story order (D62); a stop whose data is missing is skipped, the rest keep their order. */
+export const STORY: TourStop['id'][] = ['overview', 'now', 'districts', 'charging', 'hero', 'roofs', 'bvg', 'live', 'report', 'close']
 
 /** MaStR carriers the partners' register queries return; each has a `carrier.<name>` string. */
 export const CARRIERS = ['Solare Strahlungsenergie', 'Wind', 'Erdgas', 'andere Gase', 'Speicher', 'Biomasse']
 
 /** Berlin as a whole, centred ~5 km south so the city sits above the caption card. */
 const CITY: TourCamera = { center: [13.405, 52.455], zoom: 9.9, pitch: 35, bearing: 0 }
+/** One building fills the middle (as the list clicks, SITE_VIEW in App). */
+const SITE = { zoom: 17.2, pitch: 58, bearing: -20 }
+/** Mitte at street level: dense enough that buses and trams show at any hour. */
+const MITTE: TourCamera = { center: [13.4094, 52.5208], zoom: 14.3, pitch: 45, bearing: 20 }
 
 export function centroid(outline: Estate['outline']): [number, number] | null {
   if (!outline) return null
@@ -143,6 +174,22 @@ export function buildTour(d: TourData, f: TourFormat, lang: 'de' | 'en'): TourSt
     : est
       ? centroid(est.e.outline)
       : null
+  if (hero) {
+    stops.push({
+      id: 'hero',
+      lens: 'degewo',
+      realism: true,
+      camera: { center: [hero.lon, hero.lat], ...SITE },
+      overlay: null,
+      title: 'tour.hero.title',
+      body: 'tour.hero.body',
+      figureLabel: 'tour.hero.figure',
+      params: { addr: hero.addr, pot: f.n(Math.round(hero.potKw)), inst: f.n(Math.round(hero.installedKw)) },
+      figure: `${f.n(Math.round(openKw(hero)))} kWp`,
+      badges: ['estimate'],
+      source: 'tour.src.atlas',
+    })
+  }
   if (hero && est && c) {
     const claim = (est.e as Estate & { claim?: Record<string, string> }).claim?.[lang] ?? ''
     stops.push({
@@ -206,7 +253,6 @@ export function buildTour(d: TourData, f: TourFormat, lang: 'de' | 'en'): TourSt
         units: f.n(bvg.units),
       },
       figure: f.kw(bvg.kw),
-      // The figure is the register's; the live vehicles' caveat is in the caption text.
       badges: [],
       source: 'tour.src.mastrDepots',
     })
@@ -239,7 +285,84 @@ export function buildTour(d: TourData, f: TourFormat, lang: 'de' | 'en'): TourSt
     source: 'tour.src.mastrCharging',
   })
 
-  return stops
+  // D62: what the sun gives right now. The figure is LIVE (filled by the app).
+  stops.push({
+    id: 'now',
+    lens: 'bsw',
+    realism: false,
+    camera: { ...CITY, zoom: 10.2, pitch: 20, bearing: 0 },
+    overlay: null,
+    live: 'solar',
+    title: 'tour.now.title',
+    body: 'tour.now.body',
+    figureLabel: 'tour.now.figure',
+    params: { mw: f.kw(bsw.kw) },
+    figure: '…',
+    badges: ['estimate'],
+    source: 'tour.src.dwd',
+  })
+
+  // D62: charging per district, from the same stations as every other figure.
+  if (d.districts?.length) {
+    const ds = [...d.districts].sort((a, b) => b.per1000 - a.per1000)
+    const top = ds[0]
+    const low = ds[ds.length - 1]
+    const residents = ds.reduce((a, x) => a + x.residents, 0)
+    const pts = ds.reduce((a, x) => a + x.points, 0)
+    stops.push({
+      id: 'districts',
+      lens: 'bsw',
+      realism: false,
+      camera: { ...CITY, pitch: 20, bearing: 0 },
+      overlay: 'districts',
+      title: 'tour.districts.title',
+      body: 'tour.districts.body',
+      figureLabel: 'tour.districts.figure',
+      params: { top: top.bez, topV: f.dec1(top.per1000), low: low.bez, lowV: f.dec1(low.per1000), points: f.n(pts) },
+      figure: f.dec1(residents ? (pts / residents) * 1000 : 0),
+      badges: [],
+      source: 'tour.src.districts',
+    })
+  }
+
+  // D62: BVG live in Mitte. The figure (vehicles on the map) is LIVE.
+  stops.push({
+    id: 'live',
+    lens: 'bvg',
+    realism: false,
+    camera: MITTE,
+    overlay: null,
+    bvgLive: true,
+    live: 'vehicles',
+    title: 'tour.live.title',
+    body: 'tour.live.body',
+    figureLabel: 'tour.live.figure',
+    params: {},
+    figure: '…',
+    badges: ['unofficial'],
+    source: 'tour.src.radar',
+  })
+
+  // D62: the same figures in the published Power BI report (only when one is configured).
+  if (d.hasReport) {
+    stops.push({
+      id: 'report',
+      lens: 'bsw',
+      realism: false,
+      camera: { ...CITY, zoom: 10, pitch: 0, bearing: 0 },
+      overlay: null,
+      report: 'stadtwerke',
+      title: 'tour.report.title',
+      body: 'tour.report.body',
+      figureLabel: 'tour.report.figure',
+      params: { mw: f.kw(bsw.kw) },
+      figure: f.kw(bsw.kw),
+      badges: [],
+      source: 'tour.src.report',
+    })
+  }
+
+  return STORY.flatMap((id) => stops.filter((s) => s.id === id))
 }
 
 /**

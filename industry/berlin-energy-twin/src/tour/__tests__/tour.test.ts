@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { STRINGS, type StringKey } from '../../i18n/strings'
 import { buildTour, centroid, flightMs, gapFeatures, type TourStop } from '../tour'
+import { districtStats } from '../../charging/districts'
 import { estateReach, mergeNested, reachSummary } from '../../partners/chargingGap'
 import { LENSES, lensSummary } from '../../partners/partners'
 
@@ -13,10 +14,15 @@ const fmt = {
   kw: (v: number) => `${Math.round(v)} kW`,
   pct: (x: number) => `${Math.round(x * 100)} %`,
   carrier: (c: string) => c,
+  dec1: (v: number) => v.toFixed(1),
 }
 
-function tour(lang: 'de' | 'en'): TourStop[] {
-  return buildTour({ units: read(FILES[1]).units, sites: read(FILES[0]), stations: read(FILES[2]).stations }, fmt, lang)
+function tour(lang: 'de' | 'en', full = true): TourStop[] {
+  const charging = read(FILES[2])
+  const districts = full && existsSync('public/data/context.json')
+    ? districtStats(charging.stations, charging.districts, read('public/data/context.json').districts)
+    : null
+  return buildTour({ units: read(FILES[1]).units, sites: read(FILES[0]), stations: charging.stations, districts, hasReport: full }, fmt, lang)
 }
 
 describe('centroid', () => {
@@ -39,8 +45,21 @@ describe('flight time (D54)', () => {
 })
 
 describe.runIf(baked)('guided tour on the baked data', () => {
-  it('has the five decided stops in story order (D54)', () => {
-    expect(tour('de').map((s) => s.id)).toEqual(['overview', 'roofs', 'charging', 'bvg', 'close'])
+  it('has the ten decided stops in story order (D62), and drops the two that need data it lacks', () => {
+    expect(tour('de').map((s) => s.id)).toEqual(['overview', 'now', 'districts', 'charging', 'hero', 'roofs', 'bvg', 'live', 'report', 'close'])
+    expect(tour('de', false).map((s) => s.id)).toEqual(['overview', 'now', 'charging', 'hero', 'roofs', 'bvg', 'live', 'close'])
+  })
+
+  it('marks the live stops and what each stop switches on', () => {
+    const by = Object.fromEntries(tour('de').map((s) => [s.id, s]))
+    expect(by.now.live).toBe('solar')
+    expect(by.live.live).toBe('vehicles')
+    expect(by.live.bvgLive).toBe(true)
+    expect(by.live.badges).toContain('unofficial')
+    expect(by.districts.overlay).toBe('districts')
+    expect(by.report.report).toBe('stadtwerke')
+    expect(by.hero.realism).toBe(true)
+    expect(by.districts.params.top).toBe('Spandau')
   })
 
   it('fills every placeholder of every caption, in both languages', () => {
@@ -76,6 +95,8 @@ describe.runIf(baked)('guided tour on the baked data', () => {
   it('badges what it must: estimates, aggregates and straight-line distance', () => {
     const by = Object.fromEntries(tour('de').map((s) => [s.id, s]))
     expect(by.roofs.badges).toContain('estimate')
+    expect(by.hero.badges).toContain('estimate')
+    expect(by.now.badges).toContain('estimate')
     expect(by.close.badges).toContain('estimate')
     expect(by.charging.badges).toContain('airline')
     expect(by.charging.overlay).toBe('gap')

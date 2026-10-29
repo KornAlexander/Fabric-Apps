@@ -24,7 +24,7 @@ that writes reorders to the app's own SQL database, and an IBCS finance cockpit.
   point.
 - **Charging per district.** The 12 districts shaded by public charge points per 1,000
   residents, with the Stadtwerke share and public charging energy per year in the popup.
-- **Guided tour.** Five stops built from the data, presenter keys, flights timed by distance.
+- **Guided tour.** Ten stops built from the data and the live feeds (solar now, districts, 1:1 roof, BVG live, the report), presenter keys, flights timed by distance.
 - **BVG live.** BVG buses, trams, U-Bahn and ferries in the camera view every 30 s from the
   community radar `v6.bvg.transport.rest` (computed positions, unofficial source, badged so).
 - **Solar now.** An estimate of what each partner's solar produces right now: DWD irradiance
