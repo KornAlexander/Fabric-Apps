@@ -22,6 +22,8 @@ that writes reorders to the app's own SQL database, and an IBCS finance cockpit.
 - **Public charging near the estates.** All public charge points of Berlin, Stadtwerke points
   highlighted, with the 300 m reach of each degewo estate and the one estate without a Stadtwerke
   point.
+- **Charging per district.** The 12 districts shaded by public charge points per 1,000
+  residents, with the Stadtwerke share and public charging energy per year in the popup.
 - **Guided tour.** Five stops built from the data, presenter keys, flights timed by distance.
 - **BVG live.** BVG buses, trams, U-Bahn and ferries in the camera view every 30 s from the
   community radar `v6.bvg.transport.rest` (computed positions, unofficial source, badged so).
@@ -109,6 +111,7 @@ Without a deployment the order tab runs read-only and says so.
 | `npm run bake:*` | re-bake one data source (`charging`, `mastr`, `sites`, `context`, `aerial`, `terrain`, `buildings`) |
 | `npm run probe` / `probe:tour` | headless Edge screenshots of a view or the tour |
 | `node tools/probe_tabs.mjs` | headless check of the two Caldova tabs |
+| `node tools/sweep.mjs` | Playwright sweep of the whole app on three viewport sizes |
 | `npm run export:model` | write the import model's CSVs from the app's own functions |
 
 ## Data

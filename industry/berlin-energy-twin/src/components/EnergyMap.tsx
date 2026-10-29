@@ -5,6 +5,8 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 import { createFlyControls, type FlyControls, type FlyTelemetry } from '../map/flyControls'
 import { flyToOptions, type RequestedCamera } from '../map/camera'
 import { setVehicles } from './bvgLayer'
+import { PARTNER_LAYERS } from './partnerLayers'
+import { setDistricts } from './districtLayer'
 import type { Bbox } from '../live/bvgRadar'
 import { createOrbitNavigation, type OrbitNavigation } from '../map/navigation'
 import { useI18n } from '../i18n/I18nProvider'
@@ -27,7 +29,19 @@ import {
 } from './partnerLayers'
 
 /** Popup content is built as HTML, so anything interpolated must be escaped. */
-function esc(s: string): string {
+/** The lowest data layer IN THE STYLE'S OWN ORDER (review 2026-10-29: a list order put the districts over the charge points). */
+function lowestDataLayer(m: maplibregl.Map): string | undefined {
+  const ids = new Set<string>([...DATA_LAYERS, ...PARTNER_LAYERS, 'districts-fill'])
+  return m.getStyle().layers.find((l) => ids.has(l.id))?.id
+}
+
+/** Districts go under the partner marks and the charge points, labels on top. */
+function applyDistricts(m: maplibregl.Map, d: { fc: GeoJSON.FeatureCollection; range: [number, number] } | null) {
+  const before = m.getLayer('districts-fill') ? undefined : lowestDataLayer(m)
+  setDistricts(m, d ? d.fc : null, d ? d.range : [0, 1], basemapFont(m), before)
+}
+
+export function esc(s: string): string {
   return String(s)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -117,10 +131,12 @@ type Props = {
   vehicles?: GeoJSON.FeatureCollection | null
   /** the camera's view after each move, for the live radar */
   onView?: (b: Bbox) => void
+  /** charging per district (D61): shaded areas with finished popups, null hides */
+  districts?: { fc: GeoJSON.FeatureCollection; range: [number, number] } | null
 }
 
 /** Clickable layers, most specific first: a unit on a roof wins over the roof. */
-const CLICKABLE = ['unit-dot', 'roof-label', 'roof-band', 'depot-point', 'stations-bsw', 'stations-other', 'depot-fill', 'pc-fill']
+const CLICKABLE = ['unit-dot', 'roof-label', 'roof-band', 'depot-point', 'stations-bsw', 'stations-other', 'depot-fill', 'pc-fill', 'districts-fill']
 
 function applySky(m: maplibregl.Map, spec: Record<string, unknown> | null): boolean {
   if (!spec) return false
@@ -153,6 +169,7 @@ export function EnergyMap({
   gapAreas = null,
   vehicles = null,
   onView,
+  districts = null,
 }: Props) {
   const holder = useRef<HTMLDivElement>(null)
   const { t } = useI18n()
@@ -293,7 +310,7 @@ export function EnergyMap({
         try {
           const manifest: { patches: AerialPatch[] } = await (await fetchFile('data/aerial.json')).json()
           // Under every data layer: added on top, the photo covered the charge points.
-          const under = ['districts-fill', ...DATA_LAYERS].find((id) => m.getLayer(id))
+          const under = lowestDataLayer(m)
           // Only the whole-city base goes in up front; each site's sharp photo
           // comes with its buildings when the camera gets there (SiteLayers).
           for (const p of manifest.patches.filter((x) => x.imageryOnly)) {
@@ -427,6 +444,7 @@ export function EnergyMap({
       if (partnersRef.current) installPartnerLayers(m, partnersRef.current, lensRef.current)
       if (gapRef.current) setGapOverlay(m, gapRef.current)
       if (vehiclesRef.current) setVehicles(m, vehiclesRef.current, basemapFont(m))
+      if (districtsRef.current) applyDistricts(m, districtsRef.current)
 
       m.setTerrain(threeD ? { source: 'dem', exaggeration: TERRAIN_EXAGGERATION } : null)
       applySky(m, skyRef.current)
@@ -476,6 +494,19 @@ export function EnergyMap({
       m.off('idle', run)
     }
   }, [partners, lens])
+
+  const districtsRef = useRef(districts)
+  districtsRef.current = districts
+  useEffect(() => {
+    const m = map.current
+    if (!m) return
+    const run = () => applyDistricts(m, districts)
+    if (m.isStyleLoaded()) run()
+    else m.once('idle', run)
+    return () => {
+      m.off('idle', run)
+    }
+  }, [districts])
 
   const vehiclesRef = useRef(vehicles)
   vehiclesRef.current = vehicles
@@ -548,6 +579,17 @@ export function EnergyMap({
       hits.sort((a, b) => LAYERS.indexOf(a.layer.id) - LAYERS.indexOf(b.layer.id))
       const hit = hits[0]
       if (!hit) return
+      // D61: the district under the click answers when nothing above it has a popup of its own
+      // (a postcode shade with no unit of this lens used to swallow the click).
+      const district = hits.find((h) => h.layer.id === 'districts-fill')
+      const showDistrict = () => {
+        if (!district) return
+        popup.current = new maplibregl.Popup({ closeButton: true, offset: 6, maxWidth: '300px' })
+          .setLngLat(e.lngLat)
+          .setHTML(String(district.properties.popup ?? ''))
+          .addTo(m)
+      }
+      if (hit.layer.id === 'districts-fill') return showDistrict()
       if (!hit.layer.id.startsWith('stations-')) {
         const pd = partnersRef.current
         const pop = pd && partnerPopup(hit, pd, partnerLabelsRef.current, localeRef.current)
@@ -556,7 +598,7 @@ export function EnergyMap({
             .setLngLat(pop.at)
             .setHTML(pop.html)
             .addTo(m)
-        }
+        } else showDistrict()
         return
       }
       const s = stationsRef.current.find((x) => x.id === hit.properties.id)

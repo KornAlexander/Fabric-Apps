@@ -2084,6 +2084,8 @@ body {
   inset: 0;
   z-index: 20;
   overflow-y: auto;
+  /* the ported tabs are desktop layouts: on a phone they scroll sideways rather than clip */
+  overflow-x: auto;
   background: #f6f8fb;
   color: #0f1f33;
 }
@@ -2199,4 +2201,74 @@ body {
 
 .report-foot a {
   color: var(--accent);
+}
+
+/* --- D60: phone width (found by the Playwright sweep) ------------------------
+   At 390 px the header pushed tabs, Bericht, Tour and the switches off screen, the
+   open panel covered the map, and the credits took a third of the height. */
+@media (max-width: 760px) {
+  .header {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 6px 10px;
+    gap: 6px 8px;
+  }
+  .brand-sub {
+    display: none;
+  }
+  .brand span {
+    font-size: 15px;
+    white-space: nowrap;
+  }
+  .header .seg[role='tablist'] {
+    order: 10;
+    flex: 1 1 100%;
+    overflow-x: auto;
+  }
+  .header .seg[role='tablist'] button {
+    flex: 1 0 auto;
+  }
+  .header-spacer {
+    display: none;
+  }
+  .tour-start {
+    margin-right: 0;
+    padding: 5px 9px;
+  }
+  .panel {
+    width: calc(100% - 28px);
+    max-height: calc(100% - 90px);
+    z-index: 8;
+  }
+  .panel[data-open='false'] {
+    width: auto;
+  }
+  .livebar {
+    left: 62px;
+    right: 56px;
+    gap: 6px 12px;
+    padding: 6px 10px;
+  }
+  .app[data-panel='open'] .livebar {
+    display: none;
+  }
+  .attribution {
+    max-width: calc(100% - 16px);
+    max-height: 3.3em;
+    overflow: auto;
+    font-size: 9px;
+  }
+  .report-window {
+    left: 8px;
+    right: 8px;
+    width: auto;
+  }
+}
+
+/* D61: charging energy per year in the district popup */
+.dist-spark path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linejoin: round;
 }

@@ -2,7 +2,7 @@ import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } fro
 
 import { useI18n } from './i18n/I18nProvider'
 import { fill, type StringKey } from './i18n/strings'
-import { EnergyMap, OTHER_COLOUR, OWN_COLOUR, type Layers } from './components/EnergyMap'
+import { EnergyMap, esc, OTHER_COLOUR, OWN_COLOUR, type Layers } from './components/EnergyMap'
 import { bswShare, summarise, type ChargingData } from './charging/charging'
 import { fetchBakedJson, fetchFile } from './lib/fetchBaked'
 import {
@@ -26,6 +26,8 @@ import { useBvgLive } from './live/useBvgLive'
 import { estimateKw, useSolarNow } from './live/solarNow'
 import { vehicleFeatures, type Bbox } from './live/bvgRadar'
 import { MODE_COLOURS } from './components/bvgLayer'
+import { DISTRICT_HIGH, DISTRICT_LOW } from './components/districtLayer'
+import { districtFeatures, districtStats, sparkPath, type ContextDistrict, type DistrictStats } from './charging/districts'
 import { embedUrl } from './powerbi/embedUrl'
 import { ReportWindow, type ReportPage } from './powerbi/ReportWindow'
 // The Finanzen tab (from Caldova Köln, D51) is code-split: cockpit, exports and visuals load on first open.
@@ -61,7 +63,8 @@ export default function App() {
   const loc = lang === 'en' ? 'en-GB' : 'de-DE'
   const [panelOpen, setPanelOpen] = useState(() => {
     try {
-      return (localStorage.getItem(PANEL_KEY) ?? 'open') === 'open'
+      // D60: on a phone the open panel covers the whole map, so it starts closed there
+      return (localStorage.getItem(PANEL_KEY) ?? (window.innerWidth < 760 ? 'closed' : 'open')) === 'open'
     } catch {
       return true
     }
@@ -76,6 +79,9 @@ export default function App() {
   const [charging, setCharging] = useState<ChargingData | null>(null)
   const [chargingError, setChargingError] = useState(false)
   const [layers, setLayers] = useState<Layers>({ chargingBsw: true, chargingOthers: true })
+  // D61: charging per district, shaded by public points per 1,000 residents
+  const [showDistricts, setShowDistricts] = useState(false)
+  const [contextDistricts, setContextDistricts] = useState<ContextDistrict[] | null>(null)
   // degewo is the focus partner, so its lens is on from the first second (D36)
   const [lens, setLens] = useState<Lens>('degewo')
   const [partners, setPartners] = useState<PartnerData | null>(null)
@@ -185,6 +191,23 @@ export default function App() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!showDistricts || contextDistricts) return
+    let alive = true
+    fetchBakedJson<{ districts: ContextDistrict[] }>('data/context.json')
+      .then((c) => alive && setContextDistricts(c.districts))
+      .catch((e) => {
+        console.warn('district outlines unavailable', e)
+        if (alive) setShowDistricts(false)
+      })
+    return () => {
+      alive = false
+    }
+  }, [showDistricts, contextDistricts])
+  const dStats = useMemo(
+    () => (charging && contextDistricts ? districtStats(charging.stations, charging.districts, contextDistricts) : null),
+    [charging, contextDistricts],
+  )
   const summary = useMemo(() => (partners ? lensSummary(lens, partners.units, partners.sites) : null), [partners, lens])
   const ranked = useMemo(() => (partners ? rankRoofs(partners.sites.buildings) : []), [partners])
   const depots = useMemo(
@@ -211,6 +234,32 @@ export default function App() {
   const share = useMemo(() => bswShare(stations), [stations])
   const asOf = charging ? new Date(charging.meta.bakedUtc).toLocaleDateString(loc) : ''
   const fmt = (n: number) => n.toLocaleString(loc)
+  const dec1 = (n: number) => n.toLocaleString(loc, { minimumFractionDigits: 1, maximumFractionDigits: 1 })
+  const districtLayer = useMemo(() => {
+    if (!showDistricts || !dStats || !contextDistricts) return null
+    const row = (k: string, v: string) => `<div class="veh-pop-row"><span>${k}</span><b>${v}</b></div>`
+    const popupHtml = (s: DistrictStats) => {
+      const last = s.kwhByYear[s.kwhByYear.length - 1]
+      const spark = sparkPath(s.kwhByYear, 200, 34)
+      return (
+        `<div class="veh-pop" data-testid="district-popup"><div class="veh-pop-head"><b>${esc(s.bez)}</b></div>` +
+        row(t('dist.points'), fmt(s.points)) +
+        row(t('dist.per1000'), dec1(s.per1000)) +
+        row(t('dist.bsw'), `${fmt(s.bswPoints)} (${s.bswShare === null ? '-' : `${Math.round(s.bswShare * 100)} %`})`) +
+        (s.allPoints !== null ? row(t('dist.all'), fmt(s.allPoints)) : '') +
+        (last ? row(fill(t('dist.kwh'), { year: String(last[0]) }), `${fmt(Math.round(last[1] / 1000))} MWh`) : '') +
+        (spark ? `<svg class="dist-spark" viewBox="-2 -2 204 38" width="204" height="38" aria-hidden="true"><path d="${spark}"/></svg>` +
+          `<div class="veh-pop-op">${fill(t('dist.sparkNote'), { from: String(s.kwhByYear[0][0]), to: String(last[0]) })}</div>` : '') +
+        `<div class="veh-pop-op">${t('dist.source')}</div></div>`
+      )
+    }
+    const values = dStats.map((s) => s.per1000)
+    return {
+      fc: districtFeatures(dStats, contextDistricts, popupHtml, (s) => `${s.bez}\n${dec1(s.per1000)}`),
+      range: [Math.min(...values), Math.max(...values)] as [number, number],
+    }
+    // t, fmt and dec1 only depend on lang / loc
+  }, [showDistricts, dStats, contextDistricts, lang, loc])
 
   const fly = (v: Omit<Viewpoint, 'id' | 'label'> & { duration?: number }) => {
     if (v.pitch > 0) setThreeD(true)
@@ -269,7 +318,7 @@ export default function App() {
   }
 
   return (
-    <div className="app" data-tour={tour !== null ? 'on' : 'off'} data-report={reportOpen && reportMax && tab === 'twin' && tour === null ? 'max' : 'off'}>
+    <div className="app" data-tour={tour !== null ? 'on' : 'off'} data-report={reportOpen && reportMax && tab === 'twin' && tour === null ? 'max' : 'off'} data-panel={panelOpen ? 'open' : 'closed'}>
       <header className="header">
         <div className="brand">
           <span>{t('app.title')}</span>
@@ -350,6 +399,7 @@ export default function App() {
           gapAreas={stop?.overlay === 'gap' ? gapGeo : null}
           vehicles={bvgOn ? vehicles : null}
           onView={setView}
+          districts={districtLayer}
           locale={loc}
           partnerLabels={{
             operator: t('pop.operator'),
@@ -528,6 +578,16 @@ export default function App() {
                 <span className="count">{charging ? fmt(all.points - bsw.points) : '-'}</span>
               </label>
               <p className="hint">{t('charging.hint')}</p>
+              <label className="mode-row" title={t('dist.hint')}>
+                <input type="checkbox" data-testid="districts-toggle" checked={showDistricts} onChange={(e) => setShowDistricts(e.target.checked)} />
+                <span className="swatch" style={{ background: `linear-gradient(90deg, ${DISTRICT_LOW}, ${DISTRICT_HIGH})`, height: 8 }} />
+                <span>{t('dist.layer')}</span>
+              </label>
+              {showDistricts && districtLayer && (
+                <p className="hint" data-testid="districts-legend">
+                  {fill(t('dist.legend'), { min: dec1(districtLayer.range[0]), max: dec1(districtLayer.range[1]) })}
+                </p>
+              )}
 
               <div className="divider" />
 
