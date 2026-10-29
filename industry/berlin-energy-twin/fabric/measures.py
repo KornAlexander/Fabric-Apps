@@ -6,6 +6,8 @@ and which unit the number has.
 """
 from __future__ import annotations
 
+from cover import startseite
+
 KW = "#,0.0"
 KWH = "#,0"
 N = "#,0"
@@ -180,5 +182,11 @@ MEASURES: list[tuple[str, str, str | None, str, str]] = [
     ("Einwohner", "IF ( NOT ISFILTERED ( Quartier ), SUM ( Bezirk[Einwohner] ) )", N, "Bezirk",
      "Einwohner der Bezirke mit Hauptwohnsitz laut Einwohnerregister am 31.12.2025 (höher als die amtliche Zensuszahl). Nur für Berlin "
      "oder je Bezirk; leer, sobald nach Quartier gefiltert wird. Für Quartiere [Einwohner Quartiere] verwenden."),
+    # ---------------------------------------------------------------- Meta (hidden)
+    ("Startseite", startseite(), None, "Meta",
+     "HTML der Berichts-Startseite für das HTML-Content-Visual (D58). Keine Kennzahl, für Fragen nicht verwenden."),
 ]
+
+#: Measures that exist for the report only: hidden in field lists and from Copilot.
+HIDDEN_MEASURES = {"Startseite"}
 

@@ -1,10 +1,11 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/pagesMetadata/1.0.0/schema.json",
   "pageOrder": [
+    "start",
     "stadtwerke",
     "degewo",
     "bvg",
     "laden"
   ],
-  "activePageName": "stadtwerke"
+  "activePageName": "start"
 }

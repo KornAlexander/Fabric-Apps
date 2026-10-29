@@ -926,6 +926,10 @@
             "Einwohner Berlin",
             "population"
           ]
+        },
+        {
+          "name": "Startseite",
+          "visibility": "Hidden"
         }
       ]
     }

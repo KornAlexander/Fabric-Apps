@@ -22,7 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from copilot import write_copilot  # noqa: E402
-from measures import MEASURES  # noqa: E402
+from measures import HIDDEN_MEASURES, MEASURES  # noqa: E402
 
 HERE = Path(__file__).parent
 BUILD = HERE / "build"
@@ -282,6 +282,8 @@ def build_measures() -> str:
             out.append(f"\tmeasure {q(name)} = {expr}")
         if fmt:
             out.append(f"\t\tformatString: {fmt}")
+        if name in HIDDEN_MEASURES:
+            out.append("\t\tisHidden")
         out.append(f"\t\tdisplayFolder: {folder}")
         out.append(f"\t\tlineageTag: {tag('measure', name)}")
         out.append("")

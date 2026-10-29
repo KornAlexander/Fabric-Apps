@@ -26,6 +26,8 @@ REPORT_NAME = "Berliner Stadtwerke Zwilling"
 
 IBCS_BAR = "ibcsMultiTierBarECA4F65BFFB141198B7A6391AFFC946A"
 IBCS_COL = "ibcsMultiTierColumnB84BA14B8B6A4201A7F698B3B38DD148"
+#: AppSource "HTML Content" visual, as on the Hochschul-Insights cover (loaded from the store, not bundled)
+HTML_VISUAL = "htmlContent443BE3AD55E043BF878BED274D3A6855"
 THEME = "MS_Default_Theme_Korn5610309886308295.json"
 BG = "hochschul_bg4504259618932576.png"
 LOGO = "actionablereportinglogo42073863795969413.png"
@@ -301,6 +303,51 @@ def chrome(p, subtitle, slicer=True) -> list[dict]:
     return out
 
 
+def v_header_band(name) -> dict:
+    """The navy band behind logo, title and navigator; on the cover the HTML hides the page background."""
+    return {
+        "$schema": VS, "name": name, "position": pos(0, 0, 1920, 67),
+        "visual": {
+            "visualType": "shape",
+            "objects": {
+                "shape": [{"properties": {"tileShape": lit("'rectangle'")}}],
+                "fill": [{"properties": {"show": lit("true")}}, {"properties": {"fillColor": colour("'#122A52'")}, "selector": {"id": "default"}}],
+                "outline": [{"properties": {"show": lit("false")}}],
+            },
+            "visualContainerObjects": {"general": [{"properties": {"keepLayerOrder": lit("true")}}],
+                                       "background": [{"properties": {"show": lit("false")}}]},
+        },
+        "howCreated": "InsertVisualButton",
+    }
+
+
+def v_html(name, measure) -> dict:
+    return {
+        "$schema": VS, "name": name, "position": pos(0, 0, 1920, 1080),
+        "visual": {
+            "visualType": HTML_VISUAL,
+            "query": {
+                "queryState": {"content": {"projections": [projection("Measure", measure, "m")]}},
+                "sortDefinition": {"sort": [{"field": field("Measure", measure, "m"), "direction": "Descending"}], "isDefaultSort": True},
+            },
+            "visualContainerObjects": {"border": [{"properties": {"show": lit("false")}}],
+                                       "background": [{"properties": {"show": lit("true")}}]},
+            "drillFilterOtherVisuals": True,
+        },
+    }
+
+
+def build_start(p):
+    """D58: the cover, laid out like the Hochschul-Insights Home page (HTML underneath, chart in the right third)."""
+    html = v_html(nid(p, "html"), "Startseite")
+    band = v_header_band(nid(p, "band"))
+    chart = v_ibcs(nid(p, "v1"), 1094, 330, 694, 520, column=False, cat=("Partner", "Partner"),
+                   actual="Solarleistung in Betrieb kWp", reference="Solarleistung kWp",
+                   title="Solar je Partner in kWp: in Betrieb von registriert, Δ = stillgelegt", top=3,
+                   sort_by="reference", scenario="PY", abs_tier=True, percent_tier=False)
+    return [html, band, chart]
+
+
 PAGES: list[dict] = []
 
 
@@ -402,6 +449,7 @@ def build_laden(p):
     ]
 
 
+page("start", "Start", "", build_start, slicer=False)
 page("stadtwerke", "Stadtwerke",
      "Für die Berliner Stadtwerke · Solaranlagen im Marktstammdatenregister und öffentliche Ladepunkte. "
      "Die Referenz „nach Einwohnern“ ist ein Rechenwert, kein Ziel.", build_stadtwerke, partner="Berliner Stadtwerke")
@@ -476,6 +524,7 @@ def main() -> None:
                 {"name": f"{IBCS_COL}.pbiviz.json", "path": f"{IBCS_COL}.pbiviz.json", "type": "CustomVisualMetadata"}]},
         ],
         "settings": template_report.get("settings", {}),
+        "publicCustomVisuals": [HTML_VISUAL],
     })
 
     background = {"background": [{"properties": {"image": {"image": {
@@ -491,7 +540,16 @@ def main() -> None:
         if spec["partner"]:
             pg["filterConfig"] = {"filters": [categorical(nid(pid, "partner"), "Partner", "Partner", [f"'{spec['partner']}'"])]}
         dump(d / "pages" / pid / "page.json", pg)
-        visuals = chrome(pid, spec["subtitle"], spec["slicer"]) + spec["build"](pid)
+        if pid == "start":
+            # Cover: HTML at the back, then band, then logo / title / navigator, then the chart.
+            built = spec["build"](pid)
+            visuals = built[:2] + [v for v in chrome(pid, "", False) if not v["name"].endswith(nid(pid, "sub"))] + built[2:]
+            visuals = [v for v in visuals if v["name"] != nid(pid, "sub")]
+            for z, v in enumerate(visuals):
+                v["position"]["z"] = z * 1000
+                v["position"]["tabOrder"] = z * 1000
+        else:
+            visuals = chrome(pid, spec["subtitle"], spec["slicer"]) + spec["build"](pid)
         names = [v["name"] for v in visuals]
         assert len(set(names)) == len(names), pid
         for v in visuals:

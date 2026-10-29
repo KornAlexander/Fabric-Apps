@@ -165,8 +165,10 @@ def write_copilot(model_dir: Path, tables: dict[str, dict], measures: list[tuple
         t["columns"] = cols
         schema_tables.append(t)
     ms = []
+    from measures import HIDDEN_MEASURES
+
     for m in measures:
-        entry = {"name": m[0], "visibility": "Visible"}
+        entry = {"name": m[0], "visibility": "Hidden" if m[0] in HIDDEN_MEASURES else "Visible"}
         if m[0] in MEASURE_SYNONYMS:
             entry["synonyms"] = MEASURE_SYNONYMS[m[0]]
         ms.append(entry)

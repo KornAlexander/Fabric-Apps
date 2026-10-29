@@ -124,5 +124,8 @@
     "queryLimitOption": "None",
     "customMemoryLimit": "1048576",
     "customTimeoutLimit": "225"
-  }
+  },
+  "publicCustomVisuals": [
+    "htmlContent443BE3AD55E043BF878BED274D3A6855"
+  ]
 }
