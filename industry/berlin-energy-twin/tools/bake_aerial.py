@@ -95,6 +95,9 @@ def bake_patch(p: Patch) -> dict:
     return ship_patch(p, mosaic, done, total)
 
 
+WEBP_QUALITY = 75
+
+
 def nodata_mask(img: Image.Image) -> np.ndarray:
     """True where the photo has no data: the server's white fill outside Berlin.
 
@@ -125,7 +128,10 @@ def ship_patch(p: Patch, mosaic: Image.Image, done: int, total: int) -> dict:
     if hole.any():
         rgba.putalpha(Image.fromarray(np.where(hole, 0, 255).astype(np.uint8)))
     name = f"aerial-{p.id}.webp"
-    rgba.save(OUT / name, quality=85, method=6)
+    # D59: quality 75, not 85. The Fabric static deploy is ONE zip POST that times out after ~100 s;
+    # at 85 the 52 MB of aerials alone pushed it past that on a home upload. 75 is 31 % smaller,
+    # 32.5 dB PSNR against the source, and side by side at 1.5x the two cannot be told apart.
+    rgba.save(OUT / name, quality=WEBP_QUALITY, method=6)
     stale = OUT / f"aerial-{p.id}.jpg"
     if stale.exists():
         stale.unlink()
