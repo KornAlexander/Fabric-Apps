@@ -26,10 +26,15 @@ import { useBvgLive } from './live/useBvgLive'
 import { estimateKw, useSolarNow } from './live/solarNow'
 import { vehicleFeatures, type Bbox } from './live/bvgRadar'
 import { MODE_COLOURS } from './components/bvgLayer'
+import { embedUrl } from './powerbi/embedUrl'
+import { ReportWindow, type ReportPage } from './powerbi/ReportWindow'
 // The Finanzen tab (from Caldova Köln, D51) is code-split: cockpit, exports and visuals load on first open.
 const FinanzenApp = lazy(() => import('@finanzen/FinanzenApp').then((m) => ({ default: m.FinanzenApp })))
 
 type Tab = 'twin' | 'reorder' | 'finanzen'
+/** The report page each lens opens on (D57). */
+const LENS_PAGE: Record<Lens, ReportPage> = { bsw: 'stadtwerke', degewo: 'degewo', bvg: 'bvg' }
+const PBI = { reportId: import.meta.env.VITE_PBI_REPORT_ID as string, tenantId: import.meta.env.VITE_PBI_TENANT_ID as string }
 const TABS: Tab[] = ['twin', 'reorder', 'finanzen']
 
 const THEME_KEY = 'bsw-twin-theme'
@@ -103,6 +108,17 @@ export default function App() {
   const [view, setView] = useState<Bbox | null>(null)
   const bvgLive = useBvgLive(bvgOn && tab === 'twin', view)
   const solarNow = useSolarNow(clock)
+  // D57: the Power BI report in a window over the map; its page follows the lens until picked by hand.
+  const [reportOpen, setReportOpen] = useState(false)
+  const [reportPage, setReportPage] = useState<ReportPage | null>(null)
+  const [reportMax, setReportMax] = useState(false)
+  const page: ReportPage = reportPage ?? LENS_PAGE[lens]
+  const reportUrl = embedUrl({
+    ...PBI,
+    pageName: page,
+    chromeless: true,
+    locale: lang === 'en' ? { language: 'en', formatLocale: 'en-GB' } : { language: 'de', formatLocale: 'de-DE' },
+  })
   const autoBvg = (want: boolean) => {
     if (want) {
       setBvgOn((on) => {
@@ -177,6 +193,7 @@ export default function App() {
   )
   const pickLens = (l: Lens) => {
     setLens(l)
+    setReportPage(null)
     autoBvg(l === 'bvg')
     const b = partners && lensBounds(l, partners.units, partners.sites)
     if (b) setFrame({ bounds: b, nonce: Date.now() })
@@ -252,7 +269,7 @@ export default function App() {
   }
 
   return (
-    <div className="app" data-tour={tour !== null ? 'on' : 'off'}>
+    <div className="app" data-tour={tour !== null ? 'on' : 'off'} data-report={reportOpen && reportMax && tab === 'twin' && tour === null ? 'max' : 'off'}>
       <header className="header">
         <div className="brand">
           <span>{t('app.title')}</span>
@@ -266,6 +283,18 @@ export default function App() {
           ))}
         </div>
         <span className="header-spacer" />
+        {reportUrl && (
+          <button
+            hidden={tab !== 'twin'}
+            className="tour-start report-start"
+            onClick={() => setReportOpen((o) => !o)}
+            aria-pressed={reportOpen}
+            title={t('report.startTitle')}
+            data-testid="report-start"
+          >
+            {t('report.start')}
+          </button>
+        )}
         <button
           hidden={tab !== 'twin'}
           className="tour-start"
@@ -617,6 +646,19 @@ export default function App() {
           )}
         </div>
         {stop && tourStops && tour !== null && <TourCard stops={tourStops} index={tour} onIndex={goTo} onEnd={endTour} t={t} />}
+        {reportOpen && reportUrl && tab === 'twin' && tour === null && (
+          <ReportWindow
+            url={reportUrl}
+            page={page}
+            onPage={setReportPage}
+            onClose={() => {
+              setReportOpen(false)
+              setReportMax(false)
+            }}
+            onMax={setReportMax}
+            t={t}
+          />
+        )}
         {tab === 'reorder' && (
           <div className="tab-page" data-testid="page-reorder">
             <ReorderApp live={live} />

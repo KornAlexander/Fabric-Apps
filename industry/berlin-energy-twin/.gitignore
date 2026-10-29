@@ -22,6 +22,7 @@ rayfin/.temp/
 tools/fabric/protected-items.json
 tools/fabric/allowed-items.json
 tools/fabric/fabric.json
+tools/fabric/powerbi.json
 rayfin/.deployments.json
 rayfin/.lockfile.json
 logs/

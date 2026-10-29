@@ -33,6 +33,10 @@ that writes reorders to the app's own SQL database, and an IBCS finance cockpit.
   in the Fabric portal place reorders that land in the app's SQL database.
 - **IBCS Charts.** KPI cockpit and P&L with simulation, based on Michael Tenner's IBCS Finance
   Cockpit, answered from a baked snapshot of its semantic model.
+- **Report window.** The import model and its report published to the workspace
+  (`python tools/fabric/publish_pbip.py`: refresh, agreement check against the app's figures,
+  folder), shown in a Power BI window over the map whose page follows the lens. The tenant and
+  report ids live in an untracked `tools/fabric/powerbi.json`; without it there is no button.
 - **Import model for Copilot.** `fabric/` holds a portable Power BI project (PBIP) with the twin's
   data embedded in the model, German names, descriptions, Copilot instructions and a 4-page report.
 

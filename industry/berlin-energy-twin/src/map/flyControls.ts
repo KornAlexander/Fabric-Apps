@@ -427,6 +427,8 @@ export function createFlyControls(options: FlyControlsOptions): FlyControls {
     if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable)) return
     // D51: the order and finance tabs cover the map; their keys are not the camera's.
     if (typeof document !== 'undefined' && document.querySelector('.tab-page:not([hidden])')) return
+    // D57: keys on the report window's own buttons are not the camera's either.
+    if (el?.closest?.('.report-window')) return
 
     if (key === 'shift') held.add('shift')
     if (key.length === 1 && MOVEMENT_KEYS.includes(key)) {

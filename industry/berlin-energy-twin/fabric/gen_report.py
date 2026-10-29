@@ -334,7 +334,7 @@ def build_stadtwerke(p):
 def build_degewo(p):
     return kpis(p, [
         ("Solarleistung kWp", "Solarleistung degewo in kWp"),
-        ("Offenes Potenzial Fokusdächer kWp", "Offenes Potenzial degewo-Dächer in kWp (Schätzung)"),
+        ("Offenes Potenzial Fokusdächer kWp", "Offenes Dachpotenzial kWp (Schätzung)"),
         ("Quartiere", "degewo-Quartiere"),
         ("Einwohner Quartiere", "Einwohner in den Quartieren"),
     ]) + [

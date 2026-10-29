@@ -100,7 +100,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Offenes Potenzial degewo-Dächer in kWp (Schätzung)'"
+                  "Value": "'Offenes Dachpotenzial kWp (Schätzung)'"
                 }
               }
             },
