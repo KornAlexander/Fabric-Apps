@@ -17,11 +17,15 @@ import {
   type Unit,
 } from './partners/partners'
 import type { PartnerData } from './components/partnerLayers'
-import { buildTour, CARRIERS, gapFeatures } from './tour/tour'
+import { buildTour, CARRIERS, flightMs, gapFeatures, type TourCamera } from './tour/tour'
 import { TourCard } from './tour/TourCard'
 import { estateReach, mergeNested } from './partners/chargingGap'
 import { ReorderApp } from '@reorder/ReorderApp'
 import { useLive } from '@/nachbestellung/useLive'
+import { useBvgLive } from './live/useBvgLive'
+import { estimateKw, useSolarNow } from './live/solarNow'
+import { vehicleFeatures, type Bbox } from './live/bvgRadar'
+import { MODE_COLOURS } from './components/bvgLayer'
 // The Finanzen tab (from Caldova Köln, D51) is code-split: cockpit, exports and visuals load on first open.
 const FinanzenApp = lazy(() => import('@finanzen/FinanzenApp').then((m) => ({ default: m.FinanzenApp })))
 
@@ -92,6 +96,25 @@ export default function App() {
   const [tab, setTab] = useState<Tab>('twin')
   const [finanzenOpened, setFinanzenOpened] = useState(false)
   const live = useLive(tab === 'reorder')
+  // D55: BVG vehicles in the camera view; on with the BVG lens, paused on the other tabs.
+  const [bvgOn, setBvgOn] = useState(false)
+  // true while the lens or the tour turned it on; a tick by hand stays on everywhere
+  const bvgAuto = useRef(false)
+  const [view, setView] = useState<Bbox | null>(null)
+  const bvgLive = useBvgLive(bvgOn && tab === 'twin', view)
+  const solarNow = useSolarNow(clock)
+  const autoBvg = (want: boolean) => {
+    if (want) {
+      setBvgOn((on) => {
+        if (!on) bvgAuto.current = true
+        return true
+      })
+    } else if (bvgAuto.current) {
+      bvgAuto.current = false
+      setBvgOn(false)
+    }
+  }
+  const vehicles = useMemo(() => (bvgLive.kind === 'ok' ? vehicleFeatures(bvgLive.vehicles) : null), [bvgLive])
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
@@ -154,6 +177,7 @@ export default function App() {
   )
   const pickLens = (l: Lens) => {
     setLens(l)
+    autoBvg(l === 'bvg')
     const b = partners && lensBounds(l, partners.units, partners.sites)
     if (b) setFrame({ bounds: b, nonce: Date.now() })
   }
@@ -196,12 +220,19 @@ export default function App() {
   // stop for 3 s and reset lens and 3D mid-sentence (review 2026-10-28).
   const stopRef = useRef(stop)
   stopRef.current = stop
+  // D54: where the last leg ended, so the next flight takes as long as its distance needs.
+  const lastStopCamera = useRef<TourCamera | null>(null)
   useEffect(() => {
     const s = stopRef.current
-    if (tour === null || !s) return
+    if (tour === null || !s) {
+      lastStopCamera.current = null
+      return
+    }
     setLens(s.lens)
     setRealism(s.realism)
-    fly({ ...s.camera, duration: 3000 })
+    autoBvg(s.id === 'bvg')
+    fly({ ...s.camera, duration: flightMs(lastStopCamera.current, s.camera) })
+    lastStopCamera.current = s.camera
     // fly is recreated every render; the index alone decides
   }, [tour])
   const startTour = () => {
@@ -288,6 +319,8 @@ export default function App() {
           lens={lens}
           frame={frame}
           gapAreas={stop?.overlay === 'gap' ? gapGeo : null}
+          vehicles={bvgOn ? vehicles : null}
+          onView={setView}
           locale={loc}
           partnerLabels={{
             operator: t('pop.operator'),
@@ -330,6 +363,22 @@ export default function App() {
                 value={kw(summary.kw)}
                 sub={summary.postcodeOnly ? fill(t('kpi.postcodeOnly'), { n: fmt(summary.postcodeOnly) }) : null}
                 testid="kpi-lens-kw"
+              />
+            )}
+            {summary && solarNow.kind !== 'loading' && (
+              <Kpi
+                label={
+                  solarNow.kind === 'ok'
+                    ? fill(t('kpi.now'), { station: solarNow.station, time: solarNow.at.toLocaleTimeString(loc, { hour: '2-digit', minute: '2-digit' }) })
+                    : solarNow.kind === 'night'
+                      ? t('kpi.nowNight')
+                      : t('kpi.nowMissing')
+                }
+                value={solarNow.kind === 'ok' ? `≈ ${kw(estimateKw(solarNow.wm2, summary.kw))}` : t('kpi.nowNone')}
+                sub={solarNow.kind === 'ok' ? (solarNow.stale ? t('kpi.nowStale') : t('badge.estimate')) : null}
+                subWarn={solarNow.kind === 'ok' && solarNow.stale}
+                title={t('kpi.nowTitle')}
+                testid="kpi-solar-now"
               />
             )}
             {lens === 'degewo' && summary?.roofs && (
@@ -453,6 +502,42 @@ export default function App() {
 
               <div className="divider" />
 
+              <h2>{t('panel.bvgLive')}</h2>
+              <label className="mode-row">
+                <input type="checkbox" data-testid="bvg-live-toggle" checked={bvgOn} onChange={(e) => {
+                    bvgAuto.current = false
+                    setBvgOn(e.target.checked)
+                  }} />
+                <span className="swatch" style={{ background: MODE_COLOURS.bus }} />
+                <span>{t('layer.bvgLive')}</span>
+                <span className="count" data-testid="bvg-live-count">
+                  {bvgLive.kind === 'ok' ? fmt(bvgLive.vehicles.length) : bvgLive.kind === 'loading' ? '…' : '-'}
+                </span>
+              </label>
+              {bvgOn && (
+                <p className="hint" data-testid="bvg-live-status">
+                  {bvgLive.kind === 'error' ? (
+                    <span className="warn">{fill(t('bvg.error'), { detail: bvgLive.detail })}</span>
+                  ) : (
+                    <>
+                      <span className="badge">{t('bvg.badge')}</span>{' '}
+                      {bvgLive.kind === 'ok' && fill(t(clock.getTime() - bvgLive.at.getTime() > 60_000 ? 'bvg.lastAt' : 'bvg.asOf'), { time: bvgLive.at.toLocaleTimeString(loc, { hour: '2-digit', minute: '2-digit', second: '2-digit' }) })}
+                      {bvgLive.kind === 'ok' && bvgLive.capped && <> · {t('bvg.capped')}</>}
+                    </>
+                  )}
+                </p>
+              )}
+              <p className="hint bvg-legend">
+                {(['bus', 'tram', 'subway', 'ferry'] as const).map((mode) => (
+                  <span key={mode}>
+                    <span className="swatch" style={{ background: MODE_COLOURS[mode] }} /> {t(`bvg.mode.${mode}` as StringKey)}
+                  </span>
+                ))}
+              </p>
+              <p className="hint">{t('bvg.hint')}</p>
+
+              <div className="divider" />
+
               <div className="seg seg-light" role="group" aria-label={t('view.3d')}>
                 <button aria-pressed={!threeD} onClick={() => setThreeD(false)}>
                   {t('view.2d')}
@@ -555,18 +640,21 @@ function Kpi({
   sub = null,
   title,
   testid,
+  subWarn = false,
 }: {
   label: string
   value: string
   sub?: string | null
   title?: string
   testid: string
+  /** pure red (#FF0000) for a semantic warning such as a stale feed */
+  subWarn?: boolean
 }) {
   return (
     <span className="kpi" data-testid={testid} title={title}>
       <b>
         {value}
-        {sub ? <i>{sub}</i> : null}
+        {sub ? <i className={subWarn ? 'warn' : undefined}>{sub}</i> : null}
       </b>
       <em>{label}</em>
     </span>

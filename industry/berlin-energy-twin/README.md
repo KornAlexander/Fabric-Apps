@@ -16,13 +16,18 @@ that writes reorders to the app's own SQL database, and an IBCS finance cockpit.
 
 - **Three lenses.** degewo (focus), BVG and Stadtwerke. Each lens frames its sites, lists the
   largest open roof potentials and shows installed solar from the Marktstammdatenregister.
-- **Roof gaps in 3D.** On LoD2 buildings with TrueDOP 2025 roof photos, a band on the roof shows
-  the share already used and a column shows the open potential (1 m = 2 kWp). Sites load lazily,
-  at most four at a time.
+- **Roof gaps in 3D, at true size.** On LoD2 buildings with TrueDOP 2025 roof photos, a band on
+  the roof shows the share already used and a label the open kWp. Buildings, trees and terrain are
+  strictly 1:1, nothing is exaggerated. Sites load lazily, at most four at a time.
 - **Public charging near the estates.** All public charge points of Berlin, Stadtwerke points
   highlighted, with the 300 m reach of each degewo estate and the one estate without a Stadtwerke
   point.
-- **Guided tour.** Seven stops built from the data, presenter keys, fly then hold.
+- **Guided tour.** Five stops built from the data, presenter keys, flights timed by distance.
+- **BVG live.** BVG buses, trams, U-Bahn and ferries in the camera view every 30 s from the
+  community radar `v6.bvg.transport.rest` (computed positions, unofficial source, badged so).
+- **Solar now.** An estimate of what each partner's solar produces right now: DWD irradiance
+  (nearest station measuring it, via Bright Sky) × installed kWp × performance ratio 0.8, badged
+  as estimate, "no measurement" at night.
 - **DGM1 terrain** for the whole city with a subtle hillshade, in 2D and 3D.
 - **Caldova orders.** The original caldova-reorder screens with a baked snapshot; signed-in users
   in the Fabric portal place reorders that land in the app's SQL database.
@@ -39,7 +44,8 @@ open data (Geoportal Berlin WFS/WMS/Atom, MaStR, OSM)
       ▼
 public/data/*.json|bin|webp ──► React + MapLibre app (Vite) ──► Fabric App static hosting
                                      │                              (assetAccess: protected)
-                                     └─ Caldova orders ──► Rayfin data API ──► app SQL database
+                                     ├─ Caldova orders ──► Rayfin data API ──► app SQL database
+                                     └─ live: BVG radar (30 s), DWD irradiance via Bright Sky (10 min)
 app functions ──► tools/export_model_data.ts ──► fabric/gen_model.py ──► PBIP (import model)
 ```
 

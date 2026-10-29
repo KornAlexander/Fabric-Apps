@@ -8,10 +8,9 @@ import {
   postcodeAggregates,
   postcodeFills,
   rankRoofs,
-  roofBars,
+  roofLabels,
   roofShare,
   unitPoints,
-  BAR_M_PER_KW,
   type SitesData,
   type Unit,
 } from '../partners'
@@ -39,11 +38,12 @@ describe('roof gap (D33)', () => {
     expect(top.slice(0, 3).map((r) => r.addr)).toContain('Waldsassener Straße 31')
   })
 
-  it('stands a bar on its roof, as tall as the open potential at the stated scale', () => {
+  it('labels the open potential on the roof, with no non-physical column (D53)', () => {
     const r = { ...sites.buildings[0], potKw: 100, installedKw: 40 }
-    const bar = roofBars([r], { roofs: { [String(r.id)]: { site: 'x', groundM: 40, roofM: 12 } } }).features[0]
-    expect(bar.properties.base).toBe(12)
-    expect(bar.properties.top).toBe(12 + 60 * BAR_M_PER_KW)
+    const f = roofLabels([r]).features[0]
+    expect((f.geometry as { type: string }).type).toBe('Point')
+    expect(f.properties.open).toBe(60)
+    expect(roofLabels([{ ...r, installedKw: 100 }]).features).toHaveLength(0)
   })
 })
 

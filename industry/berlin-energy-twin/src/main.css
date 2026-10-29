@@ -2097,3 +2097,27 @@ body {
   font-size: 14px;
   color: var(--text-muted);
 }
+
+/* --- D55: BVG live legend and failure note --------------------------------- */
+.bvg-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+
+.bvg-legend .swatch {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  vertical-align: -1px;
+}
+
+.hint .warn {
+  color: #ff0000;
+}
+
+/* D56: a stale solar feed says so in semantic red */
+.kpi b i.warn {
+  color: #ff0000;
+}

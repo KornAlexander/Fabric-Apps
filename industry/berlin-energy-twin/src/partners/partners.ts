@@ -238,36 +238,20 @@ export function roofOutlines(roofs: readonly RankedRoof[], heights?: RoofHeights
   )
 }
 
-/** Metres of bar per kWp of open potential: a chart scale, stated in the legend. */
-export const BAR_M_PER_KW = 0.5
-/** Bar footprint, metres: thin enough to read as a bar, wide enough to see from fly-over height. */
-export const BAR_SIDE_M = 6
-
-/** A square bar per roof whose height is the open potential (D33), standing on the roof. */
-export function roofBars(roofs: readonly RankedRoof[], heights?: RoofHeights | null): FC {
+/**
+ * One point per ranked roof carrying its open potential, drawn as a label ON the roof (D53).
+ * Replaces the D33 column (1 m = 2 kWp), which stood up to 134 m on a 15 m car park: a chart
+ * mark the size of a tower broke the strict 1:1 rule. Everything in 3D is now real size.
+ */
+export function roofLabels(roofs: readonly RankedRoof[]): FC {
   return fc(
-    roofs.map((r) => {
-      const half = BAR_SIDE_M / 2
-      const dLat = half / 111_320
-      const dLon = half / (111_320 * Math.cos((r.lat * Math.PI) / 180))
-      const base = heights?.roofs[String(r.id)]?.roofM ?? 0
-      return {
+    roofs
+      .filter((r) => openKw(r) > 0)
+      .map((r) => ({
         type: 'Feature' as const,
-        properties: { id: r.id, base, top: base + openKw(r) * BAR_M_PER_KW, open: openKw(r) },
-        geometry: {
-          type: 'Polygon',
-          coordinates: [
-            [
-              [r.lon - dLon, r.lat - dLat],
-              [r.lon + dLon, r.lat - dLat],
-              [r.lon + dLon, r.lat + dLat],
-              [r.lon - dLon, r.lat + dLat],
-              [r.lon - dLon, r.lat - dLat],
-            ],
-          ],
-        },
-      }
-    }),
+        properties: { id: r.id, open: Math.round(openKw(r)) },
+        geometry: { type: 'Point', coordinates: [r.lon, r.lat] },
+      })),
   )
 }
 

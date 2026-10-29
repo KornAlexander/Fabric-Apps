@@ -4,6 +4,8 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 
 import { createFlyControls, type FlyControls, type FlyTelemetry } from '../map/flyControls'
 import { flyToOptions, type RequestedCamera } from '../map/camera'
+import { setVehicles } from './bvgLayer'
+import type { Bbox } from '../live/bvgRadar'
 import { createOrbitNavigation, type OrbitNavigation } from '../map/navigation'
 import { useI18n } from '../i18n/I18nProvider'
 import { skyColours, sunPosition, sunVector } from '../scene/sun'
@@ -17,6 +19,7 @@ import type { Lens } from '../partners/partners'
 import {
   installPartnerLayers,
   setGapOverlay,
+  basemapFont,
   partnerPopup,
   setPartnerLens,
   type PartnerData,
@@ -110,10 +113,14 @@ type Props = {
   frame?: { bounds: [[number, number], [number, number]]; nonce: number } | null
   /** tour stop 4: degewo areas by Stadtwerke charging within 300 m (null hides) */
   gapAreas?: GeoJSON.FeatureCollection | null
+  /** live BVG vehicles (D55), null hides the layer */
+  vehicles?: GeoJSON.FeatureCollection | null
+  /** the camera's view after each move, for the live radar */
+  onView?: (b: Bbox) => void
 }
 
 /** Clickable layers, most specific first: a unit on a roof wins over the roof. */
-const CLICKABLE = ['unit-dot', 'roof-bar', 'roof-band', 'depot-point', 'stations-bsw', 'stations-other', 'depot-fill', 'pc-fill']
+const CLICKABLE = ['unit-dot', 'roof-label', 'roof-band', 'depot-point', 'stations-bsw', 'stations-other', 'depot-fill', 'pc-fill']
 
 function applySky(m: maplibregl.Map, spec: Record<string, unknown> | null): boolean {
   if (!spec) return false
@@ -144,6 +151,8 @@ export function EnergyMap({
   locale,
   frame,
   gapAreas = null,
+  vehicles = null,
+  onView,
 }: Props) {
   const holder = useRef<HTMLDivElement>(null)
   const { t } = useI18n()
@@ -417,6 +426,7 @@ export function EnergyMap({
 
       if (partnersRef.current) installPartnerLayers(m, partnersRef.current, lensRef.current)
       if (gapRef.current) setGapOverlay(m, gapRef.current)
+      if (vehiclesRef.current) setVehicles(m, vehiclesRef.current, basemapFont(m))
 
       m.setTerrain(threeD ? { source: 'dem', exaggeration: TERRAIN_EXAGGERATION } : null)
       applySky(m, skyRef.current)
@@ -466,6 +476,35 @@ export function EnergyMap({
       m.off('idle', run)
     }
   }, [partners, lens])
+
+  const vehiclesRef = useRef(vehicles)
+  vehiclesRef.current = vehicles
+  useEffect(() => {
+    const m = map.current
+    if (!m) return
+    const run = () => setVehicles(m, vehicles, basemapFont(m))
+    if (m.isStyleLoaded()) run()
+    else m.once('idle', run)
+    return () => {
+      m.off('idle', run)
+    }
+  }, [vehicles])
+
+  const viewOut = useRef(onView)
+  viewOut.current = onView
+  useEffect(() => {
+    const m = map.current
+    if (!m) return
+    const emit = () => {
+      const b = m.getBounds()
+      viewOut.current?.({ north: b.getNorth(), west: b.getWest(), south: b.getSouth(), east: b.getEast() })
+    }
+    emit()
+    m.on('moveend', emit)
+    return () => {
+      m.off('moveend', emit)
+    }
+  }, [])
 
   const gapRef = useRef(gapAreas)
   gapRef.current = gapAreas

@@ -1,7 +1,7 @@
 /**
- * The guided tour (PLAN §5, Phase 4; decided 2026-10-28): seven stops, the
- * presenter clicks Next, the camera flies and holds still, a caption card at
- * the bottom says what is on screen.
+ * The guided tour (PLAN §5, Phase 4; decided 2026-10-28, five stops since
+ * 2026-10-29, D54): the presenter clicks Next, the camera flies and holds
+ * still, a caption card at the bottom says what is on screen.
  *
  * Every number in a caption is computed here from the baked files, never typed
  * into a string, so the tour cannot drift from the lenses or the report. The
@@ -19,7 +19,7 @@ export type TourCamera = { center: [number, number]; zoom: number; pitch: number
 export type Badge = 'estimate' | 'aggregated' | 'airline'
 
 export type TourStop = {
-  id: 'overview' | 'hero' | 'estate' | 'charging' | 'bvg' | 'bsw' | 'close'
+  id: 'overview' | 'roofs' | 'charging' | 'bvg' | 'close'
   lens: Lens
   /** buildings and aerial photo on (D26) */
   realism: boolean
@@ -44,8 +44,6 @@ export const CARRIERS = ['Solare Strahlungsenergie', 'Wind', 'Erdgas', 'andere G
 
 /** Berlin as a whole, centred ~5 km south so the city sits above the caption card. */
 const CITY: TourCamera = { center: [13.405, 52.455], zoom: 9.9, pitch: 35, bearing: 0 }
-/** One building or depot fills the middle (same as the list clicks, SITE_VIEW in App). */
-const SITE = { zoom: 17.2, pitch: 58, bearing: -20 }
 
 export function centroid(outline: Estate['outline']): [number, number] | null {
   if (!outline) return null
@@ -97,7 +95,6 @@ export function buildTour(d: TourData, f: TourFormat, lang: 'de' | 'en'): TourSt
   for (const s of [degewo, bvg, bsw]) for (const o of s.other) otherBy.set(o.carrier, (otherBy.get(o.carrier) ?? 0) + o.kw)
   const otherSorted = [...otherBy.entries()].sort((a, b) => b[1] - a[1])
   const otherKw = otherSorted.reduce((a, [, kw]) => a + kw, 0)
-  const list = (xs: [string, number][]) => xs.map(([c, kw]) => `${f.kw(kw)} ${f.carrier(c)}`).join(', ')
 
   const allPoints = d.stations.reduce((a, s) => a + s.points, 0)
   const bswPoints = d.stations.filter((s) => s.bsw).reduce((a, s) => a + s.points, 0)
@@ -125,48 +122,39 @@ export function buildTour(d: TourData, f: TourFormat, lang: 'de' | 'en'): TourSt
     source: 'tour.src.mastrCharging',
   })
 
+  // D54: the largest open roof and the estate with most open potential are ONE
+  // stop. The camera shows the estate (several roofs, each with its number);
+  // the caption names the single largest roof as well.
   const roofs = rankRoofs(d.sites.buildings)
   const hero = roofs[0]
-  if (hero) {
-    stops.push({
-      id: 'hero',
-      lens: 'degewo',
-      realism: true,
-      camera: { center: [hero.lon, hero.lat], ...SITE },
-      overlay: null,
-      title: 'tour.hero.title',
-      body: 'tour.hero.body',
-      figureLabel: 'tour.hero.figure',
-      params: { addr: hero.addr, pot: f.n(Math.round(hero.potKw)), inst: f.n(Math.round(hero.installedKw)) },
-      figure: `${f.n(Math.round(openKw(hero)))} kWp`,
-      badges: ['estimate'],
-      source: 'tour.src.atlas',
-    })
-  }
-
-  // The named estate with the most open potential on its ranked roofs.
   const named = d.sites.estates.filter((e) => e.kind === 'named' && e.outline)
   const byEstate = named
     .map((e) => {
       // only roofs that still have something open: the caption says "still open"
       const mine = roofs.filter((r) => r.estates?.includes(e.id) && openKw(r) > 0)
-      return { e, n: mine.length, open: mine.reduce((a, r) => a + openKw(r), 0) }
+      return { e, n: mine.length, open: mine.reduce((a, r) => a + openKw(r), 0), mine }
     })
     .sort((a, b) => b.open - a.open)
   const est = byEstate[0]
-  const c = est && centroid(est.e.outline)
-  if (est && c) {
+  // Aim at the open roofs themselves, not the estate's centre: in Gropiusstadt they sit
+  // about 600 m east of it, and the first cut of this stop framed none of them.
+  const c: [number, number] | null = est?.mine.length
+    ? [est.mine.reduce((a, r) => a + r.lon, 0) / est.mine.length, est.mine.reduce((a, r) => a + r.lat, 0) / est.mine.length]
+    : est
+      ? centroid(est.e.outline)
+      : null
+  if (hero && est && c) {
     const claim = (est.e as Estate & { claim?: Record<string, string> }).claim?.[lang] ?? ''
     stops.push({
-      id: 'estate',
+      id: 'roofs',
       lens: 'degewo',
       realism: true,
-      camera: { center: c, zoom: 15.4, pitch: 55, bearing: 25 },
+      camera: { center: c, zoom: 16, pitch: 55, bearing: 25 },
       overlay: null,
-      title: 'tour.estate.title',
-      body: est.n ? 'tour.estate.body' : 'tour.estate.bodyNone',
-      figureLabel: 'tour.estate.figure',
-      params: { name: est.e.name, claim, n: f.n(est.n) },
+      title: 'tour.roofs.title',
+      body: est.n ? 'tour.roofs.body' : 'tour.roofs.bodyNone',
+      figureLabel: 'tour.roofs.figure',
+      params: { name: est.e.name, claim: claim || ' ', n: f.n(est.n), addr: hero.addr, heroOpen: f.n(Math.round(openKw(hero))) },
       figure: `${f.n(Math.round(est.open))} kWp`,
       badges: ['estimate'],
       source: 'tour.src.atlas',
@@ -218,52 +206,50 @@ export function buildTour(d: TourData, f: TourFormat, lang: 'de' | 'en'): TourSt
         units: f.n(bvg.units),
       },
       figure: f.kw(bvg.kw),
+      // The figure is the register's; the live vehicles' caveat is in the caption text.
       badges: [],
       source: 'tour.src.mastrDepots',
     })
   }
 
-  stops.push({
-    id: 'bsw',
-    lens: 'bsw',
-    realism: false,
-    camera: { ...CITY, pitch: 40, bearing: -15 },
-    overlay: null,
-    title: 'tour.bsw.title',
-    body: 'tour.bsw.body',
-    figureLabel: 'tour.bsw.figure',
-    params: {
-      units: f.n(bsw.units),
-      mieterstrom: f.n(bsw.mieterstrom),
-      postcodeOnly: f.n(bsw.postcodeOnly),
-      others: list(bsw.other.map((o) => [o.carrier, o.kw])) || '-',
-      points: f.n(bswPoints),
-      city: f.pct(cityShare),
-    },
-    figure: f.kw(bsw.kw),
-    badges: bsw.postcodeOnly ? ['aggregated'] : [],
-    source: 'tour.src.mastrCharging',
-  })
-
+  // D54: "the Stadtwerke today" and "what comes next" close the tour as one stop on the city.
   stops.push({
     id: 'close',
-    lens: 'degewo',
+    lens: 'bsw',
     realism: false,
-    camera: { ...CITY, zoom: 10.1, pitch: 50, bearing: 20 },
+    camera: { ...CITY, zoom: 10.1, pitch: 45, bearing: 15 },
     overlay: null,
     title: 'tour.close.title',
     body: 'tour.close.body',
     figureLabel: 'tour.close.figure',
     params: {
+      units: f.n(bsw.units),
+      mieterstrom: f.n(bsw.mieterstrom),
+      postcodeOnly: f.n(bsw.postcodeOnly),
+      points: f.n(bswPoints),
+      city: f.pct(cityShare),
       roofs: f.n(degewo.roofs?.count ?? 0),
+      open: f.kw(degewo.roofs?.openKw ?? 0),
       building: f.n(bvg.depots?.construction ?? 0),
       gapCount: f.n(gaps.length),
       estates: f.n(rs.estates),
     },
-    figure: f.kw(degewo.roofs?.openKw ?? 0),
-    badges: ['estimate'],
-    source: 'tour.src.atlas',
+    figure: f.kw(bsw.kw),
+    badges: bsw.postcodeOnly ? ['estimate', 'aggregated'] : ['estimate'],
+    source: 'tour.src.mastrCharging',
   })
 
   return stops
+}
+
+/**
+ * Flight time between two stops (D54): a hop inside one district is quick, a
+ * flight across the city takes longer, so no leg feels rushed or sluggish.
+ */
+export function flightMs(from: TourCamera | null, to: TourCamera): number {
+  if (!from) return 3000
+  const kx = 111.32 * Math.cos((to.center[1] * Math.PI) / 180)
+  const km = Math.hypot((to.center[0] - from.center[0]) * kx, (to.center[1] - from.center[1]) * 110.54)
+  const ms = 2200 + 520 * Math.log2(1 + km) + 220 * Math.abs(to.zoom - from.zoom)
+  return Math.round(Math.min(5200, Math.max(2200, ms)))
 }

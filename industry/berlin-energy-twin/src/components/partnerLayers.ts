@@ -7,7 +7,7 @@ import {
   openKw,
   postcodeAggregates,
   postcodeFills,
-  roofBars,
+  roofLabels,
   roofOutlines,
   roofShare,
   unitPoints,
@@ -42,9 +42,9 @@ export const PARTNER_LAYERS = [
   'depot-line',
   'depot-line-build',
   'roof-band',
-  'roof-bar',
   'depot-point',
   'unit-dot',
+  'roof-label',
 ] as const
 
 export type PartnerData = { sites: SitesData; units: Unit[]; heights: RoofHeights | null }
@@ -57,6 +57,19 @@ function source(m: maplibregl.Map, id: string, data: unknown) {
   else m.addSource(id, { type: 'geojson', data: data as never })
 }
 
+/**
+ * The basemap's own upright label font, so a new symbol layer needs no extra glyph
+ * download. Italic stacks (water names) are skipped: a number on a roof is not a river.
+ */
+export function basemapFont(m: maplibregl.Map): string[] {
+  for (const l of m.getStyle().layers) {
+    if (l.type !== 'symbol') continue
+    const f = m.getLayoutProperty(l.id, 'text-font') as unknown
+    if (Array.isArray(f) && f.length && f.every((x) => typeof x === 'string') && !/italic/i.test(f[0])) return f as string[]
+  }
+  return ['Open Sans Regular']
+}
+
 /** Add every partner source and layer (idempotent: a style swap calls it again). */
 export function installPartnerLayers(m: maplibregl.Map, d: PartnerData, lens: Lens, beforeId?: string) {
   const depots = depotFeatures(d.sites.depots)
@@ -65,7 +78,7 @@ export function installPartnerLayers(m: maplibregl.Map, d: PartnerData, lens: Le
   source(m, 'depot-areas', depots.areas)
   source(m, 'depot-points', depots.points)
   source(m, 'roof-bands', roofOutlines(d.sites.buildings, d.heights))
-  source(m, 'roof-bars', roofBars(d.sites.buildings, d.heights))
+  source(m, 'roof-labels', roofLabels(d.sites.buildings))
   source(m, 'units', unitPoints(d.units, d.sites.placements))
 
   const add = (layer: maplibregl.LayerSpecification) => {
@@ -116,18 +129,6 @@ export function installPartnerLayers(m: maplibregl.Map, d: PartnerData, lens: Le
     },
   })
   add({
-    id: 'roof-bar',
-    type: 'fill-extrusion',
-    source: 'roof-bars',
-    filter: ['>', ['get', 'open'], 0],
-    paint: {
-      'fill-extrusion-color': ACCENT,
-      'fill-extrusion-base': ['get', 'base'],
-      'fill-extrusion-height': ['get', 'top'],
-      'fill-extrusion-opacity': 0.85,
-    },
-  })
-  add({
     id: 'depot-point',
     type: 'circle',
     source: 'depot-points',
@@ -151,6 +152,22 @@ export function installPartnerLayers(m: maplibregl.Map, d: PartnerData, lens: Le
       'circle-opacity': 0.92,
     },
   })
+  // Open potential as text on the roof (D53), in the font the basemap already loads.
+  add({
+    id: 'roof-label',
+    type: 'symbol',
+    source: 'roof-labels',
+    minzoom: 13,
+    layout: {
+      'text-field': ['concat', ['number-format', ['get', 'open'], { 'max-fraction-digits': 0 }], ' kWp'],
+      'text-font': basemapFont(m),
+      'text-size': ['interpolate', ['linear'], ['zoom'], 13, 10, 17, 13],
+      'text-allow-overlap': false,
+      'text-anchor': 'bottom',
+      'text-offset': [0, -0.4],
+    },
+    paint: { 'text-color': ACCENT, 'text-halo-color': '#ffffff', 'text-halo-width': 1.4 },
+  })
   setPartnerLens(m, d, lens)
 }
 
@@ -167,7 +184,7 @@ export function setPartnerLens(m: maplibregl.Map, d: PartnerData, lens: Lens) {
   }
   m.setPaintProperty('depot-point', 'circle-stroke-color', on(lens, 'bvg'))
   // The roof gap is degewo's analysis: shown in its lens only, hidden elsewhere.
-  for (const id of ['roof-band', 'roof-bar']) m.setLayoutProperty(id, 'visibility', lens === 'degewo' ? 'visible' : 'none')
+  for (const id of ['roof-band', 'roof-label']) m.setLayoutProperty(id, 'visibility', lens === 'degewo' ? 'visible' : 'none')
   // Charging is BSW's: full strength in its lens, receding behind the others'.
   const dim = lens === 'bsw' ? 1 : 0.35
   if (m.getLayer('stations-bsw')) m.setPaintProperty('stations-bsw', 'circle-opacity', dim)
@@ -229,7 +246,7 @@ export function partnerPopup(
         `<div class="veh-pop-op">${esc(L.placement[p.method] ?? p.method)} · MaStR ${esc(u.id)}</div></div>`,
     }
   }
-  if (layer === 'roof-band' || layer === 'roof-bar') {
+  if (layer === 'roof-band' || layer === 'roof-label') {
     const r = d.sites.buildings.find((x) => x.id === f.properties.id)
     if (!r) return null
     const share = roofShare(r)

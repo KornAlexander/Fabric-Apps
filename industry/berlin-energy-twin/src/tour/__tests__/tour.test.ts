@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { STRINGS, type StringKey } from '../../i18n/strings'
-import { buildTour, centroid, gapFeatures, type TourStop } from '../tour'
+import { buildTour, centroid, flightMs, gapFeatures, type TourStop } from '../tour'
 import { estateReach, mergeNested, reachSummary } from '../../partners/chargingGap'
 import { LENSES, lensSummary } from '../../partners/partners'
 
@@ -26,9 +26,21 @@ describe('centroid', () => {
   })
 })
 
+describe('flight time (D54)', () => {
+  const at = (lon: number, lat: number, zoom = 12) => ({ center: [lon, lat] as [number, number], zoom, pitch: 0, bearing: 0 })
+  it('is quick for a short hop, longer across the city, and bounded', () => {
+    const near = flightMs(at(13.4, 52.5), at(13.41, 52.5))
+    const far = flightMs(at(13.2, 52.4), at(13.6, 52.6, 16))
+    expect(near).toBeLessThan(far)
+    expect(near).toBeGreaterThanOrEqual(2200)
+    expect(far).toBeLessThanOrEqual(5200)
+    expect(flightMs(null, at(13.4, 52.5))).toBe(3000)
+  })
+})
+
 describe.runIf(baked)('guided tour on the baked data', () => {
-  it('has the seven decided stops in story order', () => {
-    expect(tour('de').map((s) => s.id)).toEqual(['overview', 'hero', 'estate', 'charging', 'bvg', 'bsw', 'close'])
+  it('has the five decided stops in story order (D54)', () => {
+    expect(tour('de').map((s) => s.id)).toEqual(['overview', 'roofs', 'charging', 'bvg', 'close'])
   })
 
   it('fills every placeholder of every caption, in both languages', () => {
@@ -63,12 +75,11 @@ describe.runIf(baked)('guided tour on the baked data', () => {
 
   it('badges what it must: estimates, aggregates and straight-line distance', () => {
     const by = Object.fromEntries(tour('de').map((s) => [s.id, s]))
-    expect(by.hero.badges).toContain('estimate')
-    expect(by.estate.badges).toContain('estimate')
+    expect(by.roofs.badges).toContain('estimate')
     expect(by.close.badges).toContain('estimate')
     expect(by.charging.badges).toContain('airline')
     expect(by.charging.overlay).toBe('gap')
-    expect(by.bsw.badges).toContain('aggregated')
+    expect(by.close.badges).toContain('aggregated')
   })
 
   it('outlines the gap areas for the map, red only where no Stadtwerke point is within 300 m', () => {
