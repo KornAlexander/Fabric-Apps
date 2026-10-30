@@ -2,30 +2,30 @@
 
 **Solar, public charging and housing estates of Berlin's state-owned companies on one 1:1 map.**
 
-![Berlin Energy Twin: degewo lens with solar gaps, public charging points and estates on the Berlin map](../../docs/previews/berlin-energy-twin.webp)
+![Berlin Energy Twin: housing lens with solar gaps, public charging points and estates on the Berlin map](../../docs/previews/berlin-energy-twin.webp)
 
-A Microsoft Fabric App (preview) that shows where Berliner Stadtwerke, degewo and BVG already
-produce solar power, where roof potential is still open, and how well degewo's estates are served
-by public charging. Everything comes from open data and every figure is computed in the app from
-the baked files. The UI is German with a full English switch.
+A Microsoft Fabric App (preview) that shows where Berlin's municipal energy, housing and public
+transport companies already produce solar power, where roof potential is still open, and how well
+housing estates are served by public charging. Everything comes from open data and every figure
+is computed in the app from the baked files. The UI is German with a full English switch.
 
 Two more tabs show a fictional pharma wholesaler (Caldova) as a Fabric App pattern: an order app
 that writes reorders to the app's own SQL database, and an IBCS finance cockpit.
 
 ## What it does
 
-- **Three lenses.** degewo (focus), BVG and Stadtwerke. Each lens frames its sites, lists the
-  largest open roof potentials and shows installed solar from the Marktstammdatenregister.
+- **Three lenses.** Housing (focus), public transport and municipal energy. Each lens frames its
+  sites, lists the largest open roof potentials and shows installed solar from the Marktstammdatenregister.
 - **Roof gaps in 3D, at true size.** On LoD2 buildings with TrueDOP 2025 roof photos, a band on
   the roof shows the share already used and a label the open kWp. Buildings, trees and terrain are
   strictly 1:1, nothing is exaggerated. Sites load lazily, at most four at a time.
-- **Public charging near the estates.** All public charge points of Berlin, Stadtwerke points
-  highlighted, with the 300 m reach of each degewo estate and the one estate without a Stadtwerke
-  point.
+- **Public charging near the estates.** All public charge points of Berlin, with the municipal
+  energy company's points highlighted, the 300 m reach of each housing estate and the one estate
+  without a point from that operator.
 - **Charging per district.** The 12 districts shaded by public charge points per 1,000
-  residents, with the Stadtwerke share and public charging energy per year in the popup.
-- **Guided tour.** Ten stops built from the data and the live feeds (solar now, districts, 1:1 roof, BVG live, the report), presenter keys, flights timed by distance.
-- **BVG live.** BVG buses, trams, U-Bahn and ferries in the camera view every 30 s from the
+  residents, with the municipal energy company's share and public charging energy per year in the popup.
+- **Guided tour.** Ten stops built from the data and the live feeds (solar now, districts, 1:1 roof, live public transport, the report), presenter keys, flights timed by distance.
+- **Live public transport.** Buses, trams, U-Bahn and ferries in the camera view every 30 s from the
   community radar `v6.bvg.transport.rest` (computed positions, unofficial source, badged so).
 - **Solar now.** An estimate of what each partner's solar produces right now: DWD irradiance
   (nearest station measuring it, via Bright Sky) × installed kWp × performance ratio 0.8, badged
@@ -51,7 +51,7 @@ open data (Geoportal Berlin WFS/WMS/Atom, MaStR, OSM)
 public/data/*.json|bin|webp ──► React + MapLibre app (Vite) ──► Fabric App static hosting
                                      │                              (assetAccess: protected)
                                      ├─ Caldova orders ──► Rayfin data API ──► app SQL database
-                                     └─ live: BVG radar (30 s), DWD irradiance via Bright Sky (10 min)
+                                     └─ live: public transport radar (30 s), DWD irradiance via Bright Sky (10 min)
 app functions ──► tools/export_model_data.ts ──► fabric/gen_model.py ──► PBIP (import model)
 ```
 
