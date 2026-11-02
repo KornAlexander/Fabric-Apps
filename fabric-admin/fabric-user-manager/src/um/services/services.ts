@@ -24,6 +24,9 @@ import {
   readMockPersona,
 } from './mock';
 import { RayfinUmStore, type UmStore } from './store';
+import { MemoryWorkspaceRequestStore, RayfinWorkspaceRequestStore, type WorkspaceRequestStore } from './workspaceRequestStore';
+import type { WorkspaceProvisioner } from './workspaceRequests';
+import { MockWorkspaceProvisioner } from './mock';
 
 export interface UmServices {
   env: UmEnv;
@@ -43,6 +46,8 @@ export interface UmServices {
   loadBindingWriter: () => Promise<BindingWriter | null>;
   /** Creates groups, or `null` when the build has no changes. */
   loadGroupCreator: () => Promise<GroupCreator | null>;
+  workspaceRequests: WorkspaceRequestStore;
+  loadWorkspaceProvisioner: () => Promise<WorkspaceProvisioner | null>;
 }
 
 /**
@@ -81,6 +86,8 @@ export function createUmServices(
       loadSender: async () => new MockNoticeSender(),
       loadBindingWriter: async () => new MockBindingWriter(),
       loadGroupCreator: async () => new MockGroupCreator(),
+      workspaceRequests: new MemoryWorkspaceRequestStore(demoStorage),
+      loadWorkspaceProvisioner: async () => new MockWorkspaceProvisioner(),
     };
   }
 
@@ -92,6 +99,11 @@ export function createUmServices(
     directory: new GraphDirectoryGateway(),
     fabric: new OpFabricGateway(invokeFabric),
     store: new RayfinUmStore(),
+    workspaceRequests: new RayfinWorkspaceRequestStore(),
+    loadWorkspaceProvisioner:
+      import.meta.env.VITE_UM_WRITES === 'true'
+        ? async () => new (await import('./workspaceProvisioningApi')).FabricWorkspaceProvisioner()
+        : async () => null,
     writesInBuild: import.meta.env.VITE_UM_WRITES === 'true',
     // Written out against the literal so a build without the flag drops the
     // import, and with it the only files that can send a write.

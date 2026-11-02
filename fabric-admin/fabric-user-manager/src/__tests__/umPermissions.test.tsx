@@ -43,7 +43,7 @@ describe('what each permission is for', () => {
   });
 
   it('never looks at a permission that changes something', () => {
-    expect([...PROBED_SETS].sort()).toEqual(['base', 'directory', 'fabric', 'fabricAdmin']);
+    expect([...PROBED_SETS].sort()).toEqual(['base', 'capacity', 'directory', 'fabric', 'fabricAdmin']);
     // Such a set shows what the tab learned from really asking, and nothing before that.
     expect(permissionState(permissionInfo('memberChange'), undefined)).toBe('onDemand');
     expect(permissionState(permissionInfo('memberChange'), true)).toBe('granted');

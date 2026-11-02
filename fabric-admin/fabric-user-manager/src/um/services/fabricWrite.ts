@@ -56,9 +56,38 @@ export function roleRequest(change: RoleChange): RoleRequest | null {
  */
 export type RoleWriteOutcome =
   | { ok: true }
-  | { ok: false; code: 'bad-request' | 'denied' | 'actor-mismatch' | 'conflict' | 'not-found' | 'rate-limited' | 'uncertain' | 'failed'; status?: number };
+  | { ok: false; code: 'bad-request' | 'denied' | 'actor-mismatch' | 'conflict' | 'not-found' | 'rate-limited' | 'uncertain' | 'failed'; status?: number; serviceCode?: string; message?: string; requestId?: string };
 
 export const ROLE_WRITE_TIMEOUT_MS = 20_000;
+
+async function errorDetails(response: Response, token: string): Promise<{ serviceCode?: string; message?: string; requestId?: string }> {
+  const details: { serviceCode?: string; message?: string; requestId?: string } = {};
+  const headerId = response.headers.get('request-id') ?? response.headers.get('x-ms-request-id');
+  if (isGuid(headerId)) details.requestId = headerId;
+  let text: string;
+  try {
+    text = await response.text();
+  } catch {
+    return { ...details, message: 'Fabric error response could not be read' };
+  }
+  if (!text) return details;
+  let body: unknown;
+  try {
+    body = JSON.parse(text);
+  } catch {
+    return { ...details, message: 'Fabric returned a non-JSON error response' };
+  }
+  if (!body || typeof body !== 'object') return details;
+  if ('requestId' in body && isGuid(body.requestId)) details.requestId = body.requestId;
+  const error = 'error' in body && body.error && typeof body.error === 'object' ? body.error : body;
+  const code = 'errorCode' in error ? error.errorCode : 'code' in error ? error.code : undefined;
+  if (typeof code === 'string' && /^[A-Za-z0-9_.-]{1,128}$/.test(code) && code !== token) details.serviceCode = code;
+  if ('message' in error && typeof error.message === 'string') {
+    const redacted = token ? error.message.split(token).join('[redacted]') : error.message;
+    details.message = redacted.replace(/Bearer\s+\S+/gi, 'Bearer [redacted]').replace(/\p{Cc}/gu, ' ').slice(0, 500);
+  }
+  return details;
+}
 
 export async function writeRole(change: RoleChange, token: string, fetcher: GraphFetch = (url, init) => fetch(url, init)): Promise<RoleWriteOutcome> {
   const request = roleRequest(change);
@@ -79,11 +108,12 @@ export async function writeRole(change: RoleChange, token: string, fetcher: Grap
 
   if (response.ok) return { ok: true };
   const status = response.status;
-  if (status === 401 || status === 403) return { ok: false, code: 'denied', status };
-  if (status === 404) return { ok: false, code: 'not-found', status };
-  if (status === 409) return { ok: false, code: 'conflict', status };
-  if (status === 429) return { ok: false, code: 'rate-limited', status };
+  const details = await errorDetails(response, token);
+  if (status === 401 || status === 403) return { ok: false, code: 'denied', status, ...details };
+  if (status === 404) return { ok: false, code: 'not-found', status, ...details };
+  if (status === 409) return { ok: false, code: 'conflict', status, ...details };
+  if (status === 429) return { ok: false, code: 'rate-limited', status, ...details };
   // 0 is an opaque redirect; with a server error the change may have happened.
-  if (status === 0 || status >= 500) return { ok: false, code: 'uncertain', status };
-  return { ok: false, code: 'failed', status };
+  if (status === 0 || status >= 500) return { ok: false, code: 'uncertain', status, ...details };
+  return { ok: false, code: 'failed', status, ...details };
 }

@@ -5,6 +5,9 @@ import { UmGroupContact } from './UmGroupContact.js';
 import { UmManagedGroup } from './UmManagedGroup.js';
 import { UmRequest } from './UmRequest.js';
 import { UmReviewDate } from './UmReviewDate.js';
+import { UmWorkspaceRequest } from './UmWorkspaceRequest.js';
+import { UmWorkspaceDecision } from './UmWorkspaceDecision.js';
+import { UmWorkspaceContinuation } from './UmWorkspaceContinuation.js';
 
 /**
  * Schema type definition for Fabric User Manager.
@@ -23,6 +26,9 @@ export type DataAppSchema = {
   UmManagedGroup: UmManagedGroup;
   UmRequest: UmRequest;
   UmReviewDate: UmReviewDate;
+  UmWorkspaceRequest: UmWorkspaceRequest;
+  UmWorkspaceDecision: UmWorkspaceDecision;
+  UmWorkspaceContinuation: UmWorkspaceContinuation;
 };
 
-export const schema = [GovConfig, UmAudit, UmBinding, UmGroupContact, UmManagedGroup, UmRequest, UmReviewDate];
+export const schema = [GovConfig, UmAudit, UmBinding, UmGroupContact, UmManagedGroup, UmRequest, UmReviewDate, UmWorkspaceRequest, UmWorkspaceDecision, UmWorkspaceContinuation];

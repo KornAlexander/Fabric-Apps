@@ -13,7 +13,8 @@ Access in Fabric comes in three parts: workspace roles (who may build), app audi
 - **Three tabs for the three parts**: Workspaces, Audiences, RLS / OLS. Each lists the groups you own and the groups that are open for requests, and what each group opens.
 - **Owners add and remove members** of their own groups. A check says what the person will get before anything happens.
 - **Requests and approvals**: a colleague asks for a group with a reason, an owner approves, the person is added, and it is on record who decided and when. The request states that the Power BI Guidelines were read.
-- **Power BI Guidelines** as a fourth tab: three areas (data integration, data modeling, data visualization), 19 topics, 169 rules and 26 drawings, in English and German. An app admin answers up to fifty optional questions in Setup, and the answers are filled into the text for everyone.
+- **New workspace requests**: colleagues request a workspace with a business reason. Another app admin approves or denies; approval selects an available capacity, creates the workspace and four role groups, and adds the requester to Contributor. Provisioning steps and returned resource IDs are recorded. The original approver can explicitly continue eligible failures after live checks; uncertain creates and interrupted runs require manual inspection, never an automatic retry. See [prerequisites and deployment](docs/FABRIC-USER-MANAGER-SETUP.md#new-workspace-requests).
+- **Power BI Guidelines** in their own tab: three areas (data integration, data modeling, data visualization), 19 topics, 169 rules and 26 drawings, in English and German. An app admin answers up to fifty optional questions in Setup, and the answers are filled into the text for everyone.
 - **Setup for app admins**: activate the groups people should manage, record which audience or security role a group stands for, three separate switches for member changes, role bindings and creating groups, a log of the app's own records, Excel export and import.
 
 ## Fabric architecture
@@ -23,10 +24,12 @@ No service principal and no backend that holds rights. The browser talks to Micr
 | Item | Why |
 |---|---|
 | Static web app | the front end, served by Rayfin static hosting |
-| SQL database | the app's own records: activated groups, requests, review dates, contacts, log, settings |
+| SQL database | the app's own records: activated groups, access/workspace requests, provisioning checkpoints, review dates, contacts, log, settings |
 | Entra sign-in | Fabric identity for Rayfin, plus one app registration of your own for Graph |
 
-What it never stores: members, owners and workspace roles. Those are read live every time.
+Live memberships, ownership and workspace role assignments are read from Entra and Fabric.
+Provisioning checkpoints record created group IDs, their intended roles and the
+approving owner; these snapshots are not live authorization data.
 
 ## Getting started
 
@@ -38,6 +41,11 @@ VITE_UM_MOCK=true VITE_UM_WRITES=true npx vite
 ```
 
 Open `http://localhost:5173/?as=admin`, `?as=owner` or `?as=user`. File a request as the user, approve it as the owner, read the log as the admin.
+
+For a new workspace, open **Workspace requests** as the user and submit a name
+and business reason. Reopen as admin, enable all three change switches in Setup,
+allow the provisioning permissions, load the demo capacity, select it, and approve.
+The demo creates only browser-local fixtures, not real Fabric or Entra resources.
 
 Then deploy it to your own workspace. It needs one app registration in Entra and an administrator's consent; [the setup guide](docs/FABRIC-USER-MANAGER-SETUP.md) walks through both.
 

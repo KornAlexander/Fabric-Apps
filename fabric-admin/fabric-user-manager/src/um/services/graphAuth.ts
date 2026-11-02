@@ -47,6 +47,8 @@ export const SCOPE_SETS = {
   memberChange: [`${GRAPH}GroupMember.ReadWrite.All`, `${GRAPH}User.Read.All`],
   /** Changing which group holds which workspace role. App admins, at the moment of the change. */
   fabricWrite: [`${FABRIC}Workspace.ReadWrite.All`],
+  /** Capacities the approver may assign to a new workspace. */
+  capacity: [`${FABRIC}Capacity.Read.All`],
   /** Sending the request notice from the requester's own mailbox. */
   mail: [`${GRAPH}Mail.Send`],
   /**

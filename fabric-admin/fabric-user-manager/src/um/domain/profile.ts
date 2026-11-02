@@ -2,6 +2,7 @@
 export const UM_PATHS = {
   root: '/um',
   workspaces: '/um/workspaces',
+  workspaceRequests: '/um/workspace-requests',
   audiences: '/um/audiences',
   modelRoles: '/um/model-roles',
   guidelines: '/um/guidelines',

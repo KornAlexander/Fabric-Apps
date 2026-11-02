@@ -13,6 +13,7 @@ import { Button, Notice, Pill } from './parts';
 /** A tab without `kind` is not about access and never carries a count of waiting requests. */
 const TABS: { to: string; labelKey: TranslationKey; kind?: TargetKind }[] = [
   { to: UM_PATHS.workspaces, labelKey: 'um.nav.workspaces', kind: 'Workspace' },
+  { to: UM_PATHS.workspaceRequests, labelKey: 'um.wr.title' },
   { to: UM_PATHS.audiences, labelKey: 'um.nav.audiences', kind: 'Audience' },
   { to: UM_PATHS.modelRoles, labelKey: 'um.nav.modelRoles', kind: 'ModelRole' },
   { to: UM_PATHS.guidelines, labelKey: 'um.nav.guidelines' },
@@ -132,7 +133,7 @@ export function UmTabs() {
   );
 }
 
-/** The shell: the three access tabs and the guidelines, nothing else in the navigation. */
+/** The access tabs, workspace requests and guidelines. */
 export function UmLayout() {
   const t = useT();
   const { user, signOut } = useAuth();

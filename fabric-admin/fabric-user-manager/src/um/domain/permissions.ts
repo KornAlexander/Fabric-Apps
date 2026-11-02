@@ -7,7 +7,7 @@
  * tenant can be stricter (no user may consent to anything), so the texts say
  * "normally".
  */
-export type PermissionSet = 'base' | 'directory' | 'fabric' | 'fabricAdmin' | 'memberChange' | 'fabricWrite' | 'mail' | 'groupCreate';
+export type PermissionSet = 'base' | 'directory' | 'fabric' | 'fabricAdmin' | 'memberChange' | 'fabricWrite' | 'mail' | 'groupCreate' | 'capacity';
 
 export interface PermissionInfo {
   set: PermissionSet;
@@ -22,6 +22,7 @@ export interface PermissionInfo {
 export const PERMISSIONS: readonly PermissionInfo[] = [
   { set: 'base', names: ['User.Read'], needsAdmin: false, writes: false },
   { set: 'fabric', names: ['Workspace.Read.All'], needsAdmin: false, writes: false },
+  { set: 'capacity', names: ['Capacity.Read.All'], needsAdmin: false, writes: false },
   { set: 'directory', names: ['GroupMember.Read.All', 'User.ReadBasic.All'], needsAdmin: true, writes: false },
   { set: 'fabricAdmin', names: ['Tenant.Read.All'], needsAdmin: true, writes: false },
   { set: 'memberChange', names: ['GroupMember.ReadWrite.All', 'User.Read.All'], needsAdmin: true, writes: true },
