@@ -86,6 +86,10 @@ label.confirm.ok .state { border-color: var(--cp-success); color: var(--cp-succe
 .mock-top { background: var(--cp-surface-soft); border-bottom: 1px solid var(--cp-border); padding: 6px 10px; font-size: 12px; color: var(--cp-text-muted);
   display: flex; gap: 6px; align-items: center; }
 .dots { letter-spacing: 2px; color: var(--cp-border-strong); }
+.dflt { margin-left: auto; font-size: 12px; font-weight: 600; border-radius: 999px; padding: 2px 10px; white-space: nowrap; }
+.dflt.on { background: var(--cp-success-soft); color: var(--cp-success-text); }
+.dflt.off { background: var(--cp-accent-soft); color: var(--cp-danger); }
+.dflt.na { background: var(--cp-surface-soft); color: var(--cp-text-muted); border: 1px solid var(--cp-border); }
 .badge { margin-left: auto; font-size: 11px; border: 1px solid var(--cp-border-strong); border-radius: 6px; padding: 0 6px; }
 .mock-body { padding: 12px 14px; }
 .mock-body h4 { margin: 0 0 8px; font-size: 14px; }
@@ -146,6 +150,7 @@ footer { color: var(--cp-text-muted); font-size: 12px; border-top: 1px solid var
   <button type="button" id="reset">Reset</button>
 </div>
 <main>
+  <div class="callout"><b>Only step 1 needs action by default:</b> assign the Microsoft 365 Copilot licence. Steps 2, 3 and 5 are on by default. Step 4 is off by default and only needed for tenants outside the EU and US.</div>
   <div class="callout"><b>No extra Fabric capacity needed.</b> Pro, PPU, Premium and Fabric workspaces all work. Embedded A/EM SKUs don't.</div>
   <div class="callout done-msg"><b>All green.</b> Copilot is set up for your test users.</div>
 
@@ -153,7 +158,7 @@ footer { color: var(--cp-text-muted); font-size: 12px; border-top: 1px solid var
 
     <article class="check" data-id="licence">
       <div>
-        <h2><span class="num">1</span>Copilot licence assigned</h2>
+        <h2><span class="num">1</span>Copilot licence assigned<span class="dflt off">Action needed</span></h2>
         <p class="who">Microsoft 365 licence admin</p>
         <p class="path"><span>Microsoft 365 admin center</span> → <span>Billing</span> → <span>Licenses</span></p>
         <a class="go" href="https://go.microsoft.com/fwlink/p/?linkid=842264" target="_blank" rel="noopener">Open Licenses</a>
@@ -175,7 +180,7 @@ footer { color: var(--cp-text-muted); font-size: 12px; border-top: 1px solid var
 
     <article class="check" data-id="m365-setting">
       <div>
-        <h2><span class="num">2</span>Fabric data in Microsoft Copilot</h2>
+        <h2><span class="num">2</span>Fabric data in Microsoft Copilot<span class="dflt on">On by default</span></h2>
         <p class="who">Microsoft 365 admin</p>
         <p class="path"><span>Copilot</span> → <span>Settings</span> → <span>View all</span> → <span>Fabric data in Microsoft Copilot</span></p>
         <a class="go" href="https://admin.cloud.microsoft/?#/copilot/settings/ViewAll" target="_blank" rel="noopener">Open Copilot settings</a>
@@ -204,7 +209,7 @@ footer { color: var(--cp-text-muted); font-size: 12px; border-top: 1px solid var
 
     <article class="check" data-id="fabric-share">
       <div>
-        <h2><span class="num">3</span>Share Fabric data with Microsoft 365</h2>
+        <h2><span class="num">3</span>Share Fabric data with Microsoft 365<span class="dflt on">On by default</span></h2>
         <p class="who">Fabric admin</p>
         <p class="path"><span>Fabric admin portal</span> → <span>Tenant settings</span> → search <span>Microsoft 365</span></p>
         <a class="go" href="https://app.fabric.microsoft.com/admin-portal/tenantSettings" target="_blank" rel="noopener">Open tenant settings</a>
@@ -233,7 +238,7 @@ footer { color: var(--cp-text-muted); font-size: 12px; border-top: 1px solid var
 
     <article class="check" data-id="geo">
       <div>
-        <h2><span class="num">4</span>Processing region</h2>
+        <h2><span class="num">4</span>Processing region<span class="dflt na">Off by default, only needed outside EU/US</span></h2>
         <p class="who">Fabric admin</p>
         <p class="path"><span>Fabric admin portal</span> → <span>Tenant settings</span> → <span>Copilot and Azure OpenAI Service</span></p>
         <a class="go" href="https://app.fabric.microsoft.com/admin-portal/tenantSettings" target="_blank" rel="noopener">Open tenant settings</a>
@@ -259,7 +264,7 @@ footer { color: var(--cp-text-muted); font-size: 12px; border-top: 1px solid var
 
     <article class="check" data-id="model">
       <div>
-        <h2><span class="num">5</span>AI access on the semantic model</h2>
+        <h2><span class="num">5</span>AI access on the semantic model<span class="dflt on">On by default</span></h2>
         <p class="who">Model owner (Write permission)</p>
         <p class="path"><span>Power BI</span> → workspace → semantic model <span>…</span> → <span>Settings</span> → <span>Copilot</span></p>
         <a class="go" href="https://app.powerbi.com/home" target="_blank" rel="noopener">Open Power BI</a>
