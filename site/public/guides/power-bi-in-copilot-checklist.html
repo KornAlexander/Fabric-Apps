@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Power BI data in Microsoft 365 Copilot: settings checklist</title>
+<meta name="description" content="Interactive checklist: licences, admin settings and semantic model switch needed to ask Microsoft 365 Copilot Chat about Power BI reports.">
+<script>
+  (() => {
+    const params = new URLSearchParams(window.location.search);
+    const param = params.get("clawpilotTheme") || params.get("scoutTheme");
+    const theme = param === "dark" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --cp-bg: #f7f4ef; --cp-bg-elevated: #fcfbf8; --cp-surface: #ffffff; --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede; --cp-border-strong: #919191; --cp-text: #242424; --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f; --cp-accent: #FF0000; --cp-accent-hover: #FF0000; --cp-accent-soft: rgba(255, 0, 0, 0.08);
+  --cp-accent-fg: #000000; --cp-success: #16a34a; --cp-success-soft: rgba(22, 163, 74, 0.10); --cp-success-text: #166534; --cp-danger: #FF0000;
+  --cp-warning: #f59e0b; --cp-link: #0078d4; --cp-on-link: #ffffff;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12); --cp-overlay: rgba(255, 255, 255, 0.8); --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96); --cp-sheen: rgba(255, 255, 255, 0.55); --cp-highlight: rgba(255, 0, 0, 0.12);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #3d3b3a; --cp-bg-elevated: #343231; --cp-surface: #292929; --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747; --cp-border-strong: #5f5f5f; --cp-text: #dedede; --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0; --cp-accent: #FF0000; --cp-accent-hover: #FF0000; --cp-accent-soft: rgba(255, 0, 0, 0.14);
+  --cp-accent-fg: #000000; --cp-success: #4ade80; --cp-success-soft: rgba(74, 222, 128, 0.14); --cp-success-text: #86efac; --cp-danger: #FF0000;
+  --cp-warning: #fbbf24; --cp-link: #4da6ff; --cp-on-link: #000000;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32); --cp-overlay: rgba(41, 41, 41, 0.88); --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96); --cp-sheen: rgba(255, 255, 255, 0.04); --cp-highlight: rgba(255, 0, 0, 0.12);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--cp-bg); color: var(--cp-text);
+  font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif; font-size: 15px; line-height: 1.45; }
+a { color: var(--cp-link); }
+a:focus-visible, button:focus-visible, input:focus-visible + .tick { outline: 2px solid var(--cp-text); outline-offset: 3px; }
+header { background: var(--cp-bg-elevated); border-bottom: 1px solid var(--cp-border); padding: 24px 40px 18px; }
+header h1 { margin: 0 0 4px; font-size: 28px; }
+header p { margin: 0; color: var(--cp-text-muted); }
+.status { position: sticky; top: 0; z-index: 5; background: var(--cp-panel-strong); border-bottom: 1px solid var(--cp-border);
+  padding: 10px 40px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.bar { flex: 1 1 220px; height: 10px; background: var(--cp-surface-soft); border: 1px solid var(--cp-border); border-radius: 999px; overflow: hidden; }
+.bar span { display: block; height: 100%; width: 0; background: var(--cp-success); transition: width .25s; }
+.status b { white-space: nowrap; }
+button { font: inherit; cursor: pointer; border: 1px solid var(--cp-border-strong); background: var(--cp-surface); color: var(--cp-text);
+  border-radius: 10px; padding: 4px 12px; }
+main { max-width: 1180px; margin: 0 auto; padding: 22px 40px 56px; }
+.callout { border-left: 4px solid var(--cp-accent); background: var(--cp-accent-soft); padding: 10px 14px; border-radius: 0 10px 10px 0; margin: 0 0 20px; }
+.done-msg { display: none; border-left-color: var(--cp-success); background: var(--cp-success-soft); }
+body.all-done .done-msg { display: block; }
+.checks { display: grid; gap: 16px; }
+.check { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 20px; background: var(--cp-surface);
+  border: 2px solid var(--cp-border); border-radius: 16px; padding: 16px 18px; box-shadow: 0 0 2px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.14);
+  transition: border-color .2s, background .2s; }
+.check.ok { border-color: var(--cp-success); background: var(--cp-success-soft); }
+.check h2 { margin: 0 0 6px; font-size: 18px; display: flex; gap: 10px; align-items: center; }
+.num { width: 28px; height: 28px; border-radius: 50%; background: var(--cp-surface-soft); border: 1px solid var(--cp-border-strong);
+  display: inline-flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.check.ok .num { background: var(--cp-success); border-color: var(--cp-success); color: var(--cp-surface); }
+.who { font-size: 13px; color: var(--cp-text-muted); margin: 0 0 8px; }
+.path { font-size: 13px; margin: 0 0 10px; }
+.path span { background: var(--cp-surface-soft); border: 1px solid var(--cp-border); border-radius: 6px; padding: 0 6px; white-space: nowrap; }
+.go { display: inline-block; text-decoration: none; background: var(--cp-link); color: var(--cp-on-link); border-radius: 10px;
+  padding: 6px 14px; font-weight: 600; margin: 2px 6px 10px 0; }
+.go:hover { text-decoration: underline; }
+.go.alt { background: transparent; color: var(--cp-link); border: 1px solid var(--cp-link); }
+.note { font-size: 13px; color: var(--cp-text-muted); margin: 0 0 10px; }
+label.confirm { position: relative; display: flex; gap: 10px; align-items: center; cursor: pointer; font-weight: 600; padding: 8px 10px;
+  border: 1px dashed var(--cp-border-strong); border-radius: 10px; background: var(--cp-bg-elevated); }
+label.confirm input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.tick { width: 22px; height: 22px; border: 2px solid var(--cp-border-strong); border-radius: 6px; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center; font-size: 15px; color: transparent; background: var(--cp-surface); }
+input:checked + .tick { background: var(--cp-success); border-color: var(--cp-success); color: var(--cp-surface); }
+label.confirm.ok { border-style: solid; border-color: var(--cp-success); }
+label.confirm + label.confirm { margin-top: 8px; }
+.sub { font-weight: 700; color: var(--cp-text-muted); }
+.state { margin-left: auto; font-size: 12px; font-weight: 700; border-radius: 999px; padding: 1px 10px; border: 1px solid var(--cp-border-strong); color: var(--cp-text-muted); white-space: nowrap; }
+label.confirm.ok .state { border-color: var(--cp-success); color: var(--cp-success-text); }
+/* Illustrations of the target state */
+.mock { margin: 0; border: 1px solid var(--cp-border-strong); border-radius: 10px; background: var(--cp-surface); overflow: hidden; font-size: 13px; align-self: start; }
+.mock-top { background: var(--cp-surface-soft); border-bottom: 1px solid var(--cp-border); padding: 6px 10px; font-size: 12px; color: var(--cp-text-muted);
+  display: flex; gap: 6px; align-items: center; }
+.dots { letter-spacing: 2px; color: var(--cp-border-strong); }
+.badge { margin-left: auto; font-size: 11px; border: 1px solid var(--cp-border-strong); border-radius: 6px; padding: 0 6px; }
+.mock-body { padding: 12px 14px; }
+.mock-body h4 { margin: 0 0 8px; font-size: 14px; }
+.row { display: flex; align-items: center; gap: 10px; margin: 6px 0; }
+.radio { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--cp-border-strong); flex-shrink: 0; }
+.radio.on { border-color: var(--cp-link); box-shadow: inset 0 0 0 3px var(--cp-surface); background: var(--cp-link); }
+.switch { width: 38px; height: 20px; border-radius: 999px; background: var(--cp-border-strong); position: relative; flex-shrink: 0; }
+.switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: var(--cp-surface); }
+.switch.on { background: var(--cp-link); }
+.switch.on::after { left: 21px; }
+.mark { outline: 2px solid var(--cp-success); outline-offset: 3px; border-radius: 6px; }
+.fakebtn { display: inline-block; background: var(--cp-link); color: var(--cp-on-link); border-radius: 6px; padding: 2px 12px; font-weight: 600; margin-top: 6px; }
+.muted { color: var(--cp-text-muted); }
+.lic { width: 100%; border-collapse: collapse; }
+.lic td, .lic th { border-bottom: 1px solid var(--cp-border); padding: 4px 6px; text-align: left; }
+.yes { color: var(--cp-success-text); font-weight: 700; }
+.no { font-weight: 700; white-space: nowrap; }
+.no::before { content: "\2715"; margin-right: 4px; color: var(--cp-danger); }
+.chat { display: grid; gap: 8px; }
+.bubble { border-radius: 10px; padding: 8px 10px; max-width: 92%; overflow-wrap: anywhere; }
+.bubble.me { justify-self: end; background: var(--cp-surface-soft); border: 1px solid var(--cp-border); }
+.bubble.cp { background: var(--cp-bg-elevated); border: 1px solid var(--cp-border); }
+.chip { display: inline-block; margin-top: 6px; border: 1px solid var(--cp-border-strong); border-radius: 6px; padding: 0 6px; font-size: 12px; }
+.url { font-family: Consolas, "Courier New", monospace; font-size: 12px; overflow-wrap: anywhere; }
+section.extra { margin-top: 28px; }
+section.extra h2 { font-size: 20px; margin: 0 0 10px; }
+.grid3 { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+.tile { background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px; padding: 12px 14px; }
+.tile b { display: block; margin-bottom: 4px; }
+footer { color: var(--cp-text-muted); font-size: 12px; border-top: 1px solid var(--cp-border); padding-top: 12px; margin-top: 28px; }
+/* Real screenshots with a Screenshot / Simplified switch */
+.pics { display: grid; gap: 8px; align-self: start; min-width: 0; }
+.picnav { display: inline-flex; justify-self: start; border: 1px solid var(--cp-border-strong); border-radius: 10px; overflow: hidden; }
+.picnav button { border: 0; border-radius: 0; padding: 3px 12px; font-size: 13px; background: var(--cp-surface); }
+.picnav button[aria-pressed="true"] { background: var(--cp-text); color: var(--cp-surface); font-weight: 600; }
+.shot { margin: 0; border: 1px solid var(--cp-border-strong); border-radius: 10px; overflow: hidden; background: var(--cp-surface); }
+.zoom { display: block; width: 100%; padding: 0; border: 0; border-radius: 0; background: var(--cp-surface); cursor: zoom-in; }
+.zoom img { display: block; width: 100%; height: auto; max-height: 380px; object-fit: contain; object-position: center top; }
+.shot figcaption { font-size: 12px; padding: 6px 10px; border-top: 1px solid var(--cp-border); background: var(--cp-surface-soft); }
+.shot figcaption b { color: var(--cp-success-text); }
+.shot figcaption a { white-space: nowrap; }
+.learn { font-size: 13px; font-weight: 600; text-decoration: none; }
+.learn::after { content: " \2197"; }
+.learn:hover { text-decoration: underline; }
+#lightbox { border: 1px solid var(--cp-border-strong); border-radius: 16px; padding: 12px; background: var(--cp-surface); color: var(--cp-text); max-width: 96vw; }
+#lightbox::backdrop { background: var(--cp-backdrop, rgba(0, 0, 0, 0.6)); }
+#lightbox img { display: block; max-width: 92vw; max-height: 82vh; height: auto; }
+#lightbox .close { float: right; margin-bottom: 8px; }
+@media (max-width: 860px) { .check { grid-template-columns: 1fr; } main, header, .status { padding-left: 16px; padding-right: 16px; } }
+@media print { .status button { display: none; } .status { position: static; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Power BI data in Microsoft 365 Copilot</h1>
+  <p>Settings checklist: open each setting, compare it with the picture, then tick it green. Ticks are saved only in your browser.</p>
+</header>
+<div class="status">
+  <b id="count" role="status" aria-live="polite">0 of 7 green</b>
+  <div class="bar" aria-hidden="true"><span id="bar"></span></div>
+  <button type="button" id="reset">Reset</button>
+</div>
+<main>
+  <div class="callout"><b>No extra Fabric capacity needed.</b> Pro, PPU, Premium and Fabric workspaces all work. Embedded A/EM SKUs don't.</div>
+  <div class="callout done-msg"><b>All green.</b> Copilot is set up for your test users.</div>
+
+  <div class="checks">
+
+    <article class="check" data-id="licence">
+      <div>
+        <h2><span class="num">1</span>Copilot licence assigned</h2>
+        <p class="who">Microsoft 365 licence admin</p>
+        <p class="path"><span>Microsoft 365 admin center</span> → <span>Billing</span> → <span>Licenses</span></p>
+        <a class="go" href="https://go.microsoft.com/fwlink/p/?linkid=842264" target="_blank" rel="noopener">Open Licenses</a>
+        <p class="note">Every test user needs a Microsoft 365 Copilot licence. Free Copilot Chat isn't enough. Users also need normal access to the report.</p>
+        <label class="confirm"><input type="checkbox"><span class="tick" aria-hidden="true">✓</span>Both test users have the licence<span class="state">open</span></label>
+      </div>
+      <figure class="mock" aria-label="Illustration: Microsoft 365 Copilot licence assigned to both test users">
+        <div class="mock-top"><span class="dots">●●●</span>admin.microsoft.com · Licenses<span class="badge">Illustration</span></div>
+        <div class="mock-body">
+          <h4>Microsoft 365 Copilot</h4>
+          <table class="lic">
+            <tr><th>User</th><th>Licence</th></tr>
+            <tr><td>Test user 1</td><td><span class="yes mark">✓ Assigned</span></td></tr>
+            <tr><td>Test user 2</td><td><span class="yes mark">✓ Assigned</span></td></tr>
+          </table>
+        </div>
+      </figure>
+    </article>
+
+    <article class="check" data-id="m365-setting">
+      <div>
+        <h2><span class="num">2</span>Fabric data in Microsoft Copilot</h2>
+        <p class="who">Microsoft 365 admin</p>
+        <p class="path"><span>Copilot</span> → <span>Settings</span> → <span>View all</span> → <span>Fabric data in Microsoft Copilot</span></p>
+        <a class="go" href="https://admin.cloud.microsoft/?#/copilot/settings/ViewAll" target="_blank" rel="noopener">Open Copilot settings</a>
+        <p class="note">On by default. If <b>Specific groups</b> is selected, both users must be in one of those groups.</p>
+        <label class="confirm"><input type="checkbox"><span class="tick" aria-hidden="true">✓</span>All users or our group is selected<span class="state">open</span></label>
+      </div>
+      <div class="pics">
+      <figure class="mock" aria-label="Illustration: Fabric data in Microsoft Copilot set to All users">
+        <div class="mock-top"><span class="dots">●●●</span>admin.cloud.microsoft · Copilot settings<span class="badge">Illustration</span></div>
+        <div class="mock-body">
+          <h4>Fabric data in Microsoft Copilot</h4>
+          <div class="muted">Step 1: Choose which users can access Fabric data in Microsoft Copilot</div>
+          <div class="row"><span class="radio"></span>No users</div>
+          <div class="row mark"><span class="radio on"></span><b>All users</b></div>
+          <div class="row"><span class="radio"></span>Specific groups <span class="muted">(also fine if users are members)</span></div>
+          <span class="fakebtn">Save</span>
+        </div>
+      </figure>
+      <a class="learn" href="https://learn.microsoft.com/en-us/microsoft-365/copilot/copilot-powerbi-copilot-chat" target="_blank" rel="noopener">See the real screen on Microsoft Learn</a>
+      </div>
+    </article>
+
+    <article class="check" data-id="fabric-share">
+      <div>
+        <h2><span class="num">3</span>Share Fabric data with Microsoft 365</h2>
+        <p class="who">Fabric admin</p>
+        <p class="path"><span>Fabric admin portal</span> → <span>Tenant settings</span> → search <span>Microsoft 365</span></p>
+        <a class="go" href="https://app.fabric.microsoft.com/admin-portal/tenantSettings" target="_blank" rel="noopener">Open tenant settings</a>
+        <p class="note">Optional. Lets reports appear in Copilot search and the <b>+</b> attach menu. If it's off, pasting a report URL still works. Changes can take up to 24 hours.</p>
+        <label class="confirm"><input type="checkbox" data-id="fabric-share"><span class="tick" aria-hidden="true">✓</span><span><span class="sub">3A</span> Toggle 1 enabled, or we only paste report URLs</span><span class="state">open</span></label>
+        <label class="confirm"><input type="checkbox" data-id="fabric-share-region"><span class="tick" aria-hidden="true">✓</span><span><span class="sub">3B</span> Same region, sharing off, or toggle 2 enabled</span><span class="state">open</span></label>
+      </div>
+      <div class="pics">
+      <figure class="mock" aria-label="Illustration: Share Fabric data with your Microsoft 365 services enabled for the entire organization">
+        <div class="mock-top"><span class="dots">●●●</span>app.fabric.microsoft.com · Tenant settings<span class="badge">Illustration</span></div>
+        <div class="mock-body">
+          <h4>Share Fabric data with your Microsoft 365 services</h4>
+          <div class="row"><span class="switch on mark"></span><b>Enabled</b></div>
+          <div class="row" style="margin-top:10px"><span class="switch"></span>Second toggle: cross-geography sharing</div>
+          <div class="muted">Only needed if Microsoft 365 and Fabric are in different regions</div>
+          <span class="fakebtn">Apply</span>
+        </div>
+      </figure>
+      <a class="learn" href="https://learn.microsoft.com/en-us/fabric/admin/admin-share-power-bi-metadata-microsoft-365-services" target="_blank" rel="noopener">See the real screen on Microsoft Learn</a>
+      </div>
+    </article>
+
+    <article class="check" data-id="geo">
+      <div>
+        <h2><span class="num">4</span>Processing region</h2>
+        <p class="who">Fabric admin</p>
+        <p class="path"><span>Fabric admin portal</span> → <span>Tenant settings</span> → <span>Copilot and Azure OpenAI Service</span></p>
+        <a class="go" href="https://app.fabric.microsoft.com/admin-portal/tenantSettings" target="_blank" rel="noopener">Open tenant settings</a>
+        <p class="note">Processing runs in the EU or US. Tenants in the EU or US need nothing here. Tenants elsewhere must enable this setting.</p>
+        <label class="confirm"><input type="checkbox"><span class="tick" aria-hidden="true">✓</span>Tenant is in EU/US, or setting enabled<span class="state">open</span></label>
+      </div>
+      <div class="pics">
+      <figure class="mock" aria-label="Illustration: cross-geography processing setting, only needed outside the EU and US">
+        <div class="mock-top"><span class="dots">●●●</span>app.fabric.microsoft.com · Tenant settings<span class="badge">Illustration</span></div>
+        <div class="mock-body">
+          <h4>Data sent to Azure OpenAI can be processed outside your capacity's geographic region, compliance boundary, or national cloud instance</h4>
+          <div class="row"><span class="switch"></span>EU or US tenant: no change needed</div>
+          <div class="row"><span class="switch on mark"></span>Other regions: must be enabled</div>
+        </div>
+      </figure>
+      <a class="learn" href="https://learn.microsoft.com/en-us/fabric/admin/service-admin-portal-copilot" target="_blank" rel="noopener">See the real screen on Microsoft Learn</a>
+      </div>
+    </article>
+
+    <article class="check" data-id="model">
+      <div>
+        <h2><span class="num">5</span>AI access on the semantic model</h2>
+        <p class="who">Model owner (Write permission)</p>
+        <p class="path"><span>Power BI</span> → workspace → semantic model <span>…</span> → <span>Settings</span> → <span>Copilot</span></p>
+        <a class="go" href="https://app.powerbi.com/home" target="_blank" rel="noopener">Open Power BI</a>
+        <p class="note">On by default. If it's off, read-only users can open the report but can't ask Copilot about it.</p>
+        <label class="confirm"><input type="checkbox"><span class="tick" aria-hidden="true">✓</span>Switch is on for our model<span class="state">open</span></label>
+      </div>
+      <div class="pics">
+      <figure class="mock" aria-label="Illustration: semantic model setting allowing read-only users to use AI, switched on">
+        <div class="mock-top"><span class="dots">●●●</span>app.powerbi.com · Semantic model settings<span class="badge">Illustration</span></div>
+        <div class="mock-body">
+          <h4>Copilot</h4>
+          <div class="row"><span class="switch on mark"></span><b>On</b></div>
+          <div class="muted">Allow any person with only read permissions to use AI (for example, Copilot, Microsoft's MCP tools) on this model and its related reports</div>
+        </div>
+      </figure>
+      <a class="learn" href="https://learn.microsoft.com/en-us/power-bi/create-reports/copilot-semantic-models" target="_blank" rel="noopener">See the real screen on Microsoft Learn</a>
+      </div>
+    </article>
+
+    <article class="check" data-id="test">
+      <div>
+        <h2><span class="num">6</span>Test in Copilot Chat</h2>
+        <p class="who">Each test user</p>
+        <p class="path">Open the report in Power BI → copy the <b>address bar URL</b> → paste it into Copilot Chat with a question</p>
+        <a class="go" href="https://m365.cloud.microsoft/chat" target="_blank" rel="noopener">Open Copilot Chat</a>
+        <a class="go alt" href="https://app.powerbi.com/home" target="_blank" rel="noopener">Open Power BI</a>
+        <p class="note">Use the full browser URL, not a share link. For reports in org apps, attach the report or use its name instead.</p>
+        <label class="confirm"><input type="checkbox"><span class="tick" aria-hidden="true">✓</span>Copilot answers from the report<span class="state">open</span></label>
+      </div>
+      <div class="pics">
+      <figure class="mock" aria-label="Illustration: user pastes a report URL in Copilot Chat and gets an answer citing the Power BI report">
+        <div class="mock-top"><span class="dots">●●●</span>m365.cloud.microsoft · Copilot Chat<span class="badge">Illustration</span></div>
+        <div class="mock-body chat">
+          <div class="bubble me"><span class="url">https://app.powerbi.com/groups/…/reports/…/ReportSection</span><br>What was our revenue by region in 2025?</div>
+          <div class="bubble cp">Revenue in 2025 was <b>…</b>. By region: …<br><span class="chip">Power BI · Your report</span></div>
+          <div class="row"><span class="yes">✓ Use</span><span class="url">app.powerbi.com/groups/…/reports/…</span></div>
+          <div class="row"><span class="no">Not</span><span class="url">app.powerbi.com/links/…</span></div>
+        </div>
+      </figure>
+      <a class="learn" href="https://learn.microsoft.com/en-us/fabric/admin/admin-share-power-bi-metadata-microsoft-365-services" target="_blank" rel="noopener">See the real screen on Microsoft Learn</a>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="callout" style="margin-top:20px"><b>Settings checked but no answer in step 6?</b> Wait for setting changes to apply, then open a Microsoft support ticket with the accounts, report URL, prompt, error text and time.</div>
+
+  <section class="extra">
+    <h2>Good to know</h2>
+    <div class="grid3">
+      <div class="tile"><b>Same permissions</b>Copilot uses each user's own Power BI access, including RLS and OLS.</div>
+      <div class="tile"><b>Labels and DLP</b>Sensitivity labels carry over to the chat. Purview DLP can block labelled content.</div>
+      <div class="tile"><b>Data freshness</b>Answers reflect the last model refresh. Query data is processed in Fabric under the Fabric Product Terms.</div>
+    </div>
+  </section>
+
+  <footer>
+    Pictures are simplified illustrations of the target state; each card links to the real screen on Microsoft Learn. Your admin pages can look slightly different. Most Fabric tenant setting changes apply within 15 minutes; Microsoft 365 sharing can take up to 24 hours.<br>
+    Sources: <a href="https://learn.microsoft.com/en-us/fabric/iq/connectors/microsoft-365-copilot-overview">Fabric IQ in Microsoft 365 Copilot Chat</a> ·
+    <a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/copilot-powerbi-copilot-chat">Power BI data in Microsoft Copilot (admin)</a> ·
+    <a href="https://learn.microsoft.com/en-us/power-bi/create-reports/copilot-semantic-models">Semantic model AI access</a> ·
+    <a href="https://learn.microsoft.com/en-us/fabric/admin/admin-share-power-bi-metadata-microsoft-365-services">Metadata sharing</a> ·
+    <a href="https://learn.microsoft.com/en-us/fabric/admin/about-tenant-settings">Tenant settings</a><br>
+    Updated 2 November 2026. Ticks are saved only in this browser.
+  </footer>
+</main>
+<script>
+  (() => {
+    const KEY = "power-bi-in-copilot-checklist-public-v1";
+    const cards = [...document.querySelectorAll(".check")];
+    const boxes = [...document.querySelectorAll(".check input[type=checkbox]")];
+    const idOf = box => box.dataset.id || box.closest(".check").dataset.id;
+    let saved = {};
+    try { saved = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch { saved = {}; }
+    const store = () => { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch { /* storage unavailable: ticks last for this visit only */ } };
+    function render() {
+      for (const box of boxes) {
+        const label = box.closest("label");
+        label.classList.toggle("ok", box.checked);
+        label.querySelector(".state").textContent = box.checked ? "green" : "open";
+      }
+      for (const card of cards) {
+        card.classList.toggle("ok", [...card.querySelectorAll("input[type=checkbox]")].every(b => b.checked));
+      }
+      const done = boxes.filter(b => b.checked).length;
+      document.getElementById("count").textContent = `${done} of ${boxes.length} green`;
+      document.getElementById("bar").style.width = `${(done / boxes.length) * 100}%`;
+      document.body.classList.toggle("all-done", done === boxes.length);
+    }
+    for (const box of boxes) {
+      box.checked = saved[idOf(box)] === true;
+      box.addEventListener("change", () => { saved[idOf(box)] = box.checked; store(); render(); });
+    }
+    document.getElementById("reset").addEventListener("click", () => {
+      saved = {}; store();
+      for (const box of boxes) box.checked = false;
+      render();
+    });
+    render();
+  })();
+</script>
+</body>
+</html>
