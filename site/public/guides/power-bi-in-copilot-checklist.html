@@ -145,12 +145,12 @@ footer { color: var(--cp-text-muted); font-size: 12px; border-top: 1px solid var
   <p>Settings checklist: open each setting, compare it with the picture, then tick it green. Ticks are saved only in your browser.</p>
 </header>
 <div class="status">
-  <b id="count" role="status" aria-live="polite">0 of 7 green</b>
+  <b id="count" role="status" aria-live="polite">0 of 8 green</b>
   <div class="bar" aria-hidden="true"><span id="bar"></span></div>
   <button type="button" id="reset">Reset</button>
 </div>
 <main>
-  <div class="callout"><b>Only step 1 needs action by default:</b> assign the Microsoft 365 Copilot licence. Steps 2, 3 and 5 are on by default. Step 4 is off by default and only needed for tenants outside the EU and US.</div>
+  <div class="callout"><b>Only step 1 needs action by default:</b> assign the Microsoft 365 Copilot licence (1A) and, for Cowork, add a Copilot Credits spending policy (1B). Steps 2, 3 and 5 are on by default. Step 4 is off by default and only needed for tenants outside the EU and US.</div>
   <div class="callout"><b>No extra Fabric capacity needed.</b> Pro, PPU, Premium and Fabric workspaces all work. Embedded A/EM SKUs don't.</div>
   <div class="callout done-msg"><b>All green.</b> Copilot is set up for your test users.</div>
 
@@ -158,21 +158,32 @@ footer { color: var(--cp-text-muted); font-size: 12px; border-top: 1px solid var
 
     <article class="check" data-id="licence">
       <div>
-        <h2><span class="num">1</span>Copilot licence assigned<span class="dflt off">Action needed</span></h2>
-        <p class="who">Microsoft 365 licence admin</p>
-        <p class="path"><span>Microsoft 365 admin center</span> → <span>Billing</span> → <span>Licenses</span></p>
+        <h2><span class="num">1</span>Copilot licence and Cowork credits<span class="dflt off">Action needed</span></h2>
+        <p class="who">Microsoft 365 admin (1B: Global or Billing admin)</p>
+        <p class="path"><span class="sub">1A</span> <span>Microsoft 365 admin center</span> → <span>Billing</span> → <span>Licenses</span></p>
+        <p class="path"><span class="sub">1B</span> <span>Microsoft 365 admin center</span> → <span>Copilot</span> → <span>Cost Management</span> → <span>Configuration</span></p>
         <a class="go" href="https://go.microsoft.com/fwlink/p/?linkid=842264" target="_blank" rel="noopener">Open Licenses</a>
-        <p class="note">Every test user needs a Microsoft 365 Copilot licence. Free Copilot Chat isn't enough. Users also need normal access to the report.</p>
-        <label class="confirm"><input type="checkbox"><span class="tick" aria-hidden="true">✓</span>Both test users have the licence<span class="state">open</span></label>
+        <a class="go alt" href="https://admin.cloud.microsoft/#/copilot/costmanagement/overview" target="_blank" rel="noopener">Open Cost Management</a>
+        <p class="note"><b>1A:</b> Every test user needs a Microsoft 365 Copilot licence. Free Copilot Chat isn't enough. Users also need normal access to the report.</p>
+        <p class="note"><b>1B, only for Cowork:</b> Cowork runs on Copilot Credits. Add a spending policy that includes the test users and selects <b>Cowork</b>, with a monthly limit and a billing method (prepaid credits or Azure pay-as-you-go). Copilot Chat with Power BI works without it.</p>
+        <label class="confirm"><input type="checkbox" data-id="licence"><span class="tick" aria-hidden="true">✓</span><span><span class="sub">1A</span> Both test users have the licence</span><span class="state">open</span></label>
+        <label class="confirm"><input type="checkbox" data-id="cowork-credits"><span class="tick" aria-hidden="true">✓</span><span><span class="sub">1B</span> Spending policy with Cowork, or we don't use Cowork</span><span class="state">open</span></label>
       </div>
-      <figure class="mock" aria-label="Illustration: Microsoft 365 Copilot licence assigned to both test users">
-        <div class="mock-top"><span class="dots">●●●</span>admin.microsoft.com · Licenses<span class="badge">Illustration</span></div>
+      <figure class="mock" aria-label="Illustration: Microsoft 365 Copilot licence assigned to both test users, and a Copilot Credits spending policy that selects Cowork">
+        <div class="mock-top"><span class="dots">●●●</span>admin.cloud.microsoft · Licenses, Cost Management<span class="badge">Illustration</span></div>
         <div class="mock-body">
-          <h4>Microsoft 365 Copilot</h4>
+          <h4>1A · Microsoft 365 Copilot</h4>
           <table class="lic">
             <tr><th>User</th><th>Licence</th></tr>
             <tr><td>Test user 1</td><td><span class="yes mark">✓ Assigned</span></td></tr>
             <tr><td>Test user 2</td><td><span class="yes mark">✓ Assigned</span></td></tr>
+          </table>
+          <h4 style="margin-top:14px">1B · Spending policy</h4>
+          <table class="lic">
+            <tr><th>Setting</th><th>Value</th></tr>
+            <tr><td>Scope</td><td>Test users group</td></tr>
+            <tr><td>Agents and services</td><td><span class="yes mark">✓ Cowork</span></td></tr>
+            <tr><td>Limit</td><td>Credits per month</td></tr>
           </table>
         </div>
       </figure>
@@ -335,7 +346,9 @@ footer { color: var(--cp-text-muted); font-size: 12px; border-top: 1px solid var
     <a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/copilot-powerbi-copilot-chat">Power BI data in Microsoft Copilot (admin)</a> ·
     <a href="https://learn.microsoft.com/en-us/power-bi/create-reports/copilot-semantic-models">Semantic model AI access</a> ·
     <a href="https://learn.microsoft.com/en-us/fabric/admin/admin-share-power-bi-metadata-microsoft-365-services">Metadata sharing</a> ·
-    <a href="https://learn.microsoft.com/en-us/fabric/admin/about-tenant-settings">Tenant settings</a><br>
+    <a href="https://learn.microsoft.com/en-us/fabric/admin/about-tenant-settings">Tenant settings</a> ·
+    <a href="https://learn.microsoft.com/en-us/copilot/cowork/cowork-access">Cowork access</a> ·
+    <a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/usage-based-billing-copilot-credits-setup">Copilot Credits setup</a><br>
     Updated 2 November 2026. Ticks are saved only in this browser.
   </footer>
 </main>
