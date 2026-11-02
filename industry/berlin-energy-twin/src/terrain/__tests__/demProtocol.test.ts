@@ -69,6 +69,12 @@ describe('baked terrain (tools/bake_terrain.py)', () => {
     const x = Math.floor(((lon + 180) / 360) * n)
     const y = Math.floor(((1 - Math.asinh(Math.tan((lat * Math.PI) / 180)) / Math.PI) / 2) * n)
     expect(makeLookup(m)(16, x, y)).toBe(true)
+  })
+
+  // The tiles (19 MB) are git-ignored in the public repo (**/data/terrain/), so a clone and CI have
+  // the manifest without them and the app uses AWS terrain. Where the folder exists, it must be whole.
+  it.runIf(existsSync(path) && existsSync('public/data/terrain'))('ships every tile the manifest lists', () => {
+    const m = JSON.parse(readFileSync(path, 'utf-8')) as TerrainManifest
     // every listed tile, not a sample: a missing one would reach the browser as HTML on Fabric
     const missing = Object.entries(m.tiles).flatMap(([z, list]) => list.filter((k) => !existsSync(`public/data/terrain/${z}/${k}.webp`)).map((k) => `${z}/${k}`))
     expect(missing).toEqual([])
