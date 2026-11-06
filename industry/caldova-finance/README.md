@@ -95,10 +95,10 @@ npm run dwg -- templates --lang en      # the 30 P&L Statement and ChartKitchen 
 npm run dwg:check                       # the spec against the model: structure, roles, fields, pixel grid
 ```
 
-The skill [`.claude/skills/caldova-finance-dwg/SKILL.md`](.claude/skills/caldova-finance-dwg/SKILL.md) holds every
+The skill [`.github/skills/caldova-finance-dwg/SKILL.md`](.github/skills/caldova-finance-dwg/SKILL.md) holds every
 recipe in English: change a statement's original visual, regenerate the pages and their DAX snapshot, rebuild the
-Power BI twin, bring your own model through the dwg data contract, add a page from a template. Claude Code picks it
-up when the template folder is open; any other agent (or person) can read it as a runbook.
+Power BI twin, bring your own model through the dwg data contract, add a page from a template. GitHub Copilot picks it
+up as an agent skill when the template folder is open; any other agent (or person) can read it as a runbook.
 
 Each statement page switches between the app's IBCS table (default, with the actions) and Michael Tenner's original
 P&L Statement byDatenWG visual, built with his [dwg cli](https://github.com/Losveratos/dwg-cli). The model carries the
@@ -141,7 +141,7 @@ actuals, so forecast adjustments stay in the table view.
 | `rayfin/data/*.ts` | Entities with row-level policies; `controllers.ts` reads `CONTROLLER_EMAILS` |
 | `fabric/` | The Direct Lake model (incl. the dwg contract tables), the Power BI twin, the forecast drivers |
 | `tools/` | Generator, bake and drift gate, Fabric setup, live mode switch, browser probe |
-| `.claude/skills/caldova-finance-dwg/` | Agent skill: dwg cli recipes for this template (`tools/dwg.mjs` runs dwg from the template folder) |
+| `.github/skills/caldova-finance-dwg/` | Agent skill: dwg cli recipes for this template (`tools/dwg.mjs` runs dwg from the template folder) |
 | `.github/workflows/deploy.yml` | Test, drift gate, dev and prod deployments |
 
 ## Scripts

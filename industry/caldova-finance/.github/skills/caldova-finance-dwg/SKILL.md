@@ -26,8 +26,8 @@ Work from the template's root folder. Every command below runs there.
    node ../dwg-cli/install.mjs
    ```
 
-   The installer installs packages, downloads Chromium (about 150 MB), copies dwg's own German skill `dwg` into
-   `~/.claude/skills` and runs a self test. `--no-browser` and `--no-skill` skip the download and the home-folder
+   The installer installs packages, downloads Chromium (about 150 MB), copies dwg's own German agent skill `dwg` into
+   your home folder and runs a self test. `--no-browser` and `--no-skill` skip the download and the home-folder
    write. An agent asks the person before running it.
 
 2. Check: `npm run dwg -- doctor` and `npm run dwg:check` (expect "0 Probleme" / "0 Fehler"; dwg prints German).
