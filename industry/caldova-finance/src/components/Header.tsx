@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { monthLabel } from '@/domain/format';
 import { useAuth } from '@/hooks/AuthContext';
 import { useFinance } from '@/hooks/FinanceContext';
+import { useWide } from '@/hooks/useWide';
 
 export type PageId = 'PL' | 'BS' | 'CF';
 export type View = 'table' | 'visual';
@@ -52,18 +53,20 @@ export function Header({
   onPage(p: PageId): void;
   view: View;
   onView(v: View): void;
-  onExport(kind: 'xlsx' | 'pptx'): void;
+  onExport(kind: 'xlsx' | 'pptx' | 'copy'): void;
 }) {
   const f = useFinance();
   const { user, signOut } = useAuth();
   const [confirm, setConfirm] = useState(false);
+  const wide = useWide();
   const year = f.period.month.slice(0, 4);
   const months = f.snapshot.months;
   const signed = f.close.signedOff;
 
   return (
-    <header className="grid grid-cols-[auto_1fr_auto] items-center gap-4 border-b border-ink pb-2">
-      <div className="flex items-baseline gap-3">
+    // Wide: one line, the controls in the middle. Narrow: three groups that wrap instead of squeezing their labels.
+    <header className={`border-b border-ink pb-2 ${wide ? 'grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4' : 'flex flex-wrap items-center justify-between gap-x-4 gap-y-2'}`}>
+      <div className="flex items-baseline gap-3 whitespace-nowrap">
         <h1 className="text-[18px] font-bold tracking-tight">Caldova Finance</h1>
         <nav className="flex gap-1" aria-label="Statements">
           {PAGES.map((p) => (
@@ -80,7 +83,8 @@ export function Header({
         </nav>
       </div>
 
-      <div className="flex items-center justify-center gap-3">
+      {/* From 1400 px the controls share one line (labels may break inside a button); below, they wrap as a group. */}
+      <div className={`flex items-center gap-3 ${wide ? 'flex-wrap justify-center min-[1400px]:flex-nowrap' : 'flex-wrap whitespace-nowrap'}`}>
         <label className="flex items-center gap-1 text-[12px]">
           <span className="sr-only">Month</span>
           <select value={f.period.month} onChange={(e) => f.setMonth(e.target.value)} className="rounded border border-ink bg-paper px-1 py-[3px] text-[12px]">
@@ -125,12 +129,12 @@ export function Header({
         )}
       </div>
 
-      <div className="flex items-center gap-2 text-[12px]">
-        <div className="text-right leading-4" role="status">
-          <div className="font-semibold">
+      <div className="flex min-w-0 items-center gap-2 text-[12px]">
+        <div className="min-w-0 text-right leading-4" role="status">
+          <div className="whitespace-nowrap font-semibold">
             {monthLabel(f.close.period)} close: {signed ? 'signed off' : 'open'}
           </div>
-          <div className="text-muted">
+          <div className="max-w-[24rem] truncate text-muted" title={f.close.latest?.authorEmail}>
             {f.close.latest
               ? `${f.close.latest.action === 'sign-off' ? 'by' : 'reopened by'} ${f.close.latest.authorEmail}, ${f.close.latest.createdAt.toLocaleString('en-GB', { dateStyle: 'short', timeStyle: 'short' })}`
               : 'forecast can be adjusted'}
@@ -167,6 +171,9 @@ export function Header({
             </button>
             <button type="button" className="rounded px-2 py-1 text-left hover:bg-soft" onClick={() => onExport('pptx')}>
               PowerPoint: board pack
+            </button>
+            <button type="button" className="rounded px-2 py-1 text-left hover:bg-soft" onClick={() => onExport('copy')}>
+              Copy table for Excel
             </button>
           </div>
         </details>

@@ -18,6 +18,17 @@ export interface Line {
   /** Is a positive delta good for this line? (IBCS: colour by impact.) null: neutral, drawn grey. */
   goodUp: boolean | null;
   isKpi: boolean;
+  /**
+   * Display orientation. -1 for P&L deduction lines (costs, discounts, taxes: `sign` -1), which are shown as positive
+   * amounts: values and variances are in cost terms (lower cost = negative variance, coloured good). Multiply a shown
+   * value or variance by `orient` to get its contribution to profit (what a bridge adds up).
+   */
+  orient: 1 | -1;
+}
+
+/** -1 for P&L deduction lines shown as positive amounts (see {@link Line.orient}). */
+export function orientOf(a: Account): 1 | -1 {
+  return a.statement === 'PL' && a.sign === -1 && (a.rowType === 'Account' || a.rowType === 'Subtotal') ? -1 : 1;
 }
 
 const rel = (d: number | undefined, ref: number | undefined) =>
@@ -49,22 +60,27 @@ export function statementLines(snapshot: Snapshot, current: Values['FC'], statem
   const walk = (parent: string | null, depth: number) => {
     for (const a of children.get(parent) ?? []) {
       const isKpi = a.rowType === 'KPI';
-      const c = cur[a.id];
-      const dPl = c !== undefined && pl[a.id] !== undefined ? c - pl[a.id] : undefined;
-      const dPy = c !== undefined && py[a.id] !== undefined ? c - py[a.id] : undefined;
+      const o = orientOf(a);
+      const show = (v: number | undefined) => (v === undefined ? undefined : o * v);
+      const c = show(cur[a.id]);
+      const plv = show(pl[a.id]);
+      const pyv = show(py[a.id]);
+      const dPl = c !== undefined && plv !== undefined ? c - plv : undefined;
+      const dPy = c !== undefined && pyv !== undefined ? c - pyv : undefined;
       out.push({
         account: a,
         depth,
         hasChildren: (children.get(a.id)?.length ?? 0) > 0,
         cur: c,
-        pl: pl[a.id],
-        py: py[a.id],
+        pl: plv,
+        py: pyv,
         dPl,
         dPy,
-        rPl: isKpi ? undefined : rel(dPl, pl[a.id]),
-        rPy: isKpi ? undefined : rel(dPy, py[a.id]),
-        goodUp: a.goodUp,
+        rPl: isKpi ? undefined : rel(dPl, plv),
+        rPy: isKpi ? undefined : rel(dPy, pyv),
+        goodUp: a.goodUp === null ? null : o === -1 ? !a.goodUp : a.goodUp,
         isKpi,
+        orient: o,
       });
       walk(a.id, depth + 1);
     }

@@ -17,12 +17,12 @@ Month-end in a controlling team: the actuals of the month are in. The team revie
 
 | | |
 | --- | --- |
-| **Three statements, one screen each** | Income statement with a monthly column chart and a net income bridge; balance sheet with its structure and working capital (DSO, DIO, DPO, cash conversion cycle, equity ratio); indirect cash flow with a cash bridge and a visible check that closing cash equals the balance sheet. Pages never scroll: row heights follow the screen, the P&L opens one block at a time. |
+| **Three statements, one screen each** | Income statement with a monthly column chart; balance sheet with its structure and working capital (DSO, DIO, DPO, cash conversion cycle, equity ratio); indirect cash flow with a visible check that closing cash equals the balance sheet. A Waterfall switch draws the bridge inside the table: the net income variance from PL to AC, the AC cash bridge. Variance values sit at the end of their bars. From 1200 px pages never scroll (row heights follow the screen, the P&L opens one block at a time); narrower windows stack the panels and scroll. |
 | **IBCS only** | AC solid, PY grey, PL outlined, FC hatched; order PL, PY, AC, FC; variances point by their sign and are coloured by their impact (green favourable, red unfavourable, grey where a line has no direction); message titles; one scale per column. No theme switch. |
 | **Articulated** | Net income closes into equity, the indirect cash flow reconciles to the balance sheet cash, assets equal equity and liabilities, for every month and scenario (tested). |
 | **Forecast adjustments** | An adjustment on a P&L account in an open month flows through taxes, equity, working capital and cash, live in the browser. The engine is checked against a Python oracle with four adjustment sets. |
 | **Comments and sign-off** | Comments on any line and month; a controller signs the close off (or reopens it). After sign-off the forecast is frozen. |
-| **Excel and PowerPoint** | The three statements plus the adjustment, comment and sign-off logs as `.xlsx`; one IBCS slide per statement as `.pptx`. |
+| **Excel and PowerPoint** | The three statements plus the adjustment, comment and sign-off logs as `.xlsx`; one IBCS slide per statement as `.pptx`; "Copy table for Excel" puts the statement on screen on the clipboard, pasting cell by cell as numbers (also inside the Fabric portal). |
 
 ## How it uses Rayfin
 
@@ -86,6 +86,20 @@ documents how the balance sheet and cash flow are derived; the P&L it starts fro
 
 ### The original P&L visual and the Power BI twin (dwg cli)
 
+**Use it yourself, or let an agent do it.** dwg cli is the CLI for Fabric Apps this template builds on. Clone it once
+next to the template (`git clone https://github.com/Losveratos/dwg-cli ../dwg-cli`, then `node ../dwg-cli/install.mjs`;
+or set `DWG_CLI`), then run it from the template folder:
+
+```bash
+npm run dwg -- templates --lang en      # the 30 P&L Statement and ChartKitchen templates
+npm run dwg:check                       # the spec against the model: structure, roles, fields, pixel grid
+```
+
+The skill [`.claude/skills/caldova-finance-dwg/SKILL.md`](.claude/skills/caldova-finance-dwg/SKILL.md) holds every
+recipe in English: change a statement's original visual, regenerate the pages and their DAX snapshot, rebuild the
+Power BI twin, bring your own model through the dwg data contract, add a page from a template. Claude Code picks it
+up when the template folder is open; any other agent (or person) can read it as a runbook.
+
 Each statement page switches between the app's IBCS table (default, with the actions) and Michael Tenner's original
 P&L Statement byDatenWG visual, built with his [dwg cli](https://github.com/Losveratos/dwg-cli). The model carries the
 dwg data contract next to the app's tables (`Calendar`, `P&L/BS/CF Account`, `P&L/BS/CF Fact`, English names; written
@@ -93,15 +107,14 @@ by `tools/contract_tables.py` and `tools/contract_tmdl.py`, checked by `tools/fa
 `dwg/caldova-finance.json` (`node tools/make-dwg-spec.mjs <dwg-cli checkout>`), gives both targets:
 
 ```bash
-# app pages (dwg app page needs a Rayfin layout with a connector: generate into a scratch skeleton, copy src/dwg and src/vendor)
-node dwg.mjs app page --app <skeleton> --spec dwg/caldova-finance.json --connector statements --model fabric/caldova-finance.SemanticModel
-node tools/dwg-english.mjs
-# Power BI twin
-node dwg.mjs pbip new --out fabric/caldova-finance.Report --name "Caldova Finance (Power BI)" --model fabric/caldova-finance.SemanticModel --template "<dwg-cli>/examples/showcase/ZlatyLev Showcase.Report"
-node dwg.mjs pbip register --report fabric/caldova-finance.Report --pbiviz <dwg-cli>/visuals/pbiviz/pnlByDatenWG.1.7.0.0.pbiviz
-node dwg.mjs pbip pages --report fabric/caldova-finance.Report --spec dwg/caldova-finance.json
-node dwg.mjs validate fabric/caldova-finance.Report
-python tools/fabric/publish_report.py
+# app pages: dwg app page into a throwaway skeleton, then src/dwg and src/vendor copied back and patched to English
+npm run dwg -- --pages
+# Power BI twin (<dwg-cli> is the checkout, npm run dwg -- --where prints it)
+npm run dwg -- pbip new --out fabric/caldova-finance.Report --name "Caldova Finance (Power BI)" --model fabric/caldova-finance.SemanticModel --template "<dwg-cli>/examples/showcase/ZlatyLev Showcase.Report"
+npm run dwg -- pbip register --report fabric/caldova-finance.Report --pbiviz "<dwg-cli>/visuals/pbiviz/pnlByDatenWG.1.7.0.0.pbiviz"
+npm run dwg -- pbip pages --report fabric/caldova-finance.Report --spec dwg/caldova-finance.json
+npm run dwg -- validate fabric/caldova-finance.Report
+# publishing writes to a Fabric workspace: a person runs python tools/fabric/publish_report.py
 ```
 
 The app's view has no connector: `src/hooks/use-semantic-model-query.ts` answers the visual's DAX from
@@ -118,16 +131,17 @@ actuals, so forecast adjustments stay in the table view.
 | `src/domain/lock.ts` | The close lock as a read-time rule |
 | `src/domain/assemble.ts` | The model queries and their mapping (live mode; the bake uses the same) |
 | `src/pages/*` | Income statement, balance sheet, cash flow |
-| `src/components/StatementTable.tsx`, `charts.tsx`, `ibcs.tsx` | IBCS table, columns, bridges, structure; notation helpers |
+| `src/components/StatementTable.tsx`, `charts.tsx`, `ibcs.tsx`, `src/domain/waterfall.ts` | IBCS table, columns, in-table bridges, structure; notation helpers |
 | `src/components/ActionDrawer.tsx` | Comments and forecast adjustments for the selected line |
 | `src/services/store.ts` | Records in Rayfin data, or in memory for the offline demo |
-| `src/services/exports.ts` | Excel and PowerPoint |
+| `src/services/exports.ts`, `clipboard.ts` | Excel and PowerPoint; copy table for Excel |
 | `src/components/OriginalStatement.tsx`, `src/domain/dwgPeriod.ts` | The original-visual view: period slice, queries, sizing |
 | `src/dwg/`, `src/vendor/` | Generated by dwg cli: pages and the built byDatenWG visuals (do not edit by hand) |
 | `dwg/caldova-finance.json` | The dwg spec for the app view and the Power BI twin |
 | `rayfin/data/*.ts` | Entities with row-level policies; `controllers.ts` reads `CONTROLLER_EMAILS` |
 | `fabric/` | The Direct Lake model (incl. the dwg contract tables), the Power BI twin, the forecast drivers |
 | `tools/` | Generator, bake and drift gate, Fabric setup, live mode switch, browser probe |
+| `.claude/skills/caldova-finance-dwg/` | Agent skill: dwg cli recipes for this template (`tools/dwg.mjs` runs dwg from the template folder) |
 | `.github/workflows/deploy.yml` | Test, drift gate, dev and prod deployments |
 
 ## Scripts
@@ -140,7 +154,8 @@ actuals, so forecast adjustments stay in the table view.
 | `npm test` | Unit tests: engine vs oracle, articulation, lock, store, live assembly |
 | `npm run lint` | ESLint |
 | `npm run bake` / `bake:check` | Bake the statements and the original visual's answers from the model / drift gate |
-| `npm run probe` | Headless Edge proof: no scroll at 1366 and 1920 px, the action flow end to end |
+| `npm run probe` | Headless Edge proof: no scroll at 1366 and 1920 px, nothing cut or sideways at 1010 and 800 px, the action flow end to end |
+| `npm run dwg -- <command>`, `npm run dwg:check`, `npm run dwg -- --pages` | dwg cli from the template folder; check and lint the dwg spec against the model; regenerate `src/dwg` and `src/vendor` from it |
 | `npm run live:enable` / `live:disable` | Switch live connector mode on or off |
 | `npm run rayfin:up` | Deploy |
 
@@ -151,11 +166,14 @@ actuals, so forecast adjustments stay in the table view.
 - Taxes per month on positive earnings before tax, no loss carry-forward or annual true-up.
 - A new close (next month's actuals) starts a new forecast version: adjustments of earlier closes are kept on record but no longer applied.
 - The controller list is also in the app bundle (to show the button); every signed-in user can see it.
+- Copy table for Excel copies whole kEUR, as on screen. Percentages carry Excel's locale-free value; where Excel does not read it, their text follows the browser's language, so an English browser with German regional settings can misread them. The Excel export has no such limit.
 - English only.
 
 ## Credits
 
 The IBCS approach and the cockpit this template grew out of are Michael Tenner's (DatenWG), shown at the Daten-WG Conference 2026; his MIT notice is in `NOTICE`. The original-visual view and the Power BI twin use his [dwg cli](https://github.com/Losveratos/dwg-cli) and its built P&L Statement byDatenWG visual (MIT).
+
+Copy table for Excel is adapted from the clipboard of the gallery's [finance-analytics](https://github.com/microsoft/awesome-rayfin/tree/main/templates/finance-analytics) template (Microsoft, MIT). That template is the analysis app for the same statements; this one adds the close workflow on Rayfin data.
 
 ## License
 

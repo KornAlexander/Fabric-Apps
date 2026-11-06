@@ -1,5 +1,5 @@
 /**
- * Excel and PowerPoint exports, loaded only when used (exceljs and pptxgenjs are large).
+ * Excel and PowerPoint exports; exceljs and pptxgenjs (large) load only when used. The copy table is built here too.
  * Both follow the screen: the period, the comparison and the forecast with its effective adjustments.
  */
 import { monthLabel } from '@/domain/format';
@@ -8,6 +8,7 @@ import type { Records } from '@/domain/records';
 import { periodMonths, type Period } from '@/domain/statements';
 import type { Snapshot, Statement, Values } from '@/domain/types';
 import { statementLines, type Line } from '@/domain/view';
+import type { CopyTable } from '@/services/clipboard';
 
 export interface ExportInput {
   snapshot: Snapshot;
@@ -26,7 +27,10 @@ function span(p: Period, st: Statement) {
   return ms.length > 1 ? `${monthLabel(ms[0])} – ${monthLabel(ms[ms.length - 1])}` : monthLabel(ms[0]);
 }
 
-const k = (v: number | undefined) => (v === undefined || !Number.isFinite(v) ? null : Math.round(v / 100) / 10);
+// kEUR to the cent for the .xlsx: the cell format rounds once (pre-rounding to 0.1 kEUR turned −40.45 into −41).
+const k = (v: number | undefined) => (v === undefined || !Number.isFinite(v) ? null : Math.round(v * 100) / 100000);
+// Whole kEUR for the copy, rounded as the screen rounds (format.ts): no decimal separator, so no locale can misread it.
+const kInt = (v: number | undefined) => (v === undefined || !Number.isFinite(v) ? null : Math.round(v / 1000) || 0);
 
 function download(blob: Blob, name: string) {
   const url = URL.createObjectURL(blob);
@@ -77,6 +81,31 @@ export async function exportExcel(x: ExportInput) {
   for (const ws of [log, com, so]) ws.columns.forEach((c) => (c.width = 20));
   const buf = await wb.xlsx.writeBuffer();
   download(new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), `${fileStem(x)}.xlsx`);
+}
+
+/** The statement on screen for "Copy table for Excel": the lines of its Excel sheet, in whole kEUR as on screen. */
+export function statementCopyTable(x: ExportInput, st: Statement): CopyTable {
+  const pct = '0.0%';
+  const keur = '#,##0;-#,##0';
+  return {
+    caption: `${x.snapshot.meta.company} · ${TITLES[st]} · ${span(x.period, st)} · kEUR`,
+    columns: [
+      { label: '', numeric: false },
+      ...['PL', st === 'BS' ? 'PY year-end' : 'PY', x.currentCode, `Δ${x.comparison}`, `Δ${x.comparison}%`].map((label) => ({ label, numeric: true })),
+    ],
+    rows: statementLines(x.snapshot, x.current, st, x.period).map((l) => {
+      const d = x.comparison === 'PL' ? l.dPl : l.dPy;
+      const r = x.comparison === 'PL' ? l.rPl : l.rPy;
+      const v = (n: number | undefined) => (n === undefined || !Number.isFinite(n) ? null : Math.round(n * 1e6) / 1e6 || 0);
+      return {
+        depth: l.depth,
+        bold: l.account.rowType !== 'Account' && !l.isKpi,
+        italic: l.isKpi,
+        cells: l.isKpi ? [l.account.name, v(l.pl), v(l.py), v(l.cur), v(d), null] : [l.account.name, kInt(l.pl), kInt(l.py), kInt(l.cur), kInt(d), v(r)],
+        formats: l.isKpi ? [undefined, pct, pct, pct, pct, undefined] : [undefined, keur, keur, keur, keur, pct],
+      };
+    }),
+  };
 }
 
 const fmtCell = (l: Line, v: number | undefined) => (v === undefined || !Number.isFinite(v) ? '' : l.isKpi ? `${(v * 100).toFixed(1)}%` : Math.round(v / 1000).toLocaleString('en-GB'));

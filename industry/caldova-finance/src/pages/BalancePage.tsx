@@ -9,6 +9,7 @@ import { statementRows } from '@/domain/statements';
 import { pyValues, statementLines } from '@/domain/view';
 import { useFinance } from '@/hooks/FinanceContext';
 import { useMarked } from '@/hooks/useMarked';
+import { useWide } from '@/hooks/useWide';
 
 const ASSETS: [string, string][] = [
   ['B-FA', 'Non-current'],
@@ -51,6 +52,7 @@ export function BalancePage() {
   const lines = useMemo(() => statementLines(snapshot, current, 'BS', period), [snapshot, current, period]);
   const all = useMemo(() => new Set(lines.filter((l) => l.hasChildren).map((l) => l.account.id)), [lines]);
   const marked = useMarked('BS');
+  const wide = useWide();
 
   const monthEnd = { month: period.month, mode: 'MTD' as const };
   const prevYearEnd = `${Number(period.month.slice(0, 4)) - 1}-12`;
@@ -91,14 +93,14 @@ export function BalancePage() {
   const message = `Cash ${fmtDeltaK(dCash)} kEUR and equity ${fmtDeltaK(dEq)} kEUR vs ${comparison === 'PL' ? 'budget' : 'previous year-end'}`;
 
   return (
-    <div className="grid h-full min-h-0 grid-rows-[auto_minmax(0,1fr)] gap-2">
+    <div className={wide ? 'grid h-full min-h-0 grid-rows-[auto_minmax(0,1fr)] gap-2' : 'grid gap-2'}>
       <PageTitle statement="Balance sheet" span={`${monthLabel(period.month)} month end${comparison === 'PY' ? ` vs ${monthLabel(prevYearEnd)}` : ''}`} message={message} />
-      <div className="grid min-h-0 grid-cols-[minmax(0,58fr)_minmax(0,42fr)] gap-4">
+      <div className={wide ? 'grid min-h-0 grid-cols-[minmax(0,64fr)_minmax(0,36fr)] gap-4' : 'grid gap-4'}>
         <Panel>
           <StatementTable lines={lines} expanded={all} marked={marked} pyLabel="PY YE" />
         </Panel>
-        <div className="grid min-h-0 grid-rows-[minmax(0,1fr)_auto] gap-3">
-          <Panel title={`Structure, ${refTitle} vs ${currentCode} ${monthLabel(period.month)}, kEUR`}>
+        <div className={wide ? 'grid min-h-0 grid-rows-[minmax(0,1fr)_auto] gap-3' : 'grid gap-4'}>
+          <Panel title={`Structure, ${refTitle} vs ${currentCode} ${monthLabel(period.month)}, kEUR`} className={wide ? '' : 'h-[380px]'}>
             <StructureColumns pairs={pairs} />
           </Panel>
           <Panel title="Working capital">

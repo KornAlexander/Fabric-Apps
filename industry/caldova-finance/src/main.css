@@ -51,12 +51,24 @@
   ::before {
     border-color: var(--hair);
   }
-  /* PLAN.md §5.1: the document never scrolls; every page fits the viewport. */
+  /* PLAN.md §5.1: on wide windows the document never scrolls; every page fits the viewport. Narrower windows
+     stack the panels and scroll (useWide, same breakpoint). */
   html,
   body,
   #root {
     height: 100dvh;
     overflow: hidden;
+  }
+  @media not all and (min-width: 1200px) {
+    html,
+    body,
+    #root {
+      height: auto;
+      overflow: visible;
+    }
+    #root {
+      min-height: 100dvh;
+    }
   }
   body {
     margin: 0;

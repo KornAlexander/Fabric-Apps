@@ -52,6 +52,22 @@ for (const [w, h] of [
     if (r.bad) fail(`${w}x${h} ${label}: NaN/undefined/Infinity on the page`);
     if (shots) await page.screenshot({ path: `logs/probe/${id}-${w}.png` });
 
+    // With a line selected the action drawer opens: the Waterfall switch stays reachable and no account name is cut
+    // (the measure counts names cut by the truncate class too).
+    await page.locator('tbody tr').first().click();
+    await page.waitForTimeout(300);
+    const s = await page.evaluate(() => {
+      const sw = document.querySelector('[role="switch"]');
+      const r = sw?.getBoundingClientRect();
+      const hit = r ? document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2) : null;
+      const names = [...document.querySelectorAll('tbody td:first-child')].filter((td) => td.scrollWidth > td.clientWidth + 1).length;
+      return { switchHidden: !!sw && !(hit && sw.contains(hit)), names };
+    });
+    if (s.switchHidden) fail(`${w}x${h} ${label}: the action drawer covers the Waterfall switch`);
+    if (s.names) fail(`${w}x${h} ${label}: ${s.names} account name(s) cut with the drawer open`);
+    if (shots) await page.screenshot({ path: `logs/probe/${id}-drawer-${w}.png` });
+    await page.getByRole('button', { name: 'Close', exact: true }).click();
+
     // The same statement as Michael Tenner's original visual (PLAN.md §11): drawn from the baked answers, fits.
     await page.getByRole('radio', { name: 'Original visual' }).click();
     try {
@@ -75,6 +91,49 @@ for (const [w, h] of [
     if (v.under) fail(`${w}x${h} ${label} original visual: runs under the footer`);
     if (shots) await page.screenshot({ path: `logs/probe/${id}-visual-${w}.png` });
     await page.getByRole('radio', { name: 'Table' }).click();
+  }
+  if (errors.length) fail(`${w}x${h}: page errors: ${errors.join(' | ')}`);
+  await page.close();
+}
+
+// Narrow windows (below 1200 px): the panels stack and the page scrolls down, but nothing runs off to the side, no
+// name or number is cut, and both waterfalls switch on and off.
+for (const [w, h] of [
+  [1010, 800],
+  [800, 700],
+]) {
+  const page = await browser.newPage({ viewport: { width: w, height: h } });
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(String(e)));
+  await page.goto(base);
+  await page.evaluate(() => localStorage.clear());
+  await page.reload();
+  await page.waitForSelector('table tbody tr');
+  for (const [label, id] of [
+    ['Income statement', 'pl'],
+    ['Balance sheet', 'bs'],
+    ['Cash flow', 'cf'],
+  ]) {
+    await page.getByRole('button', { name: label, exact: true }).click();
+    await page.waitForTimeout(300);
+    const r = await page.evaluate(() => {
+      const d = document.documentElement;
+      const cut = [...document.querySelectorAll('td')].filter((td) => td.scrollWidth > td.clientWidth + 1).length;
+      const header = [...document.querySelectorAll('header button, header select')].filter((b) => b.scrollWidth > b.clientWidth + 1).length;
+      return { side: d.scrollWidth > d.clientWidth, cut, header, bad: /NaN|undefined|Infinity/.test(document.body.innerText) };
+    });
+    if (r.side) fail(`${w}x${h} ${label}: the page scrolls sideways`);
+    if (r.cut) fail(`${w}x${h} ${label}: ${r.cut} cell(s) cut`);
+    if (r.header) fail(`${w}x${h} ${label}: ${r.header} header control(s) cut`);
+    if (r.bad) fail(`${w}x${h} ${label}: NaN/undefined/Infinity on the page`);
+    if (id !== 'bs') {
+      const sw = page.getByRole('switch', { name: 'Waterfall' });
+      const before = await sw.getAttribute('aria-checked');
+      await sw.click();
+      if ((await sw.getAttribute('aria-checked')) === before) fail(`${w}x${h} ${label}: the waterfall switch does nothing`);
+      await sw.click();
+    }
+    if (shots) await page.screenshot({ path: `logs/probe/${id}-narrow-${w}.png`, fullPage: true });
   }
   if (errors.length) fail(`${w}x${h}: page errors: ${errors.join(' | ')}`);
   await page.close();

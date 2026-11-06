@@ -31,6 +31,10 @@ fabric/caldova-finance.Report (incl. the registered P&L Statement visual, visual
 of dwg cli). The built visuals and the .pbiviz are published in the dwg cli repository under its MIT licence
 (commit 6d493dc). The visual's own metadata names its author and contact; it is left unchanged.
 
+src/services/clipboard.ts (copy table for Excel) is adapted from src/finance/lib/clipboard.ts of the finance-analytics
+template in microsoft/awesome-rayfin (templates/finance-analytics), Copyright (c) Microsoft Corporation, MIT (the same
+terms as above). Changes: an Excel number format per cell, locale-aware number text, a caption row and account levels.
+
 The authentication services (src/services/*AuthService.ts, rayfinClient.ts, hooks/AuthContext.tsx) follow
 the Rayfin template structure, Copyright (c) Microsoft Corporation, MIT.
 

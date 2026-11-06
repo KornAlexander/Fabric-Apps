@@ -1,6 +1,7 @@
 // IBCS building blocks, after Michael Tenner's Finance Cockpit (MIT, see NOTICE): scenario notation
 // AC solid, PY grey, PL outlined, FC hatched; variances point by their sign and are coloured by their impact.
 
+import type { Span } from '@/domain/waterfall';
 import type { CurrentCode } from '@/hooks/FinanceContext';
 
 export type Mark = 'AC' | 'PY' | 'PL' | 'FC' | 'AC&FC';
@@ -57,50 +58,157 @@ export function toneOf(delta: number | undefined, goodUp: boolean | null, zero =
 
 const toneColor = (t: Tone) => (t === 'good' ? 'var(--good)' : t === 'bad' ? 'var(--bad)' : 'var(--py)');
 
-/** Absolute variance bar around a zero axis. Direction by sign, colour by impact, one scale per column. */
-export function VarianceBar({ value, max, width, tone, hatched }: { value: number | undefined; max: number; width: number; tone: Tone; hatched?: boolean }) {
-  const half = width / 2;
-  if (value === undefined || !Number.isFinite(value)) return <svg width={width} height={12} aria-hidden="true" />;
-  const len = max > 0 ? Math.min(half - 1, (Math.abs(value) / max) * (half - 1)) : 0;
-  const color = toneColor(tone);
+/** Text width of a label in px, roughly (tabular digits are about 0.6 em). */
+export const labelWidth = (font: number, chars = 7) => Math.ceil(font * 0.6 * chars) + 6;
+
+/**
+ * One row's bar on a value axis shared by the whole column, its value at the far end of the bar: right of a bar
+ * that ends on the right (positive), left of one that ends on the left (negative). Plain variance bars start at
+ * zero; waterfall bars start at the running sum and get grey connectors to the rows above and below. Colour by
+ * impact (tone), or ink for movements that are not variances; hatched for forecast.
+ */
+export function BarCell({
+  span,
+  domain,
+  width,
+  height,
+  font,
+  label,
+  labelRight = true,
+  tone,
+  ink = false,
+  hatched = false,
+  thin = false,
+  bridge = false,
+}: {
+  span: Span | undefined;
+  domain: [number, number];
+  width: number;
+  height: number;
+  font: number;
+  label: string;
+  /** Where the label goes when there is no bar (KPI rows): by the sign of their value. */
+  labelRight?: boolean;
+  tone: Tone;
+  ink?: boolean;
+  hatched?: boolean;
+  thin?: boolean;
+  /** Waterfall: steps end anywhere on the axis, so both sides keep room for a label. */
+  bridge?: boolean;
+}) {
+  // Room for labels only on the sides the bars reach; a short margin for the zero labels beside the axis.
+  const [lo, hi] = domain;
+  const full = labelWidth(font);
+  const short = labelWidth(font, 2);
+  const left = lo < 0 || bridge ? full : short;
+  const right = hi > 0 || bridge ? full : short;
+  const x = (v: number) => left + ((v - lo) / (hi - lo || 1)) * Math.max(1, width - left - right);
+  const color = ink ? 'var(--ac)' : toneColor(tone);
+  const key = ink ? 'ink' : tone;
+  const bh = thin ? Math.max(4, Math.round(height * 0.24)) : Math.max(6, Math.min(14, Math.round(height * 0.46)));
+  const cy = height / 2;
+  const x0 = span ? Math.min(x(span.from), x(span.to)) : 0;
+  const w = span ? Math.max(0.8, Math.abs(x(span.to) - x(span.from))) : 0;
+  // Rows without a bar (KPI) put their label on their sign's side if there is room for it there.
+  const endRight = span ? span.to >= span.from : labelRight ? right === full || left !== full : left !== full;
+  const end = span ? x(span.to) : x(0);
   return (
-    <svg width={width} height={12} aria-hidden="true" className="block">
+    <svg width={width} height={height} aria-hidden="true" className="block">
       {hatched && (
         <defs>
-          <pattern id={`vb-${tone}`} width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <pattern id={`bc-${key}`} width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
             <rect width="4" height="4" fill="var(--paper)" />
             <line x1="0" y1="0" x2="0" y2="4" stroke={color} strokeWidth="2" />
           </pattern>
         </defs>
       )}
-      <rect x={value >= 0 ? half : half - len} y={2} width={len} height={8} fill={hatched ? `url(#vb-${tone})` : color} stroke={hatched ? color : 'none'} strokeWidth={hatched ? 0.8 : 0} />
-      <line x1={half} x2={half} y1={0} y2={12} stroke="var(--ink)" strokeWidth={1} />
+      <line x1={x(0)} x2={x(0)} y1={0} y2={height} stroke="var(--ink)" strokeWidth={1} />
+      {span?.linkAbove && <line x1={x(span.total ? span.to : span.from)} x2={x(span.total ? span.to : span.from)} y1={0} y2={cy - bh / 2} stroke="var(--py)" strokeWidth={1} />}
+      {span?.linkBelow && <line x1={x(span.to)} x2={x(span.to)} y1={cy + bh / 2} y2={height} stroke="var(--py)" strokeWidth={1} />}
+      {span && (
+        <rect
+          x={x0}
+          y={cy - bh / 2}
+          width={w}
+          height={bh}
+          fill={hatched ? `url(#bc-${key})` : color}
+          stroke={hatched ? color : 'none'}
+          strokeWidth={hatched ? 0.8 : 0}
+        />
+      )}
+      {label && (
+        <text
+          x={endRight ? end + 4 : end - 4}
+          y={cy + font * 0.36}
+          textAnchor={endRight ? 'start' : 'end'}
+          fontSize={font}
+          fill="var(--ink)"
+          fontWeight={span?.total ? 600 : 400}
+          // A paper halo, so an axis or connector behind the label never strikes through it.
+          stroke="var(--paper)"
+          strokeWidth={3}
+          paintOrder="stroke"
+        >
+          {label}
+        </text>
+      )}
     </svg>
   );
 }
 
 /**
- * Relative variance as a pin ("needle"); nothing for a variance that rounds to zero.
+ * Relative variance as a pin ("needle"), its percentage beyond the head on the side it points to; for a variance
+ * that rounds to zero only the axis and the label.
  *
  * IBCS: colour carries the impact, the head carries the scenario. The STEM is green, red, or grey for lines without
  * a direction; the HEAD is in the notation of the minuend (the scenario compared): solid ink for AC, hatched with an
  * ink outline for FC and for AC&FC periods that contain forecast months. Same split as the ChartKitchen visuals.
  */
-export function VariancePin({ value, max, width, tone, minuend = 'AC' }: { value: number | undefined; max: number; width: number; tone: Tone; minuend?: Mark }) {
+export function VariancePin({
+  value,
+  max,
+  width,
+  height = 12,
+  font = 11,
+  label = '',
+  tone,
+  minuend = 'AC',
+}: {
+  value: number | undefined;
+  max: number;
+  width: number;
+  height?: number;
+  font?: number;
+  label?: string;
+  tone: Tone;
+  minuend?: Mark;
+}) {
   const half = width / 2;
+  const cy = height / 2;
+  // The label goes beyond the head; with too little room for both, the pin keeps its length and drops the label.
+  const roomWith = half - 5 - labelWidth(font, 6);
+  if (roomWith < 18) label = '';
+  const room = Math.max(4, label ? roomWith : half - 5);
+  const text = (x: number, right: boolean) =>
+    label ? (
+      <text x={right ? x + 6 : x - 6} y={cy + font * 0.36} textAnchor={right ? 'start' : 'end'} fontSize={font} fill="var(--muted)" stroke="var(--paper)" strokeWidth={3} paintOrder="stroke">
+        {label}
+      </text>
+    ) : null;
   if (value === undefined || !Number.isFinite(value) || max <= 0 || Math.abs(value) < 0.0005)
     return (
-      <svg width={width} height={12} aria-hidden="true" className="block">
-        <line x1={half} x2={half} y1={0} y2={12} stroke="var(--ink)" strokeWidth={1} />
+      <svg width={width} height={height} aria-hidden="true" className="block">
+        <line x1={half} x2={half} y1={0} y2={height} stroke="var(--ink)" strokeWidth={1} />
+        {value !== undefined && text(half - 2, true)}
       </svg>
     );
   const capped = Math.abs(value) > max;
-  const len = Math.min(half - 5, (Math.abs(value) / max) * (half - 5));
+  const len = Math.min(room, (Math.abs(value) / max) * room);
   const x = value >= 0 ? half + len : half - len;
   const hatched = minuend === 'FC' || minuend === 'AC&FC';
   const head = { fill: hatched ? 'url(#pin-head-fc)' : 'var(--ink)', stroke: 'var(--ink)', strokeWidth: hatched ? 0.9 : 0 };
   return (
-    <svg width={width} height={12} aria-hidden="true" className="block">
+    <svg width={width} height={height} aria-hidden="true" className="block">
       {hatched && (
         <defs>
           <pattern id="pin-head-fc" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
@@ -109,13 +217,14 @@ export function VariancePin({ value, max, width, tone, minuend = 'AC' }: { value
           </pattern>
         </defs>
       )}
-      <line x1={half} x2={x} y1={6} y2={6} stroke={toneColor(tone)} strokeWidth={2} />
+      <line x1={half} x2={x} y1={cy} y2={cy} stroke={toneColor(tone)} strokeWidth={2} />
       {capped ? (
-        <path d={value >= 0 ? `M${x - 3.5},1.5 L${x + 3.5},6 L${x - 3.5},10.5 Z` : `M${x + 3.5},1.5 L${x - 3.5},6 L${x + 3.5},10.5 Z`} {...head} />
+        <path d={value >= 0 ? `M${x - 3.5},${cy - 4.5} L${x + 3.5},${cy} L${x - 3.5},${cy + 4.5} Z` : `M${x + 3.5},${cy - 4.5} L${x - 3.5},${cy} L${x + 3.5},${cy + 4.5} Z`} {...head} />
       ) : (
-        <rect x={x - 3.5} y={2.5} width={7} height={7} {...head} />
+        <rect x={x - 3.5} y={cy - 3.5} width={7} height={7} {...head} />
       )}
-      <line x1={half} x2={half} y1={0} y2={12} stroke="var(--ink)" strokeWidth={1} />
+      <line x1={half} x2={half} y1={0} y2={height} stroke="var(--ink)" strokeWidth={1} />
+      {text(x, value >= 0)}
     </svg>
   );
 }

@@ -22,6 +22,8 @@
     "rayfin:up": "rayfin up",
     "bake": "node tools/bake-snapshot.mjs",
     "bake:check": "node tools/bake-snapshot.mjs --check",
+    "dwg": "node tools/dwg.mjs",
+    "dwg:check": "node tools/dwg.mjs --check",
     "probe": "node tools/probe.mjs",
     "live:enable": "node tools/live-mode.mjs enable",
     "live:disable": "node tools/live-mode.mjs disable"
