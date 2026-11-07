@@ -300,15 +300,15 @@ describe('discovery against the demo fixtures', () => {
 });
 
 /**
- * Everything is read-only except one file. This scans the syntax tree of
+ * Network writes are confined to explicit adapters. This scans the syntax tree of
  * every file of the feature, not its text. It proves what it checks and no more:
  *
- * - outside `graphWrite.ts`, `graphMail.ts`, `fabricWrite.ts` and `graphGroupCreate.ts`, an HTTP `method` is only ever the literal 'GET'
+ * - outside the five sending adapters, an HTTP `method` is only ever the literal 'GET'
  *   and no string names a Graph reference link,
  * - each of those four files names only the verbs it is meant to send
  *   (members: POST and DELETE, mail: POST, role assignments: POST, PATCH, DELETE, new group: POST),
- * - those four files are imported only by `graphMemberWriter.ts`, which is
- *   imported only by a dynamic import in `services.ts`,
+ * - the original four adapters are imported only by `graphMemberWriter.ts`;
+ *   it and the workspace adapter are loaded only dynamically in `services.ts`,
  * - network primitives appear only in the eight files that are meant to call out,
  * - no file imports the write paths of the Governance Hub this app grew out of
  *   (its proxy, token cache, approval engine, gates), should they ever be copied in,
@@ -333,16 +333,18 @@ describe('read-only and separation boundary', () => {
   /** The three files that may send something other than a read: a membership write, a notice, a role assignment. */
   const ROLE_FILE = 'src/um/services/fabricWrite.ts'.replace(/\//g, sep);
   const GROUP_FILE = 'src/um/services/graphGroupCreate.ts'.replace(/\//g, sep);
-  const SENDS = new Set([WRITE_FILE, MAIL_FILE, ROLE_FILE, GROUP_FILE]);
+  const WORKSPACE_FILE = 'src/um/services/workspaceProvisioningApi.ts'.replace(/\//g, sep);
+  const SENDS = new Set([WRITE_FILE, MAIL_FILE, ROLE_FILE, GROUP_FILE, WORKSPACE_FILE]);
   /** What each of them may send. A verb outside its set, anywhere in the file, fails. */
   const VERBS_OF = new Map<string, ReadonlySet<string>>([
     [WRITE_FILE, new Set(['POST', 'DELETE'])],
     [MAIL_FILE, new Set(['POST'])],
     [ROLE_FILE, new Set(['POST', 'PATCH', 'DELETE'])],
     [GROUP_FILE, new Set(['POST'])],
+    [WORKSPACE_FILE, new Set(['GET', 'POST'])],
   ]);
   const HTTP_VERB = /^(?:GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS)$/i;
-  const MAY_CALL_OUT = new Set([WRITE_FILE, MAIL_FILE, ROLE_FILE, GROUP_FILE, 'src/um/services/graphRead.ts', 'src/um/services/gateways.ts', 'src/um/services/services.ts', 'src/um/services/fabricOps.ts'].map((p) => p.replace(/\//g, sep)));
+  const MAY_CALL_OUT = new Set([WRITE_FILE, MAIL_FILE, ROLE_FILE, GROUP_FILE, WORKSPACE_FILE, 'src/um/services/graphRead.ts', 'src/um/services/gateways.ts', 'src/um/services/services.ts', 'src/um/services/fabricOps.ts'].map((p) => p.replace(/\//g, sep)));
   const NETWORK = new Set(['fetch', 'XMLHttpRequest', 'sendBeacon', 'WebSocket', 'EventSource']);
   const FORBIDDEN_IMPORT = /(?:^|\/)(?:udfClient|fabricAuth|approvals|writes|GovernanceContext|writeGates|tasks|capabilities|operationRegistry|apiContracts)(?:\.[jt]sx?)?$/;
 
@@ -388,6 +390,9 @@ describe('read-only and separation boundary', () => {
       if (specifier && /(?:^|\/)(?:graphWrite|graphMail|fabricWrite|graphGroupCreate)$/.test(specifier) && !typeOnly && rel !== WRITER_FILE) problems.push('value import of a sending file');
       if (specifier && /(?:^|\/)graphMemberWriter$/.test(specifier) && !(rel === SERVICES_FILE && ts.isCallExpression(node))) {
         problems.push('the member writer is loaded outside the one dynamic import');
+      }
+      if (specifier && /(?:^|\/)workspaceProvisioningApi$/.test(specifier) && !typeOnly && !(rel === SERVICES_FILE && ts.isCallExpression(node))) {
+        problems.push('the workspace adapter is loaded outside the one dynamic import');
       }
       if (ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword && node.arguments[0] && !ts.isStringLiteralLike(node.arguments[0])) {
         problems.push('dynamic import with a computed path');

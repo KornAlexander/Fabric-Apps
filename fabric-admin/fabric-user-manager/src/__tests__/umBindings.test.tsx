@@ -135,6 +135,26 @@ describe('deciding a binding change', () => {
 describe('the three Fabric writes', () => {
   const base = `${FABRIC_API_ORIGIN}/v1/workspaces/${WS}/roleAssignments`;
 
+  it('preserves bounded Fabric diagnostics, redacts the token and never retries', async () => {
+    const fetcher = vi.fn(async () => new Response(JSON.stringify({
+      errorCode: 'PrincipalNotFound', message: `Cannot resolve group.\nBearer secret-token ${'x'.repeat(700)}`, requestId: g(99),
+    }), { status: 400 }));
+    const result = await writeRole({ action: 'add', workspaceId: WS, groupId: GROUP, role: 'Admin' }, 'secret-token', fetcher);
+    expect(result).toMatchObject({ ok: false, code: 'failed', status: 400, serviceCode: 'PrincipalNotFound', requestId: g(99) });
+    if (result.ok) throw new Error('Expected failure');
+    expect(result.message).toHaveLength(500);
+    expect(result.message).not.toContain('secret-token');
+    expect(result.message).not.toContain('\n');
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    const nested = await writeRole({ action: 'remove', workspaceId: WS, assignmentId: GROUP }, 'token', async () => new Response(JSON.stringify({
+      error: { code: 'AccessDenied', message: 'No permission' },
+    }), { status: 403, headers: { 'request-id': g(98) } }));
+    expect(nested).toMatchObject({ ok: false, code: 'denied', serviceCode: 'AccessDenied', requestId: g(98), message: 'No permission' });
+    expect(await writeRole({ action: 'remove', workspaceId: WS, assignmentId: GROUP }, 'token', async () => new Response('<html>error</html>', { status: 502 }))).toMatchObject({
+      ok: false, code: 'uncertain', status: 502, message: 'Fabric returned a non-JSON error response',
+    });
+  });
+
   it('builds exactly one request per change, and an add always names a group', () => {
     expect(roleRequest({ action: 'add', workspaceId: WS.toUpperCase(), groupId: GROUP, role: 'Viewer' })).toEqual({ method: 'POST', url: base, body: JSON.stringify({ principal: { id: GROUP, type: 'Group' }, role: 'Viewer' }) });
     expect(roleRequest({ action: 'change', workspaceId: WS, assignmentId: g(61), role: 'Member' })).toEqual({ method: 'PATCH', url: `${base}/${g(61)}`, body: JSON.stringify({ role: 'Member' }) });

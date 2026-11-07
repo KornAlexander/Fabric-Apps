@@ -59,10 +59,10 @@ describe('Fabric User Manager shell', () => {
     expect(screen.queryByRole('button', { name: 'Reload the page' })).not.toBeInTheDocument();
   });
 
-  it('has exactly four tabs in the navigation: three about access, and the guidelines', async () => {
+  it('has access tabs, workspace requests and the guidelines in the navigation', async () => {
     renderApp('user');
     const nav = await screen.findByRole('navigation', { name: 'Fabric User Manager' });
-    expect(within(nav).getAllByRole('link').map((a) => a.textContent)).toEqual(['Workspaces', 'Audiences', 'RLS / OLS', 'Power BI Guidelines']);
+    expect(within(nav).getAllByRole('link').map((a) => a.textContent)).toEqual(['Workspaces', 'Workspace requests', 'Audiences', 'RLS / OLS', 'Power BI Guidelines']);
     // No Hub area and, for a non-admin, no Setup entry.
     expect(screen.queryByText('Can-Do Explorer')).not.toBeInTheDocument();
     expect(screen.queryByRole('link', { name: 'Setup' })).not.toBeInTheDocument();

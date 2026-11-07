@@ -63,7 +63,8 @@ export function createFakeData() {
       },
       create: async (data: Record<string, unknown>) => {
         check();
-        const row = { ...data, id: newId() };
+        const row = { ...data, id: typeof data.id === 'string' ? data.id : newId() };
+        if (rows().some((existing) => existing.id === row.id)) throw new Error('duplicate primary key');
         rows().push(row);
         return { id: row.id, ...data };
       },

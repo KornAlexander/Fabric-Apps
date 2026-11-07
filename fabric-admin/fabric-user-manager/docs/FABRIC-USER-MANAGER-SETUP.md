@@ -100,6 +100,110 @@ App admins can create a new, empty security group in Setup. This is off by defau
 
 A new group has no members and opens nothing. Give it a workspace role, an audience or a model role, then activate it.
 
+## New workspace requests
+
+The **Workspace requests** tab adds the new-workspace request, admin approval/denial,
+automatic creation and status-tracking flow inspired by
+[fabricplatformgovernance](https://github.com/DaSenf1860/fabricplatformgovernance).
+It does not add workload-item requests.
+
+### Deploying this feature
+
+- Build with `VITE_UM_WRITES=true`.
+- Run a **full** `npx rayfin up --tenant <tenant id> --workspace-id <workspace id>`
+  against this app's existing item, checking `--dry-run` first. The feature adds
+  `UmWorkspaceRequest`, `UmWorkspaceDecision` and `UmWorkspaceContinuation`; static-hosting-only deployment
+  does not create these tables. Never point it at another app's item.
+- In the Entra registration, add delegated **Power BI Service**
+  `Capacity.Read.All`. Provisioning also uses `Workspace.Read.All`,
+  `Workspace.ReadWrite.All`, Graph `GroupMember.Read.All`, `User.ReadBasic.All`,
+  `Group.ReadWrite.All`, `GroupMember.ReadWrite.All`, and `User.Read.All`.
+  Grant admin consent for permissions requiring it; if **Assignment required**
+  is enabled, include all of them in tenant-wide admin consent.
+- Use **Assignment required** with deliberately assigned users before enabling
+  group creation, as described above.
+- The approver must be an app admin, allowed by the Fabric tenant setting to
+  create workspaces, allowed to create security groups in Entra, and a
+  contributor or administrator on the selected active capacity. Being an app
+  admin alone grants none of these service permissions.
+- In **Setup**, enable all three switches: member changes, workspace role
+  changes, and creating new groups. On **Workspace requests**, grant the
+  permissions using the individual buttons, then load capacities and select one.
+
+### What approval does
+
+A different app admin from the requester reviews the name, description and
+business reason. Denial requires a note and creates nothing. Approval:
+
+1. Re-reads the immutable request, the three switches, available capacities and
+   the requester's live identity. Initial membership is limited to enabled
+   internal Entra users; a guest or mismatched identity is refused.
+2. Claims the request with a unique decision-row primary key before any external
+   write. Concurrent approvals/denials cannot both insert that key.
+3. Creates the workspace directly on the selected capacity.
+4. Creates four non-mail-enabled, assigned security groups for **Admin, Member,
+   Contributor and Viewer**, named `FAB-<workspace>-<role>-<request suffix>`.
+   The approving admin is explicitly made owner of each group.
+5. Assigns each group its workspace role and adds the requester **only** to
+   Contributor. The approver retains the direct Admin assignment Fabric gives
+   a workspace creator; it is not removed by this feature.
+6. Reads back the capacity, group ownership, workspace roles and requester
+   membership. Only confirmed provisioning is marked **Created and verified**.
+7. Activates the groups in this app with Fabric-read bindings. Contributor and
+   Viewer are open for subsequent access requests; Admin and Member are not.
+
+Every call uses the approving person's delegated tokens. No secret, service
+principal, scheduler or background provisioning service is introduced. Keep the
+browser tab open until provisioning completes.
+
+### Partial failures and data visibility
+
+Requests, decisions, the last attempted step and all returned workspace/group IDs
+are persisted. If a call is uncertain, a read-back cannot confirm the result, the
+database fails, or the tab is closed, no create call is automatically retried and
+no existing resources are deleted. **Refresh requests** shows the last saved
+state. Inspect failures before submitting any replacement request. Fabric role
+errors now retain the HTTP status, service error code, bounded/redacted message and
+request ID when returned.
+
+Fabric can reject a newly created Entra group's role assignment with HTTP 400
+`PrincipalNotFound` while its principal resolution catches up. For this exact,
+definitively rejected response only, provisioning waits 2, 4, 8, 16 and 30 seconds
+(60 seconds of waits, at most six POSTs per role, plus API request time). Before
+each attempt it rereads roles, skips an existing matching assignment and refuses
+a conflict; retries also recheck the change switches. No other error, timeout,
+server error or uncertain write is retried. If resolution still fails, the last
+response is saved and explicit continuation remains available.
+
+The original approving app admin can explicitly **Continue provisioning** after
+eligible failures with recorded workspace/group IDs. It rechecks switches,
+requester identity, active capacity, workspace name/capacity, each recorded group's
+name/type/sole approving owner, and current roles. It never recreates the workspace
+or a recorded group, never overwrites a conflicting role, skips matching
+assignments/membership, and preserves existing managed-group settings/bindings.
+Only previously unattempted groups may be created. Capacity stays as approved.
+An immutable `UmWorkspaceContinuation` primary-key insert claims each numbered
+attempt before any external write, so concurrent clicks/tabs cannot both execute.
+The default attempt number is zero for older saved decisions.
+
+Interrupted `Provisioning`, unknown/uncertain creates without recorded IDs and
+uncertain continuation claims still require manual completion/cleanup in Fabric
+and Entra. No timeout takeover or automatic replay of uncertain writes is provided. If a claim succeeds
+but its response/checkpoint is lost, the claim remains and must not be bypassed.
+A lost create response may mean a resource exists even without a recorded ID.
+Inspect the recorded error before explicitly continuing after bounded principal
+resolution attempts are exhausted.
+
+Like the app's existing request tables, these records are advisory, not a
+server-enforced approval authority. Every authenticated app user can read these
+tables; the UI limits ordinary users to their own requests. Request rows cannot
+be updated or deleted through the declared data roles. Continuation claims are
+create/read only. Decision checkpoints can
+be created/updated by authenticated app users, so they are not a tamper-proof
+audit trail. Fabric and Entra enforce every real operation with the approver's
+own permissions; do not treat UI filtering or the Setup switches as access
+controls.
+
 ## Optional: tailoring the Power BI Guidelines
 
 The fourth tab shows general best practices for Power BI. To make it yours, open **Setup**, Power BI Guidelines, **Open questionnaire**. Fifty optional questions in six groups cover naming, tables, calendar, columns, measures and reports. Answer what matters and choose **Save for everyone**. The answers are then filled into the guideline text for everybody who uses the app, and listed at the end of the tab.

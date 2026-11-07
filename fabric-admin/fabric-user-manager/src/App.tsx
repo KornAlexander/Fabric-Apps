@@ -27,7 +27,7 @@ function AuthGuard({ children, requireAuth }: { children: React.ReactNode; requi
   return <>{children}</>;
 }
 
-/** The four tabs: workspaces, audiences, RLS/OLS and the Power BI Guidelines, plus Setup for app admins. */
+/** Access management, new workspace requests, guidelines and admin setup. */
 function UserManager() {
   return (
     <UmProvider>

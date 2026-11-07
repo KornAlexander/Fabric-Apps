@@ -36,6 +36,8 @@ import type { WriteOutcome } from './graphWrite';
 import type { GroupCreator } from './groupCreation';
 import type { MemberWriter } from './memberChanges';
 import { MemoryUmStore } from './store';
+import type { WorkspaceProvisioner } from './workspaceRequests';
+import type { WorkspaceRequestInput } from '@/um/domain/workspaceRequest';
 
 const id = (block: string, n: number) => `${block}-0000-4000-8000-${String(n).padStart(12, '0')}`;
 
@@ -378,6 +380,7 @@ export function createTabMockStore(storage: Pick<Storage, 'getItem' | 'setItem'>
       store.restore(saved.store);
       Object.assign(GROUPS, saved.groups);
       Object.assign(ROLES, saved.roles);
+      if (Array.isArray(saved.workspaces)) WORKSPACES.splice(0, WORKSPACES.length, ...saved.workspaces);
       for (const [id, alias] of saved.aliases as [string, string][]) MOCK_ALIASES.set(id, alias);
     }
   } catch {
@@ -387,7 +390,7 @@ export function createTabMockStore(storage: Pick<Storage, 'getItem' | 'setItem'>
     try {
       storage.setItem(
         DEMO_STATE_KEY,
-        JSON.stringify({ version: DEMO_STATE_VERSION, fixtures, store: store.snapshot(), groups: GROUPS, roles: ROLES, aliases: [...MOCK_ALIASES] })
+        JSON.stringify({ version: DEMO_STATE_VERSION, fixtures, store: store.snapshot(), groups: GROUPS, roles: ROLES, aliases: [...MOCK_ALIASES], workspaces: WORKSPACES })
       );
     } catch {
       // Storage full or blocked: the demo works on, it just forgets on reload.
@@ -436,6 +439,7 @@ export class MockBindingWriter implements BindingWriter {
       saveDemoState();
       return { ok: true };
     }
+
     if (!roles.value.some((a) => a.id === change.assignmentId)) return { ok: false, code: 'not-found' };
     ROLES[change.workspaceId] = ok(
       change.action === 'remove'
@@ -444,5 +448,21 @@ export class MockBindingWriter implements BindingWriter {
     );
     saveDemoState();
     return { ok: true };
+  }
+}
+
+export class MockWorkspaceProvisioner implements WorkspaceProvisioner {
+  async listCapacities() {
+    return [{ id: id('cccccccc', 1), displayName: 'Demo F4 capacity', state: 'Active' }];
+  }
+  async createWorkspace(input: WorkspaceRequestInput) {
+    const workspaceId = crypto.randomUUID();
+    WORKSPACES.push({ id: workspaceId, displayName: input.displayName });
+    ROLES[workspaceId] = ok([]);
+    saveDemoState();
+    return workspaceId;
+  }
+  async verifyWorkspace(workspaceId: string) {
+    if (!WORKSPACES.some((w) => w.id === workspaceId)) throw new Error('Demo workspace not found');
   }
 }

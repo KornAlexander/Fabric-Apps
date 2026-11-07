@@ -1,5 +1,5 @@
 /**
- * The fourth tab: the Power BI guidelines, and the questionnaire in Setup
+ * The Power BI guidelines tab, and the questionnaire in Setup
  * that tailors them. Content and answer handling are checked as data; the
  * views run against the offline fixtures.
  */
@@ -305,10 +305,10 @@ describe('filling in and searching', () => {
 });
 
 describe('the Power BI Guidelines tab', () => {
-  it('is the fourth tab and shows the standard guide to everyone', async () => {
+  it('is available alongside workspace requests and shows the standard guide to everyone', async () => {
     renderApp('user', UM_PATHS.guidelines);
     const nav = await screen.findByRole('navigation', { name: 'Fabric User Manager' });
-    expect(within(nav).getAllByRole('link').map((a) => a.textContent)).toEqual(['Workspaces', 'Audiences', 'RLS / OLS', 'Power BI Guidelines']);
+    expect(within(nav).getAllByRole('link').map((a) => a.textContent)).toEqual(['Workspaces', 'Workspace requests', 'Audiences', 'RLS / OLS', 'Power BI Guidelines']);
     expect(await screen.findByRole('heading', { level: 2, name: 'Power BI Guidelines' })).toBeInTheDocument();
     for (const section of SECTIONS) expect(screen.getByRole('heading', { level: 3, name: section.title })).toBeInTheDocument();
     expect(await screen.findByRole('heading', { name: 'Standard guidelines' })).toBeInTheDocument();

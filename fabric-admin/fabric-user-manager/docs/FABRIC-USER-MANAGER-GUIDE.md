@@ -34,6 +34,44 @@ A fourth tab, **Power BI Guidelines**, is a reference. It grants nothing and blo
 
 If a window says that an administrator has to approve, the app tells you so. Ask your app admin.
 
+## Requesting a new workspace
+
+Use **Workspace requests** when you need a new workspace, rather than access to
+an existing one. Enter a name (3–100 characters), an optional description and a
+business reason (at least 10 characters), then choose **Request new workspace**.
+Your requests and their statuses stay on that tab; use **Refresh requests** to
+see an administrator's decision.
+
+An app admin other than the requester can deny with a note, or select an active
+capacity and choose **Approve and create workspace**. Approval creates Admin,
+Member, Contributor and Viewer security groups, owned by that admin, and gives
+the requester **Contributor** access through the Contributor group. Only the
+Contributor and Viewer groups are open for subsequent group-access requests.
+The approving admin retains their direct workspace Admin role.
+
+**Created and verified** means the app read back the capacity, group ownership,
+role assignments and requester membership. Fabric may still need time to apply
+access. **Provisioning incomplete** needs inspection; do not submit another request.
+The original approving app admin may use **Continue provisioning** when offered.
+Enable all three change switches, allow the listed permissions and load capacities;
+continuation uses the originally recorded capacity, not the dropdown selection.
+It verifies the workspace name/capacity, recorded groups and their sole approving
+owner, skips existing matching roles and requester membership, and performs only
+missing steps. A conflicting role or changed group must be resolved manually.
+Keep the tab open. An interrupted **Provisioning** status or an uncertain create
+without a recorded ID still requires manual completion/cleanup.
+Resource IDs, the last attempted step and bounded Fabric error details are shown,
+including the specific error in the failure banner. For HTTP 400
+`PrincipalNotFound` only, the app waits and rereads roles before trying a rejected
+assignment again: five waits totaling one minute per role, at most six POSTs.
+An existing assignment is skipped and conflicting roles stop the run. API request
+time is additional. No workspace/group create, uncertain write, timeout or other
+error is retried automatically; no resources are deleted.
+
+If the page says `VITE_UM_WRITES=true` is required, the deployment is read-only.
+Provisioning permissions and change switches are explained in the
+[setup guide](FABRIC-USER-MANAGER-SETUP.md#new-workspace-requests).
+
 ## What a group opens
 
 Every group shows what it opens. Read the small marks next to it:
